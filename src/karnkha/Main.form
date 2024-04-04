@@ -91,6 +91,9 @@
           </SubComponents>
         </Container>
         <Component class="component.Header" name="header1">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="Main_header1"/>
+          </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="body">
           <Properties>
