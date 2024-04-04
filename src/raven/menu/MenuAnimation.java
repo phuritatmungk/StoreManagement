@@ -9,7 +9,7 @@ public class MenuAnimation {
 
     public static void showMenu(Component component, MenuItem item, MigLayout layout, boolean show) {
         int height = component.getPreferredSize().height;
-        Animator animator = new Animator(300, new TimingTargetAdapter() {
+        Animator animator = new Animator(400, new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
                 float f = show ? fraction : 1f - fraction;

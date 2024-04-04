@@ -71,9 +71,9 @@ public class MenuItem extends JButton {
         this.index = index;
         this.subMenuAble = subMenuAble;
         setContentAreaFilled(false);
-        setForeground(new Color(230, 230, 230));
+        setForeground(new Color(255, 255, 255));
         setHorizontalAlignment(SwingConstants.LEFT);
-        setBorder(new EmptyBorder(9, 10, 9, 10));
+        setBorder(new EmptyBorder(20, 30, 20, 30));
         setIconTextGap(10);
         rippleEffect = new RippleEffect(this);
         rippleEffect.setRippleColor(new Color(220, 220, 220));
@@ -93,8 +93,8 @@ public class MenuItem extends JButton {
     public void initSubMenu(int subMenuIndex, int length) {
         this.subMenuIndex = subMenuIndex;
         this.length = length;
-        setBorder(new EmptyBorder(9, 33, 9, 10));
-        setBackground(new Color(18, 99, 63));
+        setBorder(new EmptyBorder(20, 33, 20, 10));
+        setBackground(new Color(170, 170, 170));
         setOpaque(true);
     }
 
@@ -104,7 +104,7 @@ public class MenuItem extends JButton {
         Graphics2D g2 = (Graphics2D) grphcs.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if (length != 0) {
-            g2.setColor(new Color(43, 141, 98));
+            g2.setColor(new Color(255, 255, 255));
             if (subMenuIndex == 1) {
                 //  First Index
                 g2.drawImage(shadow, -shadowSize, -20, null);

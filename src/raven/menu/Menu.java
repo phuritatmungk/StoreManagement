@@ -2,16 +2,20 @@ package raven.menu;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 
 public class Menu extends JComponent {
@@ -28,16 +32,16 @@ public class Menu extends JComponent {
     private MigLayout layout;
     private String[][] menuItems = new String[][]{
         {"Dashboard"},
-        {"Email", "Inbox", "Read", "Compost"},
+        {"Email"},
         {"Chat"},
         {"Calendar"},
-        {"UI Kit", "Accordion", "Alerts", "Badges", "Breadcrumbs", "Buttons", "Button group"},
-        {"Advanced UI", "Cropper", "Owl Carousel", "Sweet Alert"},
-        {"Forms", "Basic Elements", "Advanced Elements", "SEditors", "Wizard"},
-        {"Charts", "Apex", "Flot", "Peity", "Sparkline"},
-        {"Table", "Basic Tables", "Data Table"},
-        {"Icons", "Feather Icons", "Flag Icons", "Mdi Icons"},
-        {"Special Pages", "Blank page", "Faq", "Invoice", "Profile", "Pricing", "Timeline"}
+        {"UI Kit"},
+        {"Advanced UI"},
+        {"Forms"},
+        {"Charts", "Apex", "Flot"},
+        {"Table"},
+        {"Icons"},
+        {"Special Pages"}
     };
 
     public Menu() {
@@ -65,6 +69,15 @@ public class Menu extends JComponent {
     }
 
     private void addMenu(String menuName, int index) {
+        if (index == 0) { 
+            JLabel topLabel = new JLabel("Menu", SwingConstants.CENTER); 
+            Font font = topLabel.getFont().deriveFont(Font.PLAIN, 15); 
+            topLabel.setFont(font);
+            topLabel.setForeground(Color.WHITE);
+            topLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 0)); 
+            add(topLabel, "wrap"); 
+        }
+
         int length = menuItems[index].length;
         MenuItem item = new MenuItem(menuName, index, length > 1);
         Icon icon = getIcon(index);
@@ -79,7 +92,6 @@ public class Menu extends JComponent {
                         item.setSelected(true);
                         addSubMenu(item, index, length, getComponentZOrder(item));
                     } else {
-                        //  Hide menu
                         hideMenu(item, index);
                         item.setSelected(false);
                     }
@@ -90,11 +102,11 @@ public class Menu extends JComponent {
                 }
             }
         });
-        add(item);
-        revalidate();
-        repaint();
-    }
+        add(item, "wrap"); 
 
+    revalidate();
+    repaint();
+    }    
     private void addSubMenu(MenuItem item, int index, int length, int indexZorder) {
         JPanel panel = new JPanel(new MigLayout("wrap 1, fillx, inset 0, gapy 0", "fill"));
         panel.setName(index + "");
@@ -131,7 +143,7 @@ public class Menu extends JComponent {
     @Override
     protected void paintComponent(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs.create();
-        g2.setColor(new Color(21, 110, 71));
+        g2.setColor(new Color(150, 150, 150));
         g2.fill(new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
         super.paintComponent(grphcs);
     }
