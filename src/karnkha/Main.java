@@ -4,6 +4,7 @@ import component.DefaultForm;
 import component.HomeForm;
 import java.awt.Component;
 import raven.menu.MenuEvent;
+import component.Maintenance;
 
 /**
  *
@@ -21,7 +22,11 @@ public class Main extends javax.swing.JFrame {
             public void selected(int index, int subIndex) {
                 if (index == 0) {
                     showForm(new HomeForm());
-                } else {
+                } 
+                else if (index == 2) {
+                    showForm(new Maintenance());
+                }
+                else {
                     showForm(new DefaultForm("Form : " + index + " " + subIndex));
                 }
             }
@@ -52,6 +57,7 @@ public class Main extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(163, 163, 163)));
 
         scrollPaneWin111.setBorder(null);
+        scrollPaneWin111.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPaneWin111.setViewportView(menu1);
 
         body.setBackground(new java.awt.Color(245, 245, 245));
