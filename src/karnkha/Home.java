@@ -53,7 +53,6 @@ public class Home extends javax.swing.JFrame {
         body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         icon1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        icon1.setForeground(new java.awt.Color(0, 0, 0));
         icon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/shopping-cart 1.png"))); // NOI18N
         icon1.setToolTipText("");
         icon1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -67,12 +66,10 @@ public class Home extends javax.swing.JFrame {
         body.add(icon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("ขายสินค้า");
         body.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, -1, -1));
 
         icon2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        icon2.setForeground(new java.awt.Color(0, 0, 0));
         icon2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/money 1.png"))); // NOI18N
         icon2.setToolTipText("");
         icon2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -81,20 +78,17 @@ public class Home extends javax.swing.JFrame {
         body.add(icon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 110, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("ชำระเงินค่าบริการซ่อม และ");
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         body.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, -1, -1));
         jLabel2.getAccessibleContext().setAccessibleDescription("");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("อุปกรณ์การเกษตร");
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         body.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, -1, -1));
 
         icon3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        icon3.setForeground(new java.awt.Color(0, 0, 0));
         icon3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/fix 1.png"))); // NOI18N
         icon3.setToolTipText("");
         icon3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -103,19 +97,16 @@ public class Home extends javax.swing.JFrame {
         body.add(icon3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 110, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("รับซ่อมอุปกรณ์ และ");
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         body.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 260, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("สินค้าการเกษตร");
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         body.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 290, -1, -1));
 
         icon4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        icon4.setForeground(new java.awt.Color(0, 0, 0));
         icon4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/logistic 2.png"))); // NOI18N
         icon4.setToolTipText("");
         icon4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -124,13 +115,11 @@ public class Home extends javax.swing.JFrame {
         body.add(icon4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 110, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("จัดการคลังสินค้า");
         jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         body.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 260, -1, -1));
 
         icon5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        icon5.setForeground(new java.awt.Color(0, 0, 0));
         icon5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/report 1.png"))); // NOI18N
         icon5.setToolTipText("");
         icon5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -139,13 +128,11 @@ public class Home extends javax.swing.JFrame {
         body.add(icon5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 110, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("บันทึกการสั่งซื้อสินค้า");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         body.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 260, -1, -1));
 
         icon6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        icon6.setForeground(new java.awt.Color(0, 0, 0));
         icon6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/product 1.png"))); // NOI18N
         icon6.setToolTipText("");
         icon6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -159,17 +146,14 @@ public class Home extends javax.swing.JFrame {
         body.add(icon6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 440, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("รับสินค้าตามรายการสั่งซื้อ");
         body.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 590, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("ประวัติการสั่งซื้อ");
         body.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 590, -1, -1));
 
         icon7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        icon7.setForeground(new java.awt.Color(0, 0, 0));
         icon7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/1000005428 1.png"))); // NOI18N
         icon7.setToolTipText("");
         icon7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -183,12 +167,10 @@ public class Home extends javax.swing.JFrame {
         body.add(icon7, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 440, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("จัดการทะเบียนพนักงาน");
         body.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 590, -1, -1));
 
         icon8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        icon8.setForeground(new java.awt.Color(0, 0, 0));
         icon8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/resume 1.png"))); // NOI18N
         icon8.setToolTipText("");
         icon8.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -202,7 +184,6 @@ public class Home extends javax.swing.JFrame {
         body.add(icon8, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 440, -1, -1));
 
         icon9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        icon9.setForeground(new java.awt.Color(0, 0, 0));
         icon9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/team 1.png"))); // NOI18N
         icon9.setToolTipText("");
         icon9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -216,17 +197,14 @@ public class Home extends javax.swing.JFrame {
         body.add(icon9, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 440, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("จัดการทะเบียนตัวแทนจำหน่าย");
         body.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 590, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("รายงานแสดงผลการดำเนินงาน");
         body.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 590, -1, -1));
 
         icon10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        icon10.setForeground(new java.awt.Color(0, 0, 0));
         icon10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/analytics 1.png"))); // NOI18N
         icon10.setToolTipText("");
         icon10.setVerticalAlignment(javax.swing.SwingConstants.TOP);
