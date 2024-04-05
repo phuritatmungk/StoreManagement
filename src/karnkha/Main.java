@@ -6,6 +6,7 @@ import java.awt.Component;
 import raven.menu.MenuEvent;
 import component.Maintenance;
 import component.Manage_dealer_registration;
+import component.Manage_Employee;
 import component.AddProduct;
 import component.ReportMenu;
 
@@ -29,8 +30,11 @@ public class Main extends javax.swing.JFrame {
                 else if (index == 2) {
                     showForm(new Maintenance());
                 }
-                else if (index == 3){
+                else if (index == 3) {
                     showForm(new AddProduct());
+                }
+                else if (index == 7) {
+                    showForm(new Manage_Employee());
                 }
                 else if (index == 8) {
                     showForm(new Manage_dealer_registration());
@@ -91,7 +95,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPaneWin111, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
+                    .addComponent(scrollPaneWin111, javax.swing.GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

@@ -2,9 +2,9 @@ package component;
 import java.awt.Color;
 
 
-public class Manage_dealer_registration extends javax.swing.JPanel {
+public class Edit_dealer_info extends javax.swing.JPanel {
 
-    public Manage_dealer_registration() {
+    public Edit_dealer_info() {
         initComponents();
         
     }
@@ -58,7 +58,7 @@ public class Manage_dealer_registration extends javax.swing.JPanel {
 
         JName.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         JName.setText("ชื่อ");
-        add(JName, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, -1, -1));
+        add(JName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, -1, -1));
 
         txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtName.setForeground(new java.awt.Color(123, 123, 123));
@@ -72,11 +72,11 @@ public class Manage_dealer_registration extends javax.swing.JPanel {
                 txtNameFocusLost(evt);
             }
         });
-        add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, 370, 30));
+        add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 370, 30));
 
         JSurname.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         JSurname.setText("นามสกุล");
-        add(JSurname, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, -1, -1));
+        add(JSurname, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
 
         txtSname.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtSname.setForeground(new java.awt.Color(123, 123, 123));
@@ -90,11 +90,11 @@ public class Manage_dealer_registration extends javax.swing.JPanel {
                 txtSnameFocusLost(evt);
             }
         });
-        add(txtSname, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 370, 30));
+        add(txtSname, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 370, 30));
 
         JCompany.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         JCompany.setText("บริษัท");
-        add(JCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, -1, -1));
+        add(JCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, -1, -1));
 
         txtCompany.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtCompany.setForeground(new java.awt.Color(123, 123, 123));
@@ -108,11 +108,11 @@ public class Manage_dealer_registration extends javax.swing.JPanel {
                 txtCompanyFocusLost(evt);
             }
         });
-        add(txtCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 370, 30));
+        add(txtCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 290, 370, 30));
 
         JAddress.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         JAddress.setText("ที่อยู่");
-        add(JAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 370, -1, -1));
+        add(JAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, -1, -1));
 
         txtAddress.setColumns(20);
         txtAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -120,11 +120,11 @@ public class Manage_dealer_registration extends javax.swing.JPanel {
         txtAddress.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         address_box.setViewportView(txtAddress);
 
-        add(address_box, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 370, 370, 160));
+        add(address_box, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 370, 160));
 
         JPhone.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         JPhone.setText("เบอร์โทรศัพท์");
-        add(JPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 570, -1, -1));
+        add(JPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 570, -1, -1));
 
         txtPhone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtPhone.setForeground(new java.awt.Color(123, 123, 123));
@@ -138,11 +138,11 @@ public class Manage_dealer_registration extends javax.swing.JPanel {
                 txtPhoneFocusLost(evt);
             }
         });
-        add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 570, 370, 30));
+        add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 570, 370, 30));
 
         Add_dealer_information.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Add_dealer_information.setText("เพิ่มข้อมูลตัวแทนจำหน่าย");
-        add(Add_dealer_information, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 140, -1, -1));
+        Add_dealer_information.setText("ข้อมูลตัวแทนจำหน่าย");
+        add(Add_dealer_information, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 140, -1, -1));
 
         picture_box.setBackground(new java.awt.Color(255, 255, 255));
         picture_box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -162,28 +162,28 @@ public class Manage_dealer_registration extends javax.swing.JPanel {
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnSave.setText("บันทึก");
-        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 640, 130, 50));
+        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 640, 130, 50));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 600, 370, 30));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 600, 370, 30));
 
         name__box1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         name__box1.setForeground(new java.awt.Color(123, 123, 123));
         name__box1.setText("ชื่อ");
         name__box1.setBorder(null);
-        add(name__box1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, 370, 30));
+        add(name__box1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 370, 30));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 370, 30));
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, 370, 30));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 370, 30));
+        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 370, 30));
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 320, 370, 30));
+        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 370, 30));
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 320, 370, 30));
+        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 370, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImgActionPerformed
