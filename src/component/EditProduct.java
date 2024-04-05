@@ -2,9 +2,9 @@ package component;
 
 import java.awt.Color;
 
-public class AddProduct extends javax.swing.JPanel {
+public class EditProduct extends javax.swing.JPanel {
 
-    public AddProduct() {
+    public EditProduct() {
         initComponents();
         
     }
@@ -110,7 +110,7 @@ public class AddProduct extends javax.swing.JPanel {
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnSave.setText("บันทึก");
-        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 620, 130, 50));
+        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 710, 130, 50));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 370, 30));

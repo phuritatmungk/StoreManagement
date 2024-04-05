@@ -7,6 +7,7 @@ import raven.menu.MenuEvent;
 import component.Maintenance;
 import component.Manage_dealer_registration;
 import component.AddProduct;
+import component.ReportMenu;
 
 /**
  *
@@ -33,6 +34,9 @@ public class Main extends javax.swing.JFrame {
                 }
                 else if (index == 8) {
                     showForm(new Manage_dealer_registration());
+                }
+                else if (index ==9){
+                    showForm(new ReportMenu());
                 }
                 else {
                     showForm(new DefaultForm("Form : " + index + " " + subIndex));
