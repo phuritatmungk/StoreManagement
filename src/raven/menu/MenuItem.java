@@ -1,13 +1,16 @@
 package raven.menu;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import raven.effect.RippleEffect;
@@ -67,17 +70,22 @@ public class MenuItem extends JButton {
     private int length;
 
     public MenuItem(String name, int index, boolean subMenuAble) {
-        super(name);
-        this.index = index;
-        this.subMenuAble = subMenuAble;
-        setContentAreaFilled(false);
-        setForeground(new Color(255, 255, 255));
-        setHorizontalAlignment(SwingConstants.LEFT);
-        setBorder(new EmptyBorder(20, 30, 20, 30));
-        setIconTextGap(10);
-        rippleEffect = new RippleEffect(this);
-        rippleEffect.setRippleColor(new Color(220, 220, 220));
-    }
+    super(name);
+    this.index = index;
+    this.subMenuAble = subMenuAble;
+    setContentAreaFilled(false);
+    setForeground(new Color(255, 255, 255));
+    setHorizontalAlignment(SwingConstants.LEFT);
+    setBorder(new EmptyBorder(20, 30, 20, 30));
+    setIconTextGap(10);
+    rippleEffect = new RippleEffect(this);
+    rippleEffect.setRippleColor(new Color(220, 220, 220));
+    
+    // Set font to support Thai language
+    Font font = new Font("Tahoma", Font.PLAIN, 14); 
+    setFont(font);
+}
+
 
     private void createShadowImage() {
         int widht = getWidth();
@@ -139,5 +147,13 @@ public class MenuItem extends JButton {
     public void setBounds(int i, int i1, int i2, int i3) {
         super.setBounds(i, i1, i2, i3);
         createShadowImage();
+    }
+
+    private void setLineWrap(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void setWrapStyleWord(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

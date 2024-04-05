@@ -31,17 +31,16 @@ public class Menu extends JComponent {
     private MenuEvent event;
     private MigLayout layout;
     private String[][] menuItems = new String[][]{
-        {"Dashboard"},
-        {"Email"},
-        {"Chat"},
-        {"Calendar"},
-        {"UI Kit"},
-        {"Advanced UI"},
-        {"Forms"},
-        {"Charts", "Apex", "Flot"},
-        {"Table"},
-        {"Icons"},
-        {"Special Pages"}
+        {"ขายสินค้า"},
+        {"ชำระเงินค่าบริการซ่อม และ\n  "+"อุปกรณ์การเกษตร"},
+        {"รับซ่อมอุปกรณ์ และ สินค้าการเกษตร"},
+        {"จัดการคลังสินค้า"},
+        {"บันทึกการสั้งซิ้อสินค้า"},
+        {"รับสินค้าตามรายการสั่งซื้อ"},
+        {"ประวัติการสั่งชื้อ", "ประวัติการชื้อสินค้า", "ประวัติการซ่อมสินค้า"},
+        {"จัดการทะเบียนพนักงาน"},
+        {"จัดการทะเบียนตัวแทนจำหน่าย"},
+        {"รายงานแสดงผลการดำเนินงาน"},
     };
 
     public Menu() {
@@ -59,54 +58,54 @@ public class Menu extends JComponent {
 
     }
 
-    private Icon getIcon(int index) {
-        URL url = getClass().getResource("/raven/menu/" + index + ".png");
-        if (url != null) {
-            return new ImageIcon(url);
-        } else {
-            return null;
-        }
-    }
+    //private Icon getIcon(int index) {
+        //URL url = getClass().getResource("/raven/menu/" + index + ".png");
+        //if (url != null) {
+            //return new ImageIcon(url);
+        //} else {
+            //return null;
+        //}
+    //}
 
     private void addMenu(String menuName, int index) {
-        if (index == 0) { 
-            JLabel topLabel = new JLabel("Menu", SwingConstants.CENTER); 
-            Font font = topLabel.getFont().deriveFont(Font.PLAIN, 15); 
-            topLabel.setFont(font);
-            topLabel.setForeground(Color.WHITE);
-            topLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 0)); 
-            add(topLabel, "wrap"); 
-        }
+    if (index == 0) { 
+        JLabel topLabel = new JLabel("เมนูหลัก", SwingConstants.LEFT);
+        Font font = new Font("Tahoma", Font.PLAIN, 15);
+        topLabel.setFont(font);
+        topLabel.setForeground(Color.WHITE);
+        topLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 0)); 
+        add(topLabel, "wrap"); 
+    }
 
-        int length = menuItems[index].length;
-        MenuItem item = new MenuItem(menuName, index, length > 1);
-        Icon icon = getIcon(index);
-        if (icon != null) {
-            item.setIcon(icon);
-        }
-        item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                if (length > 1) {
-                    if (!item.isSelected()) {
-                        item.setSelected(true);
-                        addSubMenu(item, index, length, getComponentZOrder(item));
-                    } else {
-                        hideMenu(item, index);
-                        item.setSelected(false);
-                    }
+    int length = menuItems[index].length;
+    MenuItem item = new MenuItem(menuName, index, length > 1);
+    // Icon icon = getIcon(index);
+    // if (icon != null) {
+    //     item.setIcon(icon);
+    // }
+    item.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            if (length > 1) {
+                if (!item.isSelected()) {
+                    item.setSelected(true);
+                    addSubMenu(item, index, length, getComponentZOrder(item));
                 } else {
-                    if (event != null) {
-                        event.selected(index, 0);
-                    }
+                    hideMenu(item, index);
+                    item.setSelected(false);
+                }
+            } else {
+                if (event != null) {
+                    event.selected(index, 0);
                 }
             }
-        });
-        add(item, "wrap"); 
+        }
+    });
+    add(item, "wrap"); 
 
     revalidate();
     repaint();
-    }    
+}
     private void addSubMenu(MenuItem item, int index, int length, int indexZorder) {
         JPanel panel = new JPanel(new MigLayout("wrap 1, fillx, inset 0, gapy 0", "fill"));
         panel.setName(index + "");
