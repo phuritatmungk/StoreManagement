@@ -1,5 +1,7 @@
 package component;
 
+import java.awt.Color;
+
 public class Maintenance extends javax.swing.JPanel {
 
     public Maintenance() {
@@ -14,27 +16,34 @@ public class Maintenance extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        queue = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        queue1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        queue2 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        queue3 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        queue4 = new javax.swing.JTextField();
-        queue5 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
-        queue6 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        txtQueue = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        txtDate = new javax.swing.JTextField();
+        jSeparator3 = new javax.swing.JSeparator();
+        txtTime = new javax.swing.JTextField();
+        jSeparator4 = new javax.swing.JSeparator();
+        txtCustomer = new javax.swing.JTextField();
+        jSeparator5 = new javax.swing.JSeparator();
+        txtPhone = new javax.swing.JTextField();
+        jSeparator6 = new javax.swing.JSeparator();
+        txtBrokenItem = new javax.swing.JTextField();
+        jSeparator7 = new javax.swing.JSeparator();
+        jSeparator8 = new javax.swing.JSeparator();
+        txtStatus = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(245, 245, 245));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -56,43 +65,25 @@ public class Maintenance extends javax.swing.JPanel {
         jLabel3.setText("รับซ่อมอุปกรณ์และสินค้าการเกษตร");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, -1, -1));
 
-        queue.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(queue, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 90, 30));
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("วันที่ :");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, -1, -1));
-
-        queue1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(queue1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, 150, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("เวลา :");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 150, -1, -1));
 
-        queue2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(queue2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 150, 90, 30));
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("ผู้ส่งซ่อม :");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
 
-        queue3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(queue3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 240, 210, 30));
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("หมายเลขโทรศัพท์ :");
         add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, -1, -1));
-
-        queue4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(queue4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 210, 30));
-
-        queue5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(queue5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 240, 210, 30));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
@@ -106,6 +97,7 @@ public class Maintenance extends javax.swing.JPanel {
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setBorder(null);
         add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 190, 30));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -115,10 +107,9 @@ public class Maintenance extends javax.swing.JPanel {
 
         jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setBorder(null);
+        jComboBox2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 340, 190, 30));
-
-        queue6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add(queue6, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 340, 140, 30));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
@@ -133,18 +124,244 @@ public class Maintenance extends javax.swing.JPanel {
         jTextArea2.setColumns(20);
         jTextArea2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextArea2.setRows(5);
+        jTextArea2.setBorder(null);
         jScrollPane3.setViewportView(jTextArea2);
 
         add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, 360, 160));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jButton1.setText("บันทึก");
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 640, 130, 50));
+        btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnSave.setText("บันทึก");
+        btnSave.setBorder(null);
+        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 640, 130, 50));
+
+        txtQueue.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtQueue.setForeground(new java.awt.Color(123, 123, 123));
+        txtQueue.setText("1");
+        txtQueue.setBorder(null);
+        txtQueue.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtQueueFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtQueueFocusLost(evt);
+            }
+        });
+        add(txtQueue, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 90, 30));
+
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 90, 30));
+
+        txtDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtDate.setForeground(new java.awt.Color(123, 123, 123));
+        txtDate.setText(" 00/00/00");
+        txtDate.setBorder(null);
+        txtDate.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDateFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDateFocusLost(evt);
+            }
+        });
+        add(txtDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, 150, 30));
+
+        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
+        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 180, 150, 30));
+
+        txtTime.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtTime.setForeground(new java.awt.Color(123, 123, 123));
+        txtTime.setText("  00 : 00");
+        txtTime.setBorder(null);
+        txtTime.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtTimeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTimeFocusLost(evt);
+            }
+        });
+        add(txtTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 150, 80, 30));
+
+        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
+        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 180, 80, 30));
+
+        txtCustomer.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtCustomer.setForeground(new java.awt.Color(123, 123, 123));
+        txtCustomer.setText(" ชื่อผู้ส่งซ่อม");
+        txtCustomer.setBorder(null);
+        txtCustomer.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCustomerFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCustomerFocusLost(evt);
+            }
+        });
+        add(txtCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 210, 30));
+
+        jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
+        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 210, 30));
+
+        txtPhone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtPhone.setForeground(new java.awt.Color(123, 123, 123));
+        txtPhone.setText(" หมายเลขโทรศัพท์");
+        txtPhone.setBorder(null);
+        txtPhone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPhoneFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPhoneFocusLost(evt);
+            }
+        });
+        add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 240, 210, 30));
+
+        jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
+        add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 270, 210, 30));
+
+        txtBrokenItem.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtBrokenItem.setForeground(new java.awt.Color(123, 123, 123));
+        txtBrokenItem.setText(" ชื่ออุปกรณ์ที่รับซ่อม");
+        txtBrokenItem.setBorder(null);
+        txtBrokenItem.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtBrokenItemFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtBrokenItemFocusLost(evt);
+            }
+        });
+        add(txtBrokenItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 240, 210, 30));
+
+        jSeparator7.setForeground(new java.awt.Color(0, 0, 0));
+        add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 270, 210, 30));
+
+        jSeparator8.setForeground(new java.awt.Color(0, 0, 0));
+        add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 370, 130, 30));
+
+        txtStatus.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtStatus.setForeground(new java.awt.Color(123, 123, 123));
+        txtStatus.setText("   รอดำเนินการ");
+        txtStatus.setBorder(null);
+        txtStatus.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtStatusFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtStatusFocusLost(evt);
+            }
+        });
+        add(txtStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 340, 130, 30));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtQueueFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQueueFocusGained
+        if(txtQueue.getText().equals("1"))
+        {
+            txtQueue.setText("");
+            txtQueue.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_txtQueueFocusGained
+
+    private void txtQueueFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQueueFocusLost
+        if (txtQueue.getText().length()==0) {
+            txtQueue.setText("1");
+            txtQueue.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_txtQueueFocusLost
+
+    private void txtDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusGained
+        if(txtDate.getText().equals(" 00/00/00"))
+       {
+           txtDate.setText("");
+           txtDate.setForeground(new Color(0, 0, 0));
+       }
+    }//GEN-LAST:event_txtDateFocusGained
+
+    private void txtDateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusLost
+        if (txtDate.getText().length()==0) {
+            txtDate.setText(" 00/00/00");
+            txtDate.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_txtDateFocusLost
+
+    private void txtTimeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimeFocusGained
+        if (txtTime.getText().equals("  00 : 00"))
+        {
+            txtTime.setText("");
+            txtTime.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_txtTimeFocusGained
+
+    private void txtTimeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimeFocusLost
+        if (txtTime.getText().length()==0) {
+            txtTime.setText("  00 : 00");
+            txtTime.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_txtTimeFocusLost
+
+    private void txtCustomerFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomerFocusGained
+        if(txtCustomer.getText().equals(" ชื่อผู้ส่งซ่อม"))
+       {
+           txtCustomer.setText("");
+           txtCustomer.setForeground(new Color(0, 0, 0));
+       }
+    }//GEN-LAST:event_txtCustomerFocusGained
+
+    private void txtCustomerFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomerFocusLost
+        if (txtCustomer.getText().length()==0) {
+            txtCustomer.setText(" ชื่อผู้ส่งซ่อม");
+            txtCustomer.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_txtCustomerFocusLost
+
+    private void txtPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneFocusGained
+        if(txtPhone.getText().equals(" หมายเลขโทรศัพท์"))
+       {
+           txtPhone.setText("");
+           txtPhone.setForeground(new Color(0, 0, 0));
+       }
+    }//GEN-LAST:event_txtPhoneFocusGained
+
+    private void txtPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneFocusLost
+        if (txtPhone.getText().length()==0) {
+            txtPhone.setText(" หมายเลขโทรศัพท์");
+            txtPhone.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_txtPhoneFocusLost
+
+    private void txtBrokenItemFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBrokenItemFocusGained
+        if(txtBrokenItem.getText().equals(" ชื่ออุปกรณ์ที่รับซ่อม"))
+       {
+           txtBrokenItem.setText("");
+           txtBrokenItem.setForeground(new Color(0, 0, 0));
+       }
+    }//GEN-LAST:event_txtBrokenItemFocusGained
+
+    private void txtBrokenItemFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBrokenItemFocusLost
+        if (txtBrokenItem.getText().length()==0) {
+            txtBrokenItem.setText(" ชื่ออุปกรณ์ที่รับซ่อม");
+            txtBrokenItem.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_txtBrokenItemFocusLost
+
+    private void txtStatusFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtStatusFocusGained
+        if(txtStatus.getText().equals("   รอดำเนินการ"))
+       {
+           txtStatus.setText("");
+           txtStatus.setForeground(new Color(0, 0, 0));
+       }
+    }//GEN-LAST:event_txtStatusFocusGained
+
+    private void txtStatusFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtStatusFocusLost
+        if (txtStatus.getText().length()==0) {
+            txtStatus.setText("   รอดำเนินการ");
+            txtStatus.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_txtStatusFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -160,13 +377,20 @@ public class Maintenance extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
     private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField queue;
-    private javax.swing.JTextField queue1;
-    private javax.swing.JTextField queue2;
-    private javax.swing.JTextField queue3;
-    private javax.swing.JTextField queue4;
-    private javax.swing.JTextField queue5;
-    private javax.swing.JTextField queue6;
+    private javax.swing.JTextField txtBrokenItem;
+    private javax.swing.JTextField txtCustomer;
+    private javax.swing.JTextField txtDate;
+    private javax.swing.JTextField txtPhone;
+    private javax.swing.JTextField txtQueue;
+    private javax.swing.JTextField txtStatus;
+    private javax.swing.JTextField txtTime;
     // End of variables declaration//GEN-END:variables
 }
