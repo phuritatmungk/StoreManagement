@@ -6,6 +6,7 @@ import java.awt.Component;
 import raven.menu.MenuEvent;
 import component.Maintenance;
 import component.Manage_dealer_registration;
+import component.Manage_Employee;
 
 /**
  *
@@ -26,6 +27,9 @@ public class Main extends javax.swing.JFrame {
                 } 
                 else if (index == 2) {
                     showForm(new Maintenance());
+                }
+                else if (index == 7) {
+                    showForm(new Manage_Employee());
                 }
                 else if (index == 8) {
                     showForm(new Manage_dealer_registration());
