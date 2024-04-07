@@ -31,7 +31,6 @@ public class Manage_dealer_registration extends javax.swing.JPanel {
         btnImg = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        name__box1 = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
@@ -167,12 +166,6 @@ public class Manage_dealer_registration extends javax.swing.JPanel {
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 600, 370, 30));
 
-        name__box1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        name__box1.setForeground(new java.awt.Color(123, 123, 123));
-        name__box1.setText("ชื่อ");
-        name__box1.setBorder(null);
-        add(name__box1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, 370, 30));
-
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 370, 30));
 
@@ -189,21 +182,6 @@ public class Manage_dealer_registration extends javax.swing.JPanel {
     private void btnImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImgActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnImgActionPerformed
-
-    private void txtNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusGained
-        if(txtName.getText().equals("ชื่อ"))
-       {
-           txtName.setText("");
-           txtName.setForeground(new Color(0, 0, 0));
-       }
-    }//GEN-LAST:event_txtNameFocusGained
-
-    private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
-        if (txtName.getText().length()==0) {
-            txtName.setText("ชื่อ");
-            txtName.setForeground(new Color(123, 123, 123));
-        }
-    }//GEN-LAST:event_txtNameFocusLost
 
     private void txtSnameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSnameFocusGained
         if(txtSname.getText().equals("นามสกุล"))
@@ -254,6 +232,21 @@ public class Manage_dealer_registration extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtPhoneFocusLost
 
+    private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
+        if (txtName.getText().length()==0) {
+            txtName.setText("ชื่อ");
+            txtName.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_txtNameFocusLost
+
+    private void txtNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusGained
+        if(txtName.getText().equals("ชื่อ"))
+        {
+            txtName.setText("");
+            txtName.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_txtNameFocusGained
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
@@ -272,7 +265,6 @@ public class Manage_dealer_registration extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTextField name__box1;
     private javax.swing.JLabel picture_box;
     private javax.swing.JTextArea txtAddress;
     private javax.swing.JTextField txtCompany;

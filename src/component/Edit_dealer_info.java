@@ -31,7 +31,6 @@ public class Edit_dealer_info extends javax.swing.JPanel {
         btnImg = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        name__box1 = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
@@ -167,12 +166,6 @@ public class Edit_dealer_info extends javax.swing.JPanel {
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 600, 370, 30));
 
-        name__box1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        name__box1.setForeground(new java.awt.Color(123, 123, 123));
-        name__box1.setText("ชื่อ");
-        name__box1.setBorder(null);
-        add(name__box1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 370, 30));
-
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, 370, 30));
 
@@ -272,7 +265,6 @@ public class Edit_dealer_info extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTextField name__box1;
     private javax.swing.JLabel picture_box;
     private javax.swing.JTextArea txtAddress;
     private javax.swing.JTextField txtCompany;
