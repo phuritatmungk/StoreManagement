@@ -2,9 +2,9 @@ package component;
 
 import java.awt.Color;
 
-public class Sellproduct extends javax.swing.JPanel {
+public class Pay_for_repair_services extends javax.swing.JPanel {
 
-    public Sellproduct() {
+    public Pay_for_repair_services() {
         initComponents();
         
     }
@@ -30,8 +30,8 @@ public class Sellproduct extends javax.swing.JPanel {
         add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Topic.setText("ขายสินค้า");
-        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 50, -1, -1));
+        Topic.setText("ชำระเงินค่าบริการซ่อม และอุปกรณ์การเกษตร");
+        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, -1, -1));
 
         btnNext.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnNext.setText("ดำเนินการต่อ");

@@ -2,9 +2,9 @@ package component;
 
 import java.awt.Color;
 
-public class Sellproduct extends javax.swing.JPanel {
+public class Pay_for_repair_services2 extends javax.swing.JPanel {
 
-    public Sellproduct() {
+    public Pay_for_repair_services2() {
         initComponents();
         
     }
@@ -30,8 +30,8 @@ public class Sellproduct extends javax.swing.JPanel {
         add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Topic.setText("ขายสินค้า");
-        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 50, -1, -1));
+        Topic.setText("ชำระเงินค่าบริการซ่อม และอุปกรณ์การเกษตร");
+        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, -1, -1));
 
         btnNext.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnNext.setText("ดำเนินการต่อ");
@@ -46,7 +46,7 @@ public class Sellproduct extends javax.swing.JPanel {
         back_button.setForeground(new java.awt.Color(139, 139, 139));
         back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loupe2.png"))); // NOI18N
-        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 30, 30));
+        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 50, 30, 30));
 
         txtSearch1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtSearch1.setForeground(new java.awt.Color(123, 123, 123));
@@ -66,7 +66,7 @@ public class Sellproduct extends javax.swing.JPanel {
                 txtSearch1ActionPerformed(evt);
             }
         });
-        add(txtSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 260, 30));
+        add(txtSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 50, 260, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed

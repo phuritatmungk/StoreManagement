@@ -2,9 +2,9 @@ package component;
 
 import java.awt.Color;
 
-public class Sellproduct extends javax.swing.JPanel {
+public class Sellproduct2 extends javax.swing.JPanel {
 
-    public Sellproduct() {
+    public Sellproduct2() {
         initComponents();
         
     }
@@ -15,8 +15,8 @@ public class Sellproduct extends javax.swing.JPanel {
 
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        btnNext = new javax.swing.JButton();
         back_button = new javax.swing.JLabel();
+        btnNext = new javax.swing.JButton();
         txtSearch1 = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -33,6 +33,12 @@ public class Sellproduct extends javax.swing.JPanel {
         Topic.setText("ขายสินค้า");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 50, -1, -1));
 
+        back_button.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        back_button.setForeground(new java.awt.Color(139, 139, 139));
+        back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loupe2.png"))); // NOI18N
+        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 30, 30));
+
         btnNext.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnNext.setText("ดำเนินการต่อ");
         btnNext.addActionListener(new java.awt.event.ActionListener() {
@@ -41,12 +47,6 @@ public class Sellproduct extends javax.swing.JPanel {
             }
         });
         add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 650, 170, 50));
-
-        back_button.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        back_button.setForeground(new java.awt.Color(139, 139, 139));
-        back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loupe2.png"))); // NOI18N
-        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 30, 30));
 
         txtSearch1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtSearch1.setForeground(new java.awt.Color(123, 123, 123));
