@@ -10,6 +10,7 @@ import component.Manage_Employee;
 import component.AddProduct;
 import component.ReportMenu;
 import component.Sellproduct;
+import component.Sellproduct2;
 
 /**
  *
@@ -26,7 +27,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void selected(int index, int subIndex) {
                 if (index == 0) {
-                    showForm(new Sellproduct());
+                    showForm(new Sellproduct2());
                 } 
                 else if (index == 2) {
                     showForm(new Maintenance());

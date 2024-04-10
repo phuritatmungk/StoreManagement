@@ -1,13 +1,53 @@
 package component;
 
 import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import raven.cell.TableActionCellEditorTrash;
+import raven.cell.TableActionCellRenderTrash;
+import raven.cell.TableActionEventTrash;
 
 public class Sellproduct2 extends javax.swing.JPanel {
 
     public Sellproduct2() {
         initComponents();
-        
+        TableActionEventTrash event = new TableActionEventTrash() {
+            @Override
+            public void onDelete(int row) {
+                if (table.isEditing()) {
+                    table.getCellEditor().stopCellEditing();
+                }
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+                model.removeRow(row);
+            }
+        };
+        table.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRenderTrash());
+        table.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditorTrash(event));
+        table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
+                setHorizontalAlignment(SwingConstants.RIGHT);
+                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
+            }
+        });
+       testData();
     }
+    
+    private void testData() {
+        table.getColumnModel().getColumn(6).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                setHorizontalAlignment(SwingConstants.CENTER);
+                return this;
+            }
+    });
+         DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addRow(new ModelItemSell(1, "Test4", "test", 2, 0.5).toTableRow(table.getRowCount() + 1));
+}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -18,6 +58,8 @@ public class Sellproduct2 extends javax.swing.JPanel {
         back_button = new javax.swing.JLabel();
         btnNext = new javax.swing.JButton();
         txtSearch1 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -67,6 +109,52 @@ public class Sellproduct2 extends javax.swing.JPanel {
             }
         });
         add(txtSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 260, 30));
+
+        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "", "", "No.", "Product ID", "Product", "Product Type", "Quantity", "Price", ""
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, true, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        table.setRowHeight(40);
+        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
+        table.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(table);
+        if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(0).setMinWidth(0);
+            table.getColumnModel().getColumn(0).setMaxWidth(0);
+            table.getColumnModel().getColumn(1).setMinWidth(40);
+            table.getColumnModel().getColumn(1).setMaxWidth(40);
+            table.getColumnModel().getColumn(2).setResizable(false);
+            table.getColumnModel().getColumn(3).setResizable(false);
+            table.getColumnModel().getColumn(4).setMinWidth(500);
+            table.getColumnModel().getColumn(4).setMaxWidth(500);
+            table.getColumnModel().getColumn(5).setResizable(false);
+            table.getColumnModel().getColumn(6).setResizable(false);
+            table.getColumnModel().getColumn(7).setResizable(false);
+            table.getColumnModel().getColumn(8).setResizable(false);
+        }
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
@@ -91,6 +179,8 @@ public class Sellproduct2 extends javax.swing.JPanel {
     private javax.swing.JLabel back_button;
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnNext;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable table;
     private javax.swing.JTextField txtSearch1;
     // End of variables declaration//GEN-END:variables
 
