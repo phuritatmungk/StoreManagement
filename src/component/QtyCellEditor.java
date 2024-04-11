@@ -30,9 +30,9 @@ public class QtyCellEditor extends DefaultCellEditor {
         DefaultFormatter formatter = (DefaultFormatter) editor.getTextField().getFormatter();
         formatter.setCommitsOnValidEdit(true);
         editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
-        input.addChangeListener((ChangeEvent e) -> {
-            inputChange();
-        });
+        //input.addChangeListener((ChangeEvent e) -> {
+            //inputChange();
+        //});
     }
 
     @Override

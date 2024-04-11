@@ -37,6 +37,12 @@ public class Sellproduct2 extends javax.swing.JPanel {
     }
     
     private void testData() {
+        table.getColumnModel().getColumn(6).setCellEditor(new QtyCellEditor(new EventCellInputChange() {
+            @Override
+            public void inputChanged() {
+                //sumAmount();
+            }
+        }));
         table.getColumnModel().getColumn(6).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -46,7 +52,9 @@ public class Sellproduct2 extends javax.swing.JPanel {
             }
     });
          DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addRow(new ModelItemSell(1, "Test4", "test", 2, 0.5).toTableRow(table.getRowCount() + 1));
+        model.addRow(new ModelItemSell(17, "Test1", "test1", 5, 485.0).toTableRow(table.getRowCount() + 1));
+        model.addRow(new ModelItemSell(22, "Test2", "test2", 2, 846.0).toTableRow(table.getRowCount() + 1));
+        model.addRow(new ModelItemSell(38, "Test3", "test3", 9, 650.0).toTableRow(table.getRowCount() + 1));
 }
 
     @SuppressWarnings("unchecked")
