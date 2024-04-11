@@ -11,6 +11,7 @@ import component.AddProduct;
 import component.ReportMenu;
 import component.Sellproduct;
 import component.Sellproduct2;
+import component.Buy_History;
 
 /**
  *
@@ -34,6 +35,9 @@ public class Main extends javax.swing.JFrame {
                 }
                 else if (index == 3) {
                     showForm(new AddProduct());
+                }
+                else if (index == 6){
+                    showForm(new Buy_History());
                 }
                 else if (index == 7) {
                     showForm(new Manage_Employee());
