@@ -96,7 +96,7 @@ public class AddProduct extends javax.swing.JPanel {
         picture_box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         picture_box.setForeground(new java.awt.Color(123, 123, 123));
         picture_box.setText("                       รูปสินค้า");
-        picture_box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        picture_box.setBorder(javax.swing.BorderFactory.createLineBorder(null));
         add(picture_box, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 190, 330, 270));
 
         btnPic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
