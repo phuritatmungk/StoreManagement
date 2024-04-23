@@ -1,9 +1,33 @@
 package component;
 
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import raven.cell.TableActionCellEditorAdd;
+import raven.cell.TableActionCellRenderAdd;
+import raven.cell.TableActionEventAdd;
+
 public class Repair_List_Page extends javax.swing.JPanel {
 
     public Repair_List_Page() {
         initComponents();
+        TableActionEventAdd event = new TableActionEventAdd() {
+            @Override
+            public void onAdd(int row) {
+                System.out.println("Edit row : " + row);
+            }
+
+        };
+        table.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderAdd());
+        table.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditorAdd(event));
+        table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
+                setHorizontalAlignment(SwingConstants.RIGHT);
+                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
+            }
+        });
         
     }
 
@@ -13,11 +37,12 @@ public class Repair_List_Page extends javax.swing.JPanel {
 
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        edit_bt = new javax.swing.JButton();
         Save_bt1 = new javax.swing.JButton();
         delete_bt = new javax.swing.JButton();
         Status_Combo = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -32,15 +57,6 @@ public class Repair_List_Page extends javax.swing.JPanel {
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Topic.setText("รับซ่อมอุปกรณ์และสินค้าเกษตร");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, -1, -1));
-
-        edit_bt.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        edit_bt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/edit_1.png"))); // NOI18N
-        edit_bt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edit_btActionPerformed(evt);
-            }
-        });
-        add(edit_bt, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 130, 40, 40));
 
         Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Save_bt1.setText("เพิ่ม");
@@ -73,11 +89,43 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("ค้นหาสถานะ");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 60, -1, -1));
-    }// </editor-fold>//GEN-END:initComponents
 
-    private void edit_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_btActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edit_btActionPerformed
+        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"1", "A", "001", null, null, null, null, null},
+                {"2", "B", "002", null, null, null, null, null},
+                {"3", "C", "003", null, null, null, null, null},
+                {"4", "D", "004", null, null, null, null, null}
+            },
+            new String [] {
+                "No.", "Date", "Repair informant", "Number", "Customer ID", "Repairer", " Status", ""
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        table.setRowHeight(40);
+        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
+        table.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(table);
+        if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(0).setResizable(false);
+            table.getColumnModel().getColumn(1).setResizable(false);
+            table.getColumnModel().getColumn(3).setResizable(false);
+            table.getColumnModel().getColumn(4).setResizable(false);
+            table.getColumnModel().getColumn(5).setResizable(false);
+            table.getColumnModel().getColumn(7).setResizable(false);
+        }
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+    }// </editor-fold>//GEN-END:initComponents
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
         // TODO add your handling code here:
@@ -98,8 +146,9 @@ public class Repair_List_Page extends javax.swing.JPanel {
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton delete_bt;
-    private javax.swing.JButton edit_bt;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 
     private void dispose() {
