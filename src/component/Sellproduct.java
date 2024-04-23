@@ -75,7 +75,7 @@ public class Sellproduct extends javax.swing.JPanel {
         txtSearch1.setForeground(new java.awt.Color(123, 123, 123));
         txtSearch1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtSearch1.setText("      ค้นหาสินค้า");
-        txtSearch1.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        txtSearch1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtSearch1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtSearch1FocusGained(evt);
