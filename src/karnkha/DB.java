@@ -11,11 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.DriverManager;  
 
-public class DB_backup {
+public class DB {
     
     public static String servername = "localhost";
     public static String username = "root";
-    public static String dbname = "product_db";
+    public static String dbname = "storedb";
     public static Integer portnumber = 3306;
     public static String password = "";// no password
     
@@ -35,7 +35,7 @@ public class DB_backup {
         try {
             return datasource.getConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(DB_backup.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
         
@@ -44,7 +44,7 @@ public class DB_backup {
     public static void connect() {  
         Connection conn = null;  
         try {  
-            String url = "jdbc:sqlite:C:/sqlite/db/product_db.db";  
+            String url = "jdbc:sqlite:C:/sqlite/db/storedb.db";  
             conn = DriverManager.getConnection(url);  
               
             System.out.println("Connection to SQLite has been established.");  
@@ -64,11 +64,11 @@ public class DB_backup {
     
     public static Connection mycon() {
         Connection con = null;
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/product_db","root", "");
-        }catch (SQLException e) {
-            System.out.println(e);
-        }
-    return con;
+            try {
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/storedb","root", "");
+            }catch (SQLException e) {
+                System.out.println(e);
+            }
+        return con;
     }
 }

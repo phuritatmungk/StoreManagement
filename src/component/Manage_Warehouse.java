@@ -1,34 +1,22 @@
 package component;
 
-import java.awt.Component;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import raven.cell.TableActionCellEditorAdd;
-import raven.cell.TableActionCellRenderAdd;
-import raven.cell.TableActionEventAdd;
+import javax.swing.*;
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import karnkha.DB;
+import karnkha.InventoryInfo;
 
 public class Manage_Warehouse extends javax.swing.JPanel {
+    
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
 
     public Manage_Warehouse() {
         initComponents();
-        TableActionEventAdd event = new TableActionEventAdd() {
-            @Override
-            public void onAdd(int row) {
-                System.out.println("Edit row : " + row);
-            }
-
-        };
-        table.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderAdd());
-        table.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditorAdd(event));
-        table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-                setHorizontalAlignment(SwingConstants.RIGHT);
-                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
-            }
-        });
-        
+        con = DB.mycon();
+        showProductsInTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -42,7 +30,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         Save_bt1 = new javax.swing.JButton();
         delete_bt = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -99,42 +87,32 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         });
         add(delete_bt, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 640, 130, 50));
 
-        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", null, "A", "001", null, null, null, null},
-                {"2", null, "B", "002", null, null, null, null},
-                {"3", null, "C", "003", null, null, null, null},
-                {"4", null, "D", "004", null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "No.", "Date", "Product ID", "Product", "Product Type", "Quantity", "Price", ""
+                "No", "Product ID", "Date", "Product Name", "Category", "Quantity", "Price"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        table.setRowHeight(40);
-        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
-        table.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(table);
-        if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(0).setResizable(false);
-            table.getColumnModel().getColumn(1).setResizable(false);
-            table.getColumnModel().getColumn(2).setResizable(false);
-            table.getColumnModel().getColumn(3).setMinWidth(500);
-            table.getColumnModel().getColumn(3).setMaxWidth(500);
-            table.getColumnModel().getColumn(4).setResizable(false);
-            table.getColumnModel().getColumn(5).setResizable(false);
-            table.getColumnModel().getColumn(6).setResizable(false);
-            table.getColumnModel().getColumn(7).setResizable(false);
-        }
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
@@ -155,6 +133,69 @@ public class Manage_Warehouse extends javax.swing.JPanel {
 
     }//GEN-LAST:event_Save_bt1MouseClicked
 
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        // TODO add your handling code here:
+        int index = jTable.getSelectedRow();
+        position = index;
+    }//GEN-LAST:event_jTableMouseClicked
+
+    ArrayList<InventoryInfo> productsArray = new ArrayList<>();
+    
+    int position = 0;
+    public ArrayList<InventoryInfo> getProductsList()
+    {
+        ArrayList<InventoryInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `inventory`";
+        
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            st = DB.getConnection().createStatement();
+            rs = st.executeQuery(selectQuery);
+            InventoryInfo product;
+            
+            while(rs.next())
+            {
+                product = new InventoryInfo(rs.getInt("No"), rs.getInt("Id"),
+                                      rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
+                                      rs.getInt("Quantity"), rs.getDouble("Price"));
+                list.add(product);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        productsArray = list;
+        return list;
+        
+    }
+    
+    public void showProductsInTable()
+    {
+        ArrayList<InventoryInfo> productsList = getProductsList();
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        
+        model.setRowCount(0);
+        
+        Object[] row = new Object[7];
+        
+        for(int i = 0; i < productsList.size(); i++)
+        {
+            row[0] = productsList.get(i).getNo();
+            row[1] = productsList.get(i).getId();
+            row[2] = productsList.get(i).getDate();
+            row[3] = productsList.get(i).getName();
+            row[4] = productsList.get(i).getCategory();
+            row[5] = productsList.get(i).getQuantity();
+            row[6] = productsList.get(i).getPrice();
+            
+            model.addRow(row);
+        }
+        
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Save_bt1;
@@ -163,11 +204,8 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton delete_bt;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextField search__box;
-    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 
-    private void dispose() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
