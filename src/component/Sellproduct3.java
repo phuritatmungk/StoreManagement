@@ -24,6 +24,8 @@ public class Sellproduct3 extends javax.swing.JPanel {
         btnNext1 = new javax.swing.JButton();
         Topic3 = new javax.swing.JLabel();
         Topic4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -109,6 +111,43 @@ public class Sellproduct3 extends javax.swing.JPanel {
         Topic4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Topic4.setText("Total :");
         add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 580, -1, -1));
+
+        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"1", "A", "001", null, null, null},
+                {"2", "B", "002", null, null, null},
+                {"3", "C", "003", null, null, null},
+                {"4", "D", "004", null, null, null}
+            },
+            new String [] {
+                "No.", "Product ID", "Product", "Product Type", "Quantity", "Price"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        table.setRowHeight(40);
+        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
+        table.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(table);
+        if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(0).setResizable(false);
+            table.getColumnModel().getColumn(1).setResizable(false);
+            table.getColumnModel().getColumn(2).setMinWidth(500);
+            table.getColumnModel().getColumn(2).setMaxWidth(500);
+            table.getColumnModel().getColumn(3).setResizable(false);
+            table.getColumnModel().getColumn(4).setResizable(false);
+            table.getColumnModel().getColumn(5).setResizable(false);
+        }
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 1240, 430));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
@@ -157,6 +196,8 @@ public class Sellproduct3 extends javax.swing.JPanel {
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnNext1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable table;
     private javax.swing.JTextField txtCustomer1;
     private javax.swing.JTextField txtTime;
     // End of variables declaration//GEN-END:variables
