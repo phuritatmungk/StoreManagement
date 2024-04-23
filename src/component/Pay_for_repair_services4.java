@@ -26,6 +26,8 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         txtSearch6 = new javax.swing.JTextField();
         txtSearch7 = new javax.swing.JTextField();
         Topic3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -191,6 +193,43 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic3.setText("ผู้ส่งซ่อม");
         add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 600, -1, 30));
+
+        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"1", "A", "001", null, null, null},
+                {"2", "B", "002", null, null, null},
+                {"3", "C", "003", null, null, null},
+                {"4", "D", "004", null, null, null}
+            },
+            new String [] {
+                "No.", "Product ID", "Product", "Product Type", "Quantity", " Price"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        table.setRowHeight(40);
+        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
+        table.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(table);
+        if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(0).setResizable(false);
+            table.getColumnModel().getColumn(1).setResizable(false);
+            table.getColumnModel().getColumn(2).setMinWidth(500);
+            table.getColumnModel().getColumn(2).setMaxWidth(500);
+            table.getColumnModel().getColumn(3).setResizable(false);
+            table.getColumnModel().getColumn(4).setResizable(false);
+            table.getColumnModel().getColumn(5).setResizable(false);
+        }
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 480));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
@@ -282,6 +321,8 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnpay;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable table;
     private javax.swing.JTextField txtSearch2;
     private javax.swing.JTextField txtSearch3;
     private javax.swing.JTextField txtSearch4;
