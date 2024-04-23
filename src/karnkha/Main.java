@@ -13,6 +13,7 @@ import component.Manage_Warehouse;
 import component.Purchase_Order_Recording;
 import component.Dealer_registration_page;
 import component.Receive_Product_according_to_order_list;
+import component.Repair_History;
 
 
 /**
@@ -29,6 +30,7 @@ public class Main extends javax.swing.JFrame {
         menu1.setEvent(new MenuEvent() {
             @Override
             public void selected(int index, int subIndex) {
+                System.out.println("Menu Index : " + index + "SubMenu Index : " + subIndex);
                 if (index == 0) {
                     showForm(new Sellproduct());
                 } 
@@ -48,7 +50,12 @@ public class Main extends javax.swing.JFrame {
                     showForm(new Receive_Product_according_to_order_list());
                 }
                 else if (index == 6){
-                    showForm(new Buy_History());
+                    if (subIndex == 1){
+                        showForm(new Buy_History());
+                    }
+                    if (subIndex == 2) {
+                        showForm(new Repair_History());
+                    }
                 }
                 else if (index == 7) {
                     showForm(new Employee_registration_page());
