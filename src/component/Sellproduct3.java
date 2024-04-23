@@ -6,7 +6,6 @@ public class Sellproduct3 extends javax.swing.JPanel {
 
     public Sellproduct3() {
         initComponents();
-        
     }
 
     @SuppressWarnings("unchecked")

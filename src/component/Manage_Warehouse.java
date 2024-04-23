@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.InventoryInfo;
+import raven.cell.TableActionCellEditorEdit;
+import raven.cell.TableActionCellRenderEdit;
+import raven.cell.TableActionEventEdit;
 
 public class Manage_Warehouse extends javax.swing.JPanel {
     
@@ -17,12 +20,22 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         initComponents();
         con = DB.mycon();
         showProductsInTable();
+        TableActionEventEdit event = new TableActionEventEdit() {
+            @Override
+            public void onEdit(int row) {
+                System.out.println("Edit row :" + row);
+                jFrame1.setVisible(true);
+            }
+        };
+        jTable.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderEdit());
+        jTable.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditorEdit(event));
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrame1 = new javax.swing.JFrame();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         back_button = new javax.swing.JLabel();
@@ -31,6 +44,12 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         delete_bt = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+
+        jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jFrame1.setAlwaysOnTop(true);
+        jFrame1.setLocationByPlatform(true);
+        jFrame1.setPreferredSize(new java.awt.Dimension(1280, 720));
+        jFrame1.setSize(new java.awt.Dimension(1280, 720));
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -90,23 +109,24 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No", "Product ID", "Date", "Product Name", "Category", "Quantity", "Price"
+                "No", "Product ID", "Date", "Product Name", "Category", "Quantity", "Price", "Title 8"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        jTable.setRowHeight(50);
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableMouseClicked(evt);
@@ -203,6 +223,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     private javax.swing.JLabel back_button;
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton delete_bt;
+    private javax.swing.JFrame jFrame1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable;
     private javax.swing.JTextField search__box;

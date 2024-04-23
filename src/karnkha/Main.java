@@ -30,7 +30,6 @@ public class Main extends javax.swing.JFrame {
         menu1.setEvent(new MenuEvent() {
             @Override
             public void selected(int index, int subIndex) {
-                System.out.println("Menu Index : " + index + "SubMenu Index : " + subIndex);
                 if (index == 0) {
                     showForm(new Sellproduct());
                 } 
