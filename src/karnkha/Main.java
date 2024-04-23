@@ -12,7 +12,7 @@ import component.ReportMenu;
 import component.Sellproduct;
 import component.Sellproduct2;
 import component.Buy_History;
-import component.Pay_for_repair_services;
+import component.Pay_for_repair_services3;
 import component.Repair_List_Page;
 import component.Manage_Warehouse;
 import component.Purchase_Order_Recording;
@@ -38,7 +38,7 @@ public class Main extends javax.swing.JFrame {
                     showForm(new Sellproduct2());
                 } 
                 else if (index == 1) {
-                    showForm(new Pay_for_repair_services());
+                    showForm(new Pay_for_repair_services3());
                 }
                 else if (index == 2) {
                     showForm(new Repair_List_Page());
