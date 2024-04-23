@@ -131,7 +131,7 @@ public class Sellproduct2 extends javax.swing.JPanel {
                 java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, false, true
+                false, true, false, false, false, false, true, false, true
             };
 
             public Class getColumnClass(int columnIndex) {

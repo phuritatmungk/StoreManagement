@@ -5,22 +5,25 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import raven.cell.TableActionCellEditorAdd;
+import raven.cell.TableActionCellEditorView;
 import raven.cell.TableActionCellRenderAdd;
+import raven.cell.TableActionCellRenderView;
 import raven.cell.TableActionEventAdd;
+import raven.cell.TableActionEventView;
 
 public class Repair_History extends javax.swing.JPanel {
 
     public Repair_History() {
     initComponents();{
-    TableActionEventAdd event = new TableActionEventAdd() {
+     TableActionEventView event = new TableActionEventView() {
             @Override
-            public void onAdd(int row) {
+            public void onView(int row) {
                 System.out.println("Edit row : " + row);
             }
 
         };
-        table.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderAdd());
-        table.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorAdd(event));
+        table.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderView());
+        table.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorView(event));
         table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
@@ -28,7 +31,6 @@ public class Repair_History extends javax.swing.JPanel {
                 return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
             }
         });
-
         };      
     }
 

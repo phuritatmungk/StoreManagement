@@ -4,23 +4,23 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
-import raven.cell.TableActionCellEditorAdd;
-import raven.cell.TableActionCellRenderAdd;
-import raven.cell.TableActionEventAdd;
+import raven.cell.TableActionCellEditorEdit;
+import raven.cell.TableActionCellRenderEdit;
+import raven.cell.TableActionEventEdit;
 
 public class Purchase_Order_Recording extends javax.swing.JPanel {
 
     public Purchase_Order_Recording() {
         initComponents();
-        TableActionEventAdd event = new TableActionEventAdd() {
+        TableActionEventEdit event = new TableActionEventEdit() {
             @Override
-            public void onAdd(int row) {
+            public void onEdit(int row) {
                 System.out.println("Edit row : " + row);
             }
 
         };
-        table.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderAdd());
-        table.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorAdd(event));
+        table.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderEdit());
+        table.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorEdit(event));
         table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
