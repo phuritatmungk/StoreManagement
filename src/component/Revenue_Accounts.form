@@ -117,8 +117,8 @@
                 <Column editable="false" title="Product Type" type="java.lang.Object"/>
                 <Column editable="false" title="Cost" type="java.lang.Object"/>
                 <Column editable="false" title="Sale price" type="java.lang.Object"/>
-                <Column editable="true" title="Quantity" type="java.lang.Object"/>
-                <Column editable="true" title="Income" type="java.lang.Object"/>
+                <Column editable="false" title="Quantity" type="java.lang.Object"/>
+                <Column editable="false" title="Income" type="java.lang.Object"/>
                 <Column editable="false" title="Total" type="java.lang.Object"/>
               </Table>
             </Property>

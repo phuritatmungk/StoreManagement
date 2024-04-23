@@ -146,7 +146,7 @@ public class Inventory_Report extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -164,10 +164,12 @@ public class Inventory_Report extends javax.swing.JPanel {
             table.getColumnModel().getColumn(2).setMinWidth(500);
             table.getColumnModel().getColumn(2).setMaxWidth(500);
             table.getColumnModel().getColumn(3).setResizable(false);
+            table.getColumnModel().getColumn(4).setResizable(false);
+            table.getColumnModel().getColumn(5).setResizable(false);
             table.getColumnModel().getColumn(6).setResizable(false);
         }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 1240, 520));
 
         Topic5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic5.setText("จำนวนสินค้าในคลังทั้งหมด");

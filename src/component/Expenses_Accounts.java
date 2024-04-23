@@ -144,7 +144,7 @@ public class Expenses_Accounts extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -162,6 +162,8 @@ public class Expenses_Accounts extends javax.swing.JPanel {
             table.getColumnModel().getColumn(2).setMinWidth(500);
             table.getColumnModel().getColumn(2).setMaxWidth(500);
             table.getColumnModel().getColumn(3).setResizable(false);
+            table.getColumnModel().getColumn(4).setResizable(false);
+            table.getColumnModel().getColumn(5).setResizable(false);
             table.getColumnModel().getColumn(6).setResizable(false);
             table.getColumnModel().getColumn(7).setResizable(false);
         }
