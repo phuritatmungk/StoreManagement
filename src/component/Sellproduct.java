@@ -41,6 +41,7 @@ public class Sellproduct extends javax.swing.JPanel {
         txtSearch1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        txtSearch2 = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -128,6 +129,26 @@ public class Sellproduct extends javax.swing.JPanel {
         }
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+
+        txtSearch2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtSearch2.setForeground(new java.awt.Color(123, 123, 123));
+        txtSearch2.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtSearch2.setText("      ค้นหาสินค้า");
+        txtSearch2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtSearch2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtSearch2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtSearch2FocusLost(evt);
+            }
+        });
+        txtSearch2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearch2ActionPerformed(evt);
+            }
+        });
+        add(txtSearch2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 260, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
@@ -146,6 +167,18 @@ public class Sellproduct extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearch1ActionPerformed
 
+    private void txtSearch2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch2FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearch2FocusGained
+
+    private void txtSearch2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch2FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearch2FocusLost
+
+    private void txtSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearch2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearch2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
@@ -155,6 +188,7 @@ public class Sellproduct extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table;
     private javax.swing.JTextField txtSearch1;
+    private javax.swing.JTextField txtSearch2;
     // End of variables declaration//GEN-END:variables
 
 }

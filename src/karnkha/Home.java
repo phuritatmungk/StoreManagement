@@ -1,5 +1,6 @@
 package karnkha;
 
+import karnkha.DatabaseConnection;
 /**
  *
  * @author RAVEN
@@ -11,6 +12,15 @@ public class Home extends javax.swing.JFrame {
      */
     public Home() {
         initComponents();
+        init();
+    }
+    
+    private void init() {
+        try{
+            DatabaseConnection.getInstance().connectToDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")
