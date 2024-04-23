@@ -1,9 +1,9 @@
 package component;
 
 
-public class Sell_Report extends javax.swing.JPanel {
+public class Sales_Report extends javax.swing.JPanel {
 
-    public Sell_Report() {
+    public Sales_Report() {
     initComponents();
     }
 
