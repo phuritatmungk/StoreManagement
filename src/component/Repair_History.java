@@ -11,12 +11,23 @@ import raven.cell.TableActionEventAdd;
 public class Repair_History extends javax.swing.JPanel {
 
     public Repair_History() {
-    initComponents();
-       TableActionEventAdd event = new TableActionEventAdd() {
+    initComponents();{
+    TableActionEventAdd event = new TableActionEventAdd() {
             @Override
             public void onAdd(int row) {
                 System.out.println("Edit row : " + row);
             }
+
+        };
+        table.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderAdd());
+        table.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorAdd(event));
+        table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
+                setHorizontalAlignment(SwingConstants.RIGHT);
+                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
+            }
+        });
 
         };      
     }
@@ -52,17 +63,17 @@ public class Repair_History extends javax.swing.JPanel {
         table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", null, "A", "001", null, null, null, null},
-                {"2", null, "B", "002", null, null, null, null},
-                {"3", null, "C", "003", null, null, null, null},
-                {"4", null, "D", "004", null, null, null, null}
+                {"1", null, "A", "001", null, null, null, null, null},
+                {"2", null, "B", "002", null, null, null, null, null},
+                {"3", null, "C", "003", null, null, null, null, null},
+                {"4", null, "D", "004", null, null, null, null, null}
             },
             new String [] {
-                "No.", "Date", "Name", "Phone", "Product ", "Employee ID", "Employee Name", "Price"
+                "No.", "Date", "Name", "Phone", "Product ", "Employee ID", "Employee Name", "Price", ""
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -80,6 +91,9 @@ public class Repair_History extends javax.swing.JPanel {
             table.getColumnModel().getColumn(2).setResizable(false);
             table.getColumnModel().getColumn(3).setResizable(false);
             table.getColumnModel().getColumn(5).setResizable(false);
+            table.getColumnModel().getColumn(6).setResizable(false);
+            table.getColumnModel().getColumn(7).setResizable(false);
+            table.getColumnModel().getColumn(8).setResizable(false);
         }
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1160, 560));

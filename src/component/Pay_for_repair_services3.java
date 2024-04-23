@@ -1,12 +1,34 @@
 package component;
 
-import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import raven.cell.TableActionCellEditorView;
+import raven.cell.TableActionCellRenderView;
+import raven.cell.TableActionEventView;
 
 public class Pay_for_repair_services3 extends javax.swing.JPanel {
 
     public Pay_for_repair_services3() {
         initComponents();
-        
+         TableActionEventView event = new TableActionEventView() {
+            @Override
+            public void onView(int row) {
+                System.out.println("Edit row : " + row);
+            }
+
+        };
+        table.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderView());
+        table.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorView(event));
+        table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
+                setHorizontalAlignment(SwingConstants.RIGHT);
+                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
+            }
+        });
+   
     }
 
     @SuppressWarnings("unchecked")
@@ -16,6 +38,8 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         btnNext = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -39,6 +63,34 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
             }
         });
         add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 650, 170, 50));
+
+        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"1", "A", "001", null, null, null, null},
+                {"2", "B", "002", null, null, null, null},
+                {"3", "C", "003", null, null, null, null},
+                {"4", "D", "004", null, null, null, null}
+            },
+            new String [] {
+                "No.", "Product ID", "Product", "Product Type", "Quantity", "Price", ""
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        table.setRowHeight(40);
+        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
+        table.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(table);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
@@ -50,6 +102,8 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnNext;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 
 }

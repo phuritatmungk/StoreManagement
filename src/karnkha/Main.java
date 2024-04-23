@@ -12,6 +12,13 @@ import component.ReportMenu;
 import component.Sellproduct;
 import component.Sellproduct2;
 import component.Buy_History;
+import component.Pay_for_repair_services3;
+import component.Repair_List_Page;
+import component.Manage_Warehouse;
+import component.Purchase_Order_Recording;
+import component.Dealer_registration_page;
+import component.Receive_Product_according_to_order_list;
+
 
 /**
  *
@@ -30,11 +37,20 @@ public class Main extends javax.swing.JFrame {
                 if (index == 0) {
                     showForm(new Sellproduct2());
                 } 
+                else if (index == 1) {
+                    showForm(new Pay_for_repair_services3());
+                }
                 else if (index == 2) {
-                    showForm(new Maintenance());
+                    showForm(new Repair_List_Page());
                 }
                 else if (index == 3) {
-                    showForm(new AddProduct());
+                    showForm(new Manage_Warehouse());
+                }
+                else if (index ==4){
+                    showForm(new Purchase_Order_Recording());
+                }
+                else if (index ==5){
+                    showForm(new Receive_Product_according_to_order_list());
                 }
                 else if (index == 6){
                     showForm(new Buy_History());
@@ -43,7 +59,7 @@ public class Main extends javax.swing.JFrame {
                     showForm(new Manage_Employee());
                 }
                 else if (index == 8) {
-                    showForm(new Manage_dealer_registration());
+                    showForm(new Dealer_registration_page());
                 }
                 else if (index ==9){
                     showForm(new ReportMenu());
