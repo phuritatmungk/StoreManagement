@@ -8,9 +8,9 @@ import raven.cell.TableActionCellEditorEdit;
 import raven.cell.TableActionCellRenderEdit;
 import raven.cell.TableActionEventEdit;
 
-public class Employee_registration_page1 extends javax.swing.JPanel {
+public class Employee_registration_page extends javax.swing.JPanel {
 
-    public Employee_registration_page1() {
+    public Employee_registration_page() {
         initComponents();
         TableActionEventEdit event = new TableActionEventEdit() {
             @Override
@@ -19,8 +19,8 @@ public class Employee_registration_page1 extends javax.swing.JPanel {
             }
 
         };
-        table.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderEdit());
-        table.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditorEdit(event));
+        table.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderEdit());
+        table.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorEdit(event));
         table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {

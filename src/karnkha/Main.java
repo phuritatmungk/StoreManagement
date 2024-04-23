@@ -1,16 +1,11 @@
 package karnkha;
 
 import component.DefaultForm;
-import component.HomeForm;
 import java.awt.Component;
 import raven.menu.MenuEvent;
-import component.Maintenance;
-import component.Manage_dealer_registration;
-import component.Manage_Employee;
-import component.AddProduct;
+import component.Employee_registration_page;
 import component.ReportMenu;
 import component.Sellproduct;
-import component.Sellproduct2;
 import component.Buy_History;
 import component.Pay_for_repair_services3;
 import component.Repair_List_Page;
@@ -35,7 +30,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void selected(int index, int subIndex) {
                 if (index == 0) {
-                    showForm(new Sellproduct2());
+                    showForm(new Sellproduct());
                 } 
                 else if (index == 1) {
                     showForm(new Pay_for_repair_services3());
@@ -56,7 +51,7 @@ public class Main extends javax.swing.JFrame {
                     showForm(new Buy_History());
                 }
                 else if (index == 7) {
-                    showForm(new Manage_Employee());
+                    showForm(new Employee_registration_page());
                 }
                 else if (index == 8) {
                     showForm(new Dealer_registration_page());

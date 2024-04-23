@@ -19,8 +19,8 @@ public class Dealer_registration_page extends javax.swing.JPanel {
             }
 
         };
-        table.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderEdit());
-        table.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditorEdit(event));
+        table.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRenderEdit());
+        table.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditorEdit(event));
         table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
@@ -125,8 +125,8 @@ public class Dealer_registration_page extends javax.swing.JPanel {
         jScrollPane1.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(0).setResizable(false);
-            table.getColumnModel().getColumn(1).setMinWidth(500);
-            table.getColumnModel().getColumn(1).setMaxWidth(500);
+            table.getColumnModel().getColumn(1).setMinWidth(250);
+            table.getColumnModel().getColumn(1).setMaxWidth(250);
             table.getColumnModel().getColumn(2).setMinWidth(500);
             table.getColumnModel().getColumn(2).setMaxWidth(500);
             table.getColumnModel().getColumn(3).setResizable(false);
