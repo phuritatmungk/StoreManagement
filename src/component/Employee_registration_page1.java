@@ -8,9 +8,9 @@ import raven.cell.TableActionCellEditorEdit;
 import raven.cell.TableActionCellRenderEdit;
 import raven.cell.TableActionEventEdit;
 
-public class Dealer_registration_page extends javax.swing.JPanel {
+public class Employee_registration_page1 extends javax.swing.JPanel {
 
-    public Dealer_registration_page() {
+    public Employee_registration_page1() {
         initComponents();
         TableActionEventEdit event = new TableActionEventEdit() {
             @Override
@@ -54,8 +54,8 @@ public class Dealer_registration_page extends javax.swing.JPanel {
         add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Topic.setText("จัดการทะเบียนตัวแทนจำหน่าย");
-        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, -1, -1));
+        Topic.setText("จัดการทะเบียนพนักงาน");
+        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 50, -1, -1));
 
         back_button.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         back_button.setForeground(new java.awt.Color(139, 139, 139));
@@ -66,13 +66,8 @@ public class Dealer_registration_page extends javax.swing.JPanel {
 
         search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         search__box.setForeground(new java.awt.Color(123, 123, 123));
-        search__box.setText("   ค้นหาชื่อบริษัท");
+        search__box.setText("  ค้นหารหัสพนักงาน");
         search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        search__box.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search__boxActionPerformed(evt);
-            }
-        });
         add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 50, 300, 30));
 
         Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -101,17 +96,17 @@ public class Dealer_registration_page extends javax.swing.JPanel {
         table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", null, "A", "001", null},
-                {"2", null, "B", "002", null},
-                {"3", null, "C", "003", null},
-                {"4", null, "D", "004", null}
+                {"1", null, "A", "001", null, null},
+                {"2", null, "B", "002", null, null},
+                {"3", null, "C", "003", null, null},
+                {"4", null, "D", "004", null, null}
             },
             new String [] {
-                "No.", "Company", "Name", "Phone", ""
+                "No.", "Name", "Employee ID", "Position", "Rate", ""
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -125,20 +120,16 @@ public class Dealer_registration_page extends javax.swing.JPanel {
         jScrollPane1.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(0).setResizable(false);
-            table.getColumnModel().getColumn(1).setMinWidth(500);
-            table.getColumnModel().getColumn(1).setMaxWidth(500);
-            table.getColumnModel().getColumn(2).setMinWidth(500);
-            table.getColumnModel().getColumn(2).setMaxWidth(500);
+            table.getColumnModel().getColumn(1).setMinWidth(400);
+            table.getColumnModel().getColumn(1).setMaxWidth(400);
+            table.getColumnModel().getColumn(2).setMinWidth(150);
+            table.getColumnModel().getColumn(2).setMaxWidth(150);
             table.getColumnModel().getColumn(3).setResizable(false);
-            table.getColumnModel().getColumn(4).setResizable(false);
+            table.getColumnModel().getColumn(5).setResizable(false);
         }
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 1160, 560));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search__boxActionPerformed
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
         // TODO add your handling code here:

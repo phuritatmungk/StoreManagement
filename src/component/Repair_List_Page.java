@@ -4,23 +4,25 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
-import raven.cell.TableActionCellEditorAdd;
-import raven.cell.TableActionCellRenderAdd;
-import raven.cell.TableActionEventAdd;
+import raven.cell.TableActionCellEditorEditView;
+import raven.cell.TableActionCellRenderEditView;
+import raven.cell.TableActionEventEditView;
 
 public class Repair_List_Page extends javax.swing.JPanel {
 
     public Repair_List_Page() {
         initComponents();
-        TableActionEventAdd event = new TableActionEventAdd() {
+        TableActionEventEditView event = new TableActionEventEditView() {
             @Override
-            public void onAdd(int row) {
+            public void onEdit(int row) {
                 System.out.println("Edit row : " + row);
             }
-
+            public void onView(int row) {
+                System.out.println("Edit row : " + row);
+            }
         };
-        table.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderAdd());
-        table.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditorAdd(event));
+        table.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderEditView());
+        table.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditorEditView(event));
         table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
