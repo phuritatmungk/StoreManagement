@@ -48,7 +48,6 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         jFrame1.setAlwaysOnTop(true);
         jFrame1.setLocationByPlatform(true);
-        jFrame1.setPreferredSize(new java.awt.Dimension(1280, 720));
         jFrame1.setSize(new java.awt.Dimension(1280, 720));
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -115,7 +114,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No", "Product ID", "Date", "Product Name", "Category", "Quantity", "Price", "Title 8"
+                "No", "Product ID", "Date", "Product Name", "Category", "Quantity", "Price", ""
             }
         ) {
             boolean[] canEdit = new boolean [] {

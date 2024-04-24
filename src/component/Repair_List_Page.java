@@ -1,35 +1,37 @@
 package component;
 
+import java.sql.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.Component;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
+import java.util.ArrayList;
 import raven.cell.TableActionCellEditorEditView;
 import raven.cell.TableActionCellRenderEditView;
 import raven.cell.TableActionEventEditView;
+import karnkha.RepairRequest;
+import karnkha.DB;
 
 public class Repair_List_Page extends javax.swing.JPanel {
+    
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
 
     public Repair_List_Page() {
         initComponents();
+        con = DB.mycon();
+        showRequestInTable();
         TableActionEventEditView event = new TableActionEventEditView() {
             @Override
             public void onEdit(int row) {
                 System.out.println("Edit row : " + row);
             }
             public void onView(int row) {
-                System.out.println("Edit row : " + row);
+                System.out.println("View row : " + row);
             }
         };
-        table.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderEditView());
-        table.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditorEditView(event));
-        table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-                setHorizontalAlignment(SwingConstants.RIGHT);
-                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
-            }
-        });
+        jTable.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRenderEditView());
+        jTable.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditorEditView(event));
         
     }
 
@@ -43,8 +45,8 @@ public class Repair_List_Page extends javax.swing.JPanel {
         delete_bt = new javax.swing.JButton();
         Status_Combo = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -92,41 +94,35 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jLabel1.setText("ค้นหาสถานะ");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 60, -1, -1));
 
-        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "A", "001", null, null, null, null, null},
-                {"2", "B", "002", null, null, null, null, null},
-                {"3", "C", "003", null, null, null, null, null},
-                {"4", "D", "004", null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No.", "Date", "Repair informant", "Number", "Customer ID", "Repairer", " Status", ""
+                "No", "Date", "Customer Name", "Phone", "Item", "Employee ID", "Repairman", "Status", ""
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true
+                false, false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        table.setRowHeight(40);
-        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
-        table.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(table);
-        if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(0).setResizable(false);
-            table.getColumnModel().getColumn(1).setResizable(false);
-            table.getColumnModel().getColumn(3).setResizable(false);
-            table.getColumnModel().getColumn(4).setResizable(false);
-            table.getColumnModel().getColumn(5).setResizable(false);
-            table.getColumnModel().getColumn(7).setResizable(false);
-        }
+        jTable.setRowHeight(50);
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
@@ -141,6 +137,69 @@ public class Repair_List_Page extends javax.swing.JPanel {
 
     }//GEN-LAST:event_Save_bt1MouseClicked
 
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        // TODO add your handling code here:
+        int index = jTable.getSelectedRow();
+        position = index;
+    }//GEN-LAST:event_jTableMouseClicked
+
+    ArrayList<RepairRequest> requestArray = new ArrayList<>();
+    
+    int position = 0;
+    public ArrayList<RepairRequest> getRequestList()
+    {
+        ArrayList<RepairRequest> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `request`";
+        
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            st = DB.getConnection().createStatement();
+            rs = st.executeQuery(selectQuery);
+            RepairRequest request;
+            
+            while(rs.next())
+            {
+                request = new RepairRequest(rs.getInt("No"), rs.getString("Date"),
+                                      rs.getString("Name"), rs.getInt("Phone"), rs.getString("Item"),
+                                      rs.getInt("ID"), rs.getString("Repairman"), rs.getString("Status"));
+                list.add(request);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        requestArray = list;
+        return list;
+        
+    }
+    
+    public void showRequestInTable()
+    {
+        ArrayList<RepairRequest> requestsList = getRequestList();
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        
+        model.setRowCount(0);
+        
+        Object[] row = new Object[8];
+        
+        for(int i = 0; i < requestsList.size(); i++)
+        {
+            row[0] = requestsList.get(i).getNo();
+            row[1] = requestsList.get(i).getDate();
+            row[2] = requestsList.get(i).getName();
+            row[3] = requestsList.get(i).getPhone();
+            row[4] = requestsList.get(i).getItem();
+            row[5] = requestsList.get(i).getId();
+            row[6] = requestsList.get(i).getRepairman();
+            row[7] = requestsList.get(i).getStatus();
+            
+            model.addRow(row);
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Save_bt1;
@@ -149,8 +208,8 @@ public class Repair_List_Page extends javax.swing.JPanel {
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton delete_bt;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable table;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
 
     private void dispose() {
