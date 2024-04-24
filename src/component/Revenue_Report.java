@@ -1,10 +1,21 @@
 package component;
 
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import karnkha.DB;
+import karnkha.RevenueInfo;
 
-public class Expenses_Accounts extends javax.swing.JPanel {
+public class Revenue_Report extends javax.swing.JPanel {
 
-    public Expenses_Accounts() {
-    initComponents();
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+    
+    public Revenue_Report() {
+        initComponents();
+        con = DB.mycon();
+        showProductsInTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -22,8 +33,8 @@ public class Expenses_Accounts extends javax.swing.JPanel {
         Topic3 = new javax.swing.JLabel();
         txtDate1 = new javax.swing.JTextField();
         Topic4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -101,7 +112,7 @@ public class Expenses_Accounts extends javax.swing.JPanel {
         add(txtDate2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 660, 190, 30));
 
         Topic2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        Topic2.setText("รายงานสรุปรายจ่าย");
+        Topic2.setText("รายงานสรุปรายรับ");
         add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, -1, -1));
 
         Topic3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -131,44 +142,35 @@ public class Expenses_Accounts extends javax.swing.JPanel {
         Topic4.setText("เลือกวันที่:");
         add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 660, -1, -1));
 
-        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "A", "001", null, null, null, null, null},
-                {"2", "B", "002", null, null, null, null, null},
-                {"3", "C", "003", null, null, null, null, null},
-                {"4", "D", "004", null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Date", "Product ID", "Product", "Product Type", "Cost", "Quantity", "Expenses", "Total"
+                "Date", "Product ID", "List", "Category", "Cost", "Price", "Quantity", "Income", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        table.setRowHeight(40);
-        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
-        table.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(table);
-        if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(0).setResizable(false);
-            table.getColumnModel().getColumn(1).setResizable(false);
-            table.getColumnModel().getColumn(2).setMinWidth(500);
-            table.getColumnModel().getColumn(2).setMaxWidth(500);
-            table.getColumnModel().getColumn(3).setResizable(false);
-            table.getColumnModel().getColumn(4).setResizable(false);
-            table.getColumnModel().getColumn(5).setResizable(false);
-            table.getColumnModel().getColumn(6).setResizable(false);
-            table.getColumnModel().getColumn(7).setResizable(false);
-        }
+        jTable.setRowHeight(50);
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
@@ -215,6 +217,70 @@ public class Expenses_Accounts extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDate1ActionPerformed
 
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        // TODO add your handling code here:
+        int index = jTable.getSelectedRow();
+        position = index;
+    }//GEN-LAST:event_jTableMouseClicked
+
+    ArrayList<RevenueInfo> revenueArray = new ArrayList<>();
+    
+    int position = 0;
+    public ArrayList<RevenueInfo> getProductsList()
+    {
+        ArrayList<RevenueInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `reportrevenue`";
+        
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            st = DB.getConnection().createStatement();
+            rs = st.executeQuery(selectQuery);
+            RevenueInfo revenue;
+            
+            while(rs.next())
+            {
+                revenue = new RevenueInfo(rs.getString("Date"), rs.getInt("Id"),
+                                      rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
+                                      rs.getDouble("Price"), rs.getInt("Quantity"), rs.getDouble("Income"), rs.getDouble("Total"));
+                list.add(revenue);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        revenueArray = list;
+        return list;
+        
+    }
+    
+    public void showProductsInTable()
+    {
+        ArrayList<RevenueInfo> revenuesList = getProductsList();
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        
+        model.setRowCount(0);
+        
+        Object[] row = new Object[9];
+        
+        for(int i = 0; i < revenuesList.size(); i++)
+        {
+            row[0] = revenuesList.get(i).getDate();
+            row[1] = revenuesList.get(i).getId();
+            row[2] = revenuesList.get(i).getList();
+            row[3] = revenuesList.get(i).getCategory();
+            row[4] = revenuesList.get(i).getCost();
+            row[5] = revenuesList.get(i).getPrice();
+            row[6] = revenuesList.get(i).getQuantity();
+            row[7] = revenuesList.get(i).getIncome();
+            row[8] = revenuesList.get(i).getTotal();
+            
+            model.addRow(row);
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
@@ -225,8 +291,8 @@ public class Expenses_Accounts extends javax.swing.JPanel {
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable table;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextField txtDate1;
     private javax.swing.JTextField txtDate2;
     private javax.swing.JTextField txtSum;

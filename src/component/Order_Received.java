@@ -1,17 +1,24 @@
 package component;
 
-import java.awt.Component;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import raven.cell.TableActionCellEditorEdit;
 import raven.cell.TableActionCellRenderEdit;
 import raven.cell.TableActionEventEdit;
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import karnkha.DB;
+import karnkha.OrderReceivedInfo;
 
-public class Purchase_Order_Recording extends javax.swing.JPanel {
+public class Order_Received extends javax.swing.JPanel {
 
-    public Purchase_Order_Recording() {
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+    
+    public Order_Received() {
         initComponents();
+        con = DB.mycon();
+        showProductsInTable();
         TableActionEventEdit event = new TableActionEventEdit() {
             @Override
             public void onEdit(int row) {
@@ -19,15 +26,8 @@ public class Purchase_Order_Recording extends javax.swing.JPanel {
             }
 
         };
-        table.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderEdit());
-        table.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorEdit(event));
-        table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-                setHorizontalAlignment(SwingConstants.RIGHT);
-                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
-            }
-        });
+        jTable.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderEdit());
+        jTable.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditorEdit(event));
     }
 
     @SuppressWarnings("unchecked")
@@ -40,8 +40,8 @@ public class Purchase_Order_Recording extends javax.swing.JPanel {
         Save_bt1 = new javax.swing.JButton();
         delete_bt = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -54,7 +54,7 @@ public class Purchase_Order_Recording extends javax.swing.JPanel {
         add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Topic.setText("บันทึกการสั่งซื้อสินค้า");
+        Topic.setText("รับสินค้าตามรายการสั่งซื้อ");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, -1, -1));
 
         search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -94,42 +94,35 @@ public class Purchase_Order_Recording extends javax.swing.JPanel {
         jLabel1.setText("วันที่");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, -1, -1));
 
-        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "A", null, null, null, null},
-                {"2", "B", null, null, null, null},
-                {"3", "C", null, null, null, null},
-                {"4", "D", null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No.", "Date", "Name of business", "Quantity", "Price", ""
+                "No", "Date", "Company Name", "Employee Id", "Recipient", "Quantity", "Total", ""
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+                false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        table.setRowHeight(40);
-        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
-        table.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(table);
-        if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(0).setResizable(false);
-            table.getColumnModel().getColumn(1).setResizable(false);
-            table.getColumnModel().getColumn(2).setMinWidth(500);
-            table.getColumnModel().getColumn(2).setMaxWidth(500);
-            table.getColumnModel().getColumn(3).setResizable(false);
-            table.getColumnModel().getColumn(4).setResizable(false);
-            table.getColumnModel().getColumn(5).setResizable(false);
-        }
+        jTable.setRowHeight(50);
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
     private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
@@ -148,6 +141,68 @@ public class Purchase_Order_Recording extends javax.swing.JPanel {
 
     }//GEN-LAST:event_Save_bt1MouseClicked
 
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        // TODO add your handling code here:
+        int index = jTable.getSelectedRow();
+        position = index;
+    }//GEN-LAST:event_jTableMouseClicked
+
+    ArrayList<OrderReceivedInfo> productsArray = new ArrayList<>();
+    
+    int position = 0;
+    public ArrayList<OrderReceivedInfo> getProductsList()
+    {
+        ArrayList<OrderReceivedInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `orderreceived`";
+        
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            st = DB.getConnection().createStatement();
+            rs = st.executeQuery(selectQuery);
+            OrderReceivedInfo product;
+            
+            while(rs.next())
+            {
+                product = new OrderReceivedInfo(rs.getInt("No"), rs.getString("Date"),
+                                      rs.getString("Name"), rs.getInt("Id"), rs.getString("Recipient"),
+                                      rs.getInt("Quantity"), rs.getDouble("Total"));
+                list.add(product);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        productsArray = list;
+        return list;
+        
+    }
+    
+    public void showProductsInTable()
+    {
+        ArrayList<OrderReceivedInfo> productsList = getProductsList();
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        
+        model.setRowCount(0);
+        
+        Object[] row = new Object[7];
+        
+        for(int i = 0; i < productsList.size(); i++)
+        {
+            row[0] = productsList.get(i).getNo();
+            row[1] = productsList.get(i).getDate();
+            row[2] = productsList.get(i).getName();
+            row[3] = productsList.get(i).getId();
+            row[4] = productsList.get(i).getRecipient();
+            row[5] = productsList.get(i).getQuantity();
+            row[6] = productsList.get(i).getTotal();
+            
+            model.addRow(row);
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Save_bt1;
@@ -155,12 +210,8 @@ public class Purchase_Order_Recording extends javax.swing.JPanel {
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton delete_bt;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextField search__box;
-    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
-
-    private void dispose() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

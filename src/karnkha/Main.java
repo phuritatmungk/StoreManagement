@@ -3,16 +3,16 @@ package karnkha;
 import component.DefaultForm;
 import java.awt.Component;
 import raven.menu.MenuEvent;
-import component.Employee_registration_page;
+import component.Manage_Employee;
 import component.ReportMenu;
 import component.Sellproduct;
-import component.Buy_History;
+import component.SellHistory;
 import component.Pay_for_repair_services3;
 import component.Repair_List_Page;
 import component.Manage_Warehouse;
-import component.Purchase_Order_Recording;
-import component.Dealer_registration_page;
-import component.Receive_Product_according_to_order_list;
+import component.Order_Record;
+import component.Manage_Distributor;
+import component.Order_Received;
 import component.Repair_History;
 
 
@@ -43,24 +43,24 @@ public class Main extends javax.swing.JFrame {
                     showForm(new Manage_Warehouse());
                 }
                 else if (index ==4){
-                    showForm(new Purchase_Order_Recording());
+                    showForm(new Order_Record());
                 }
                 else if (index ==5){
-                    showForm(new Receive_Product_according_to_order_list());
+                    showForm(new Order_Received());
                 }
                 else if (index == 6){
                     if (subIndex == 1){
-                        showForm(new Buy_History());
+                        showForm(new SellHistory());
                     }
                     if (subIndex == 2) {
                         showForm(new Repair_History());
                     }
                 }
                 else if (index == 7) {
-                    showForm(new Employee_registration_page());
+                    showForm(new Manage_Employee());
                 }
                 else if (index == 8) {
-                    showForm(new Dealer_registration_page());
+                    showForm(new Manage_Distributor());
                 }
                 else if (index ==9){
                     showForm(new ReportMenu());

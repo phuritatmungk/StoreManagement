@@ -1,17 +1,24 @@
 package component;
 
-import java.awt.Component;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import raven.cell.TableActionCellEditorEdit;
 import raven.cell.TableActionCellRenderEdit;
 import raven.cell.TableActionEventEdit;
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import karnkha.DB;
+import karnkha.DistributorInfo;
 
-public class Employee_registration_page extends javax.swing.JPanel {
+public class Manage_Distributor extends javax.swing.JPanel {
 
-    public Employee_registration_page() {
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+    
+    public Manage_Distributor() {
         initComponents();
+        con = DB.mycon();
+        showDistributorInTable();
         TableActionEventEdit event = new TableActionEventEdit() {
             @Override
             public void onEdit(int row) {
@@ -19,15 +26,8 @@ public class Employee_registration_page extends javax.swing.JPanel {
             }
 
         };
-        table.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderEdit());
-        table.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorEdit(event));
-        table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-                setHorizontalAlignment(SwingConstants.RIGHT);
-                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
-            }
-        });
+        jTable.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRenderEdit());
+        jTable.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditorEdit(event));
     }
 
     @SuppressWarnings("unchecked")
@@ -40,8 +40,8 @@ public class Employee_registration_page extends javax.swing.JPanel {
         search__box = new javax.swing.JTextField();
         Save_bt1 = new javax.swing.JButton();
         delete_bt = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -54,8 +54,8 @@ public class Employee_registration_page extends javax.swing.JPanel {
         add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Topic.setText("จัดการทะเบียนพนักงาน");
-        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 50, -1, -1));
+        Topic.setText("จัดการทะเบียนตัวแทนจำหน่าย");
+        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, -1, -1));
 
         back_button.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         back_button.setForeground(new java.awt.Color(139, 139, 139));
@@ -66,8 +66,13 @@ public class Employee_registration_page extends javax.swing.JPanel {
 
         search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         search__box.setForeground(new java.awt.Color(123, 123, 123));
-        search__box.setText("  ค้นหารหัสพนักงาน");
+        search__box.setText("   ค้นหาชื่อบริษัท");
         search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        search__box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search__boxActionPerformed(evt);
+            }
+        });
         add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 50, 300, 30));
 
         Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -93,43 +98,40 @@ public class Employee_registration_page extends javax.swing.JPanel {
         });
         add(delete_bt, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 680, 130, 50));
 
-        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", null, "A", "001", null, null},
-                {"2", null, "B", "002", null, null},
-                {"3", null, "C", "003", null, null},
-                {"4", null, "D", "004", null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "No.", "Name", "Employee ID", "Position", "Rate", ""
+                "No", "Company Name", "Salesman Name", "Phone No", ""
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+                false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        table.setRowHeight(40);
-        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
-        table.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(table);
-        if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(0).setResizable(false);
-            table.getColumnModel().getColumn(1).setMinWidth(400);
-            table.getColumnModel().getColumn(1).setMaxWidth(400);
-            table.getColumnModel().getColumn(2).setMinWidth(150);
-            table.getColumnModel().getColumn(2).setMaxWidth(150);
-            table.getColumnModel().getColumn(3).setResizable(false);
-            table.getColumnModel().getColumn(5).setResizable(false);
-        }
+        jTable.setRowHeight(50);
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 1160, 560));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_search__boxActionPerformed
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
         // TODO add your handling code here:
@@ -143,6 +145,64 @@ public class Employee_registration_page extends javax.swing.JPanel {
 
     }//GEN-LAST:event_Save_bt1MouseClicked
 
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        // TODO add your handling code here:
+        int index = jTable.getSelectedRow();
+        position = index;
+    }//GEN-LAST:event_jTableMouseClicked
+
+    ArrayList<DistributorInfo> distributorArray = new ArrayList<>();
+    
+    int position = 0;
+    public ArrayList<DistributorInfo> getProductsList()
+    {
+        ArrayList<DistributorInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `distributor`";
+        
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            st = DB.getConnection().createStatement();
+            rs = st.executeQuery(selectQuery);
+            DistributorInfo distributor;
+            
+            while(rs.next())
+            {
+                distributor = new DistributorInfo(rs.getInt("No"), rs.getString("Company"),
+                                      rs.getString("Salesman"), rs.getInt("Phone"));
+                list.add(distributor);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        distributorArray = list;
+        return list;
+        
+    }
+    
+    public void showDistributorInTable()
+    {
+        ArrayList<DistributorInfo> distributorsList = getProductsList();
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        
+        model.setRowCount(0);
+        
+        Object[] row = new Object[5];
+        
+        for(int i = 0; i < distributorsList.size(); i++)
+        {
+            row[0] = distributorsList.get(i).getNo();
+            row[1] = distributorsList.get(i).getName();
+            row[2] = distributorsList.get(i).getSalesman();
+            row[3] = distributorsList.get(i).getPhone();
+            
+            model.addRow(row);
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Save_bt1;
@@ -150,12 +210,8 @@ public class Employee_registration_page extends javax.swing.JPanel {
     private javax.swing.JLabel back_button;
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton delete_bt;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextField search__box;
-    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
-
-    private void dispose() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

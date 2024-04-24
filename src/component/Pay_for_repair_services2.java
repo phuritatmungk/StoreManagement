@@ -1,61 +1,36 @@
 package component;
 
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
+import java.sql.*;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import karnkha.DB;
+import karnkha.CartInfo;
 import raven.cell.TableActionCellEditorTrash;
 import raven.cell.TableActionCellRenderTrash;
 import raven.cell.TableActionEventTrash;
 
 public class Pay_for_repair_services2 extends javax.swing.JPanel {
+    
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
 
     public Pay_for_repair_services2() {
         initComponents();
+        con = DB.mycon();
+        showProductsInTable();
         TableActionEventTrash event = new TableActionEventTrash() {
             @Override
             public void onDelete(int row) {
-                if (table.isEditing()) {
-                    table.getCellEditor().stopCellEditing();
+                if (jTable.isEditing()) {
+                    jTable.getCellEditor().stopCellEditing();
                 }
-                DefaultTableModel model = (DefaultTableModel) table.getModel();
+                DefaultTableModel model = (DefaultTableModel) jTable.getModel();
                 model.removeRow(row);
             }
         };
-        table.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRenderTrash());
-        table.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditorTrash(event));
-        table.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-                setHorizontalAlignment(SwingConstants.RIGHT);
-                return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1);
-            }
-        });
-       testData();
-    }
-    
-    private void testData() {
-        table.getColumnModel().getColumn(6).setCellEditor(new QtyCellEditor(new EventCellInputChange() {
-            @Override
-            public void inputChanged() {
-                //sumAmount();
-            }
-        }));
-        table.getColumnModel().getColumn(6).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                setHorizontalAlignment(SwingConstants.CENTER);
-                return this;
-            }
-    });
-         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addRow(new ModelItemSell(17, "Test1", "test1", 5, 485.0).toTableRow(table.getRowCount() + 1));
-        model.addRow(new ModelItemSell(22, "Test2", "test2", 2, 846.0).toTableRow(table.getRowCount() + 1));
-        model.addRow(new ModelItemSell(38, "Test3", "test3", 9, 650.0).toTableRow(table.getRowCount() + 1));
-        
+        jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderTrash());
+        jTable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorTrash(event));
     }
 
     @SuppressWarnings("unchecked")
@@ -67,8 +42,8 @@ public class Pay_for_repair_services2 extends javax.swing.JPanel {
         btnNext = new javax.swing.JButton();
         back_button = new javax.swing.JLabel();
         txtSearch1 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -119,51 +94,35 @@ public class Pay_for_repair_services2 extends javax.swing.JPanel {
         });
         add(txtSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 50, 260, 30));
 
-        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "", "", "No.", "Product ID", "Product", "Product Type", "Quantity", "Price", ""
+                "No", "Product ID", "Product Name", "Category", "Quantity", "Price", ""
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, false, true
+                false, false, false, false, false, false, true
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        table.setRowHeight(40);
-        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
-        table.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(table);
-        if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(0).setMinWidth(0);
-            table.getColumnModel().getColumn(0).setMaxWidth(0);
-            table.getColumnModel().getColumn(1).setMinWidth(40);
-            table.getColumnModel().getColumn(1).setMaxWidth(40);
-            table.getColumnModel().getColumn(2).setResizable(false);
-            table.getColumnModel().getColumn(3).setResizable(false);
-            table.getColumnModel().getColumn(4).setMinWidth(500);
-            table.getColumnModel().getColumn(4).setMaxWidth(500);
-            table.getColumnModel().getColumn(5).setResizable(false);
-            table.getColumnModel().getColumn(6).setResizable(false);
-            table.getColumnModel().getColumn(7).setResizable(false);
-            table.getColumnModel().getColumn(8).setResizable(false);
-        }
+        jTable.setRowHeight(50);
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
@@ -182,14 +141,75 @@ public class Pay_for_repair_services2 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearch1ActionPerformed
 
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        // TODO add your handling code here:
+        int index = jTable.getSelectedRow();
+        position = index;
+    }//GEN-LAST:event_jTableMouseClicked
+
+    ArrayList<CartInfo> productsArray = new ArrayList<>();
+    
+    int position = 0;
+    public ArrayList<CartInfo> getProductsList()
+    {
+        ArrayList<CartInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `repaircart`";
+        
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            st = DB.getConnection().createStatement();
+            rs = st.executeQuery(selectQuery);
+            CartInfo product;
+            
+            while(rs.next())
+            {
+                product = new CartInfo(rs.getInt("No"), rs.getInt("Id"),
+                                      rs.getString("Name"), rs.getString("Category"),
+                                      rs.getInt("Quantity"), rs.getDouble("Price"));
+                list.add(product);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        productsArray = list;
+        return list;
+        
+    }
+    
+    public void showProductsInTable()
+    {
+        ArrayList<CartInfo> productsList = getProductsList();
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        
+        model.setRowCount(0);
+        
+        Object[] row = new Object[6];
+        
+        for(int i = 0; i < productsList.size(); i++)
+        {
+            row[0] = productsList.get(i).getNo();
+            row[1] = productsList.get(i).getId();
+            row[2] = productsList.get(i).getName();
+            row[3] = productsList.get(i).getCategory();
+            row[4] = productsList.get(i).getQuantity();
+            row[5] = productsList.get(i).getPrice();
+            
+            model.addRow(row);
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button;
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnNext;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable table;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextField txtSearch1;
     // End of variables declaration//GEN-END:variables
 
