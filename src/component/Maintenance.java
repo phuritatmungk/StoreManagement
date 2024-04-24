@@ -3,13 +3,42 @@ package component;
 import java.awt.Color;
 import karnkha.Main;
 import component.Repair_List_Page;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.Timer;
 
 public class Maintenance extends javax.swing.JPanel {
 
     public Maintenance() {
         initComponents();
         
+        showDate();
+        
+        showTime();
     }
+    
+    public void showDate(){
+        Date d = new Date();
+        SimpleDateFormat s = new SimpleDateFormat(" dd/MM/yy");
+        String dat = s.format(d);
+        Date.setText(dat);
+    }
+    
+    public void showTime(){
+        new Timer (0,new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Date d = new Date();
+                SimpleDateFormat s = new SimpleDateFormat("hh:mm");
+                String tim = s.format(d);
+                Time.setText(tim);
+            }
+        }).start();
+            
+    }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -34,9 +63,9 @@ public class Maintenance extends javax.swing.JPanel {
         btnSave = new javax.swing.JButton();
         txtQueue = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        txtDate = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        txtTime = new javax.swing.JTextField();
+        Date = new javax.swing.JTextField();
+        Time = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
         txtCustomer = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
@@ -132,6 +161,7 @@ public class Maintenance extends javax.swing.JPanel {
 
         txtQueue.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtQueue.setForeground(new java.awt.Color(123, 123, 123));
+        txtQueue.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtQueue.setText("1");
         txtQueue.setBorder(null);
         txtQueue.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -147,36 +177,44 @@ public class Maintenance extends javax.swing.JPanel {
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 90, 30));
 
-        txtDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtDate.setForeground(new java.awt.Color(123, 123, 123));
-        txtDate.setText(" 00/00/00");
-        txtDate.setBorder(null);
-        txtDate.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtDateFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtDateFocusLost(evt);
-            }
-        });
-        add(txtDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, 150, 30));
-
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 180, 150, 30));
 
-        txtTime.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtTime.setForeground(new java.awt.Color(123, 123, 123));
-        txtTime.setText("  00 : 00");
-        txtTime.setBorder(null);
-        txtTime.addFocusListener(new java.awt.event.FocusAdapter() {
+        Date.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Date.setForeground(new java.awt.Color(123, 123, 123));
+        Date.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Date.setText("00/00/0000");
+        Date.setBorder(null);
+        Date.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTimeFocusGained(evt);
+                DateFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTimeFocusLost(evt);
+                DateFocusLost(evt);
             }
         });
-        add(txtTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 150, 80, 30));
+        Date.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DateActionPerformed(evt);
+            }
+        });
+        add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, 150, 30));
+        Date.getAccessibleContext().setAccessibleName("");
+
+        Time.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Time.setForeground(new java.awt.Color(123, 123, 123));
+        Time.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Time.setText("  00 : 00");
+        Time.setBorder(null);
+        Time.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TimeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TimeFocusLost(evt);
+            }
+        });
+        add(Time, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 150, 80, 30));
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 180, 80, 30));
@@ -265,35 +303,35 @@ public class Maintenance extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtQueueFocusLost
 
-    private void txtDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusGained
-        if(txtDate.getText().equals(" 00/00/00"))
+    private void DateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DateFocusGained
+        if(Date.getText().equals(" 00/00/00"))
        {
-           txtDate.setText("");
-           txtDate.setForeground(new Color(0, 0, 0));
+           Date.setText("");
+           Date.setForeground(new Color(0, 0, 0));
        }
-    }//GEN-LAST:event_txtDateFocusGained
+    }//GEN-LAST:event_DateFocusGained
 
-    private void txtDateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusLost
-        if (txtDate.getText().length()==0) {
-            txtDate.setText(" 00/00/00");
-            txtDate.setForeground(new Color(123, 123, 123));
+    private void DateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DateFocusLost
+        if (Date.getText().length()==0) {
+            Date.setText(" 00/00/00");
+            Date.setForeground(new Color(123, 123, 123));
         }
-    }//GEN-LAST:event_txtDateFocusLost
+    }//GEN-LAST:event_DateFocusLost
 
-    private void txtTimeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimeFocusGained
-        if (txtTime.getText().equals("  00 : 00"))
+    private void TimeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TimeFocusGained
+        if (Time.getText().equals("  00 : 00"))
         {
-            txtTime.setText("");
-            txtTime.setForeground(new Color(0, 0, 0));
+            Time.setText("");
+            Time.setForeground(new Color(0, 0, 0));
         }
-    }//GEN-LAST:event_txtTimeFocusGained
+    }//GEN-LAST:event_TimeFocusGained
 
-    private void txtTimeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimeFocusLost
-        if (txtTime.getText().length()==0) {
-            txtTime.setText("  00 : 00");
-            txtTime.setForeground(new Color(123, 123, 123));
+    private void TimeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TimeFocusLost
+        if (Time.getText().length()==0) {
+            Time.setText("  00 : 00");
+            Time.setForeground(new Color(123, 123, 123));
         }
-    }//GEN-LAST:event_txtTimeFocusLost
+    }//GEN-LAST:event_TimeFocusLost
 
     private void txtCustomerFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomerFocusGained
         if(txtCustomer.getText().equals(" ชื่อผู้ส่งซ่อม"))
@@ -362,8 +400,14 @@ public class Maintenance extends javax.swing.JPanel {
         Main.body.revalidate();
     }//GEN-LAST:event_jLabel1MouseClicked
 
+    private void DateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DateActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Date;
+    private javax.swing.JTextField Time;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -390,10 +434,8 @@ public class Maintenance extends javax.swing.JPanel {
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField txtBrokenItem;
     private javax.swing.JTextField txtCustomer;
-    private javax.swing.JTextField txtDate;
     private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtQueue;
     private javax.swing.JTextField txtStatus;
-    private javax.swing.JTextField txtTime;
     // End of variables declaration//GEN-END:variables
 }

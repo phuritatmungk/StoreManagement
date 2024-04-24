@@ -11,7 +11,9 @@ import raven.cell.TableActionCellRenderAdd;
 import raven.cell.TableActionEventAdd;
 import karnkha.Main;
 import component.Sellproduct2;
+import java.awt.Color;
 import java.awt.PopupMenu;
+import javax.swing.table.TableRowSorter;
 
 public class Sellproduct extends javax.swing.JPanel {
     
@@ -42,8 +44,7 @@ public class Sellproduct extends javax.swing.JPanel {
         Topic = new javax.swing.JLabel();
         btnNext = new javax.swing.JButton();
         back_button = new javax.swing.JLabel();
-        txtSearch1 = new javax.swing.JTextField();
-        txtSearch2 = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
 
@@ -74,47 +75,27 @@ public class Sellproduct extends javax.swing.JPanel {
         back_button.setForeground(new java.awt.Color(139, 139, 139));
         back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loupe2.png"))); // NOI18N
-        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 30, 30));
+        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 60, 30, 30));
 
-        txtSearch1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSearch1.setForeground(new java.awt.Color(123, 123, 123));
-        txtSearch1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtSearch1.setText("      ค้นหาสินค้า");
-        txtSearch1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtSearch1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtSearch.setForeground(new java.awt.Color(123, 123, 123));
+        txtSearch.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtSearch.setText("ค้นหาสินค้า");
+        txtSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSearch1FocusGained(evt);
+                txtSearchFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtSearch1FocusLost(evt);
+                txtSearchFocusLost(evt);
             }
         });
-        txtSearch1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearch1ActionPerformed(evt);
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
             }
         });
-        add(txtSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 260, 30));
-
-        txtSearch2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSearch2.setForeground(new java.awt.Color(123, 123, 123));
-        txtSearch2.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtSearch2.setText("      ค้นหาสินค้า");
-        txtSearch2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtSearch2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSearch2FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtSearch2FocusLost(evt);
-            }
-        });
-        txtSearch2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearch2ActionPerformed(evt);
-            }
-        });
-        add(txtSearch2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 260, 30));
+        add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 260, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -154,36 +135,34 @@ public class Sellproduct extends javax.swing.JPanel {
         Main.body.revalidate();
     }//GEN-LAST:event_btnNextActionPerformed
 
-    private void txtSearch1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch1FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch1FocusGained
-
-    private void txtSearch1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch1FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch1FocusLost
-
-    private void txtSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearch1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch1ActionPerformed
-
-    private void txtSearch2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch2FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch2FocusGained
-
-    private void txtSearch2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch2FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch2FocusLost
-
-    private void txtSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearch2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch2ActionPerformed
-
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
         int index = jTable.getSelectedRow();
         position = index;
     }//GEN-LAST:event_jTableMouseClicked
 
+    private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
+        if (txtSearch.getText().length()==0) {
+            txtSearch.setText("ค้นหาสินค้า");
+            txtSearch.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_txtSearchFocusLost
+
+    private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
+        if(txtSearch.getText().equals("ค้นหาสินค้า")){
+            txtSearch.setText("");
+            txtSearch.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_txtSearchFocusGained
+
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable.setRowSorter(sorter);
+        int columnIndexToFilter = 2;
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim(), columnIndexToFilter));
+    }//GEN-LAST:event_txtSearchKeyReleased
+        
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     
     int position = 0;
@@ -247,8 +226,7 @@ public class Sellproduct extends javax.swing.JPanel {
     private javax.swing.JButton btnNext;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
-    private javax.swing.JTextField txtSearch1;
-    private javax.swing.JTextField txtSearch2;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 
 }

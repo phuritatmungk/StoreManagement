@@ -8,6 +8,11 @@ import karnkha.DB;
 import karnkha.CartInfo;
 import karnkha.Main;
 import component.Sellproduct2;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.Timer;
 public class Sellproduct3 extends javax.swing.JPanel {
     
     Connection con = null;
@@ -16,8 +21,34 @@ public class Sellproduct3 extends javax.swing.JPanel {
 
     public Sellproduct3() {
         initComponents();
+        
+        showDate();
+        
+        showTime();
+        
         con = DB.mycon();
+        
         showProductsInTable();
+    }
+    
+    public void showDate(){
+        Date d = new Date();
+        SimpleDateFormat s = new SimpleDateFormat("dd/MM/yy");
+        String dat = s.format(d);
+        Date.setText(dat);
+    }
+    
+    public void showTime(){
+        new Timer (0,new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Date d = new Date();
+                SimpleDateFormat s = new SimpleDateFormat("hh:mm");
+                String tim = s.format(d);
+                Time.setText(tim);
+            }
+        }).start();
+            
     }
 
     @SuppressWarnings("unchecked")
@@ -29,14 +60,13 @@ public class Sellproduct3 extends javax.swing.JPanel {
         btnNext = new javax.swing.JButton();
         Topic1 = new javax.swing.JLabel();
         Topic2 = new javax.swing.JLabel();
-        txtTime = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        txtCustomer1 = new javax.swing.JTextField();
+        Date = new javax.swing.JTextField();
         btnNext1 = new javax.swing.JButton();
         Topic3 = new javax.swing.JLabel();
         Topic4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        Time = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -75,41 +105,19 @@ public class Sellproduct3 extends javax.swing.JPanel {
         Topic2.setText("วันที่ :");
         add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 50, -1, 30));
 
-        txtTime.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtTime.setForeground(new java.awt.Color(123, 123, 123));
-        txtTime.setText("  00 : 00");
-        txtTime.setBorder(null);
-        txtTime.addFocusListener(new java.awt.event.FocusAdapter() {
+        Date.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Date.setForeground(new java.awt.Color(123, 123, 123));
+        Date.setText("00:00:00");
+        Date.setBorder(null);
+        Date.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTimeFocusGained(evt);
+                DateFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTimeFocusLost(evt);
+                DateFocusLost(evt);
             }
         });
-        txtTime.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimeActionPerformed(evt);
-            }
-        });
-        add(txtTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 90, 80, 30));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/calendar1_1.png"))); // NOI18N
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 50, -1, 30));
-
-        txtCustomer1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtCustomer1.setForeground(new java.awt.Color(123, 123, 123));
-        txtCustomer1.setText(" ##/##/##");
-        txtCustomer1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtCustomer1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCustomer1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCustomer1FocusLost(evt);
-            }
-        });
-        add(txtCustomer1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 50, 190, 30));
+        add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 50, 130, 30));
 
         btnNext1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnNext1.setText("ดำเนินการต่อ");
@@ -157,38 +165,45 @@ public class Sellproduct3 extends javax.swing.JPanel {
         jScrollPane2.setViewportView(jTable);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 1240, 430));
+
+        Time.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Time.setForeground(new java.awt.Color(123, 123, 123));
+        Time.setText("00 : 00");
+        Time.setBorder(null);
+        Time.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TimeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                TimeFocusLost(evt);
+            }
+        });
+        Time.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TimeActionPerformed(evt);
+            }
+        });
+        add(Time, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 90, 80, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNextActionPerformed
 
-    private void txtTimeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimeFocusGained
-        if (txtTime.getText().equals("  00 : 00"))
+    private void DateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DateFocusGained
+        if (Date.getText().equals("  00 : 00"))
         {
-            txtTime.setText("");
-            txtTime.setForeground(new Color(0, 0, 0));
+            Date.setText("");
+            Date.setForeground(new Color(0, 0, 0));
         }
-    }//GEN-LAST:event_txtTimeFocusGained
+    }//GEN-LAST:event_DateFocusGained
 
-    private void txtTimeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTimeFocusLost
-        if (txtTime.getText().length()==0) {
-            txtTime.setText("  00 : 00");
-            txtTime.setForeground(new Color(123, 123, 123));
+    private void DateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DateFocusLost
+        if (Date.getText().length()==0) {
+            Date.setText("  00 : 00");
+            Date.setForeground(new Color(123, 123, 123));
         }
-    }//GEN-LAST:event_txtTimeFocusLost
-
-    private void txtTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimeActionPerformed
-
-    private void txtCustomer1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomer1FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCustomer1FocusGained
-
-    private void txtCustomer1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomer1FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCustomer1FocusLost
+    }//GEN-LAST:event_DateFocusLost
 
     private void btnNext1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNext1ActionPerformed
         // TODO add your handling code here:
@@ -206,6 +221,18 @@ public class Sellproduct3 extends javax.swing.JPanel {
         Main.body.repaint();
         Main.body.revalidate();
     }//GEN-LAST:event_back_button1MouseClicked
+
+    private void TimeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TimeFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TimeFocusGained
+
+    private void TimeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TimeFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TimeFocusLost
+
+    private void TimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TimeActionPerformed
 
     ArrayList<CartInfo> productsArray = new ArrayList<>();
     
@@ -264,6 +291,8 @@ public class Sellproduct3 extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Date;
+    private javax.swing.JTextField Time;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel Topic1;
     private javax.swing.JLabel Topic2;
@@ -272,11 +301,8 @@ public class Sellproduct3 extends javax.swing.JPanel {
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnNext1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
-    private javax.swing.JTextField txtCustomer1;
-    private javax.swing.JTextField txtTime;
     // End of variables declaration//GEN-END:variables
 
 }
