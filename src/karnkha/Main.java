@@ -178,7 +178,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel body;
+    public static javax.swing.JPanel body;
     private component.Header header1;
     private javax.swing.JPanel jPanel1;
     private raven.menu.Menu menu1;

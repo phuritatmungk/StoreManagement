@@ -9,6 +9,9 @@ import karnkha.InventoryInfo;
 import raven.cell.TableActionCellEditorAdd;
 import raven.cell.TableActionCellRenderAdd;
 import raven.cell.TableActionEventAdd;
+import karnkha.Main;
+import component.AddProduct;
+import java.awt.PopupMenu;
 
 public class Sellproduct extends javax.swing.JPanel {
     
@@ -145,7 +148,10 @@ public class Sellproduct extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        // TODO add your handling code here:
+        Main.body.removeAll();
+        Main.body.add(new AddProduct());
+        Main.body.repaint();
+        Main.body.revalidate();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void txtSearch1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch1FocusGained
