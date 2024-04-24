@@ -1,354 +1,210 @@
 package component;
-import java.awt.Color;
 
+import raven.cell.TableActionCellEditorEdit;
+import raven.cell.TableActionCellRenderEdit;
+import raven.cell.TableActionEventEdit;
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import karnkha.DB;
+import karnkha.EmployeeInfo;
 
 public class Manage_Employee extends javax.swing.JPanel {
 
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+    
     public Manage_Employee() {
         initComponents();
-        
+        con = DB.mycon();
+        showEmployeeInTable();
+        TableActionEventEdit event = new TableActionEventEdit() {
+            @Override
+            public void onEdit(int row) {
+                System.out.println("Edit row : " + row);
+            }
+
+        };
+        jTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderEdit());
+        jTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorEdit(event));
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        back_button = new javax.swing.JLabel();
+        back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        JId = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
-        JName = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
-        JSname = new javax.swing.JLabel();
-        txtSname = new javax.swing.JTextField();
-        JAddress = new javax.swing.JLabel();
-        address_box = new javax.swing.JScrollPane();
-        txtAddress = new javax.swing.JTextArea();
-        JPhone = new javax.swing.JLabel();
-        txtPhone = new javax.swing.JTextField();
-        Add_dealer_information = new javax.swing.JLabel();
-        picture_box = new javax.swing.JLabel();
-        btnImg = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
-        jSeparator4 = new javax.swing.JSeparator();
-        JJob = new javax.swing.JLabel();
-        JSalary = new javax.swing.JLabel();
-        txtJob = new javax.swing.JTextField();
-        jSeparator5 = new javax.swing.JSeparator();
-        txtSalary = new javax.swing.JTextField();
-        jSeparator6 = new javax.swing.JSeparator();
+        back_button = new javax.swing.JLabel();
+        search__box = new javax.swing.JTextField();
+        Save_bt1 = new javax.swing.JButton();
+        delete_bt = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        back_button.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        back_button.setForeground(new java.awt.Color(139, 139, 139));
-        back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/back-button.png"))); // NOI18N
-        back_button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                back_buttonMouseClicked(evt);
-            }
-        });
-        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
+        back_button1.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        back_button1.setForeground(new java.awt.Color(139, 139, 139));
+        back_button1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        back_button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/back-button.png"))); // NOI18N
+        add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Topic.setText("จัดการทะเบียนพนักงาน");
-        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, -1, -1));
+        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 50, -1, -1));
 
-        JId.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        JId.setText("รหัสพนักงาน");
-        add(JId, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, -1, -1));
+        back_button.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        back_button.setForeground(new java.awt.Color(139, 139, 139));
+        back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/loupe2_1.png"))); // NOI18N
+        back_button.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 50, 30, 30));
 
-        txtId.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtId.setForeground(new java.awt.Color(123, 123, 123));
-        txtId.setText("รหัสพนักงาน");
-        txtId.setBorder(null);
-        txtId.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtIdFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtIdFocusLost(evt);
-            }
-        });
-        add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, 220, 30));
+        search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        search__box.setForeground(new java.awt.Color(123, 123, 123));
+        search__box.setText("  ค้นหารหัสพนักงาน");
+        search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 50, 300, 30));
 
-        JName.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        JName.setText("ชื่อ");
-        add(JName, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, -1, -1));
-
-        txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtName.setForeground(new java.awt.Color(123, 123, 123));
-        txtName.setText("ชื่อ");
-        txtName.setBorder(null);
-        txtName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNameFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNameFocusLost(evt);
+        Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        Save_bt1.setText("เพิ่ม");
+        Save_bt1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Save_bt1MouseClicked(evt);
             }
         });
-        add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 230, 220, 30));
-
-        JSname.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        JSname.setText("นามสกุล");
-        add(JSname, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 320, -1, -1));
-
-        txtSname.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSname.setForeground(new java.awt.Color(123, 123, 123));
-        txtSname.setText("นามสกุล");
-        txtSname.setBorder(null);
-        txtSname.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSnameFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtSnameFocusLost(evt);
-            }
-        });
-        add(txtSname, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, 220, 30));
-
-        JAddress.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        JAddress.setText("ที่อยู่");
-        add(JAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 320, -1, -1));
-
-        txtAddress.setColumns(20);
-        txtAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtAddress.setRows(5);
-        txtAddress.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        address_box.setViewportView(txtAddress);
-
-        add(address_box, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 330, 320, 170));
-
-        JPhone.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        JPhone.setText("เบอร์โทรศัพท์");
-        add(JPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 410, -1, -1));
-
-        txtPhone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtPhone.setForeground(new java.awt.Color(123, 123, 123));
-        txtPhone.setText("เบอร์โทรศัพท์");
-        txtPhone.setBorder(null);
-        txtPhone.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtPhoneFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPhoneFocusLost(evt);
-            }
-        });
-        add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 410, 220, 30));
-
-        Add_dealer_information.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Add_dealer_information.setText("เพิ่มข้อมูลพนักงาน");
-        add(Add_dealer_information, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, -1, -1));
-
-        picture_box.setBackground(new java.awt.Color(255, 255, 255));
-        picture_box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        picture_box.setForeground(new java.awt.Color(123, 123, 123));
-        picture_box.setText("          รูปพนักงาน");
-        picture_box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        add(picture_box, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 200, 190));
-
-        btnImg.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnImg.setText("เลือกรูป");
-        btnImg.addActionListener(new java.awt.event.ActionListener() {
+        Save_bt1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImgActionPerformed(evt);
+                Save_bt1ActionPerformed(evt);
             }
         });
-        add(btnImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 360, 120, 50));
+        add(Save_bt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 680, 130, 50));
 
-        btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnSave.setText("บันทึก");
-        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 590, 130, 50));
-
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 440, 220, 30));
-
-        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 180, 220, 30));
-
-        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 260, 220, 30));
-
-        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 350, 220, 30));
-
-        JJob.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        JJob.setText("ตำแหน่ง");
-        add(JJob, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 150, -1, -1));
-
-        JSalary.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        JSalary.setText("อัตราจ้าง");
-        add(JSalary, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 230, -1, -1));
-
-        txtJob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtJob.setForeground(new java.awt.Color(123, 123, 123));
-        txtJob.setText("ตำแหน่ง");
-        txtJob.setBorder(null);
-        txtJob.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtJobFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtJobFocusLost(evt);
+        delete_bt.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        delete_bt.setText("ลบ");
+        delete_bt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_btActionPerformed(evt);
             }
         });
-        add(txtJob, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 150, 220, 30));
+        add(delete_bt, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 680, 130, 50));
 
-        jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 180, 220, 30));
-
-        txtSalary.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSalary.setForeground(new java.awt.Color(123, 123, 123));
-        txtSalary.setText("จำนวนเงิน");
-        txtSalary.setBorder(null);
-        txtSalary.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSalaryFocusGained(evt);
+        jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "No", "Employee Name", "Employee ID", "Job Titles", "Daily Wage", ""
             }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtSalaryFocusLost(evt);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        add(txtSalary, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 230, 220, 30));
+        jTable.setRowHeight(50);
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable);
 
-        jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 260, 220, 30));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImgActionPerformed
+    private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnImgActionPerformed
+    }//GEN-LAST:event_delete_btActionPerformed
 
-    private void txtIdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFocusGained
-        if(txtId.getText().equals("รหัสพนักงาน"))
-       {
-           txtId.setText("");
-           txtId.setForeground(new Color(0, 0, 0));
-       }
-    }//GEN-LAST:event_txtIdFocusGained
+    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
 
-    private void txtIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFocusLost
-        if (txtId.getText().length()==0) {
-            txtId.setText("รหัสพนักงาน");
-            txtId.setForeground(new Color(123, 123, 123));
-        }
-    }//GEN-LAST:event_txtIdFocusLost
+    }//GEN-LAST:event_Save_bt1ActionPerformed
 
-    private void txtNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusGained
-        if(txtName.getText().equals("ชื่อ"))
-       {
-           txtName.setText("");
-           txtName.setForeground(new Color(0, 0, 0));
-       }
-    }//GEN-LAST:event_txtNameFocusGained
+    private void Save_bt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Save_bt1MouseClicked
 
-    private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
-        if (txtName.getText().length()==0) {
-            txtName.setText("ชื่อ");
-            txtName.setForeground(new Color(123, 123, 123));
-        }
-    }//GEN-LAST:event_txtNameFocusLost
+    }//GEN-LAST:event_Save_bt1MouseClicked
 
-    private void txtSnameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSnameFocusGained
-        if(txtSname.getText().equals("นามสกุล"))
-       {
-           txtSname.setText("");
-           txtSname.setForeground(new Color(0, 0, 0));
-       }
-    }//GEN-LAST:event_txtSnameFocusGained
-
-    private void txtSnameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSnameFocusLost
-        if (txtSname.getText().length()==0) {
-            txtSname.setText("นามสกุล");
-            txtSname.setForeground(new Color(123, 123, 123));
-        }
-    }//GEN-LAST:event_txtSnameFocusLost
-
-    private void back_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_buttonMouseClicked
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_back_buttonMouseClicked
+        int index = jTable.getSelectedRow();
+        position = index;
+    }//GEN-LAST:event_jTableMouseClicked
 
-    private void txtPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneFocusGained
-        if(txtPhone.getText().equals("เบอร์โทรศัพท์"))
-       {
-           txtPhone.setText("");
-           txtPhone.setForeground(new Color(0, 0, 0));
-       }
-    }//GEN-LAST:event_txtPhoneFocusGained
-
-    private void txtPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneFocusLost
-        if (txtPhone.getText().length()==0) {
-            txtPhone.setText("เบอร์โทรศัพท์");
-            txtPhone.setForeground(new Color(123, 123, 123));
+    ArrayList<EmployeeInfo> employeesArray = new ArrayList<>();
+    
+    int position = 0;
+    public ArrayList<EmployeeInfo> getProductsList()
+    {
+        ArrayList<EmployeeInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `employee`";
+        
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            st = DB.getConnection().createStatement();
+            rs = st.executeQuery(selectQuery);
+            EmployeeInfo employee;
+            
+            while(rs.next())
+            {
+                employee = new EmployeeInfo(rs.getInt("No"), rs.getString("Name"),
+                                      rs.getInt("Id"), rs.getString("Job"),
+                                      rs.getDouble("Wage"));
+                list.add(employee);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
         }
-    }//GEN-LAST:event_txtPhoneFocusLost
-
-    private void txtJobFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtJobFocusGained
-        if(txtJob.getText().equals("ตำแหน่ง"))
-       {
-           txtJob.setText("");
-           txtJob.setForeground(new Color(0, 0, 0));
-       }
-    }//GEN-LAST:event_txtJobFocusGained
-
-    private void txtJobFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtJobFocusLost
-        if (txtJob.getText().length()==0) {
-            txtJob.setText("ตำแหน่ง");
-            txtJob.setForeground(new Color(123, 123, 123));
+        
+        employeesArray = list;
+        return list;
+        
+    }
+    
+    public void showEmployeeInTable()
+    {
+        ArrayList<EmployeeInfo> employeesList = getProductsList();
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        
+        model.setRowCount(0);
+        
+        Object[] row = new Object[5];
+        
+        for(int i = 0; i < employeesList.size(); i++)
+        {
+            row[0] = employeesList.get(i).getNo();
+            row[1] = employeesList.get(i).getName();
+            row[2] = employeesList.get(i).getId();
+            row[3] = employeesList.get(i).getJob();
+            row[4] = employeesList.get(i).getWage();
+            
+            model.addRow(row);
         }
-    }//GEN-LAST:event_txtJobFocusLost
-
-    private void txtSalaryFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSalaryFocusGained
-        if(txtSalary.getText().equals("จำนวนเงิน"))
-       {
-           txtSalary.setText("");
-           txtSalary.setForeground(new Color(0, 0, 0));
-       }
-    }//GEN-LAST:event_txtSalaryFocusGained
-
-    private void txtSalaryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSalaryFocusLost
-        if (txtSalary.getText().length()==0) {
-            txtSalary.setText("จำนวนเงิน");
-            txtSalary.setForeground(new Color(123, 123, 123));
-        }
-    }//GEN-LAST:event_txtSalaryFocusLost
-
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Add_dealer_information;
-    private javax.swing.JLabel JAddress;
-    private javax.swing.JLabel JId;
-    private javax.swing.JLabel JJob;
-    private javax.swing.JLabel JName;
-    private javax.swing.JLabel JPhone;
-    private javax.swing.JLabel JSalary;
-    private javax.swing.JLabel JSname;
+    private javax.swing.JButton Save_bt1;
     private javax.swing.JLabel Topic;
-    private javax.swing.JScrollPane address_box;
     private javax.swing.JLabel back_button;
-    private javax.swing.JButton btnImg;
-    private javax.swing.JButton btnSave;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JLabel picture_box;
-    private javax.swing.JTextArea txtAddress;
-    private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtJob;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPhone;
-    private javax.swing.JTextField txtSalary;
-    private javax.swing.JTextField txtSname;
+    private javax.swing.JLabel back_button1;
+    private javax.swing.JButton delete_bt;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable;
+    private javax.swing.JTextField search__box;
     // End of variables declaration//GEN-END:variables
 }

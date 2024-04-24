@@ -1,24 +1,21 @@
 package component;
 
-import java.awt.Component;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import raven.cell.TableActionCellEditorAdd;
-import raven.cell.TableActionCellRenderAdd;
-import raven.cell.TableActionEventAdd;
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import karnkha.DB;
+import karnkha.InventoryInfo;
 
-public class Buy_History extends javax.swing.JPanel {
+public class SellHistory extends javax.swing.JPanel {
+    
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
 
-    public Buy_History() {
-    initComponents();
-       TableActionEventAdd event = new TableActionEventAdd() {
-            @Override
-            public void onAdd(int row) {
-                System.out.println("Edit row : " + row);
-            }
-
-        };
+    public SellHistory() {
+        initComponents();
+        con = DB.mycon();
+        showProductsInTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -27,13 +24,13 @@ public class Buy_History extends javax.swing.JPanel {
 
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
         txtCustomer1 = new javax.swing.JTextField();
         Topic2 = new javax.swing.JLabel();
         Topic3 = new javax.swing.JLabel();
         txtCustomer2 = new javax.swing.JTextField();
         btnNext = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -48,43 +45,6 @@ public class Buy_History extends javax.swing.JPanel {
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Topic.setText("ประวัติการซื้อสินค้า");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
-
-        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"1", null, "A", "001", null, null, null},
-                {"2", null, "B", "002", null, null, null},
-                {"3", null, "C", "003", null, null, null},
-                {"4", null, "D", "004", null, null, null}
-            },
-            new String [] {
-                "No.", "Date", "ProductID", "Product", "Product Type", "Quantity", "Price"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, true, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        table.setRowHeight(40);
-        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
-        table.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(table);
-        if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(0).setResizable(false);
-            table.getColumnModel().getColumn(2).setResizable(false);
-            table.getColumnModel().getColumn(3).setMinWidth(500);
-            table.getColumnModel().getColumn(3).setMaxWidth(500);
-            table.getColumnModel().getColumn(4).setResizable(false);
-            table.getColumnModel().getColumn(5).setResizable(false);
-            table.getColumnModel().getColumn(6).setResizable(false);
-        }
-
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1180, 560));
 
         txtCustomer1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtCustomer1.setForeground(new java.awt.Color(123, 123, 123));
@@ -130,6 +90,36 @@ public class Buy_History extends javax.swing.JPanel {
             }
         });
         add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 70, 110, 30));
+
+        jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "No", "Date", "Product ID", "Product Name", "Category", "Quantity", "Price"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable.setRowHeight(50);
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTable);
+
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtCustomer1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomer1FocusGained
@@ -152,6 +142,68 @@ public class Buy_History extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNextActionPerformed
 
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        // TODO add your handling code here:
+        int index = jTable.getSelectedRow();
+        position = index;
+    }//GEN-LAST:event_jTableMouseClicked
+
+    ArrayList<InventoryInfo> productsArray = new ArrayList<>();
+    
+    int position = 0;
+    public ArrayList<InventoryInfo> getProductsList()
+    {
+        ArrayList<InventoryInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `sales`";
+        
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            st = DB.getConnection().createStatement();
+            rs = st.executeQuery(selectQuery);
+            InventoryInfo product;
+            
+            while(rs.next())
+            {
+                product = new InventoryInfo(rs.getInt("No"), rs.getInt("Id"),
+                                      rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
+                                      rs.getInt("Quantity"), rs.getDouble("Price"));
+                list.add(product);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        productsArray = list;
+        return list;
+        
+    }
+    
+    public void showProductsInTable()
+    {
+        ArrayList<InventoryInfo> productsList = getProductsList();
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        
+        model.setRowCount(0);
+        
+        Object[] row = new Object[7];
+        
+        for(int i = 0; i < productsList.size(); i++)
+        {
+            row[0] = productsList.get(i).getNo();
+            row[1] = productsList.get(i).getDate();
+            row[2] = productsList.get(i).getId();
+            row[3] = productsList.get(i).getName();
+            row[4] = productsList.get(i).getCategory();
+            row[5] = productsList.get(i).getQuantity();
+            row[6] = productsList.get(i).getPrice();
+            
+            model.addRow(row);
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
@@ -159,8 +211,8 @@ public class Buy_History extends javax.swing.JPanel {
     private javax.swing.JLabel Topic3;
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnNext;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable table;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextField txtCustomer1;
     private javax.swing.JTextField txtCustomer2;
     // End of variables declaration//GEN-END:variables

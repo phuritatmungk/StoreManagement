@@ -1,10 +1,21 @@
 package component;
 
+import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import karnkha.DB;
+import karnkha.ExpenseInfo;
 
 public class Sales_Report extends javax.swing.JPanel {
 
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+    
     public Sales_Report() {
-    initComponents();
+        initComponents();
+        con = DB.mycon();
+        showProductsInTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -22,10 +33,10 @@ public class Sales_Report extends javax.swing.JPanel {
         Topic3 = new javax.swing.JLabel();
         txtDate1 = new javax.swing.JTextField();
         Topic4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
         Topic5 = new javax.swing.JLabel();
         txtSum2 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -133,42 +144,6 @@ public class Sales_Report extends javax.swing.JPanel {
         Topic4.setText("เลือกวันที่:");
         add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 660, -1, -1));
 
-        table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"1", "A", "001", null, null, null, null},
-                {"2", "B", "002", null, null, null, null},
-                {"3", "C", "003", null, null, null, null},
-                {"4", "D", "004", null, null, null, null}
-            },
-            new String [] {
-                "Date", "Product ID", "Product", "Product Type", "Cost", "Quantity", "Total"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        table.setRowHeight(40);
-        table.setSelectionBackground(new java.awt.Color(56, 138, 112));
-        table.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(table);
-        if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(0).setResizable(false);
-            table.getColumnModel().getColumn(1).setResizable(false);
-            table.getColumnModel().getColumn(2).setMinWidth(500);
-            table.getColumnModel().getColumn(2).setMaxWidth(500);
-            table.getColumnModel().getColumn(3).setResizable(false);
-            table.getColumnModel().getColumn(6).setResizable(false);
-        }
-
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
-
         Topic5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic5.setText("จำนวนสินค้าออกจากคลังทั้งหมด");
         add(Topic5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 740, -1, -1));
@@ -191,6 +166,36 @@ public class Sales_Report extends javax.swing.JPanel {
             }
         });
         add(txtSum2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 660, 200, 70));
+
+        jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Date", "Product ID", "Product Name", "Category", "Cost", "Quantity", "Total"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable.setRowHeight(50);
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable);
+
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
@@ -249,6 +254,68 @@ public class Sales_Report extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSum2ActionPerformed
 
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+        // TODO add your handling code here:
+        int index = jTable.getSelectedRow();
+        position = index;
+    }//GEN-LAST:event_jTableMouseClicked
+
+    ArrayList<ExpenseInfo> salesArray = new ArrayList<>();
+    
+    int position = 0;
+    public ArrayList<ExpenseInfo> getProductsList()
+    {
+        ArrayList<ExpenseInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `reportsales`";
+        
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            st = DB.getConnection().createStatement();
+            rs = st.executeQuery(selectQuery);
+            ExpenseInfo sales;
+            
+            while(rs.next())
+            {
+                sales = new ExpenseInfo(rs.getString("Date"), rs.getInt("Id"),
+                                      rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
+                                      rs.getInt("Quantity"), rs.getDouble("Expense"), rs.getDouble("Total"));
+                list.add(sales);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        salesArray = list;
+        return list;
+        
+    }
+    
+    public void showProductsInTable()
+    {
+        ArrayList<ExpenseInfo> salessList = getProductsList();
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        
+        model.setRowCount(0);
+        
+        Object[] row = new Object[7];
+        
+        for(int i = 0; i < salessList.size(); i++)
+        {
+            row[0] = salessList.get(i).getDate();
+            row[1] = salessList.get(i).getId();
+            row[2] = salessList.get(i).getList();
+            row[3] = salessList.get(i).getCategory();
+            row[4] = salessList.get(i).getCost();
+            row[5] = salessList.get(i).getQuantity();
+            row[6] = salessList.get(i).getTotal();
+            
+            model.addRow(row);
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
@@ -260,8 +327,8 @@ public class Sales_Report extends javax.swing.JPanel {
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable table;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextField txtDate1;
     private javax.swing.JTextField txtDate2;
     private javax.swing.JTextField txtSum;
