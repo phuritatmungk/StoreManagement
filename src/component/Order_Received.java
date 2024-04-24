@@ -1,5 +1,7 @@
 package component;
 
+import Com_Table.Table_OrderRec;
+import java.awt.Component;
 import raven.cell.TableActionCellEditorEdit;
 import raven.cell.TableActionCellRenderEdit;
 import raven.cell.TableActionEventEdit;
@@ -30,10 +32,22 @@ public class Order_Received extends javax.swing.JPanel {
         jTable.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditorEdit(event));
     }
 
+     public void showForm(Component com) {
+        body.add(com);
+        body.repaint();
+        body.revalidate();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrame1 = new javax.swing.JFrame();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        Table_Receive_Pro = new javax.swing.JTable();
+        jSeparator11 = new javax.swing.JSeparator();
+        body = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         search__box = new javax.swing.JTextField();
@@ -42,6 +56,50 @@ public class Order_Received extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+
+        jFrame1.setPreferredSize(new java.awt.Dimension(1550, 800));
+        jFrame1.setSize(new java.awt.Dimension(1550, 800));
+        jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Table_Receive_Pro.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "No.", "Product", "Quantity", "Product Cost", "Product Type", "All Prices"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Table_Receive_Pro.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(Table_Receive_Pro);
+
+        jFrame1.getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 40, 940, 350));
+
+        jSeparator11.setForeground(new java.awt.Color(0, 0, 0));
+        jSeparator11.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jSeparator11.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
+        jFrame1.getContentPane().add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 10, 740));
+
+        body.setBackground(new java.awt.Color(245, 245, 245));
+        body.setPreferredSize(new java.awt.Dimension(590, 800));
+        body.setLayout(new java.awt.BorderLayout());
+        jFrame1.getContentPane().add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 800));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1550, 800));
+        jFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -138,7 +196,8 @@ public class Order_Received extends javax.swing.JPanel {
     }//GEN-LAST:event_Save_bt1ActionPerformed
 
     private void Save_bt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Save_bt1MouseClicked
-
+        jFrame1.setVisible(true);
+        showForm(new Table_OrderRec());
     }//GEN-LAST:event_Save_bt1MouseClicked
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
@@ -206,11 +265,17 @@ public class Order_Received extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Save_bt1;
+    private javax.swing.JTable Table_Receive_Pro;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button1;
+    public static javax.swing.JPanel body;
     private javax.swing.JButton delete_bt;
+    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator11;
     private javax.swing.JTable jTable;
     private javax.swing.JTextField search__box;
     // End of variables declaration//GEN-END:variables
