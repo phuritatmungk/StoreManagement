@@ -36,6 +36,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     private void initComponents() {
 
         jFrame1 = new javax.swing.JFrame();
+        jTextField2 = new javax.swing.JTextField();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         back_button = new javax.swing.JLabel();
@@ -49,6 +50,10 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         jFrame1.setAlwaysOnTop(true);
         jFrame1.setLocationByPlatform(true);
         jFrame1.setSize(new java.awt.Dimension(1280, 720));
+        jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jFrame1.getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, -1, -1));
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -126,11 +131,6 @@ public class Manage_Warehouse extends javax.swing.JPanel {
             }
         });
         jTable.setRowHeight(50);
-        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
@@ -151,12 +151,6 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     private void Save_bt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Save_bt1MouseClicked
 
     }//GEN-LAST:event_Save_bt1MouseClicked
-
-    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
-        // TODO add your handling code here:
-        int index = jTable.getSelectedRow();
-        position = index;
-    }//GEN-LAST:event_jTableMouseClicked
 
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     
@@ -225,6 +219,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     private javax.swing.JFrame jFrame1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField search__box;
     // End of variables declaration//GEN-END:variables
 
