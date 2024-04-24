@@ -23,17 +23,25 @@ public class Repair_History extends javax.swing.JPanel {
             @Override
             public void onView(int row) {
                 System.out.println("View row : " + row);
+                jFrame1.setVisible(true);
             }
 
         };
-        jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderView());
-        jTable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorView(event));
+        jTable.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRenderView());
+        jTable.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditorView(event));
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrame1 = new javax.swing.JFrame();
+        jPanel1 = new javax.swing.JPanel();
+        Label_Aprices1 = new javax.swing.JLabel();
+        Company_label = new javax.swing.JLabel();
+        ScrollPane_Note = new javax.swing.JScrollPane();
+        Table_Order_Record1 = new javax.swing.JTable();
+        All_prices = new javax.swing.JLabel();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         txtCustomer1 = new javax.swing.JTextField();
@@ -43,6 +51,58 @@ public class Repair_History extends javax.swing.JPanel {
         btnNext = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+
+        jFrame1.setPreferredSize(new java.awt.Dimension(1550, 800));
+        jFrame1.setSize(new java.awt.Dimension(1550, 800));
+        jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Label_Aprices1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Label_Aprices1.setText("ราคารวมทั้งหมด :");
+        jPanel1.add(Label_Aprices1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 680, -1, -1));
+
+        Company_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        Company_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Company_label.setText("รายละเอียดประวัติการซ่อมสินค้า");
+        jPanel1.add(Company_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 1440, -1));
+
+        Table_Order_Record1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "No.", "ID Product", "Product", "Product Type", "Quantity", "Prices"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Table_Order_Record1.getTableHeader().setReorderingAllowed(false);
+        Table_Order_Record1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Table_Order_Record1MouseClicked(evt);
+            }
+        });
+        ScrollPane_Note.setViewportView(Table_Order_Record1);
+
+        jPanel1.add(ScrollPane_Note, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 1440, 590));
+
+        All_prices.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        All_prices.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        All_prices.setText("00.00");
+        jPanel1.add(All_prices, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 680, 250, -1));
+
+        jFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -160,6 +220,10 @@ public class Repair_History extends javax.swing.JPanel {
         position = index;
     }//GEN-LAST:event_jTableMouseClicked
 
+    private void Table_Order_Record1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_Order_Record1MouseClicked
+
+    }//GEN-LAST:event_Table_Order_Record1MouseClicked
+
     ArrayList<RepairRequest> requestArray = new ArrayList<>();
     
     int position = 0;
@@ -219,11 +283,18 @@ public class Repair_History extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel All_prices;
+    private javax.swing.JLabel Company_label;
+    private javax.swing.JLabel Label_Aprices1;
+    private javax.swing.JScrollPane ScrollPane_Note;
+    private javax.swing.JTable Table_Order_Record1;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel Topic2;
     private javax.swing.JLabel Topic3;
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnNext;
+    private javax.swing.JFrame jFrame1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
     private javax.swing.JTextField txtCustomer1;

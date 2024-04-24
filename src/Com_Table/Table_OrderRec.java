@@ -81,7 +81,7 @@ public class Table_OrderRec extends javax.swing.JPanel {
 
         Date_Text1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         Date_Text1.setText("ชื่อบริษัท");
-        add(Date_Text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 80, -1));
+        add(Date_Text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 130, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
