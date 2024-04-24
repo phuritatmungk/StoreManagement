@@ -1,7 +1,8 @@
 package component;
 
 import java.awt.Color;
-
+import karnkha.Main;
+import component.Manage_Warehouse;
 public class EditProduct extends javax.swing.JPanel {
 
     public EditProduct() {
@@ -46,6 +47,11 @@ public class EditProduct extends javax.swing.JPanel {
         back_button.setForeground(new java.awt.Color(139, 139, 139));
         back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/back-button.png"))); // NOI18N
+        back_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back_buttonMouseClicked(evt);
+            }
+        });
         add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -296,6 +302,13 @@ public class EditProduct extends javax.swing.JPanel {
             txtAmount.setForeground(new Color(0, 0, 0));
         }
     }//GEN-LAST:event_txtAmountFocusGained
+
+    private void back_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_buttonMouseClicked
+        Main.body.removeAll();
+        Main.body.add(new Manage_Warehouse());
+        Main.body.repaint();
+        Main.body.revalidate();
+    }//GEN-LAST:event_back_buttonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

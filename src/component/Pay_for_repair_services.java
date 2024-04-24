@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.InventoryInfo;
+import karnkha.Main;
+import component.Pay_for_repair_services2;
 
 public class Pay_for_repair_services extends javax.swing.JPanel {
 
@@ -48,6 +50,11 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
         back_button1.setForeground(new java.awt.Color(139, 139, 139));
         back_button1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/back-button.png"))); // NOI18N
+        back_button1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back_button1MouseClicked(evt);
+            }
+        });
         add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -121,7 +128,10 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        // TODO add your handling code here:
+        Main.body.removeAll();
+        Main.body.add(new Pay_for_repair_services2());
+        Main.body.repaint();
+        Main.body.revalidate();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void txtSearch1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch1FocusGained
@@ -141,6 +151,10 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
         int index = jTable.getSelectedRow();
         position = index;
     }//GEN-LAST:event_jTableMouseClicked
+
+    private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
+
+    }//GEN-LAST:event_back_button1MouseClicked
 
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     

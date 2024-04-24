@@ -1,7 +1,12 @@
 package component;
 
 import java.awt.Color;
-
+import karnkha.Main;
+import component.Revenue_Report;
+import component.Expense_Report;
+import component.Inventory_Report;
+import component.Sales_Report;
+import component.Order_Report;
 public class ReportMenu extends javax.swing.JPanel {
 
     public ReportMenu() {
@@ -35,6 +40,11 @@ public class ReportMenu extends javax.swing.JPanel {
         icon2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         icon2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         icon2.setName(""); // NOI18N
+        icon2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon2MouseClicked(evt);
+            }
+        });
         add(icon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -48,6 +58,11 @@ public class ReportMenu extends javax.swing.JPanel {
         icon3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         icon3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         icon3.setName(""); // NOI18N
+        icon3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon3MouseClicked(evt);
+            }
+        });
         add(icon3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 160, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -66,6 +81,11 @@ public class ReportMenu extends javax.swing.JPanel {
         icon4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         icon4.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         icon4.setName(""); // NOI18N
+        icon4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon4MouseClicked(evt);
+            }
+        });
         add(icon4, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 160, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -79,6 +99,11 @@ public class ReportMenu extends javax.swing.JPanel {
         icon5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         icon5.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         icon5.setName(""); // NOI18N
+        icon5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon5MouseClicked(evt);
+            }
+        });
         add(icon5, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 430, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -105,8 +130,39 @@ public class ReportMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void icon7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon7MouseClicked
-        // TODO add your handling code here:
+        Main.body.removeAll();
+        Main.body.add(new Sales_Report());
+        Main.body.repaint();
+        Main.body.revalidate();
     }//GEN-LAST:event_icon7MouseClicked
+
+    private void icon2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon2MouseClicked
+        Main.body.removeAll();
+        Main.body.add(new Revenue_Report());
+        Main.body.repaint();
+        Main.body.revalidate();
+    }//GEN-LAST:event_icon2MouseClicked
+
+    private void icon3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon3MouseClicked
+        Main.body.removeAll();
+        Main.body.add(new Expense_Report());
+        Main.body.repaint();
+        Main.body.revalidate();
+    }//GEN-LAST:event_icon3MouseClicked
+
+    private void icon4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon4MouseClicked
+        Main.body.removeAll();
+        Main.body.add(new Inventory_Report());
+        Main.body.repaint();
+        Main.body.revalidate();
+    }//GEN-LAST:event_icon4MouseClicked
+
+    private void icon5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon5MouseClicked
+        Main.body.removeAll();
+        Main.body.add(new Order_Report());
+        Main.body.repaint();
+        Main.body.revalidate();
+    }//GEN-LAST:event_icon5MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

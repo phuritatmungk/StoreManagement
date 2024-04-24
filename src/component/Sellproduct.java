@@ -10,7 +10,7 @@ import raven.cell.TableActionCellEditorAdd;
 import raven.cell.TableActionCellRenderAdd;
 import raven.cell.TableActionEventAdd;
 import karnkha.Main;
-import component.AddProduct;
+import component.Sellproduct2;
 import java.awt.PopupMenu;
 
 public class Sellproduct extends javax.swing.JPanel {
@@ -149,7 +149,7 @@ public class Sellproduct extends javax.swing.JPanel {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         Main.body.removeAll();
-        Main.body.add(new AddProduct());
+        Main.body.add(new Sellproduct2());
         Main.body.repaint();
         Main.body.revalidate();
     }//GEN-LAST:event_btnNextActionPerformed

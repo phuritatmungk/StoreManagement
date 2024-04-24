@@ -1,6 +1,7 @@
 package component;
 import java.awt.Color;
-
+import karnkha.Main;
+import component.Manage_Employee;
 
 public class Edit_employee_info extends javax.swing.JPanel {
 
@@ -273,7 +274,10 @@ public class Edit_employee_info extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSnameFocusLost
 
     private void back_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_buttonMouseClicked
-        // TODO add your handling code here:
+        Main.body.removeAll();
+        Main.body.add(new Manage_Employee());
+        Main.body.repaint();
+        Main.body.revalidate();
     }//GEN-LAST:event_back_buttonMouseClicked
 
     private void txtPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneFocusGained

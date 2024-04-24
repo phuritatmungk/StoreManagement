@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.InventoryInfo;
+import karnkha.Main;
 import raven.cell.TableActionCellEditorEdit;
 import raven.cell.TableActionCellRenderEdit;
 import raven.cell.TableActionEventEdit;
+import component.AddProduct;
+import component.EditProduct;
 
+import java.awt.Color;
 public class Manage_Warehouse extends javax.swing.JPanel {
     
     Connection con = null;
@@ -24,7 +28,10 @@ public class Manage_Warehouse extends javax.swing.JPanel {
             @Override
             public void onEdit(int row) {
                 System.out.println("Edit row :" + row);
-                jFrame1.setVisible(true);
+                Main.body.removeAll();
+                Main.body.add(new EditProduct());
+                Main.body.repaint();
+                Main.body.revalidate();
             }
         };
         jTable.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderEdit());
@@ -35,25 +42,14 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFrame1 = new javax.swing.JFrame();
-        jTextField2 = new javax.swing.JTextField();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         back_button = new javax.swing.JLabel();
         search__box = new javax.swing.JTextField();
-        Save_bt1 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         delete_bt = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
-
-        jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jFrame1.setAlwaysOnTop(true);
-        jFrame1.setLocationByPlatform(true);
-        jFrame1.setSize(new java.awt.Dimension(1280, 720));
-        jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jFrame1.getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, -1, -1));
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -87,19 +83,19 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         });
         add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 50, 300, 30));
 
-        Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Save_bt1.setText("เพิ่ม");
-        Save_bt1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAdd.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnAdd.setText("เพิ่ม");
+        btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Save_bt1MouseClicked(evt);
+                btnAddMouseClicked(evt);
             }
         });
-        Save_bt1.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Save_bt1ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
-        add(Save_bt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 640, 130, 50));
+        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 640, 130, 50));
 
         delete_bt.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         delete_bt.setText("ลบ");
@@ -144,13 +140,16 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_delete_btActionPerformed
 
-    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        Main.body.removeAll();
+        Main.body.add(new AddProduct());
+        Main.body.repaint();
+        Main.body.revalidate();
+    }//GEN-LAST:event_btnAddActionPerformed
 
-    }//GEN-LAST:event_Save_bt1ActionPerformed
+    private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
 
-    private void Save_bt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Save_bt1MouseClicked
-
-    }//GEN-LAST:event_Save_bt1MouseClicked
+    }//GEN-LAST:event_btnAddMouseClicked
 
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     
@@ -205,21 +204,19 @@ public class Manage_Warehouse extends javax.swing.JPanel {
             row[6] = productsList.get(i).getPrice();
             
             model.addRow(row);
-        }
-        
+        }      
     }
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Save_bt1;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button;
     private javax.swing.JLabel back_button1;
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton delete_bt;
-    private javax.swing.JFrame jFrame1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField search__box;
     // End of variables declaration//GEN-END:variables
 

@@ -1,7 +1,8 @@
 package component;
 
 import java.awt.Color;
-
+import karnkha.Main;
+import component.Manage_Warehouse;
 public class AddProduct extends javax.swing.JPanel {
 
     public AddProduct() {
@@ -30,7 +31,7 @@ public class AddProduct extends javax.swing.JPanel {
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
         jCost_price = new javax.swing.JLabel();
-        txtCost_price = new javax.swing.JTextField();
+        txtCost = new javax.swing.JTextField();
         txtPrice = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
         jPrice = new javax.swing.JLabel();
@@ -46,6 +47,11 @@ public class AddProduct extends javax.swing.JPanel {
         back_button.setForeground(new java.awt.Color(139, 139, 139));
         back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/back-button.png"))); // NOI18N
+        back_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back_buttonMouseClicked(evt);
+            }
+        });
         add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -96,7 +102,7 @@ public class AddProduct extends javax.swing.JPanel {
         picture_box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         picture_box.setForeground(new java.awt.Color(123, 123, 123));
         picture_box.setText("                       รูปสินค้า");
-        picture_box.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        picture_box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         add(picture_box, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 190, 330, 270));
 
         btnPic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -146,19 +152,19 @@ public class AddProduct extends javax.swing.JPanel {
         jCost_price.setText("ราคาต้นทุน");
         add(jCost_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, -1, -1));
 
-        txtCost_price.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtCost_price.setForeground(new java.awt.Color(123, 123, 123));
-        txtCost_price.setText("0");
-        txtCost_price.setBorder(null);
-        txtCost_price.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtCost.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtCost.setForeground(new java.awt.Color(123, 123, 123));
+        txtCost.setText("0");
+        txtCost.setBorder(null);
+        txtCost.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCost_priceFocusGained(evt);
+                txtCostFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCost_priceFocusLost(evt);
+                txtCostFocusLost(evt);
             }
         });
-        add(txtCost_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 370, 30));
+        add(txtCost, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 370, 30));
 
         txtPrice.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtPrice.setForeground(new java.awt.Color(123, 123, 123));
@@ -228,12 +234,12 @@ public class AddProduct extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtTypeFocusLost
 
-    private void txtCost_priceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCost_priceFocusLost
-        if (txtCost_price.getText ().length() ==0){
-            txtCost_price.setText ("0") ;
-            txtCost_price.setForeground(new Color(123, 123, 123));
+    private void txtCostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCostFocusLost
+        if (txtCost.getText ().length() ==0){
+            txtCost.setText ("0") ;
+            txtCost.setForeground(new Color(123, 123, 123));
         }
-    }//GEN-LAST:event_txtCost_priceFocusLost
+    }//GEN-LAST:event_txtCostFocusLost
 
     private void txtPriceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPriceFocusLost
         if (txtPrice.getText ().length() ==0){
@@ -273,13 +279,13 @@ public class AddProduct extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtTypeFocusGained
 
-    private void txtCost_priceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCost_priceFocusGained
-        if (txtCost_price.getText().equals("0"))
+    private void txtCostFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCostFocusGained
+        if (txtCost.getText().equals("0"))
         {
-            txtCost_price.setText("");
-            txtCost_price.setForeground(new Color(0, 0, 0));
+            txtCost.setText("");
+            txtCost.setForeground(new Color(0, 0, 0));
         }
-    }//GEN-LAST:event_txtCost_priceFocusGained
+    }//GEN-LAST:event_txtCostFocusGained
 
     private void txtPriceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPriceFocusGained
         if (txtPrice.getText().equals("0"))
@@ -296,6 +302,13 @@ public class AddProduct extends javax.swing.JPanel {
             txtAmount.setForeground(new Color(0, 0, 0));
         }
     }//GEN-LAST:event_txtAmountFocusGained
+
+    private void back_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_buttonMouseClicked
+        Main.body.removeAll();
+        Main.body.add(new Manage_Warehouse());
+        Main.body.repaint();
+        Main.body.revalidate();
+    }//GEN-LAST:event_back_buttonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -318,7 +331,7 @@ public class AddProduct extends javax.swing.JPanel {
     private javax.swing.JLabel jType;
     private javax.swing.JLabel picture_box;
     private javax.swing.JTextField txtAmount;
-    private javax.swing.JTextField txtCost_price;
+    private javax.swing.JTextField txtCost;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtProductid;

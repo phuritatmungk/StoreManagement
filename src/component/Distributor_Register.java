@@ -1,6 +1,7 @@
 package component;
 import java.awt.Color;
-
+import component.Manage_Distributor;
+import karnkha.Main;
 
 public class Distributor_Register extends javax.swing.JPanel {
 
@@ -214,7 +215,10 @@ public class Distributor_Register extends javax.swing.JPanel {
     }//GEN-LAST:event_txtCompanyFocusLost
 
     private void back_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_buttonMouseClicked
-        // TODO add your handling code here:
+        Main.body.removeAll();
+        Main.body.add(new Manage_Distributor());
+        Main.body.repaint();
+        Main.body.revalidate();
     }//GEN-LAST:event_back_buttonMouseClicked
 
     private void txtPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneFocusGained

@@ -7,7 +7,7 @@ import component.Manage_Employee;
 import component.ReportMenu;
 import component.Sellproduct;
 import component.SellHistory;
-import component.Pay_for_repair_services3;
+import component.Pay_for_repair_services;
 import component.Repair_List_Page;
 import component.Manage_Warehouse;
 import component.Order_Record;
@@ -34,7 +34,7 @@ public class Main extends javax.swing.JFrame {
                     showForm(new Sellproduct());
                 } 
                 else if (index == 1) {
-                    showForm(new Pay_for_repair_services3());
+                    showForm(new Pay_for_repair_services());
                 }
                 else if (index == 2) {
                     showForm(new Repair_List_Page());

@@ -10,6 +10,8 @@ import raven.cell.TableActionCellRenderEditView;
 import raven.cell.TableActionEventEditView;
 import karnkha.RepairRequest;
 import karnkha.DB;
+import karnkha.Main;
+import component.Maintenance;
 
 public class Repair_List_Page extends javax.swing.JPanel {
     
@@ -65,8 +67,8 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jTextField_Repairman = new javax.swing.JTextField();
         jTextField_Id = new javax.swing.JTextField();
         jTextField_Item = new javax.swing.JTextField();
-        jTextField_Status = new javax.swing.JTextField();
         jTextField_Behavior = new javax.swing.JTextField();
+        jComboBox_Status = new javax.swing.JComboBox<>();
         jFrame2 = new javax.swing.JFrame();
         jPanel2 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -85,12 +87,12 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jTextField_Repairman2 = new javax.swing.JTextField();
         jTextField_Id2 = new javax.swing.JTextField();
         jTextField_Item2 = new javax.swing.JTextField();
-        jComboBox_Status = new javax.swing.JComboBox<>();
+        jComboBox_Status2 = new javax.swing.JComboBox<>();
         jTextField_Behavior2 = new javax.swing.JTextField();
         btnEdit = new javax.swing.JButton();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        Save_bt1 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         delete_bt = new javax.swing.JButton();
         Status_Combo = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -102,7 +104,6 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jFrame1.setBackground(new java.awt.Color(255, 255, 255));
         jFrame1.setLocation(new java.awt.Point(800, 350));
         jFrame1.setMinimumSize(new java.awt.Dimension(440, 440));
-        jFrame1.setPreferredSize(new java.awt.Dimension(440, 440));
         jFrame1.setResizable(false);
         jFrame1.setSize(new java.awt.Dimension(440, 440));
         jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -202,14 +203,6 @@ public class Repair_List_Page extends javax.swing.JPanel {
         });
         jPanel1.add(jTextField_Item, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 140, 25));
 
-        jTextField_Status.setEditable(false);
-        jTextField_Status.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField_Status.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTextField_Status.setBorder(null);
-        jTextField_Status.setFocusable(false);
-        jTextField_Status.setVerifyInputWhenFocusTarget(false);
-        jPanel1.add(jTextField_Status, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 140, 25));
-
         jTextField_Behavior.setEditable(false);
         jTextField_Behavior.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_Behavior.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -217,13 +210,17 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jTextField_Behavior.setFocusable(false);
         jPanel1.add(jTextField_Behavior, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 330, 120));
 
+        jComboBox_Status.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_Status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "กำลังดำเนินการ", "เสร็จสิ้น" }));
+        jComboBox_Status.setEnabled(false);
+        jPanel1.add(jComboBox_Status, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 140, 30));
+
         jFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 630));
 
         jFrame2.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         jFrame2.setAlwaysOnTop(true);
         jFrame2.setLocation(new java.awt.Point(800, 350));
         jFrame2.setMinimumSize(new java.awt.Dimension(440, 440));
-        jFrame2.setPreferredSize(new java.awt.Dimension(440, 500));
         jFrame2.setResizable(false);
         jFrame2.setSize(new java.awt.Dimension(440, 500));
         jFrame2.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -267,37 +264,30 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jLabel21.setText("สถานะสินค้า :");
         jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 223, -1, -1));
 
-        jTextField_No2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_No2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_No2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jTextField_No2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 140, 25));
 
-        jTextField_Date2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_Date2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Date2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jTextField_Date2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 140, 25));
 
-        jTextField_Name2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_Name2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Name2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jTextField_Name2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 140, 25));
 
-        jTextField_Phone2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_Phone2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Phone2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jTextField_Phone2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 140, 25));
 
-        jTextField_Repairman2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_Repairman2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Repairman2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jTextField_Repairman2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 140, 25));
 
-        jTextField_Id2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_Id2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Id2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jTextField_Id2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 140, 25));
 
-        jTextField_Item2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_Item2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Item2.setForeground(new java.awt.Color(255, 0, 51));
         jTextField_Item2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -308,10 +298,9 @@ public class Repair_List_Page extends javax.swing.JPanel {
         });
         jPanel2.add(jTextField_Item2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 140, 25));
 
-        jComboBox_Status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox_Status, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 140, 30));
+        jComboBox_Status2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(jComboBox_Status2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 140, 30));
 
-        jTextField_Behavior2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_Behavior2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Behavior2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jTextField_Behavior2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 330, 120));
@@ -344,19 +333,19 @@ public class Repair_List_Page extends javax.swing.JPanel {
         Topic.setText("รับซ่อมอุปกรณ์และสินค้าเกษตร");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, -1, -1));
 
-        Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Save_bt1.setText("เพิ่ม");
-        Save_bt1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAdd.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnAdd.setText("เพิ่ม");
+        btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Save_bt1MouseClicked(evt);
+                btnAddMouseClicked(evt);
             }
         });
-        Save_bt1.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Save_bt1ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
-        add(Save_bt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 640, 130, 50));
+        add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 640, 130, 50));
 
         delete_bt.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         delete_bt.setText("ลบ");
@@ -411,13 +400,16 @@ public class Repair_List_Page extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_delete_btActionPerformed
 
-    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 
-    }//GEN-LAST:event_Save_bt1ActionPerformed
+    }//GEN-LAST:event_btnAddActionPerformed
 
-    private void Save_bt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Save_bt1MouseClicked
-
-    }//GEN-LAST:event_Save_bt1MouseClicked
+    private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
+        Main.body.removeAll();
+        Main.body.add(new Maintenance());
+        Main.body.repaint();
+        Main.body.revalidate();
+    }//GEN-LAST:event_btnAddMouseClicked
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
@@ -443,7 +435,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         String item = jTextField_Item2.getText();
         Integer id = Integer.valueOf(jTextField_Id2.getText());
         String repairman =  jTextField_Repairman2.getText();
-        String status =  jComboBox_Status.getSelectedItem().toString();
+        String status =  jComboBox_Status2.getSelectedItem().toString();
  
         String updateQuery = "UPDATE `request` SET `Date`=?,`Name`=?,`Phone`=?,`Item`=? ,`Id`=? ,`Repairman`=? ,`Status`=? WHERE `No`=? ";
         try {
@@ -556,7 +548,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jTextField_Item2.setText(requestArray.get(index).getItem());
         jTextField_Id2.setText(requestArray.get(index).getId().toString());
         jTextField_Repairman2.setText(requestArray.get(index).getRepairman());
-        jComboBox_Status.setSelectedItem(requestArray.get(index).getStatus());
+        jComboBox_Status2.setSelectedItem(requestArray.get(index).getStatus());
         jTextField_Behavior2.setText(requestArray.get(index).getName());
     }
         public boolean checkEmptyFields()
@@ -580,13 +572,14 @@ public class Repair_List_Page extends javax.swing.JPanel {
 
      }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Save_bt1;
     private javax.swing.JComboBox<String> Status_Combo;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button1;
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton delete_bt;
     private javax.swing.JComboBox<String> jComboBox_Status;
+    private javax.swing.JComboBox<String> jComboBox_Status2;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
@@ -628,7 +621,6 @@ public class Repair_List_Page extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField_Phone2;
     private javax.swing.JTextField jTextField_Repairman;
     private javax.swing.JTextField jTextField_Repairman2;
-    private javax.swing.JTextField jTextField_Status;
     // End of variables declaration//GEN-END:variables
 
     private void dispose() {

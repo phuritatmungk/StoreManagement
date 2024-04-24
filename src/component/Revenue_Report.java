@@ -4,7 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
+import karnkha.Main;
 import karnkha.RevenueInfo;
+import component.ReportMenu;
 
 public class Revenue_Report extends javax.swing.JPanel {
 
@@ -44,6 +46,11 @@ public class Revenue_Report extends javax.swing.JPanel {
         back_button1.setForeground(new java.awt.Color(139, 139, 139));
         back_button1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/back-button.png"))); // NOI18N
+        back_button1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back_button1MouseClicked(evt);
+            }
+        });
         add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -222,6 +229,13 @@ public class Revenue_Report extends javax.swing.JPanel {
         int index = jTable.getSelectedRow();
         position = index;
     }//GEN-LAST:event_jTableMouseClicked
+
+    private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
+        Main.body.removeAll();
+        Main.body.add(new ReportMenu());
+        Main.body.repaint();
+        Main.body.revalidate();
+    }//GEN-LAST:event_back_button1MouseClicked
 
     ArrayList<RevenueInfo> revenueArray = new ArrayList<>();
     

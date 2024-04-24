@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.DistributorInfo;
-
+import karnkha.Main;
+import component.Distributor_Register;
+import component.Edit_dealer_info;
 public class Manage_Distributor extends javax.swing.JPanel {
 
     Connection con = null;
@@ -23,6 +25,11 @@ public class Manage_Distributor extends javax.swing.JPanel {
             @Override
             public void onEdit(int row) {
                 System.out.println("Edit row : " + row);
+                Main.body.removeAll();
+                Main.body.add(new Edit_dealer_info());
+                Main.body.repaint();
+                Main.body.revalidate();
+                
             }
 
         };
@@ -142,7 +149,10 @@ public class Manage_Distributor extends javax.swing.JPanel {
     }//GEN-LAST:event_Save_bt1ActionPerformed
 
     private void Save_bt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Save_bt1MouseClicked
-
+        Main.body.removeAll();
+        Main.body.add(new Distributor_Register());
+        Main.body.repaint();
+        Main.body.revalidate();
     }//GEN-LAST:event_Save_bt1MouseClicked
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
