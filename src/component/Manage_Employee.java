@@ -11,6 +11,9 @@ import karnkha.EmployeeInfo;
 import karnkha.Main;
 import component.Employee_Register;
 import component.Edit_employee_info;
+import java.awt.Color;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
 public class Manage_Employee extends javax.swing.JPanel {
 
     Connection con = null;
@@ -67,14 +70,26 @@ public class Manage_Employee extends javax.swing.JPanel {
         back_button.setForeground(new java.awt.Color(139, 139, 139));
         back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/loupe2_1.png"))); // NOI18N
-        back_button.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 50, 30, 30));
+        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 50, 30, 30));
 
         search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         search__box.setForeground(new java.awt.Color(123, 123, 123));
-        search__box.setText("  ค้นหารหัสพนักงาน");
+        search__box.setText("ค้นหารหัสพนักงาน");
         search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 50, 300, 30));
+        search__box.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                search__boxFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                search__boxFocusLost(evt);
+            }
+        });
+        search__box.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                search__boxKeyReleased(evt);
+            }
+        });
+        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 50, 300, 30));
 
         Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Save_bt1.setText("เพิ่ม");
@@ -150,6 +165,28 @@ public class Manage_Employee extends javax.swing.JPanel {
         int index = jTable.getSelectedRow();
         position = index;
     }//GEN-LAST:event_jTableMouseClicked
+
+    private void search__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search__boxFocusGained
+        if(search__box.getText().equals("ค้นหารหัสพนักงาน")){
+                search__box.setText("");
+                search__box.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_search__boxFocusGained
+
+    private void search__boxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search__boxFocusLost
+        if (search__box.getText().length()==0) {
+            search__box.setText("ค้นหารหัสพนักงาน");
+            search__box.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_search__boxFocusLost
+
+    private void search__boxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search__boxKeyReleased
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable.setRowSorter(sorter);
+        int columnIndexToFilter = 2;
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter));
+    }//GEN-LAST:event_search__boxKeyReleased
 
     ArrayList<EmployeeInfo> employeesArray = new ArrayList<>();
     

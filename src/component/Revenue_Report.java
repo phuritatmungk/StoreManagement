@@ -7,6 +7,7 @@ import karnkha.DB;
 import karnkha.Main;
 import karnkha.RevenueInfo;
 import component.ReportMenu;
+import java.text.SimpleDateFormat;
 
 public class Revenue_Report extends javax.swing.JPanel {
 
@@ -17,7 +18,7 @@ public class Revenue_Report extends javax.swing.JPanel {
     public Revenue_Report() {
         initComponents();
         con = DB.mycon();
-        showProductsInTable();
+        //showProductsInTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -28,15 +29,15 @@ public class Revenue_Report extends javax.swing.JPanel {
         Topic = new javax.swing.JLabel();
         btnPrint = new javax.swing.JButton();
         Topic1 = new javax.swing.JLabel();
-        btnSearch = new javax.swing.JButton();
         txtSum = new javax.swing.JTextField();
-        txtDate2 = new javax.swing.JTextField();
         Topic2 = new javax.swing.JLabel();
         Topic3 = new javax.swing.JLabel();
-        txtDate1 = new javax.swing.JTextField();
         Topic4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        Date2 = new com.toedter.calendar.JDateChooser();
+        Date1 = new com.toedter.calendar.JDateChooser();
+        btnSearch = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -71,15 +72,6 @@ public class Revenue_Report extends javax.swing.JPanel {
         Topic1.setText("รายงานแสดงผลการดำเนินงาน");
         add(Topic1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 30, -1, -1));
 
-        btnSearch.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnSearch.setText("ค้นหา");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
-            }
-        });
-        add(btnSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 650, 170, 50));
-
         txtSum.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtSum.setForeground(new java.awt.Color(123, 123, 123));
         txtSum.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -99,25 +91,6 @@ public class Revenue_Report extends javax.swing.JPanel {
         });
         add(txtSum, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 660, 190, 30));
 
-        txtDate2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtDate2.setForeground(new java.awt.Color(123, 123, 123));
-        txtDate2.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtDate2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtDate2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtDate2FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtDate2FocusLost(evt);
-            }
-        });
-        txtDate2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDate2ActionPerformed(evt);
-            }
-        });
-        add(txtDate2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 660, 190, 30));
-
         Topic2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Topic2.setText("รายงานสรุปรายรับ");
         add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, -1, -1));
@@ -125,25 +98,6 @@ public class Revenue_Report extends javax.swing.JPanel {
         Topic3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Topic3.setText("ถึง:");
         add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 660, -1, -1));
-
-        txtDate1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtDate1.setForeground(new java.awt.Color(123, 123, 123));
-        txtDate1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtDate1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtDate1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtDate1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtDate1FocusLost(evt);
-            }
-        });
-        txtDate1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDate1ActionPerformed(evt);
-            }
-        });
-        add(txtDate1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 660, 190, 30));
 
         Topic4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Topic4.setText("เลือกวันที่:");
@@ -178,15 +132,22 @@ public class Revenue_Report extends javax.swing.JPanel {
         jScrollPane2.setViewportView(jTable);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+        add(Date2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 660, 190, 30));
+        add(Date1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 660, 190, 30));
+
+        btnSearch.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnSearch.setText("ค้นหา");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+        add(btnSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 650, 170, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPrintActionPerformed
-
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSearchActionPerformed
 
     private void txtSumFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSumFocusGained
         // TODO add your handling code here:
@@ -200,30 +161,6 @@ public class Revenue_Report extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSumActionPerformed
 
-    private void txtDate2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDate2FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDate2FocusGained
-
-    private void txtDate2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDate2FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDate2FocusLost
-
-    private void txtDate2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDate2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDate2ActionPerformed
-
-    private void txtDate1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDate1FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDate1FocusGained
-
-    private void txtDate1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDate1FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDate1FocusLost
-
-    private void txtDate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDate1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDate1ActionPerformed
-
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
         int index = jTable.getSelectedRow();
@@ -236,6 +173,21 @@ public class Revenue_Report extends javax.swing.JPanel {
         Main.body.repaint();
         Main.body.revalidate();
     }//GEN-LAST:event_back_button1MouseClicked
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        try{
+
+            jTable.setModel(new DefaultTableModel(null, new Object[]{"No","Date","List","Category","Cost","Price","Quantity","Income","Total"}));
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String date1 = df.format(Date1.getDate());
+            String date2 = df.format(Date2.getDate());
+
+            //showData(date1, date2);
+
+        }catch(Exception e){
+
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     ArrayList<RevenueInfo> revenueArray = new ArrayList<>();
     
@@ -297,6 +249,8 @@ public class Revenue_Report extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser Date1;
+    private com.toedter.calendar.JDateChooser Date2;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel Topic1;
     private javax.swing.JLabel Topic2;
@@ -307,8 +261,6 @@ public class Revenue_Report extends javax.swing.JPanel {
     private javax.swing.JButton btnSearch;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
-    private javax.swing.JTextField txtDate1;
-    private javax.swing.JTextField txtDate2;
     private javax.swing.JTextField txtSum;
     // End of variables declaration//GEN-END:variables
 

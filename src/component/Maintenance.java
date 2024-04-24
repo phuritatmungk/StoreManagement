@@ -183,7 +183,7 @@ public class Maintenance extends javax.swing.JPanel {
         Date.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Date.setForeground(new java.awt.Color(123, 123, 123));
         Date.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Date.setText("00/00/0000");
+        Date.setText("00/00/00");
         Date.setBorder(null);
         Date.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {

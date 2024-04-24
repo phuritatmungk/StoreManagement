@@ -1,6 +1,7 @@
 package component;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
@@ -15,20 +16,21 @@ public class SellHistory extends javax.swing.JPanel {
     public SellHistory() {
         initComponents();
         con = DB.mycon();
-        showProductsInTable();
+       
     }
 
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        txtCustomer1 = new javax.swing.JTextField();
         Topic2 = new javax.swing.JLabel();
         Topic3 = new javax.swing.JLabel();
-        txtCustomer2 = new javax.swing.JTextField();
         btnNext = new javax.swing.JButton();
+        Data1 = new com.toedter.calendar.JDateChooser();
+        Data2 = new com.toedter.calendar.JDateChooser();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
 
@@ -46,20 +48,6 @@ public class SellHistory extends javax.swing.JPanel {
         Topic.setText("ประวัติการซื้อสินค้า");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
 
-        txtCustomer1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtCustomer1.setForeground(new java.awt.Color(123, 123, 123));
-        txtCustomer1.setText(" ##/##/##");
-        txtCustomer1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtCustomer1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCustomer1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCustomer1FocusLost(evt);
-            }
-        });
-        add(txtCustomer1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 70, 190, 30));
-
         Topic2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic2.setText("ถึง :");
         add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 70, -1, 30));
@@ -67,20 +55,6 @@ public class SellHistory extends javax.swing.JPanel {
         Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic3.setText("วันที่ :");
         add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, -1, 30));
-
-        txtCustomer2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtCustomer2.setForeground(new java.awt.Color(123, 123, 123));
-        txtCustomer2.setText(" ##/##/##");
-        txtCustomer2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtCustomer2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCustomer2FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCustomer2FocusLost(evt);
-            }
-        });
-        add(txtCustomer2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 70, 190, 30));
 
         btnNext.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnNext.setText("ค้นหา");
@@ -90,6 +64,8 @@ public class SellHistory extends javax.swing.JPanel {
             }
         });
         add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 70, 110, 30));
+        add(Data1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 190, 30));
+        add(Data2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 70, 190, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -122,24 +98,19 @@ public class SellHistory extends javax.swing.JPanel {
         add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCustomer1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomer1FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCustomer1FocusGained
-
-    private void txtCustomer1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomer1FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCustomer1FocusLost
-
-    private void txtCustomer2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomer2FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCustomer2FocusGained
-
-    private void txtCustomer2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomer2FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCustomer2FocusLost
-
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        // TODO add your handling code here:
+        try{
+            
+            jTable.setModel(new DefaultTableModel(null, new Object[]{"No","Date","Product ID","Product Name","Category","Quantity","Price"}));
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String date1 = df.format(Data1.getDate());
+            String date2 = df.format(Data2.getDate());
+            
+            //getProductsList(date1, date2);
+            
+        }catch(Exception e){
+            
+        }
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
@@ -206,6 +177,8 @@ public class SellHistory extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser Data1;
+    private com.toedter.calendar.JDateChooser Data2;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel Topic2;
     private javax.swing.JLabel Topic3;
@@ -213,8 +186,6 @@ public class SellHistory extends javax.swing.JPanel {
     private javax.swing.JButton btnNext;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable;
-    private javax.swing.JTextField txtCustomer1;
-    private javax.swing.JTextField txtCustomer2;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -17,6 +17,9 @@ public class Order_Received extends javax.swing.JPanel {
     ResultSet rs = null;
     PreparedStatement pst = null;
     
+    private DateChooser chData = new DateChooser();
+    
+    
     public Order_Received() {
         initComponents();
         con = DB.mycon();
@@ -101,7 +104,7 @@ public class Order_Received extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        search__box = new javax.swing.JTextField();
+        searchDate = new javax.swing.JTextField();
         Save_bt1 = new javax.swing.JButton();
         delete_bt = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -258,7 +261,6 @@ public class Order_Received extends javax.swing.JPanel {
 
         jFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
 
-        jFrame2.setPreferredSize(new java.awt.Dimension(1200, 800));
         jFrame2.setSize(new java.awt.Dimension(1200, 800));
         jFrame2.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -408,15 +410,15 @@ public class Order_Received extends javax.swing.JPanel {
         Topic.setText("รับสินค้าตามรายการสั่งซื้อ");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, -1, -1));
 
-        search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        search__box.setForeground(new java.awt.Color(123, 123, 123));
-        search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        search__box.addActionListener(new java.awt.event.ActionListener() {
+        searchDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        searchDate.setForeground(new java.awt.Color(123, 123, 123));
+        searchDate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        searchDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search__boxActionPerformed(evt);
+                searchDateActionPerformed(evt);
             }
         });
-        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 50, 290, 30));
+        add(searchDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 50, 290, 30));
 
         Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Save_bt1.setText("เพิ่ม");
@@ -443,7 +445,7 @@ public class Order_Received extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("วันที่");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 52, -1, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -476,9 +478,9 @@ public class Order_Received extends javax.swing.JPanel {
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
+    private void searchDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_search__boxActionPerformed
+    }//GEN-LAST:event_searchDateActionPerformed
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
         // TODO add your handling code here:
@@ -644,6 +646,6 @@ public class Order_Received extends javax.swing.JPanel {
     private javax.swing.JTable jTable;
     private javax.swing.JTextArea jTextArea_Information;
     private javax.swing.JTextArea jTextArea_Information1;
-    private javax.swing.JTextField search__box;
+    private javax.swing.JTextField searchDate;
     // End of variables declaration//GEN-END:variables
 }

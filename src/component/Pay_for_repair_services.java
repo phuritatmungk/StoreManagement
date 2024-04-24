@@ -13,6 +13,8 @@ import karnkha.DB;
 import karnkha.InventoryInfo;
 import karnkha.Main;
 import component.Pay_for_repair_services2;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
 
 public class Pay_for_repair_services extends javax.swing.JPanel {
 
@@ -74,12 +76,12 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
         back_button.setForeground(new java.awt.Color(139, 139, 139));
         back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loupe2.png"))); // NOI18N
-        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 30, 30));
+        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 60, 30, 30));
 
         txtSearch1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtSearch1.setForeground(new java.awt.Color(123, 123, 123));
         txtSearch1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtSearch1.setText("      ค้นหาสินค้า");
+        txtSearch1.setText("ค้นหาสินค้า");
         txtSearch1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtSearch1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -92,6 +94,11 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
         txtSearch1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSearch1ActionPerformed(evt);
+            }
+        });
+        txtSearch1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearch1KeyReleased(evt);
             }
         });
         add(txtSearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 260, 30));
@@ -135,11 +142,17 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void txtSearch1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch1FocusGained
-        // TODO add your handling code here:
+         if(txtSearch1.getText().equals("ค้นหาสินค้า")){
+                txtSearch1.setText("");
+                txtSearch1.setForeground(new Color(0, 0, 0));
+        }
     }//GEN-LAST:event_txtSearch1FocusGained
 
     private void txtSearch1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch1FocusLost
-        // TODO add your handling code here:
+       if (txtSearch1.getText().length()==0) {
+            txtSearch1.setText("ค้นหาสินค้า");
+            txtSearch1.setForeground(new Color(123, 123, 123));
+        }
     }//GEN-LAST:event_txtSearch1FocusLost
 
     private void txtSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearch1ActionPerformed
@@ -155,6 +168,14 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
     private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
 
     }//GEN-LAST:event_back_button1MouseClicked
+
+    private void txtSearch1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearch1KeyReleased
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable.setRowSorter(sorter);
+        int columnIndexToFilter = 3;
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch1.getText().trim(), columnIndexToFilter));
+    }//GEN-LAST:event_txtSearch1KeyReleased
 
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     

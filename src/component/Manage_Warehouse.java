@@ -14,6 +14,7 @@ import component.AddProduct;
 import component.EditProduct;
 
 import java.awt.Color;
+import javax.swing.table.TableRowSorter;
 public class Manage_Warehouse extends javax.swing.JPanel {
     
     Connection con = null;
@@ -69,19 +70,26 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         back_button.setForeground(new java.awt.Color(139, 139, 139));
         back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/loupe2_1.png"))); // NOI18N
-        back_button.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 50, 30, 30));
+        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 50, 30, 30));
 
         search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         search__box.setForeground(new java.awt.Color(123, 123, 123));
-        search__box.setText("   ค้นหาสินค้า");
+        search__box.setText("ค้นหาสินค้า");
         search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        search__box.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search__boxActionPerformed(evt);
+        search__box.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                search__boxFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                search__boxFocusLost(evt);
             }
         });
-        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 50, 300, 30));
+        search__box.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                search__boxKeyReleased(evt);
+            }
+        });
+        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 50, 300, 30));
 
         btnAdd.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnAdd.setText("เพิ่ม");
@@ -132,10 +140,6 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search__boxActionPerformed
-
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_delete_btActionPerformed
@@ -150,6 +154,28 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
 
     }//GEN-LAST:event_btnAddMouseClicked
+
+    private void search__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search__boxFocusGained
+        if(search__box.getText().equals("ค้นหาสินค้า")){
+                search__box.setText("");
+                search__box.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_search__boxFocusGained
+
+    private void search__boxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search__boxFocusLost
+        if (search__box.getText().length()==0) {
+            search__box.setText("ค้นหาสินค้า");
+            search__box.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_search__boxFocusLost
+
+    private void search__boxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search__boxKeyReleased
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable.setRowSorter(sorter);
+        int columnIndexToFilter = 3;
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter));
+    }//GEN-LAST:event_search__boxKeyReleased
 
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     

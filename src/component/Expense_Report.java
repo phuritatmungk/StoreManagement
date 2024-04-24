@@ -1,5 +1,6 @@
 package component;
 
+import com.mysql.cj.protocol.Resultset;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -7,6 +8,7 @@ import karnkha.DB;
 import karnkha.ExpenseInfo;
 import karnkha.Main;
 import component.ReportMenu;
+import static karnkha.DB.getConnection;
 public class Expense_Report extends javax.swing.JPanel {
 
     Connection con = null;
@@ -18,6 +20,8 @@ public class Expense_Report extends javax.swing.JPanel {
         con = DB.mycon();
         showProductsInTable();
     }
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
