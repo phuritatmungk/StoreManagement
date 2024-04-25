@@ -8,6 +8,7 @@ import karnkha.CartInfo;
 import karnkha.DB;
 import karnkha.Main;
 import component.Pay_for_repair_services3;
+import karnkha.RepairRequest;
 public class Pay_for_repair_services4 extends javax.swing.JPanel {
 
     Connection con = null;
@@ -29,14 +30,14 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         Topic = new javax.swing.JLabel();
         btnPrint = new javax.swing.JButton();
         btnpay = new javax.swing.JButton();
-        txtSearch2 = new javax.swing.JTextField();
+        txtRepairman = new javax.swing.JTextField();
         Topic1 = new javax.swing.JLabel();
         Topic2 = new javax.swing.JLabel();
         txtSearch3 = new javax.swing.JTextField();
-        txtSearch4 = new javax.swing.JTextField();
-        txtSearch5 = new javax.swing.JTextField();
-        txtSearch6 = new javax.swing.JTextField();
-        txtSearch7 = new javax.swing.JTextField();
+        txtPhone = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
+        txtProduct = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
         Topic3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
@@ -79,25 +80,25 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         });
         add(btnpay, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 650, 200, 50));
 
-        txtSearch2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSearch2.setForeground(new java.awt.Color(123, 123, 123));
-        txtSearch2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtSearch2.setText("นาย แม็ก");
-        txtSearch2.setBorder(null);
-        txtSearch2.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtRepairman.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtRepairman.setForeground(new java.awt.Color(123, 123, 123));
+        txtRepairman.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtRepairman.setText("นาย แม็ก");
+        txtRepairman.setBorder(null);
+        txtRepairman.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSearch2FocusGained(evt);
+                txtRepairmanFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtSearch2FocusLost(evt);
+                txtRepairmanFocusLost(evt);
             }
         });
-        txtSearch2.addActionListener(new java.awt.event.ActionListener() {
+        txtRepairman.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearch2ActionPerformed(evt);
+                txtRepairmanActionPerformed(evt);
             }
         });
-        add(txtSearch2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 650, 110, 30));
+        add(txtRepairman, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 650, 110, 30));
 
         Topic1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Topic1.setText("ชำระเงินค่าบริการซ่อม และอุปกรณ์การเกษตร");
@@ -127,85 +128,85 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         });
         add(txtSearch3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 50, 200, 30));
 
-        txtSearch4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSearch4.setForeground(new java.awt.Color(123, 123, 123));
-        txtSearch4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtSearch4.setText("0000000000");
-        txtSearch4.setBorder(null);
-        txtSearch4.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtPhone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtPhone.setForeground(new java.awt.Color(123, 123, 123));
+        txtPhone.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtPhone.setText("0000000000");
+        txtPhone.setBorder(null);
+        txtPhone.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSearch4FocusGained(evt);
+                txtPhoneFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtSearch4FocusLost(evt);
+                txtPhoneFocusLost(evt);
             }
         });
-        txtSearch4.addActionListener(new java.awt.event.ActionListener() {
+        txtPhone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearch4ActionPerformed(evt);
+                txtPhoneActionPerformed(evt);
             }
         });
-        add(txtSearch4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 600, 150, 30));
+        add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 600, 150, 30));
 
-        txtSearch5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSearch5.setForeground(new java.awt.Color(123, 123, 123));
-        txtSearch5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtSearch5.setText("นาย กล้า");
-        txtSearch5.setBorder(null);
-        txtSearch5.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtName.setForeground(new java.awt.Color(123, 123, 123));
+        txtName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtName.setText("นาย กล้า");
+        txtName.setBorder(null);
+        txtName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSearch5FocusGained(evt);
+                txtNameFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtSearch5FocusLost(evt);
+                txtNameFocusLost(evt);
             }
         });
-        txtSearch5.addActionListener(new java.awt.event.ActionListener() {
+        txtName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearch5ActionPerformed(evt);
+                txtNameActionPerformed(evt);
             }
         });
-        add(txtSearch5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 600, 110, 30));
+        add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 600, 110, 30));
 
-        txtSearch6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSearch6.setForeground(new java.awt.Color(123, 123, 123));
-        txtSearch6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtSearch6.setText("ปั้มน้ำ");
-        txtSearch6.setBorder(null);
-        txtSearch6.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtProduct.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtProduct.setForeground(new java.awt.Color(123, 123, 123));
+        txtProduct.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtProduct.setText("ปั้มน้ำ");
+        txtProduct.setBorder(null);
+        txtProduct.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSearch6FocusGained(evt);
+                txtProductFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtSearch6FocusLost(evt);
+                txtProductFocusLost(evt);
             }
         });
-        txtSearch6.addActionListener(new java.awt.event.ActionListener() {
+        txtProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearch6ActionPerformed(evt);
+                txtProductActionPerformed(evt);
             }
         });
-        add(txtSearch6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 600, 60, 30));
+        add(txtProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 600, 60, 30));
 
-        txtSearch7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSearch7.setForeground(new java.awt.Color(123, 123, 123));
-        txtSearch7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtSearch7.setText("0000000000");
-        txtSearch7.setBorder(null);
-        txtSearch7.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtId.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtId.setForeground(new java.awt.Color(123, 123, 123));
+        txtId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtId.setText("0000000000");
+        txtId.setBorder(null);
+        txtId.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSearch7FocusGained(evt);
+                txtIdFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtSearch7FocusLost(evt);
+                txtIdFocusLost(evt);
             }
         });
-        txtSearch7.addActionListener(new java.awt.event.ActionListener() {
+        txtId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearch7ActionPerformed(evt);
+                txtIdActionPerformed(evt);
             }
         });
-        add(txtSearch7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 650, 150, 30));
+        add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 650, 150, 30));
 
         Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic3.setText("ผู้ส่งซ่อม");
@@ -250,17 +251,17 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnpayActionPerformed
 
-    private void txtSearch2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch2FocusGained
+    private void txtRepairmanFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRepairmanFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch2FocusGained
+    }//GEN-LAST:event_txtRepairmanFocusGained
 
-    private void txtSearch2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch2FocusLost
+    private void txtRepairmanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRepairmanFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch2FocusLost
+    }//GEN-LAST:event_txtRepairmanFocusLost
 
-    private void txtSearch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearch2ActionPerformed
+    private void txtRepairmanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRepairmanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch2ActionPerformed
+    }//GEN-LAST:event_txtRepairmanActionPerformed
 
     private void txtSearch3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch3FocusGained
         // TODO add your handling code here:
@@ -274,53 +275,53 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearch3ActionPerformed
 
-    private void txtSearch4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch4FocusGained
+    private void txtPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch4FocusGained
+    }//GEN-LAST:event_txtPhoneFocusGained
 
-    private void txtSearch4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch4FocusLost
+    private void txtPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch4FocusLost
+    }//GEN-LAST:event_txtPhoneFocusLost
 
-    private void txtSearch4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearch4ActionPerformed
+    private void txtPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch4ActionPerformed
+    }//GEN-LAST:event_txtPhoneActionPerformed
 
-    private void txtSearch5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch5FocusGained
+    private void txtNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch5FocusGained
+    }//GEN-LAST:event_txtNameFocusGained
 
-    private void txtSearch5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch5FocusLost
+    private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch5FocusLost
+    }//GEN-LAST:event_txtNameFocusLost
 
-    private void txtSearch5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearch5ActionPerformed
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch5ActionPerformed
+    }//GEN-LAST:event_txtNameActionPerformed
 
-    private void txtSearch6FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch6FocusGained
+    private void txtProductFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch6FocusGained
+    }//GEN-LAST:event_txtProductFocusGained
 
-    private void txtSearch6FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch6FocusLost
+    private void txtProductFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch6FocusLost
+    }//GEN-LAST:event_txtProductFocusLost
 
-    private void txtSearch6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearch6ActionPerformed
+    private void txtProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch6ActionPerformed
+    }//GEN-LAST:event_txtProductActionPerformed
 
-    private void txtSearch7FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch7FocusGained
+    private void txtIdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch7FocusGained
+    }//GEN-LAST:event_txtIdFocusGained
 
-    private void txtSearch7FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch7FocusLost
+    private void txtIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch7FocusLost
+    }//GEN-LAST:event_txtIdFocusLost
 
-    private void txtSearch7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearch7ActionPerformed
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch7ActionPerformed
+    }//GEN-LAST:event_txtIdActionPerformed
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
@@ -368,6 +369,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         
     }
     
+    
     public void showProductsInTable()
     {
         ArrayList<CartInfo> productsList = getProductsList();
@@ -401,12 +403,12 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
     private javax.swing.JButton btnpay;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
-    private javax.swing.JTextField txtSearch2;
+    public static javax.swing.JTextField txtId;
+    public static javax.swing.JTextField txtName;
+    public static javax.swing.JTextField txtPhone;
+    public static javax.swing.JTextField txtProduct;
+    public static javax.swing.JTextField txtRepairman;
     private javax.swing.JTextField txtSearch3;
-    private javax.swing.JTextField txtSearch4;
-    private javax.swing.JTextField txtSearch5;
-    private javax.swing.JTextField txtSearch6;
-    private javax.swing.JTextField txtSearch7;
     // End of variables declaration//GEN-END:variables
 
 }
