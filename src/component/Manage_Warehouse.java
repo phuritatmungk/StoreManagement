@@ -27,6 +27,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     public Manage_Warehouse() {
         initComponents();
         con = DB.mycon();
+        loadCategory();
         loadAllProducts();
         
             
@@ -78,6 +79,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         jTable = new javax.swing.JTable();
 
         jFrame1.setBounds(new java.awt.Rectangle(50, 50, 0, 0));
+        jFrame1.setLocation(new java.awt.Point(1250, 360));
         jFrame1.setPreferredSize(new java.awt.Dimension(500, 500));
         jFrame1.setResizable(false);
         jFrame1.setSize(new java.awt.Dimension(500, 500));
@@ -91,7 +93,12 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         jLabel4.setText("จำนวนคงเหลือ");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
 
-        CategoryBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CategoryBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category" }));
+        CategoryBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                CategoryBoxItemStateChanged(evt);
+            }
+        });
         CategoryBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CategoryBoxActionPerformed(evt);
@@ -447,14 +454,13 @@ public class Manage_Warehouse extends javax.swing.JPanel {
                     rs.getInt("Quantity"),
                     rs.getDouble("Price")
                 };
-                model.addRow(row); // เพิ่มแถวใหม่ในตาราง
+                model.addRow(row);
             }
 
         } catch (NumberFormatException | SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
     } else {
-        // แจ้งให้ผู้ใช้กรอกข้อมูลในทั้ง Bmin และ Bmax
         JOptionPane.showMessageDialog(this, "กรุณากรอกค่า Price ทั้งสอง", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
     }
   
@@ -471,6 +477,11 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     private void CategoryBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoryBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CategoryBoxActionPerformed
+
+    private void CategoryBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CategoryBoxItemStateChanged
+        String query = CategoryBox.getSelectedItem().toString();
+        filter(query);
+    }//GEN-LAST:event_CategoryBoxItemStateChanged
 
     
      private void loadAllProducts() {
@@ -557,8 +568,32 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         EditProduct.txtPrice.setText(productsArray.get(index).getPrice().toString());
         EditProduct.txtAmount.setText(productsArray.get(index).getQuantity().toString());
     }
+public void loadCategory() {
+    try {
+        String query = "SELECT Category FROM inventory";
+        PreparedStatement ps = DB.getConnection().prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            String Category = rs.getString("Category");
+            CategoryBox.addItem(Category);
+        }
+        
+    } catch (SQLException ex) {
+        System.out.println("Failed to load employees: " + ex.getMessage());
+    }
+}
+        private void filter(String query){
+            DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+            jTable.setRowSorter(sorter);
 
-    
+            if (!query.equals("Category")) { 
+                sorter.setRowFilter(RowFilter.regexFilter(query, 4));
+                 } else {
+                 jTable.setRowSorter(sorter); 
+    }
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Bgo;

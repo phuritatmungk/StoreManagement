@@ -13,6 +13,7 @@ import karnkha.RepairRequest;
 import karnkha.DB;
 import karnkha.Main;
 import component.Maintenance;
+import javax.swing.table.TableRowSorter;
 
 public class Repair_List_Page extends javax.swing.JPanel {
     
@@ -370,10 +371,10 @@ public class Repair_List_Page extends javax.swing.JPanel {
 
         Status_Combo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Status_Combo.setForeground(new java.awt.Color(123, 123, 123));
-        Status_Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ค้นหาสถานะ", "รอการดำเนินการ", "กำลังดำเนินการ", "เสร็จการดำเนินการ", "ชำระเสร็จสิ้น" }));
-        Status_Combo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                Status_ComboKeyReleased(evt);
+        Status_Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ค้นหาสถานะ", "เสร็จสิ้น", "กำลังดำเนินการ", "เสร็จสิ้น", "ชำระเสร็จสิ้น" }));
+        Status_Combo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                Status_ComboItemStateChanged(evt);
             }
         });
         add(Status_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 50, 170, 40));
@@ -515,9 +516,10 @@ public class Repair_List_Page extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox_StatusActionPerformed
 
-    private void Status_ComboKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Status_ComboKeyReleased
-        
-    }//GEN-LAST:event_Status_ComboKeyReleased
+    private void Status_ComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Status_ComboItemStateChanged
+        String query = Status_Combo.getSelectedItem().toString();
+        filter(query);
+    }//GEN-LAST:event_Status_ComboItemStateChanged
 
     ArrayList<RepairRequest> requestArray = new ArrayList<>();
     
@@ -619,6 +621,17 @@ public class Repair_List_Page extends javax.swing.JPanel {
   
 
      }
+        private void filter(String query){
+            DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+            jTable.setRowSorter(sorter);
+
+            if (!query.equals("ค้นหาสถานะ")) { 
+                sorter.setRowFilter(RowFilter.regexFilter(query, 7));
+                 } else {
+                 jTable.setRowSorter(sorter); 
+    }
+        }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Status_Combo;
     private javax.swing.JLabel Topic;
