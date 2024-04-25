@@ -33,7 +33,9 @@ public class Manage_Distributor extends javax.swing.JPanel {
                 Main.body.add(new Edit_dealer_info());
                 Main.body.repaint();
                 Main.body.revalidate();
-                
+                int index = jTable.getSelectedRow();
+                showProductData(index);
+                position = index;
             }
 
         };
@@ -233,7 +235,7 @@ public class Manage_Distributor extends javax.swing.JPanel {
             while(rs.next())
             {
                 distributor = new DistributorInfo(rs.getInt("No"), rs.getString("Company"),
-                                      rs.getString("Salesman"), rs.getInt("Phone"));
+                                      rs.getString("Salesman"), rs.getInt("Phone"),rs.getString("Address"));
                 list.add(distributor);
             }
             
@@ -264,9 +266,16 @@ public class Manage_Distributor extends javax.swing.JPanel {
             
             model.addRow(row);
         }
-        
-    }
 
+    }
+public void showProductData(int index)
+      {Edit_dealer_info.txtNo.setText(distributorArray.get(index).getNo().toString());
+        Edit_dealer_info.txtName.setText(distributorArray.get(index).getName().toString());
+        Edit_dealer_info.txtCompany.setText(distributorArray.get(index).getSalesman().toString());
+        Edit_dealer_info.txtAddress.setText(distributorArray.get(index).getAddress().toString());
+        Edit_dealer_info.txtPhone.setText(distributorArray.get(index).getPhone().toString());
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Save_bt1;
     private javax.swing.JLabel Topic;

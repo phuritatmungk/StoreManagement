@@ -462,7 +462,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         String repairman =  jTextField_Repairman2.getText();
         String status =  jComboBox_Status2.getSelectedItem().toString();
  
-        String updateQuery = "UPDATE `request` SET `Date`=?,`Name`=?,`Phone`=?,`Item`=? ,`Id`=? ,`Repairman`=? ,`Status`=? WHERE `No`=?";
+        String updateQuery = "UPDATE `request` SET `Datetime`=?,`Name`=?,`Phone`=?,`Item`=? ,`Id`=? ,`Repairman`=? ,`Status`=? WHERE `No`=?";
         try {
             PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
             ps.setDate(1, new java.sql.Date(date.getTime()));
@@ -508,7 +508,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
             
             while(rs.next())
             {
-                request = new RepairRequest(rs.getInt("No"), rs.getString("Date"),
+                request = new RepairRequest(rs.getInt("No"), rs.getString("Datetime"),
                                       rs.getString("Name"), rs.getInt("Phone"), rs.getString("Item"),
                                       rs.getInt("ID"), rs.getString("Repairman"), rs.getString("Status"));
                 list.add(request);

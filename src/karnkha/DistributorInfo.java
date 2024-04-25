@@ -14,12 +14,14 @@ public class DistributorInfo {
     private String name;
     private String salesman;
     private Integer phone;
-
-    public DistributorInfo(Integer no, String name, String salesman, Integer phone) {
+    private String address;
+            
+    public DistributorInfo(Integer no, String name, String salesman, Integer phone,String address) {
         this.no = no;
         this.name = name;
         this.salesman = salesman;
         this.phone = phone;
+        this.address = address; 
     }
 
     public Integer getNo() {
@@ -52,5 +54,12 @@ public class DistributorInfo {
 
     public void setPhone(Integer phone) {
         this.phone = phone;
+    }
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

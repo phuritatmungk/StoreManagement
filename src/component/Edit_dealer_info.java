@@ -1,4 +1,11 @@
 package component;
+import static component.EditProduct.txtAmount;
+import static component.EditProduct.txtCost_price;
+import static component.EditProduct.txtName;
+import static component.EditProduct.txtNo;
+import static component.EditProduct.txtPrice;
+import static component.EditProduct.txtProductid;
+import static component.EditProduct.txtType;
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Distributor;
@@ -40,6 +47,7 @@ public class Edit_dealer_info extends javax.swing.JPanel {
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
+        txtNo = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -187,6 +195,13 @@ public class Edit_dealer_info extends javax.swing.JPanel {
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 370, 30));
+
+        txtNo.setEditable(false);
+        txtNo.setBackground(new java.awt.Color(255, 255, 255));
+        txtNo.setForeground(new java.awt.Color(255, 255, 255));
+        txtNo.setText("1");
+        txtNo.setBorder(null);
+        add(txtNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 860, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImgActionPerformed
@@ -261,7 +276,34 @@ public class Edit_dealer_info extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPhoneFocusLost
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        Integer no = Integer.valueOf(txtNo.getText().toString()); 
+        String name = txtName.getText();
+        String company = txtCompany.getText();
+        String address = txtAddress.getText();
+        Integer phone = Integer.valueOf(txtPhone.getText().toString());
 
+ 
+        String updateQuery = "UPDATE distributor SET Company=?,=?,Salesman=?,Phone=? ,Address=?  WHERE No=?";
+        try {
+            PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
+            ps.setString(1, company);
+            ps.setString(2, name);
+            ps.setInt(3, phone);
+            ps.setString(4, address); 
+            ps.setInt(5, no);
+
+            if(ps.executeUpdate() > 0)
+            {
+                System.out.println("Updated");
+            }
+            else
+            {
+                System.out.println("Failed");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
 
@@ -283,10 +325,11 @@ public class Edit_dealer_info extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel picture_box;
-    private javax.swing.JTextArea txtAddress;
-    private javax.swing.JTextField txtCompany;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPhone;
-    private javax.swing.JTextField txtSname;
+    public static javax.swing.JTextArea txtAddress;
+    public static javax.swing.JTextField txtCompany;
+    public static javax.swing.JTextField txtName;
+    public static javax.swing.JTextField txtNo;
+    public static javax.swing.JTextField txtPhone;
+    public static javax.swing.JTextField txtSname;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,13 +15,21 @@ public class OrderInfo {
     private String name;
     private Integer quantity;
     private Double total;
+    private String category;
+    private Double cost;
+    private String company;
+    private String remark;
 
-    public OrderInfo(Integer no, String date, String name, Integer quantity, Double total) {
+    public OrderInfo(Integer no, String date, String company, String name, String category, Double cost,Integer quantity, Double total, String remark) {
         this.no = no;
         this.date = date;
+        this.company = company;
         this.name = name;
+        this.category = category;
+        this.cost = cost;
         this.quantity = quantity;
         this.total = total;
+        this.remark = remark;
     }
 
     public Integer getNo() {
@@ -62,5 +70,37 @@ public class OrderInfo {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
