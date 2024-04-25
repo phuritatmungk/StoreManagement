@@ -3,7 +3,16 @@ package component;
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Warehouse;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import karnkha.DB;
+import java.util.Date;
+
 public class AddProduct extends javax.swing.JPanel {
+    
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
 
     public AddProduct() {
         initComponents();
@@ -36,8 +45,8 @@ public class AddProduct extends javax.swing.JPanel {
         jSeparator8 = new javax.swing.JSeparator();
         jPrice = new javax.swing.JLabel();
         jAmount = new javax.swing.JLabel();
-        txtAmount = new javax.swing.JTextField();
         jSeparator9 = new javax.swing.JSeparator();
+        txtAmount = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -116,6 +125,11 @@ public class AddProduct extends javax.swing.JPanel {
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnSave.setText("บันทึก");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 620, 130, 50));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
@@ -191,6 +205,9 @@ public class AddProduct extends javax.swing.JPanel {
         jAmount.setText("จำนวนสินค้า");
         add(jAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 540, -1, -1));
 
+        jSeparator9.setForeground(new java.awt.Color(0, 0, 0));
+        add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 570, 370, 30));
+
         txtAmount.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtAmount.setForeground(new java.awt.Color(123, 123, 123));
         txtAmount.setText("0");
@@ -204,9 +221,6 @@ public class AddProduct extends javax.swing.JPanel {
             }
         });
         add(txtAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 540, 370, 30));
-
-        jSeparator9.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 570, 370, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtProductidFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductidFocusLost
@@ -248,13 +262,6 @@ public class AddProduct extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtPriceFocusLost
 
-    private void txtAmountFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAmountFocusLost
-        if (txtAmount.getText ().length() ==0){
-            txtAmount.setText ("0") ;
-            txtAmount.setForeground(new Color(123, 123, 123));
-        }
-    }//GEN-LAST:event_txtAmountFocusLost
-
     private void txtProductidFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductidFocusGained
         if (txtProductid.getText().equals("000000001"))
         {
@@ -295,20 +302,57 @@ public class AddProduct extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtPriceFocusGained
 
-    private void txtAmountFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAmountFocusGained
-        if (txtAmount.getText().equals("0"))
-        {
-            txtAmount.setText("");
-            txtAmount.setForeground(new Color(0, 0, 0));
-        }
-    }//GEN-LAST:event_txtAmountFocusGained
-
     private void back_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_buttonMouseClicked
         Main.body.removeAll();
         Main.body.add(new Manage_Warehouse());
         Main.body.repaint();
         Main.body.revalidate();
     }//GEN-LAST:event_back_buttonMouseClicked
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        Integer id = Integer.valueOf(txtProductid.getText().toString());
+        String name = txtName.getText();
+        String category = txtType.getText();
+        Double price = Double.valueOf(txtPrice.getText().toString());
+        Integer quantity = Integer.valueOf(txtAmount.getText().toString());
+        java.util.Date date = new java.util.Date();
+        
+        String insertQuery = "INSERT INTO `inventory`(`Id`, `Date`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?)";
+        
+        try {
+                
+            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            ps.setInt(1, id);
+            ps.setDate(2, new java.sql.Date(date.getTime()));
+            ps.setString(3, name);
+            ps.setString(4, category);
+            ps.setInt(5, quantity);
+            ps.setDouble(6, price);
+            
+            if(ps.executeUpdate() > 0)
+            {
+                //showProductsInTable();
+                JOptionPane.showMessageDialog(null, "New Product Added Successfully", "Add Product", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Added Complete");
+            }
+            else
+            {
+              JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
+              System.out.println("Some Error Message Here");  
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Failed to Add");
+        }                     
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void txtAmountFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAmountFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAmountFocusGained
+
+    private void txtAmountFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAmountFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAmountFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

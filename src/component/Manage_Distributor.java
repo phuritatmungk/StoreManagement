@@ -12,6 +12,7 @@ import karnkha.Main;
 import component.Distributor_Register;
 import component.Edit_dealer_info;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 public class Manage_Distributor extends javax.swing.JPanel {
@@ -99,11 +100,6 @@ public class Manage_Distributor extends javax.swing.JPanel {
 
         Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Save_bt1.setText("เพิ่ม");
-        Save_bt1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Save_bt1MouseClicked(evt);
-            }
-        });
         Save_bt1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Save_bt1ActionPerformed(evt);
@@ -159,17 +155,6 @@ public class Manage_Distributor extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_delete_btActionPerformed
 
-    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
-
-    }//GEN-LAST:event_Save_bt1ActionPerformed
-
-    private void Save_bt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Save_bt1MouseClicked
-        Main.body.removeAll();
-        Main.body.add(new Distributor_Register());
-        Main.body.repaint();
-        Main.body.revalidate();
-    }//GEN-LAST:event_Save_bt1MouseClicked
-
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
         int index = jTable.getSelectedRow();
@@ -197,6 +182,13 @@ public class Manage_Distributor extends javax.swing.JPanel {
         int columnIndexToFilter = 1;
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter));
     }//GEN-LAST:event_search__boxKeyReleased
+
+    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
+        Main.body.removeAll();
+        Main.body.add(new Distributor_Register());
+        Main.body.repaint();
+        Main.body.revalidate();
+    }//GEN-LAST:event_Save_bt1ActionPerformed
 
     ArrayList<DistributorInfo> distributorArray = new ArrayList<>();
     

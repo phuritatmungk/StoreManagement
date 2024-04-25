@@ -1,9 +1,18 @@
 package component;
 import java.awt.Color;
 import component.Manage_Distributor;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import karnkha.DB;
 import karnkha.Main;
+import java.sql.*;
 
 public class Distributor_Register extends javax.swing.JPanel {
+    
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
 
     public Distributor_Register() {
         initComponents();
@@ -162,6 +171,11 @@ public class Distributor_Register extends javax.swing.JPanel {
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnSave.setText("บันทึก");
+        btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSaveMouseClicked(evt);
+            }
+        });
         add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 640, 130, 50));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -250,6 +264,41 @@ public class Distributor_Register extends javax.swing.JPanel {
             txtName.setForeground(new Color(0, 0, 0));
         }
     }//GEN-LAST:event_txtNameFocusGained
+
+    private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
+        String name = txtName.getText();
+        String sname = txtSname.getText();
+        String company = txtCompany.getText();
+        String address = txtAddress.getText();
+        Integer phone = Integer.valueOf(txtPhone.getText().toString());
+        String fname = name + sname;
+        
+        String insertQuery = "INSERT INTO `distributor`(`Company`, `Salesman`, `Phone`, `Address`) VALUES (?,?,?,?)";
+        
+        try {
+                
+            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            ps.setString(1, company);
+            ps.setString(2, fname);
+            ps.setInt(3, phone);
+            ps.setString(4, address);
+            
+            if(ps.executeUpdate() > 0)
+            {
+                //showProductsInTable();
+                JOptionPane.showMessageDialog(null, "New Product Added Successfully", "Add Product", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Added Complete");
+            }
+            else
+            {
+              JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
+              System.out.println("Some Error Message Here");  
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Failed to Add");
+        }                     
+    }//GEN-LAST:event_btnSaveMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
