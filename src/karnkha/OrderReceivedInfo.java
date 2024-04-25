@@ -12,20 +12,28 @@ public class OrderReceivedInfo {
     
     private Integer no;
     private String date;
+    private String company;
     private String name;
     private Integer id;
+    private String category;
+    private Double cost;
     private String recipient;
     private Integer quantity;
     private Double total;
+    private String remark;
 
-    public OrderReceivedInfo(Integer no, String date, String name, Integer id, String recipient, Integer quantity, Double total) {
+    public OrderReceivedInfo(Integer no, String date, String company, String name, String category, Integer id, Double cost, String recipient, Integer quantity, Double total, String remark) {
         this.no = no;
         this.date = date;
+        this.company = company;
         this.name = name;
         this.id = id;
+        this.category = category;
+        this.cost = cost;
         this.recipient = recipient;
         this.quantity = quantity;
         this.total = total;
+        this.remark = remark;
     }
 
     public Integer getNo() {
@@ -82,5 +90,37 @@ public class OrderReceivedInfo {
 
     public void setRecipient(String recipient) {
         this.recipient = recipient;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

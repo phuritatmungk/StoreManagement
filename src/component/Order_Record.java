@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
+import karnkha.Main;
 import karnkha.OrderInfo;
 import raven.cell.TableActionCellEditorEditView;
 import raven.cell.TableActionCellRenderEditView;
@@ -199,9 +200,11 @@ public class Order_Record extends javax.swing.JPanel {
         jPanel2.add(Btt_Calender, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 435, -1, -1));
 
         ComboBox_Type1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ComboBox_Type1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "kuy" }));
         jPanel2.add(ComboBox_Type1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 570, 210, 30));
 
         ComboBox_Company1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ComboBox_Company1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Test", "asd" }));
         jPanel2.add(ComboBox_Company1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 430, 210, 30));
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -402,10 +405,6 @@ public class Order_Record extends javax.swing.JPanel {
     }   
     }//GEN-LAST:event_delete_btActionPerformed
 
-    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
-
-    }//GEN-LAST:event_Save_bt1ActionPerformed
-
     private void Save_bt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Save_bt1MouseClicked
         jFrame2.setVisible(true);
     }//GEN-LAST:event_Save_bt1MouseClicked
@@ -429,8 +428,54 @@ public class Order_Record extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
-        // TODO add your handling code here:
+        
+        String name = Field_Product2.getText();
+        String category = ComboBox_Type1.getSelectedItem().toString();
+        String company = ComboBox_Company1.getSelectedItem().toString();
+        Double cost = Double.valueOf(Field_Cost.getText().toString());
+        Integer quantity = Integer.valueOf(Field_Quantity.getText().toString());
+        java.util.Date date = new java.util.Date();
+        Double total = cost * quantity;
+        String remark = jTextArea_Information1.getText();
+        
+        String insertQuery = "INSERT INTO `order`(`Date`, `Company`, `Name`, `Category`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?,?,?,?,?,?,?,?)";
+        
+        try {
+                
+            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            
+            ps.setDate(1, new java.sql.Date(date.getTime()));
+            ps.setString(2, company);
+            ps.setString(3, name);
+            ps.setString(4, category);
+            ps.setDouble(5, cost);
+            ps.setInt(6, quantity);
+            ps.setDouble(7, total);
+            ps.setString(8, remark);
+            
+            if(ps.executeUpdate() > 0)
+            {
+                Main.body.removeAll();
+                Main.body.add(new Order_Record());
+                Main.body.repaint();
+                Main.body.revalidate();
+                JOptionPane.showMessageDialog(null, "New Order Added Successfully", "Add Order", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Added Complete");
+            }
+            else
+            {
+              JOptionPane.showMessageDialog(null, "Order Not Added", "Add Order", JOptionPane.ERROR_MESSAGE);
+              System.out.println("Some Error Message Here");  
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }                     
     }//GEN-LAST:event_btnAdd1ActionPerformed
+
+    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Save_bt1ActionPerformed
 
     ArrayList<OrderInfo> productsArray = new ArrayList<>();
     
@@ -451,7 +496,8 @@ public class Order_Record extends javax.swing.JPanel {
             while(rs.next())
             {
                 product = new OrderInfo(rs.getInt("No"), rs.getString("Date"),
-                                      rs.getString("Company"), rs.getInt("Quantity"), rs.getDouble("Total"));
+                                      rs.getString("Company"), rs.getString("Name"), rs.getString("Category"), 
+                                      rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Total"), rs.getString("Remark"));
                 list.add(product);
             }
             
@@ -477,7 +523,7 @@ public class Order_Record extends javax.swing.JPanel {
         {
             row[0] = productsList.get(i).getNo();
             row[1] = productsList.get(i).getDate();
-            row[2] = productsList.get(i).getName();
+            row[2] = productsList.get(i).getCompany();
             row[3] = productsList.get(i).getQuantity();
             row[4] = productsList.get(i).getTotal();
             
@@ -533,7 +579,4 @@ public class Order_Record extends javax.swing.JPanel {
     private javax.swing.JTextField search__box;
     // End of variables declaration//GEN-END:variables
 
-    private void dispose() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

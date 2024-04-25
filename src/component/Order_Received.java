@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
+import karnkha.Main;
 import karnkha.OrderReceivedInfo;
 
 public class Order_Received extends javax.swing.JPanel {
@@ -168,6 +169,7 @@ public class Order_Received extends javax.swing.JPanel {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 560, -1, -1));
 
         ComboBox_Type.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ComboBox_Type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "123" }));
         jPanel1.add(ComboBox_Type, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 620, 210, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -225,6 +227,7 @@ public class Order_Received extends javax.swing.JPanel {
         jPanel1.add(Field_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 500, 210, -1));
 
         ComboBox_Employee.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ComboBox_Employee.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "pongsapak" }));
         jPanel1.add(ComboBox_Employee, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 560, 210, 30));
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -291,6 +294,12 @@ public class Order_Received extends javax.swing.JPanel {
         jFrame2.getContentPane().add(btnSave1, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 680, 170, 50));
 
         ComboBox_Type2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ComboBox_Type2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1587" }));
+        ComboBox_Type2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBox_Type2ActionPerformed(evt);
+            }
+        });
         jFrame2.getContentPane().add(ComboBox_Type2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 620, 210, 30));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -317,6 +326,7 @@ public class Order_Received extends javax.swing.JPanel {
         jFrame2.getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 560, -1, -1));
 
         ComboBox_Employee1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ComboBox_Employee1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "pongsapak" }));
         jFrame2.getContentPane().add(ComboBox_Employee1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 560, 210, 30));
 
         Field_Cost1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -335,7 +345,8 @@ public class Order_Received extends javax.swing.JPanel {
         jLabel16.setText("ราคาต้นทุนสินค้า :");
         jFrame2.getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 500, -1, -1));
 
-        ComboBox_Type3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ComboBox_Type3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ComboBox_Type3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ได่" }));
         jFrame2.getContentPane().add(ComboBox_Type3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 500, 210, 30));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -348,6 +359,11 @@ public class Order_Received extends javax.swing.JPanel {
 
         Field_Product3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Field_Product3.setText("ชื่อสินค้า");
+        Field_Product3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Field_Product3ActionPerformed(evt);
+            }
+        });
         jFrame2.getContentPane().add(Field_Product3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 440, 210, -1));
 
         Table_Receive_Pro1.setModel(new javax.swing.table.DefaultTableModel(
@@ -389,7 +405,8 @@ public class Order_Received extends javax.swing.JPanel {
         jLabel20.setText("บริษัทที่เป็นตัวแทนจำหน่าย :");
         jFrame2.getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, -1));
 
-        ComboBox_Company2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ComboBox_Company2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ComboBox_Company2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "บริษัทไก่", " " }));
         jFrame2.getContentPane().add(ComboBox_Company2, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 20, 180, 30));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -529,7 +546,52 @@ public class Order_Received extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
-        // TODO add your handling code here:
+        String name = Field_Product4.getText();
+        String category = Field_type.getText();
+        String company = ComboBox_Company2.getSelectedItem().toString();
+        String recipient = ComboBox_Employee.getSelectedItem().toString();
+        Integer id = Integer.valueOf(ComboBox_Type.getSelectedItem().toString());
+        Double cost = Double.valueOf(Field_Cost.getText().toString());
+        Integer quantity = Integer.valueOf(Field_Quantity.getText().toString());
+        java.util.Date date = new java.util.Date();
+        Double total = cost * quantity;
+        String remark = jTextArea_Information.getText();
+        
+        String insertQuery = "INSERT INTO `orderreceived`(`Date`, `Company`, `Name`, `Category`, `Id`, `Recipient`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        
+        try {
+                
+            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            
+            ps.setDate(1, new java.sql.Date(date.getTime()));
+            ps.setString(2, company);
+            ps.setString(3, name);
+            ps.setString(4, category);
+            ps.setInt(5, id);
+            ps.setString(6, recipient);
+            ps.setDouble(7, cost);
+            ps.setInt(8, quantity);
+            ps.setDouble(9, total);
+            ps.setString(10, remark);
+            
+            if(ps.executeUpdate() > 0)
+            {
+                Main.body.removeAll();
+                Main.body.add(new Order_Received());
+                Main.body.repaint();
+                Main.body.revalidate();
+                JOptionPane.showMessageDialog(null, "New Order Added Successfully", "Add Order", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Added Complete");
+            }
+            else
+            {
+              JOptionPane.showMessageDialog(null, "Order Not Added", "Add Order", JOptionPane.ERROR_MESSAGE);
+              System.out.println("Some Error Message Here");  
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }                     
     }//GEN-LAST:event_btnAdd1ActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -537,7 +599,7 @@ public class Order_Received extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAdd2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd2ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnAdd2ActionPerformed
 
     private void btnDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete1ActionPerformed
@@ -547,6 +609,14 @@ public class Order_Received extends javax.swing.JPanel {
     private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSave1ActionPerformed
+
+    private void Field_Product3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Field_Product3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Field_Product3ActionPerformed
+
+    private void ComboBox_Type2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBox_Type2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBox_Type2ActionPerformed
 
     ArrayList<OrderReceivedInfo> productsArray = new ArrayList<>();
     
@@ -566,9 +636,9 @@ public class Order_Received extends javax.swing.JPanel {
             
             while(rs.next())
             {
-                product = new OrderReceivedInfo(rs.getInt("No"), rs.getString("Date"),
-                                      rs.getString("Name"), rs.getInt("Id"), rs.getString("Recipient"),
-                                      rs.getInt("Quantity"), rs.getDouble("Total"));
+                product = new OrderReceivedInfo(rs.getInt("No"), rs.getString("Date"), rs.getString("Company"),
+                                      rs.getString("Name"), rs.getString("Category"), rs.getInt("Id"), rs.getDouble("Cost"), rs.getString("Recipient"),
+                                      rs.getInt("Quantity"), rs.getDouble("Total"), rs.getString("Remark"));
                 list.add(product);
             }
             
@@ -594,7 +664,7 @@ public class Order_Received extends javax.swing.JPanel {
         {
             row[0] = productsList.get(i).getNo();
             row[1] = productsList.get(i).getDate();
-            row[2] = productsList.get(i).getName();
+            row[2] = productsList.get(i).getCompany();
             row[3] = productsList.get(i).getId();
             row[4] = productsList.get(i).getRecipient();
             row[5] = productsList.get(i).getQuantity();

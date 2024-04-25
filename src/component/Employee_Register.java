@@ -343,25 +343,25 @@ public class Employee_Register extends javax.swing.JPanel {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         
         Integer id = Integer.valueOf(txtId.getText().toString());
-        String name = txtName.getText();
+        String fname = txtName.getText();
         String sname = txtSname.getText();
-        String fname = name + " " + sname;
         String address = txtAddress.getText();
         String job = txtJob.getText();
         Double wage = Double.valueOf(txtSalary.getText().toString());
         Integer phone = Integer.valueOf(txtPhone.getText().toString());
         
-        String insertQuery = "INSERT INTO `employee`(`Name`, `Id`, `Phone`, `Job`, `Wage`, `Address`) VALUES (?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO `employee`(`Fname`, `Sname`, `Id`, `Phone`, `Job`, `Wage`, `Address`) VALUES (?,?,?,?,?,?,?)";
         
         try {
                 
             PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
             ps.setString(1, fname);
-            ps.setInt(2, id);
-            ps.setInt(3, phone);
-            ps.setString(4, job);
-            ps.setDouble(5, wage);
-            ps.setString(6, address);
+            ps.setString(2, sname);
+            ps.setInt(3, id);
+            ps.setInt(4, phone);
+            ps.setString(5, job);
+            ps.setDouble(6, wage);
+            ps.setString(7, address);
             
             if(ps.executeUpdate() > 0)
             {
