@@ -1,5 +1,6 @@
 package component;
 
+
 import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import component.AddProduct;
 import component.EditProduct;
 import static component.EditProduct.txtNo;
 import java.awt.Color;
+import java.awt.Component;
 import javax.swing.table.TableRowSorter;
 
 public class Manage_Warehouse extends javax.swing.JPanel {
@@ -26,6 +28,8 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         initComponents();
         con = DB.mycon();
         showProductsInTable();
+        
+            
         TableActionEventEdit event = new TableActionEventEdit() {
             @Override
             public void onEdit(int row) {
@@ -53,6 +57,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         search__box = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
         delete_bt = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
 
@@ -118,6 +123,12 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         });
         add(delete_bt, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 640, 130, 50));
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/settings3.png"))); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.setBorderPainted(false);
+        jButton2.setDefaultCapable(false);
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 110, 50, 40));
+
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -144,6 +155,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
     int selectedRow = jTable.getSelectedRow(); 
     if(selectedRow != -1) { 
@@ -205,6 +217,8 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter));
     }//GEN-LAST:event_search__boxKeyReleased
 
+    
+    
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     
     int position = 0;
@@ -280,6 +294,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton delete_bt;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable;
     private javax.swing.JTextField search__box;

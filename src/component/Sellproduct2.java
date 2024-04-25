@@ -16,6 +16,7 @@ import raven.cell.TableActionEventTrash;
 import component.Sellproduct3;
 import component.Sellproduct;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 public class Sellproduct2 extends javax.swing.JPanel {
@@ -33,6 +34,31 @@ public class Sellproduct2 extends javax.swing.JPanel {
             public void onDelete(int row) {
                 if (jTable.isEditing()) {
                     jTable.getCellEditor().stopCellEditing();
+                        int selectedRow = jTable.getSelectedRow(); 
+    if(selectedRow != -1) { 
+        int id = (int) jTable.getValueAt(selectedRow, 0); 
+        if(id > 0) { 
+            String deleteQuery = "DELETE FROM cart WHERE No=?";
+            try {
+                PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+                ps.setInt(1, id);
+                int deletedRows = ps.executeUpdate(); 
+                if(deletedRows > 0) { 
+                    DefaultTableModel model = (DefaultTableModel) jTable.getModel(); 
+                    model.removeRow(selectedRow); 
+                    JOptionPane.showMessageDialog(null, "Product Deleted Successfully", "Remove Product", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to delete product", "Remove Product", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                System.out.println("Failed to remove product: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Product Not Deleted, Make Sure The ID is Valid", "Remove Product", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please select a row to delete", "Remove Product", JOptionPane.ERROR_MESSAGE);
+    }
                 }
                 DefaultTableModel model = (DefaultTableModel) jTable.getModel();
                 model.removeRow(row);

@@ -271,17 +271,17 @@ public class Distributor_Register extends javax.swing.JPanel {
         String company = txtCompany.getText();
         String address = txtAddress.getText();
         Integer phone = Integer.valueOf(txtPhone.getText().toString());
-        String fname = name + " " + sname;
         
-        String insertQuery = "INSERT INTO `distributor`(`Company`, `Salesman`, `Phone`, `Address`) VALUES (?,?,?,?)";
+        String insertQuery = "INSERT INTO `distributor`(`Company`, `FName`, `Sname`, `Phone`, `Address`) VALUES (?,?,?,?,?)";
         
         try {
                 
             PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
             ps.setString(1, company);
-            ps.setString(2, fname);
-            ps.setInt(3, phone);
-            ps.setString(4, address);
+            ps.setString(2, name);
+            ps.setString(3, sname);
+            ps.setInt(4, phone);
+            ps.setString(5, address);
             
             if(ps.executeUpdate() > 0)
             {

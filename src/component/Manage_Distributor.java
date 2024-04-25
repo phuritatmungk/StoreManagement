@@ -235,7 +235,8 @@ public class Manage_Distributor extends javax.swing.JPanel {
             while(rs.next())
             {
                 distributor = new DistributorInfo(rs.getInt("No"), rs.getString("Company"),
-                                      rs.getString("Salesman"), rs.getInt("Phone"),rs.getString("Address"));
+                                       rs.getString("Fname"),rs.getString("Sname"),
+                                       rs.getInt("Phone"),rs.getString("Address"));
                 list.add(distributor);
             }
             
@@ -260,7 +261,7 @@ public class Manage_Distributor extends javax.swing.JPanel {
         for(int i = 0; i < distributorsList.size(); i++)
         {
             row[0] = distributorsList.get(i).getNo();
-            row[1] = distributorsList.get(i).getName();
+            row[1] = distributorsList.get(i).getCompany();
             row[2] = distributorsList.get(i).getSalesman();
             row[3] = distributorsList.get(i).getPhone();
             
@@ -268,10 +269,11 @@ public class Manage_Distributor extends javax.swing.JPanel {
         }
 
     }
-public void showProductData(int index)
+        public void showProductData(int index)
       {Edit_dealer_info.txtNo.setText(distributorArray.get(index).getNo().toString());
-        Edit_dealer_info.txtName.setText(distributorArray.get(index).getName().toString());
-        Edit_dealer_info.txtCompany.setText(distributorArray.get(index).getSalesman().toString());
+        Edit_dealer_info.txtName.setText(distributorArray.get(index).getFname().toString());
+        Edit_dealer_info.txtSname.setText(distributorArray.get(index).getSname().toString());
+        Edit_dealer_info.txtCompany.setText(distributorArray.get(index).getCompany().toString());
         Edit_dealer_info.txtAddress.setText(distributorArray.get(index).getAddress().toString());
         Edit_dealer_info.txtPhone.setText(distributorArray.get(index).getPhone().toString());
 

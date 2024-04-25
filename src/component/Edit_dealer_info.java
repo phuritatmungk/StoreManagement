@@ -277,20 +277,22 @@ public class Edit_dealer_info extends javax.swing.JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         Integer no = Integer.valueOf(txtNo.getText().toString()); 
-        String name = txtName.getText();
+        String fname = txtName.getText();
+        String sname = txtSname.getText();
         String company = txtCompany.getText();
         String address = txtAddress.getText();
         Integer phone = Integer.valueOf(txtPhone.getText().toString());
 
  
-        String updateQuery = "UPDATE distributor SET Company=?,=?,Salesman=?,Phone=? ,Address=?  WHERE No=?";
+        String updateQuery = "UPDATE distributor SET Company=?,Fname=?,Sname=? ,Phone=?,Address=?  WHERE No=?";
         try {
             PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
             ps.setString(1, company);
-            ps.setString(2, name);
-            ps.setInt(3, phone);
-            ps.setString(4, address); 
-            ps.setInt(5, no);
+            ps.setString(2, fname);
+            ps.setString(3, sname);
+            ps.setInt(4, phone);
+            ps.setString(5, address); 
+            ps.setInt(6, no);
 
             if(ps.executeUpdate() > 0)
             {

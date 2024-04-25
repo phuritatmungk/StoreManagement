@@ -11,16 +11,19 @@ package karnkha;
 public class EmployeeInfo {
     
     private Integer no;
-    private String name;
+    private String fname;
     private Integer id;
     private String job;
     private Double wage;
     private Integer phone;
     private String address;
+    private String sname;
+    private String full;
 
-    public EmployeeInfo(Integer no, String name, Integer id, String job, Double wage, Integer phone, String address) {
+    public EmployeeInfo(Integer no, String fname, String sname, Integer id, String job, Double wage, Integer phone, String address) {
         this.no = no;
-        this.name = name;
+        this.fname = fname;
+        this.sname = sname;
         this.id = id;
         this.job = job;
         this.wage = wage;
@@ -34,14 +37,6 @@ public class EmployeeInfo {
 
     public void setNo(Integer no) {
         this.no = no;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Integer getId() {
@@ -82,5 +77,30 @@ public class EmployeeInfo {
 
     public void setPhone(Integer phone) {
         this.phone = phone;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getSname() {
+        return sname;
+    }
+
+    public void setSname(String sname) {
+        this.sname = sname;
+    }
+
+    public String getFull() {
+        String full = getFname() + " " + getSname();
+        return full;
+    }
+
+    public void setFull(String full) {
+        this.full = full;
     }
 }
