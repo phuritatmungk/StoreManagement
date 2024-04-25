@@ -1,12 +1,18 @@
 package component;
 
 import Com_Table.Table_OrderRec;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.raven.datechooser.DateBetween;
 import com.raven.datechooser.DateChooser;
+import com.raven.datechooser.listener.DateChooserAction;
+import com.raven.datechooser.listener.DateChooserAdapter;
 import java.awt.Component;
 import raven.cell.TableActionCellEditorEdit;
 import raven.cell.TableActionCellRenderEdit;
 import raven.cell.TableActionEventEdit;
 import java.sql.*;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,9 +25,32 @@ public class Order_Received extends javax.swing.JPanel {
     Connection con = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+    private DateChooser chDate = new DateChooser();
+    private DefaultTableModel model;
     
     public Order_Received() {
         initComponents();
+        chDate.setTextField(searchDate);
+        chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
+        chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+        model = (DefaultTableModel)jTable.getModel();
+        chDate.addActionDateChooserListener(new DateChooserAdapter() {
+            @Override
+            public void dateBetweenChanged(DateBetween db, DateChooserAction action) {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String dateFrom = df.format(db.getFromDate());
+                String toDate = df.format(db.getToDate());
+                loadData("SELECT * FROM `orderreceived` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
+        
+                model.fireTableDataChanged();
+            }
+        });
+                try{
+            DB.getInstance().getConnection();
+        } catch (Exception e) {
+            System.err.println(e);
+            }
+        
         con = DB.mycon();
         showProductsInTable();
         TableActionEventEdit event = new TableActionEventEdit() {
@@ -42,6 +71,40 @@ public class Order_Received extends javax.swing.JPanel {
         body.revalidate();
     }
     
+     private void loadData(String sql) {
+        try {
+            model.setRowCount(0); // เคลียร์ข้อมูลในตารางก่อนโหลดข้อมูลใหม่
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            DecimalFormat f = new DecimalFormat("$ #,##0.##");
+            PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+            String No = r.getString("No");
+            String Date = r.getString("Date");
+            String Company = r.getString("Company");
+            String Name = r.getString("Name");
+            String Category = r.getString("Category");
+            String Id = r.getString("Id");
+            String Cost = f.format(r.getDouble("Cost"));
+            String Recipient = r.getString("Recipient");
+            String Quantity = f.format(r.getDouble("Quantity"));
+            String Total = f.format(r.getDouble("Total"));
+            String Remark = r.getString("Remark");
+
+            // เพิ่มข้อมูลใหม่เข้าไปในตาราง
+            model.addRow(new Object[] { No,Date,Company,Name,Category,Id,Cost,Recipient,Quantity,Total,Remark});
+            
+         
+            
+        }
+        r.close();
+        p.close();
+        model.fireTableDataChanged();
+    } catch (Exception e) {
+        System.err.println(e);
+    }
+}
+     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -429,6 +492,7 @@ public class Order_Received extends javax.swing.JPanel {
 
         searchDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         searchDate.setForeground(new java.awt.Color(123, 123, 123));
+        searchDate.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         searchDate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         searchDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -461,8 +525,8 @@ public class Order_Received extends javax.swing.JPanel {
         add(delete_bt, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 640, 130, 50));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("วันที่");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 52, -1, 30));
+        jLabel1.setText("วันที่ :");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 50, -1, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -492,7 +556,15 @@ public class Order_Received extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
-
+public static void main (String args []) {
+        FlatIntelliJLaf.registerCustomDefaultsSource("style");
+        FlatIntelliJLaf. setup ();
+        java.awt. EventQueue. invokeLater (new Runnable () {
+            public void run () {
+                new Order_Record() .setVisible(true);
+            }
+        });
+    }
     private void searchDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchDateActionPerformed
