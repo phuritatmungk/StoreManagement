@@ -313,11 +313,12 @@ public class AddProduct extends javax.swing.JPanel {
         Integer id = Integer.valueOf(txtProductid.getText().toString());
         String name = txtName.getText();
         String category = txtType.getText();
+        Double cost = Double.valueOf(txtCost.getText().toString());
         Double price = Double.valueOf(txtPrice.getText().toString());
         Integer quantity = Integer.valueOf(txtAmount.getText().toString());
         java.util.Date date = new java.util.Date();
         
-        String insertQuery = "INSERT INTO `inventory`(`Id`, `Date`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO `inventory`(`Id`, `Date`, `Name`, `Category`, `Cost`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?,?)";
         
         try {
                 
@@ -326,8 +327,9 @@ public class AddProduct extends javax.swing.JPanel {
             ps.setDate(2, new java.sql.Date(date.getTime()));
             ps.setString(3, name);
             ps.setString(4, category);
-            ps.setInt(5, quantity);
-            ps.setDouble(6, price);
+            ps.setDouble(5, cost);
+            ps.setInt(6, quantity);
+            ps.setDouble(7, price);
             
             if(ps.executeUpdate() > 0)
             {
@@ -347,11 +349,18 @@ public class AddProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void txtAmountFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAmountFocusGained
-        // TODO add your handling code here:
+        if (txtAmount.getText().equals("0"))
+        {
+            txtAmount.setText("");
+            txtAmount.setForeground(new Color(0, 0, 0));
+        }
     }//GEN-LAST:event_txtAmountFocusGained
 
     private void txtAmountFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAmountFocusLost
-        // TODO add your handling code here:
+        if (txtAmount.getText ().length() ==0){
+            txtAmount.setText ("0") ;
+            txtAmount.setForeground(new Color(123, 123, 123));
+        }
     }//GEN-LAST:event_txtAmountFocusLost
 
 

@@ -1,9 +1,8 @@
 package karnkha;
 
-/**
- *
- * @author RAVEN
- */
+import karnkha.Main;
+import component.Sellproduct;
+
 public class Home extends javax.swing.JFrame {
 
     /**
@@ -255,6 +254,10 @@ public class Home extends javax.swing.JFrame {
 
     private void icon1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon1MouseClicked
         new Main().setVisible(true);
+        Main.body.removeAll();
+        Main.body.add(new Sellproduct());
+        Main.body.repaint();
+        Main.body.revalidate();
         this.dispose();
     }//GEN-LAST:event_icon1MouseClicked
 
