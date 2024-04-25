@@ -38,24 +38,22 @@ public class Sellproduct extends javax.swing.JPanel {
                 Integer quantity = Integer.valueOf(jText_Quantity.getText().toString());
                 Double price = Double.valueOf(jText_Price.getText());
                 
-                quantity--;
-                if(quantity < 1){
-        
-                String insertQuery = "INSERT INTO `cart`(`Id`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?)";
+                int currentQuantity = Integer.valueOf(jText_Quantity.getText().toString());
+                currentQuantity--;
+                if(currentQuantity < 1){
+                    JOptionPane.showMessageDialog(null,"Not Enough Item","Error",JOptionPane.ERROR_MESSAGE);
+                }else{
+                    String updateQuery = "UPDATE `inventory`SET`Quantity` = ? WHERE `Id`=? ";
         
         try {
             
-            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
-            ps.setInt(1, id);
-            ps.setString(2, name);
-            ps.setString(3, category);
-            ps.setInt(4, quantity);
-            ps.setDouble(5, price);
-      
+            PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
+            ps.setInt(1, currentQuantity);
+            ps.setInt(2, id);
             
             if(ps.executeUpdate() > 0)
             {
-                showProductsInTable();
+                jTable.setValueAt(currentQuantity, row, 4);
                 JOptionPane.showMessageDialog(null, "New Product Added Successfully", "Add Product", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("New Product Added");
             }
@@ -68,7 +66,27 @@ public class Sellproduct extends javax.swing.JPanel {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+        String insertQuery = "INSERT INTO `cart`(`Id`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?)";
+                try {
+            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            ps.setInt(1, id);
+            ps.setString(2, name);
+            ps.setString(3, category);
+            ps.setInt(4, 1);
+            ps.setDouble(5, price);
+
+            if (ps.executeUpdate() > 0) {
+                showProductsInTable();
+                System.out.println("New Product Added");
+            } else {
+                JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Some Error Message Here");
             }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+}
 
         };
         jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderAdd());
@@ -203,7 +221,9 @@ public class Sellproduct extends javax.swing.JPanel {
         jText_Category.setBorder(null);
         add(jText_Category, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 730, -1, -1));
 
+        jText_Quantity.setEditable(false);
         jText_Quantity.setBackground(new java.awt.Color(255, 255, 255));
+        jText_Quantity.setForeground(new java.awt.Color(255, 255, 255));
         jText_Quantity.setText("jTextField1");
         jText_Quantity.setBorder(null);
         add(jText_Quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 690, -1, 20));
