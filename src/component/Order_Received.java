@@ -466,9 +466,6 @@ public class Order_Received extends javax.swing.JPanel {
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
@@ -526,10 +523,6 @@ public class Order_Received extends javax.swing.JPanel {
     }   
     }//GEN-LAST:event_delete_btActionPerformed
 
-    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
-
-    }//GEN-LAST:event_Save_bt1ActionPerformed
-
     private void Save_bt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Save_bt1MouseClicked
         jFrame1.setVisible(true);
         showForm(new Table_OrderRec());
@@ -542,7 +535,50 @@ public class Order_Received extends javax.swing.JPanel {
     }//GEN-LAST:event_jTableMouseClicked
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
+        String name = Field_Product4.getText();
+        String category = Field_type.getText();
+        String company = ComboBox_Company2.getSelectedItem().toString();
+        String recipient = ComboBox_Employee.getSelectedItem().toString();
+        Integer id = Integer.valueOf(ComboBox_Type.getSelectedItem().toString());
+        Double cost = Double.valueOf(Field_Cost.getText().toString());
+        Integer quantity = Integer.valueOf(Field_Quantity.getText().toString());
+        java.util.Date date = new java.util.Date();
+        Double total = cost * quantity;
+        String remark = jTextArea_Information.getText();
+        
+        String insertQuery = "INSERT INTO `orderreceived`(`Date`, `Company`, `Name`, `Category`, `Id`, `Recipient`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        
+        try {
+                
+            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            
+            ps.setDate(1, new java.sql.Date(date.getTime()));
+            ps.setString(2, company);
+            ps.setString(3, name);
+            ps.setString(4, category);
+            ps.setInt(5, id);
+            ps.setString(6, recipient);
+            ps.setDouble(7, cost);
+            ps.setInt(8, quantity);
+            ps.setDouble(9, total);
+            ps.setString(10, remark);
+            
+            if(ps.executeUpdate() > 0)
+            {
+                showProductsTable();
+                jFrame1.dispose();
+                JOptionPane.showMessageDialog(null, "New Order Added Successfully", "Add Order", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Added Complete");
+            }
+            else
+            {
+              JOptionPane.showMessageDialog(null, "Order Not Added", "Add Order", JOptionPane.ERROR_MESSAGE);
+              System.out.println("Some Error Message Here");  
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }     
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
@@ -576,10 +612,7 @@ public class Order_Received extends javax.swing.JPanel {
             
             if(ps.executeUpdate() > 0)
             {
-                Main.body.removeAll();
-                Main.body.add(new Order_Received());
-                Main.body.repaint();
-                Main.body.revalidate();
+                showProductsInTable();
                 JOptionPane.showMessageDialog(null, "New Order Added Successfully", "Add Order", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("Added Complete");
             }
@@ -618,6 +651,10 @@ public class Order_Received extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_ComboBox_Type2ActionPerformed
 
+    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
+       
+    }//GEN-LAST:event_Save_bt1ActionPerformed
+
     ArrayList<OrderReceivedInfo> productsArray = new ArrayList<>();
     
     int position = 0;
@@ -652,6 +689,30 @@ public class Order_Received extends javax.swing.JPanel {
     }
     
     public void showProductsInTable()
+    {
+        ArrayList<OrderReceivedInfo> productsList = getProductsList();
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        
+        model.setRowCount(0);
+        
+        Object[] row = new Object[7];
+        
+        for(int i = 0; i < productsList.size(); i++)
+        {
+            row[0] = productsList.get(i).getNo();
+            row[1] = productsList.get(i).getName();
+            row[2] = productsList.get(i).getQuantity();
+            row[3] = productsList.get(i).getId();
+            row[4] = productsList.get(i).getCost();
+            row[5] = productsList.get(i).getCategory();
+            row[6] = productsList.get(i).getTotal();
+            
+            model.addRow(row);
+        }
+        
+    }
+    
+        public void showProductsTable()
     {
         ArrayList<OrderReceivedInfo> productsList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
