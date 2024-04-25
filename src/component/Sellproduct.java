@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.PopupMenu;
 import java.util.Comparator;
 import javax.swing.table.TableRowSorter;
+import karnkha.Home;
 
 public class Sellproduct extends javax.swing.JPanel {
     
@@ -101,6 +102,11 @@ public class Sellproduct extends javax.swing.JPanel {
         back_button1.setForeground(new java.awt.Color(139, 139, 139));
         back_button1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/back-button.png"))); // NOI18N
+        back_button1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back_button1MouseClicked(evt);
+            }
+        });
         add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -275,6 +281,10 @@ public class Sellproduct extends javax.swing.JPanel {
     private void jText_PriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_PriceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jText_PriceActionPerformed
+
+    private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
+
+    }//GEN-LAST:event_back_button1MouseClicked
  
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     

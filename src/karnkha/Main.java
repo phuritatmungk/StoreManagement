@@ -36,7 +36,6 @@ public class Main extends javax.swing.JFrame {
             public void selected(int index, int subIndex) {
                 if (index == 0) {
                     showForm(new Sellproduct());
-                    clearAllData(); 
                 } 
                 else if (index == 1) {
                     showForm(new Pay_for_repair_services());
