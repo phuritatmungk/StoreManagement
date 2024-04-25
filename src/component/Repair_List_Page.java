@@ -398,7 +398,31 @@ public class Repair_List_Page extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
-        // TODO add your handling code here:
+    int selectedRow = jTable.getSelectedRow(); 
+    if(selectedRow != -1) { 
+        int id = (int) jTable.getValueAt(selectedRow, 0); 
+        if(id > 0) { 
+            String deleteQuery = "DELETE FROM request WHERE No=?";
+            try {
+                PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+                ps.setInt(1, id);
+                int deletedRows = ps.executeUpdate(); 
+                if(deletedRows > 0) { 
+                    DefaultTableModel model = (DefaultTableModel) jTable.getModel(); 
+                    model.removeRow(selectedRow); 
+                    JOptionPane.showMessageDialog(null, "Product Deleted Successfully", "Remove Product", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to delete product", "Remove Product", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                System.out.println("Failed to remove product: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Product Not Deleted, Make Sure The ID is Valid", "Remove Product", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please select a row to delete", "Remove Product", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_delete_btActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -452,6 +476,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
             
             if(ps.executeUpdate() > 0)
             {
+                showRequestInTable();
                 System.out.println("Updated");
             }
             else

@@ -4,6 +4,10 @@
  */
 package Com_Table;
 
+import karnkha.Main;
+import Com_Table.Table_OrderRec;
+import component.Order_Received;
+
 /**
  *
  * @author pongs
@@ -90,6 +94,11 @@ public class Table_RecivePro extends javax.swing.JPanel {
         back_button1.setForeground(new java.awt.Color(139, 139, 139));
         back_button1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/back-button Table.png"))); // NOI18N
+        back_button1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back_button1MouseClicked(evt);
+            }
+        });
         jPanel1.add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 30, 40));
 
         All_prices.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -107,6 +116,13 @@ public class Table_RecivePro extends javax.swing.JPanel {
     private void Table_Order_Record1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_Order_Record1MouseClicked
 
     }//GEN-LAST:event_Table_Order_Record1MouseClicked
+
+    private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
+        Order_Received.body.removeAll();
+        Order_Received.body.add(new Table_OrderRec());
+        Order_Received.body.repaint();
+        Order_Received.body.revalidate();
+    }//GEN-LAST:event_back_button1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
