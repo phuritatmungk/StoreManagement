@@ -1,4 +1,4 @@
-    package component;
+package component;
 
 import java.awt.Color;
 import karnkha.Main;

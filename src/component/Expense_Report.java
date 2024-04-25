@@ -246,7 +246,7 @@ public class Expense_Report extends javax.swing.JPanel {
     public ArrayList<ExpenseInfo> getProductsList()
     {
         ArrayList<ExpenseInfo> list = new ArrayList<>();
-        String selectQuery = "SELECT * FROM `intentory`";
+        String selectQuery = "SELECT * FROM `reportexpense`";
         
         Statement st;
         ResultSet rs;

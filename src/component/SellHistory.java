@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
-import karnkha.InventoryInfo;
+import karnkha.SalesInfo;
 
 public class SellHistory extends javax.swing.JPanel {
     
@@ -16,7 +16,7 @@ public class SellHistory extends javax.swing.JPanel {
     public SellHistory() {
         initComponents();
         con = DB.mycon();
-        
+        showProductsInTable();
     }
 
     
@@ -119,12 +119,12 @@ public class SellHistory extends javax.swing.JPanel {
         position = index;
     }//GEN-LAST:event_jTableMouseClicked
 
-    ArrayList<InventoryInfo> productsArray = new ArrayList<>();
+    ArrayList<SalesInfo> productsArray = new ArrayList<>();
     
     int position = 0;
-    public ArrayList<InventoryInfo> getProductsList()
+    public ArrayList<SalesInfo> getProductsList()
     {
-        ArrayList<InventoryInfo> list = new ArrayList<>();
+        ArrayList<SalesInfo> list = new ArrayList<>();
         String selectQuery = "SELECT * FROM `sales`";
         
         Statement st;
@@ -133,13 +133,13 @@ public class SellHistory extends javax.swing.JPanel {
         try {
             st = DB.getConnection().createStatement();
             rs = st.executeQuery(selectQuery);
-            InventoryInfo product;
+            SalesInfo product;
             
             while(rs.next())
             {
-                product = new InventoryInfo(rs.getInt("No"), rs.getInt("Id"),
+                product = new SalesInfo(rs.getInt("No"), rs.getInt("Id"),
                                       rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
-                                      rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price"));
+                                      rs.getInt("Quantity"), rs.getDouble("Price"));
                 list.add(product);
             }
             
@@ -154,7 +154,7 @@ public class SellHistory extends javax.swing.JPanel {
     
     public void showProductsInTable()
     {
-        ArrayList<InventoryInfo> productsList = getProductsList();
+        ArrayList<SalesInfo> productsList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         
         model.setRowCount(0);

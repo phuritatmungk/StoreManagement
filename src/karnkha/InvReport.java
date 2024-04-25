@@ -8,36 +8,24 @@ package karnkha;
  *
  * @author chait
  */
-public class RevenueInfo {
+public class InvReport {
     
-    private String date;
     private Integer id;
-    private String list;
+    private String name;
     private String category;
-    private Double cost;
-    private Double price;
     private Integer quantity;
-    private Double income;
+    private Double cost;
     private Double total;
-    
-    public RevenueInfo(String date, Integer id, String list, String category, Double cost, Double price, Integer quantity, Double income, Double total) {
-        this.date = date;
+    private String date;
+
+    public InvReport(String date, Integer id, String name, String category, Double cost, Integer quantity, Double total) {
         this.id = id;
-        this.list = list;
+        this.date = date;
+        this.name = name;
         this.category = category;
         this.cost = cost;
-        this.price = price;
         this.quantity = quantity;
-        this.income = income;
         this.total = total;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public Integer getId() {
@@ -48,12 +36,12 @@ public class RevenueInfo {
         this.id = id;
     }
 
-    public String getList() {
-        return list;
+    public String getName() {
+        return name;
     }
 
-    public void setList(String list) {
-        this.list = list;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCategory() {
@@ -64,14 +52,6 @@ public class RevenueInfo {
         this.category = category;
     }
 
-    public Double getCost() {
-        return cost;
-    }
-
-    public void setCost(Double cost) {
-        this.cost = cost;
-    }
-
     public Integer getQuantity() {
         return quantity;
     }
@@ -80,27 +60,34 @@ public class RevenueInfo {
         this.quantity = quantity;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+    
+    /**
+     * @return the total
+     */
     public Double getTotal() {
+        Double total = getCost() * getQuantity();
         return total;
     }
 
+    /**
+     * @param total the total to set
+     */
     public void setTotal(Double total) {
         this.total = total;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getCost() {
+        return cost;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Double getIncome() {
-        return income;
-    }
-
-    public void setIncome(Double income) {
-        this.income = income;
+    public void setCost(Double cost) {
+        this.cost = cost;
     }
 }

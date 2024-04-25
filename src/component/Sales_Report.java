@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
-import karnkha.ExpenseInfo;
+import karnkha.InvReport;
 import component.ReportMenu;
 import karnkha.Main;
 public class Sales_Report extends javax.swing.JPanel {
@@ -273,12 +273,12 @@ public class Sales_Report extends javax.swing.JPanel {
         Main.body.revalidate();
     }//GEN-LAST:event_back_button1MouseClicked
 
-    ArrayList<ExpenseInfo> salesArray = new ArrayList<>();
+    ArrayList<InvReport> salesArray = new ArrayList<>();
     
     int position = 0;
-    public ArrayList<ExpenseInfo> getProductsList()
+    public ArrayList<InvReport> getProductsList()
     {
-        ArrayList<ExpenseInfo> list = new ArrayList<>();
+        ArrayList<InvReport> list = new ArrayList<>();
         String selectQuery = "SELECT * FROM `reportsales`";
         
         Statement st;
@@ -287,13 +287,13 @@ public class Sales_Report extends javax.swing.JPanel {
         try {
             st = DB.getConnection().createStatement();
             rs = st.executeQuery(selectQuery);
-            ExpenseInfo sales;
+            InvReport sales;
             
             while(rs.next())
             {
-                sales = new ExpenseInfo(rs.getString("Date"), rs.getInt("Id"),
+                sales = new InvReport(rs.getString("Date"), rs.getInt("Id"),
                                       rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
-                                      rs.getInt("Quantity"), rs.getDouble("Expense"), rs.getDouble("Total"));
+                                      rs.getInt("Quantity"), rs.getDouble("Total"));
                 list.add(sales);
             }
             
@@ -308,7 +308,7 @@ public class Sales_Report extends javax.swing.JPanel {
     
     public void showProductsInTable()
     {
-        ArrayList<ExpenseInfo> salessList = getProductsList();
+        ArrayList<InvReport> salessList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         
         model.setRowCount(0);
@@ -319,7 +319,7 @@ public class Sales_Report extends javax.swing.JPanel {
         {
             row[0] = salessList.get(i).getDate();
             row[1] = salessList.get(i).getId();
-            row[2] = salessList.get(i).getList();
+            row[2] = salessList.get(i).getName();
             row[3] = salessList.get(i).getCategory();
             row[4] = salessList.get(i).getCost();
             row[5] = salessList.get(i).getQuantity();
