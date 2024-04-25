@@ -17,7 +17,7 @@ public class Maintenance extends javax.swing.JPanel {
 
     public Maintenance() {
         initComponents();
-        
+
         showDate();
         
         showTime();
