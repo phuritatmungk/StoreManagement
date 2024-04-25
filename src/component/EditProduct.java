@@ -3,12 +3,6 @@ package component;
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Warehouse;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import karnkha.DB;
-import karnkha.InventoryInfo;
 public class EditProduct extends javax.swing.JPanel {
 
     public EditProduct() {
@@ -316,38 +310,6 @@ public class EditProduct extends javax.swing.JPanel {
         Main.body.revalidate();
     }//GEN-LAST:event_back_buttonMouseClicked
 
-    ArrayList<InventoryInfo> productsArray = new ArrayList<>();
-    
-    int position = 0;
-    public ArrayList<InventoryInfo> getProductsList()
-    {
-        ArrayList<InventoryInfo> list = new ArrayList<>();
-        String selectQuery = "SELECT * FROM `inventory`";
-        
-        Statement st;
-        ResultSet rs;
-        
-        try {
-            st = DB.getConnection().createStatement();
-            rs = st.executeQuery(selectQuery);
-            InventoryInfo product;
-            
-            while(rs.next())
-            {
-                product = new InventoryInfo(rs.getInt("No"), rs.getInt("Id"),
-                                      rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
-                                      rs.getInt("Quantity"), rs.getDouble("Price"));
-                list.add(product);
-            }
-            
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        
-        productsArray = list;
-        return list;
-        
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
