@@ -17,9 +17,6 @@ public class Order_Received extends javax.swing.JPanel {
     ResultSet rs = null;
     PreparedStatement pst = null;
     
-    private DateChooser chData = new DateChooser();
-    
-    
     public Order_Received() {
         initComponents();
         con = DB.mycon();
