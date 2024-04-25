@@ -140,7 +140,7 @@ public class Order_Received extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "No.", "Product", "Quantity", "Product Cost", "Product Type", "All Prices"
+                "No.", "Product", "Quantity", "Product Cost", "Product Type", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {

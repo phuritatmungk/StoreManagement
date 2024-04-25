@@ -33,6 +33,9 @@ public class Manage_Employee extends javax.swing.JPanel {
                 Main.body.add(new Edit_employee_info());
                 Main.body.repaint();
                 Main.body.revalidate();
+                int index = jTable.getSelectedRow();
+                showProductData(index);
+                position = index;
             }
 
         };
