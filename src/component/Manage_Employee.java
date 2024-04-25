@@ -33,6 +33,9 @@ public class Manage_Employee extends javax.swing.JPanel {
                 Main.body.add(new Edit_employee_info());
                 Main.body.repaint();
                 Main.body.revalidate();
+                int index = jTable.getSelectedRow();
+                showProductData(index);
+                position = index;
             }
 
         };
@@ -267,7 +270,17 @@ public class Manage_Employee extends javax.swing.JPanel {
         }
         
     }
-
+public void showProductData(int index)
+      {
+        Edit_employee_info.txtNo.setText(employeesArray.get(index).getNo().toString());
+        Edit_employee_info.txtId.setText(employeesArray.get(index).getId().toString());
+        Edit_employee_info.txtName.setText(employeesArray.get(index).getName().toString());
+        //Edit_employee_info.txtSname.setText(employeesArray.get(index).getId().toString());
+        Edit_employee_info.txtPhone.setText(employeesArray.get(index).getPhone().toString());
+        Edit_employee_info.txtJob.setText(employeesArray.get(index).getJob().toString());
+        Edit_employee_info.txtSalary.setText(employeesArray.get(index).getWage().toString());
+        Edit_employee_info.txtAddress.setText(employeesArray.get(index).getAddress().toString());
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Save_bt1;
     private javax.swing.JLabel Topic;
