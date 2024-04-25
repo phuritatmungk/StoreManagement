@@ -552,8 +552,8 @@ public class Order_Record extends javax.swing.JPanel {
         add(delete_bt, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 640, 130, 50));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("วันที่");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 60, -1, -1));
+        jLabel1.setText("วันที่ :");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 50, -1, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(

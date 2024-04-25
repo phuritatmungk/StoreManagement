@@ -1,6 +1,12 @@
 package component;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.raven.datechooser.DateBetween;
+import com.raven.datechooser.DateChooser;
+import com.raven.datechooser.listener.DateChooserAction;
+import com.raven.datechooser.listener.DateChooserAdapter;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -12,12 +18,72 @@ public class SellHistory extends javax.swing.JPanel {
     Connection con = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+    
+    private DateChooser chDate = new DateChooser();
+    private DefaultTableModel model;
 
     public SellHistory() {
         initComponents();
+        chDate.setTextField(search__box);
+        chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
+        chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+        model = (DefaultTableModel)jTable.getModel();
+        chDate.addActionDateChooserListener(new DateChooserAdapter() {
+            @Override
+            public void dateBetweenChanged(DateBetween db, DateChooserAction action) {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String dateFrom = df.format(db.getFromDate());
+                String toDate = df.format(db.getToDate());
+                loadData("SELECT * FROM `sales` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
+        
+                model.fireTableDataChanged();
+            }
+        });
+                try{
+            DB.getInstance().getConnection();
+        } catch (Exception e) {
+            System.err.println(e);
+            }
+                
+                
+                
+                
         con = DB.mycon();
         showProductsInTable();
     }
+    
+    private void loadData(String sql) {
+        try {
+            model.setRowCount(0); // เคลียร์ข้อมูลในตารางก่อนโหลดข้อมูลใหม่
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            DecimalFormat f = new DecimalFormat("$ #,##0.##");
+            PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+            String No = r.getString("No");
+            String Id = r.getString("Id");
+            String Date = r.getString("Date");
+            String Name = r.getString("Name");
+            String Category = r.getString("Category");
+            
+            String Quantity = f.format(r.getDouble("Quantity"));
+            String Total = f.format(r.getDouble("Total"));
+            
+            //product = new SalesInfo(rs.getInt("No"), rs.getInt("Id"),
+                                     // rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
+                                      //rs.getInt("Quantity"), rs.getDouble("Price"));
+                //list.add(product);
+            
+            // เพิ่มข้อมูลใหม่เข้าไปในตาราง
+            model.addRow(new Object[] { No, Date, Company, Quantity, Total });
+        }
+        r.close();
+        p.close();
+        model.fireTableDataChanged();
+    } catch (Exception e) {
+        System.err.println(e);
+    }
+}
 
     
     @SuppressWarnings("unchecked")
@@ -26,11 +92,8 @@ public class SellHistory extends javax.swing.JPanel {
 
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        Topic2 = new javax.swing.JLabel();
         Topic3 = new javax.swing.JLabel();
-        btnNext = new javax.swing.JButton();
-        Data1 = new com.toedter.calendar.JDateChooser();
-        Data2 = new com.toedter.calendar.JDateChooser();
+        search__box = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
 
@@ -48,24 +111,16 @@ public class SellHistory extends javax.swing.JPanel {
         Topic.setText("ประวัติการซื้อสินค้า");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
 
-        Topic2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Topic2.setText("ถึง :");
-        add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 70, -1, 30));
-
         Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic3.setText("วันที่ :");
-        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, -1, 30));
+        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 60, -1, 30));
 
-        btnNext.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnNext.setText("ค้นหา");
-        btnNext.addActionListener(new java.awt.event.ActionListener() {
+        search__box.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNextActionPerformed(evt);
+                search__boxActionPerformed(evt);
             }
         });
-        add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 70, 110, 30));
-        add(Data1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 190, 30));
-        add(Data2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 70, 190, 30));
+        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 60, 230, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -98,27 +153,24 @@ public class SellHistory extends javax.swing.JPanel {
 
         add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        try{
-            
-            jTable.setModel(new DefaultTableModel(null, new Object[]{"No","Date","Product ID","Product Name","Category","Quantity","Price"}));
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String date1 = df.format(Data1.getDate());
-            String date2 = df.format(Data2.getDate());
-            
-            //getProductsList(date1, date2);
-            
-        }catch(Exception e){
-            
-        }
-    }//GEN-LAST:event_btnNextActionPerformed
-
+public static void main (String args []) {
+        FlatIntelliJLaf.registerCustomDefaultsSource("style");
+        FlatIntelliJLaf. setup ();
+        java.awt. EventQueue. invokeLater (new Runnable () {
+            public void run () {
+                new Order_Record() .setVisible(true);
+            }
+        });
+    }
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
         int index = jTable.getSelectedRow();
         position = index;
     }//GEN-LAST:event_jTableMouseClicked
+
+    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_search__boxActionPerformed
 
     ArrayList<SalesInfo> productsArray = new ArrayList<>();
     
@@ -178,15 +230,12 @@ public class SellHistory extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser Data1;
-    private com.toedter.calendar.JDateChooser Data2;
     private javax.swing.JLabel Topic;
-    private javax.swing.JLabel Topic2;
     private javax.swing.JLabel Topic3;
     private javax.swing.JLabel back_button1;
-    private javax.swing.JButton btnNext;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable;
+    private javax.swing.JTextField search__box;
     // End of variables declaration//GEN-END:variables
 
 }
