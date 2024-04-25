@@ -139,7 +139,7 @@ public class SellHistory extends javax.swing.JPanel {
             {
                 product = new InventoryInfo(rs.getInt("No"), rs.getInt("Id"),
                                       rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
-                                      rs.getInt("Quantity"), rs.getDouble("Price"));
+                                      rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price"));
                 list.add(product);
             }
             
