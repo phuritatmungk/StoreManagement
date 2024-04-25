@@ -162,7 +162,7 @@ public class Sellproduct extends javax.swing.JPanel {
         int columnIndexToFilter = 2;
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim(), columnIndexToFilter));
     }//GEN-LAST:event_txtSearchKeyReleased
-        
+ 
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     
     int position = 0;

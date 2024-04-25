@@ -80,7 +80,6 @@ public class Order_Record extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
 
-        jFrame1.setPreferredSize(new java.awt.Dimension(1550, 800));
         jFrame1.setSize(new java.awt.Dimension(1550, 800));
         jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -137,6 +136,7 @@ public class Order_Record extends javax.swing.JPanel {
 
         jFrame1.getContentPane().add(ScrollPane_Note, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 1440, 590));
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Company_label.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -157,10 +157,10 @@ public class Order_Record extends javax.swing.JPanel {
 
         jFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
 
-        jFrame2.setPreferredSize(new java.awt.Dimension(1550, 800));
         jFrame2.setSize(new java.awt.Dimension(1550, 800));
         jFrame2.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
