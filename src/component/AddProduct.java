@@ -310,7 +310,9 @@ public class AddProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_back_buttonMouseClicked
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        Integer id = Integer.valueOf(txtProductid.getText().toString());
+
+        Integer no = getNextQueueNumber();
+        Integer id = Integer.valueOf(txtProductid.getText().toString());       
         String name = txtName.getText();
         String category = txtType.getText();
         Double cost = Double.valueOf(txtCost.getText().toString());
@@ -318,18 +320,19 @@ public class AddProduct extends javax.swing.JPanel {
         Integer quantity = Integer.valueOf(txtAmount.getText().toString());
         java.util.Date date = new java.util.Date();
         
-        String insertQuery = "INSERT INTO `inventory`(`Id`, `Date`, `Name`, `Category`, `Cost`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO `inventory`(`No`,`Id`, `Date`, `Name`, `Category`, `Cost`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?,?,?)";
         
         try {
                 
             PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
-            ps.setInt(1, id);
-            ps.setDate(2, new java.sql.Date(date.getTime()));
-            ps.setString(3, name);
-            ps.setString(4, category);
-            ps.setDouble(5, cost);
-            ps.setInt(6, quantity);
-            ps.setDouble(7, price);
+            ps.setInt(1, no);
+            ps.setInt(2, id);
+            ps.setDate(3, new java.sql.Date(date.getTime()));
+            ps.setString(4, name);
+            ps.setString(5, category);
+            ps.setDouble(6, cost);
+            ps.setInt(7, quantity);
+            ps.setDouble(8, price);
             
             if(ps.executeUpdate() > 0)
             {
@@ -366,7 +369,23 @@ public class AddProduct extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtAmountFocusLost
 
+private int getNextQueueNumber() {
+    int nextQueueNumber = 1; 
 
+    try {
+        String query = "SELECT MAX(No) AS MaxNo FROM inventory"; 
+        PreparedStatement ps = DB.getConnection().prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            nextQueueNumber = rs.getInt("MaxNo") + 1;
+        }
+    } catch (SQLException ex) {
+        System.out.println("Failed to get next queue number: " + ex.getMessage());
+    }
+
+    return nextQueueNumber;
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
     private javax.swing.JLabel Topic;

@@ -266,22 +266,25 @@ public class Distributor_Register extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNameFocusGained
 
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
-        String name = txtName.getText();
+
+        Integer no = getNextQueueNumber();
+        String name = txtName.getText();        
         String sname = txtSname.getText();
         String company = txtCompany.getText();
         String address = txtAddress.getText();
         Integer phone = Integer.valueOf(txtPhone.getText().toString());
         
-        String insertQuery = "INSERT INTO `distributor`(`Company`, `FName`, `Sname`, `Phone`, `Address`) VALUES (?,?,?,?,?)";
+        String insertQuery = "INSERT INTO `distributor`(`No`,`Company`, `FName`, `Sname`, `Phone`, `Address`) VALUES (?,?,?,?,?,?)";
         
         try {
                 
             PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
-            ps.setString(1, company);
-            ps.setString(2, name);
-            ps.setString(3, sname);
-            ps.setInt(4, phone);
-            ps.setString(5, address);
+            ps.setInt(1, no);
+            ps.setString(2, company);
+            ps.setString(3, name);
+            ps.setString(4, sname);
+            ps.setInt(5, phone);
+            ps.setString(6, address);
             
             if(ps.executeUpdate() > 0)
             {
@@ -296,10 +299,26 @@ public class Distributor_Register extends javax.swing.JPanel {
             }
             
         } catch (SQLException ex) {
-            System.out.println("Failed to Add");
+            System.out.println(ex);
         }                     
     }//GEN-LAST:event_btnSaveMouseClicked
+private int getNextQueueNumber() {
+    int nextQueueNumber = 1; 
 
+    try {
+        String query = "SELECT MAX(No) AS MaxNo FROM distributor"; 
+        PreparedStatement ps = DB.getConnection().prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            nextQueueNumber = rs.getInt("MaxNo") + 1;
+        }
+    } catch (SQLException ex) {
+        System.out.println("Failed to get next queue number: " + ex.getMessage());
+    }
+
+    return nextQueueNumber;
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
