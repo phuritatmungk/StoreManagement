@@ -13,6 +13,7 @@ import karnkha.Main;
 import component.Sellproduct2;
 import java.awt.Color;
 import java.awt.PopupMenu;
+import java.util.Comparator;
 import javax.swing.table.TableRowSorter;
 
 public class Sellproduct extends javax.swing.JPanel {
@@ -321,24 +322,24 @@ public class Sellproduct extends javax.swing.JPanel {
         
     }
     
-    public void showProductsInTable()
-    {
+    public void showProductsInTable() {
         ArrayList<InventoryInfo> productsList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        
+
+        // Clear the existing rows in the table
         model.setRowCount(0);
+
+        // Iterate through the productsList and add each item to the table model
+        for (InventoryInfo product : productsList) {
+            Object[] row = new Object[6];
+            row[0] = product.getNo();
+            row[1] = product.getId();
+            row[2] = product.getName();
+            row[3] = product.getCategory();
+            row[4] = product.getQuantity();
+            row[5] = product.getPrice();
         
-        Object[] row = new Object[6];
-        
-        for(int i = 0; i < productsList.size(); i++)
-        {
-            row[0] = productsList.get(i).getNo();
-            row[1] = productsList.get(i).getId();
-            row[2] = productsList.get(i).getName();
-            row[3] = productsList.get(i).getCategory();
-            row[4] = productsList.get(i).getQuantity();
-            row[5] = productsList.get(i).getPrice();
-            
+            // Add the new row to the table model
             model.addRow(row);
         }
     }

@@ -1,17 +1,25 @@
 package component;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.raven.datechooser.DateBetween;
+import com.raven.datechooser.DateChooser;
+import com.raven.datechooser.listener.DateChooserAction;
+import com.raven.datechooser.listener.DateChooserAdapter;
+import com.raven.datechooser.listener.DateChooserListener;
 import raven.cell.TableActionCellEditorEdit;
 
 import java.sql.*;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import static java.time.Clock.system;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.Main;
 import karnkha.OrderInfo;
-import raven.cell.TableActionCellEditorEditView;
-import raven.cell.TableActionCellRenderEditView;
-import raven.cell.TableActionEventEditView;
+import com.raven.datechooser.*;
+
 
 public class Order_Record extends javax.swing.JPanel {
 
@@ -19,8 +27,34 @@ public class Order_Record extends javax.swing.JPanel {
     ResultSet rs = null;
     PreparedStatement pst = null;
     
+    private DateChooser chDate = new DateChooser();
+    private DefaultTableModel model;
+    
     public Order_Record() {
         initComponents();
+        chDate.setTextField(search__box);
+        chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
+        chDate.setDateFormat(new SimpleDateFormat("dd/MM/yyyy"));
+        model = (DefaultTableModel)jTable.getModel();
+        chDate.addActionDateChooserListener(new DateChooserAdapter() {
+            @Override
+            public void dateBetweenChanged(DateBetween db, DateChooserAction action) {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+                String dateFrom = df.format(db.getFromDate());
+                String toDate = df.format(db.getToDate());
+                loadData("select * from order where Date");
+            }   
+        });
+                try{
+            DB.getInstance().getConnection();
+        } catch (Exception e) {
+            System.err.println(e);
+            }
+     
+        
+  
+
+
         con = DB.mycon();
         showProductsInTable();
         TableActionEventEditView event = new TableActionEventEditView() {
@@ -38,7 +72,31 @@ public class Order_Record extends javax.swing.JPanel {
         jTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderEditView());
         jTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorEditView(event));
     }
-
+    
+    private void loadData(String sql) {
+            try{
+                
+                        model.setRowCount(0);
+                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                        DecimalFormat f = new DecimalFormat("$ #,##0.##");
+                        PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
+                        ResultSet r = p.executeQuery();
+                        while (r.next()) {
+                            String No = r.getString("No");
+                            String Date = r.getString("Date");
+                            String Company =  r.getString("Company");
+                            String Quantity = f.format (r.getDouble("Quantity"));
+                            String Total = f.format (r.getDouble("Total"));
+                            
+                        }
+                        r.close();
+                        p.close();
+                } catch (Exception e) {
+                    
+                        System.err.println(e);
+                }
+     }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -372,7 +430,15 @@ public class Order_Record extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
-
+    public static void main (String args []) {
+        FlatIntelliJLaf.registerCustomDefaultsSource("style");
+        FlatIntelliJLaf. setup ();
+        java.awt. EventQueue. invokeLater (new Runnable () {
+            public void run () {
+                new Order_Record() .setVisible(true);
+            }
+        });
+    }
     private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_search__boxActionPerformed
@@ -531,6 +597,8 @@ public class Order_Record extends javax.swing.JPanel {
         }
         
     }
+    
+        
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel All_prices;

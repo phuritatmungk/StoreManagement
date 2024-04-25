@@ -18,9 +18,18 @@ public class DB {
     public static String dbname = "storedb";
     public static Integer portnumber = 3306;
     public static String password = "";// no password
+    private static DB instance = null;
     
     
     // create a function to create and get the connection
+    
+    public static DB getInstance(){
+        if(instance == null){
+            instance = new DB();
+        }
+        return instance;
+    }
+    
     public static Connection getConnection()
     {
         
@@ -40,6 +49,7 @@ public class DB {
         }
         
     }
+    
     
     public static void connect() {  
         Connection conn = null;  
@@ -71,4 +81,8 @@ public class DB {
             }
         return con;
     }
+
+    
 }
+
+     
