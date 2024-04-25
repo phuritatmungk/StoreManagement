@@ -18,7 +18,7 @@ public class Revenue_Report extends javax.swing.JPanel {
     public Revenue_Report() {
         initComponents();
         con = DB.mycon();
-        //showProductsInTable();
+        showProductsInTable();
     }
 
     @SuppressWarnings("unchecked")

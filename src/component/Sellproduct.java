@@ -158,25 +158,16 @@ public class Sellproduct extends javax.swing.JPanel {
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-    jTable.setRowSorter(sorter);
-    
-    // กำหนดคอลัมน์ที่ต้องการเรียงลำดับใหม่เมื่อค้นหา
-    int columnIndexToSort = 2; // คอลัมน์ No.
-    
-    sorter.setComparator(columnIndexToSort, new Comparator<Object>() {
-        public int compare(Object o1, Object o2) {
-            // เปรียบเทียบค่าในคอลัมน์ที่ต้องการเรียงลำดับใหม่ (No.) เป็นตัวเลข
-            Integer num1 = Integer.parseInt(o1.toString());
-            Integer num2 = Integer.parseInt(o2.toString());
-            return num1.compareTo(num2);
-        }
-    });
-    
-    // กำหนดเงื่อนไขการค้นหาที่จะนำไปใช้ในการกรองข้อมูลในตาราง
-    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim(), columnIndexToSort));
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable.setRowSorter(sorter);
+        int columnIndexToFilter = 2;
+        int columnIndexToFilter2 = 1;
+        int columnIndexToFilter3 = 3;
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim(), columnIndexToFilter));
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim(), columnIndexToFilter2));
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim(), columnIndexToFilter3));
     }//GEN-LAST:event_txtSearchKeyReleased
-        
+ 
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     
     int position = 0;
@@ -197,7 +188,7 @@ public class Sellproduct extends javax.swing.JPanel {
             {
                 product = new InventoryInfo(rs.getInt("No"), rs.getInt("Id"),
                                       rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
-                                      rs.getInt("Quantity"), rs.getDouble("Price"));
+                                      rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price"));
                 list.add(product);
             }
             

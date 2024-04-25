@@ -5,9 +5,13 @@ import karnkha.Main;
 import component.Repair_List_Page;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import karnkha.DB;
 
 public class Maintenance extends javax.swing.JPanel {
 
@@ -124,7 +128,7 @@ public class Maintenance extends javax.swing.JPanel {
         add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, -1, -1));
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
         jComboBox1.setBorder(null);
         add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 190, 30));
 
@@ -157,6 +161,11 @@ public class Maintenance extends javax.swing.JPanel {
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnSave.setText("บันทึก");
         btnSave.setBorder(null);
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 640, 130, 50));
 
         txtQueue.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -403,6 +412,54 @@ public class Maintenance extends javax.swing.JPanel {
     private void DateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DateActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        
+        Integer no = Integer.valueOf(txtQueue.getText().toString());
+        java.util.Date date = new java.util.Date();
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
+        String name = txtCustomer.getText();
+        Integer phone = Integer.valueOf(txtPhone.getText().toString());
+        String item = txtBrokenItem.getText();
+        Integer id = Integer.valueOf(jComboBox1.getSelectedItem().toString());
+        String repairman = jComboBox2.getSelectedItem().toString();
+        String status = txtStatus.getText();
+        String malfunction = jTextArea2.getText();
+        
+        String insertQuery = "INSERT INTO `request`(`No`, `Datetime`, `Name`, `Phone`, `Item`, `Id`, `Repairman`, `Status`, `Malfunction`) VALUES (?,?,?,?,?,?,?,?,?)";
+        
+        try {
+                
+            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            ps.setInt(1, no);
+            ps.setTimestamp(2, timestamp);
+            ps.setString(3, name);
+            ps.setInt(4, phone);
+            ps.setString(5, item);
+            ps.setInt(6, id);
+            ps.setString(7, repairman);
+            ps.setString(8, status);
+            ps.setString(9, malfunction);
+            
+            if(ps.executeUpdate() > 0)
+            {
+                Main.body.removeAll();
+                Main.body.add(new Repair_List_Page());
+                Main.body.repaint();
+                Main.body.revalidate();
+                JOptionPane.showMessageDialog(null, "New Request Added Successfully", "Add Request", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Added Complete");
+            }
+            else
+            {
+              JOptionPane.showMessageDialog(null, "Request Not Added", "Add Request", JOptionPane.ERROR_MESSAGE);
+              System.out.println("Some Error Message Here");  
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Failed to Add");
+        }                     
+    }//GEN-LAST:event_btnSaveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

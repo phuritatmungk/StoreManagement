@@ -11,15 +11,20 @@ package karnkha;
 public class DistributorInfo {
     
     private Integer no;
-    private String name;
-    private String salesman;
+    private String company;
+    private String fname;
+    private String sname;
     private Integer phone;
-
-    public DistributorInfo(Integer no, String name, String salesman, Integer phone) {
+    private String address;
+    private String salesman;
+            
+    public DistributorInfo(Integer no, String company, String fname, String sname, Integer phone,String address) {
         this.no = no;
-        this.name = name;
-        this.salesman = salesman;
+        this.company = company;
+        this.fname = fname;
+        this.sname = sname;
         this.phone = phone;
+        this.address = address; 
     }
 
     public Integer getNo() {
@@ -30,27 +35,51 @@ public class DistributorInfo {
         this.no = no;
     }
 
-    public String getName() {
-        return name;
+    public void setPhone(Integer phone) {
+        this.phone = phone;
+    }
+    public String getAddress() {
+        return address;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getSalesman() {
-        return salesman;
+    public String getCompany() {
+        return company;
     }
 
-    public void setSalesman(String salesman) {
-        this.salesman = salesman;
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getSname() {
+        return sname;
+    }
+
+    public void setSname(String sname) {
+        this.sname = sname;
     }
 
     public Integer getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
-        this.phone = phone;
+    public String getSalesman() {
+        String salesman = getFname() + " " + getSname();
+        return salesman;
+    }
+
+    public void setSalesman(String salesman) {
+        this.salesman = salesman;
     }
 }

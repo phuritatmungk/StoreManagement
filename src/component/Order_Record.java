@@ -7,15 +7,16 @@ import com.raven.datechooser.listener.DateChooserAction;
 import com.raven.datechooser.listener.DateChooserAdapter;
 import com.raven.datechooser.listener.DateChooserListener;
 import raven.cell.TableActionCellEditorEdit;
-import raven.cell.TableActionCellRenderEdit;
-import raven.cell.TableActionEventEdit;
+
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import static java.time.Clock.system;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
+import karnkha.Main;
 import karnkha.OrderInfo;
 import com.raven.datechooser.*;
 
@@ -56,16 +57,20 @@ public class Order_Record extends javax.swing.JPanel {
 
         con = DB.mycon();
         showProductsInTable();
-        TableActionEventEdit event = new TableActionEventEdit() {
+        TableActionEventEditView event = new TableActionEventEditView() {
             @Override
             public void onEdit(int row) {
+                System.out.println("Edit row : " + row);
+                jFrame2.setVisible(true);
+            }
+            public void onView(int row) {
                 System.out.println("Edit row : " + row);
                 jFrame1.setVisible(true);
             }
 
         };
-        jTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderEdit());
-        jTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorEdit(event));
+        jTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderEditView());
+        jTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorEditView(event));
     }
     
     private void loadData(String sql) {
@@ -141,7 +146,6 @@ public class Order_Record extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
 
-        jFrame1.setPreferredSize(new java.awt.Dimension(1550, 800));
         jFrame1.setSize(new java.awt.Dimension(1550, 800));
         jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -198,6 +202,7 @@ public class Order_Record extends javax.swing.JPanel {
 
         jFrame1.getContentPane().add(ScrollPane_Note, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 1440, 590));
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Company_label.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -218,10 +223,10 @@ public class Order_Record extends javax.swing.JPanel {
 
         jFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
 
-        jFrame2.setPreferredSize(new java.awt.Dimension(1550, 800));
         jFrame2.setSize(new java.awt.Dimension(1550, 800));
         jFrame2.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -253,9 +258,11 @@ public class Order_Record extends javax.swing.JPanel {
         jPanel2.add(Btt_Calender, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 435, -1, -1));
 
         ComboBox_Type1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ComboBox_Type1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "kuy" }));
         jPanel2.add(ComboBox_Type1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 570, 210, 30));
 
         ComboBox_Company1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ComboBox_Company1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Test", "asd" }));
         jPanel2.add(ComboBox_Company1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 430, 210, 30));
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -437,12 +444,32 @@ public class Order_Record extends javax.swing.JPanel {
     }//GEN-LAST:event_search__boxActionPerformed
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
-        // TODO add your handling code here:
+    int selectedRow = jTable.getSelectedRow(); 
+    if(selectedRow != -1) { 
+        int id = (int) jTable.getValueAt(selectedRow, 0); 
+        if(id > 0) { 
+            String deleteQuery = "DELETE FROM order WHERE No=?";
+            try {
+                PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+                ps.setInt(1, id);
+                int deletedRows = ps.executeUpdate(); 
+                if(deletedRows > 0) { 
+                    DefaultTableModel model = (DefaultTableModel) jTable.getModel(); 
+                    model.removeRow(selectedRow); 
+                    JOptionPane.showMessageDialog(null, "Product Deleted Successfully", "Remove Product", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to delete product", "Remove Product", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                System.out.println("Failed to remove product: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Product Not Deleted, Make Sure The ID is Valid", "Remove Product", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please select a row to delete", "Remove Product", JOptionPane.ERROR_MESSAGE);
+    }   
     }//GEN-LAST:event_delete_btActionPerformed
-
-    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
-
-    }//GEN-LAST:event_Save_bt1ActionPerformed
 
     private void Save_bt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Save_bt1MouseClicked
         jFrame2.setVisible(true);
@@ -467,8 +494,54 @@ public class Order_Record extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
-        // TODO add your handling code here:
+        
+        String name = Field_Product2.getText();
+        String category = ComboBox_Type1.getSelectedItem().toString();
+        String company = ComboBox_Company1.getSelectedItem().toString();
+        Double cost = Double.valueOf(Field_Cost.getText().toString());
+        Integer quantity = Integer.valueOf(Field_Quantity.getText().toString());
+        java.util.Date date = new java.util.Date();
+        Double total = cost * quantity;
+        String remark = jTextArea_Information1.getText();
+        
+        String insertQuery = "INSERT INTO `order`(`Date`, `Company`, `Name`, `Category`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?,?,?,?,?,?,?,?)";
+        
+        try {
+                
+            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            
+            ps.setDate(1, new java.sql.Date(date.getTime()));
+            ps.setString(2, company);
+            ps.setString(3, name);
+            ps.setString(4, category);
+            ps.setDouble(5, cost);
+            ps.setInt(6, quantity);
+            ps.setDouble(7, total);
+            ps.setString(8, remark);
+            
+            if(ps.executeUpdate() > 0)
+            {
+                Main.body.removeAll();
+                Main.body.add(new Order_Record());
+                Main.body.repaint();
+                Main.body.revalidate();
+                JOptionPane.showMessageDialog(null, "New Order Added Successfully", "Add Order", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Added Complete");
+            }
+            else
+            {
+              JOptionPane.showMessageDialog(null, "Order Not Added", "Add Order", JOptionPane.ERROR_MESSAGE);
+              System.out.println("Some Error Message Here");  
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }                     
     }//GEN-LAST:event_btnAdd1ActionPerformed
+
+    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Save_bt1ActionPerformed
 
     ArrayList<OrderInfo> productsArray = new ArrayList<>();
     
@@ -489,7 +562,8 @@ public class Order_Record extends javax.swing.JPanel {
             while(rs.next())
             {
                 product = new OrderInfo(rs.getInt("No"), rs.getString("Date"),
-                                      rs.getString("Company"), rs.getInt("Quantity"), rs.getDouble("Total"));
+                                      rs.getString("Company"), rs.getString("Name"), rs.getString("Category"), 
+                                      rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Total"), rs.getString("Remark"));
                 list.add(product);
             }
             
@@ -515,7 +589,7 @@ public class Order_Record extends javax.swing.JPanel {
         {
             row[0] = productsList.get(i).getNo();
             row[1] = productsList.get(i).getDate();
-            row[2] = productsList.get(i).getName();
+            row[2] = productsList.get(i).getCompany();
             row[3] = productsList.get(i).getQuantity();
             row[4] = productsList.get(i).getTotal();
             
@@ -573,7 +647,4 @@ public class Order_Record extends javax.swing.JPanel {
     private javax.swing.JTextField search__box;
     // End of variables declaration//GEN-END:variables
 
-    private void dispose() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

@@ -8,35 +8,24 @@ package karnkha;
  *
  * @author chait
  */
-public class InventoryInfo {
+public class InvReport {
     
-    private Integer no;
     private Integer id;
     private String name;
     private String category;
     private Integer quantity;
-    private Double price;
     private Double cost;
     private Double total;
     private String date;
 
-    public InventoryInfo(Integer no, Integer id, String date, String name, String category, Double cost, Integer quantity, Double price) {
-        this.no = no;
+    public InvReport(String date, Integer id, String name, String category, Double cost, Integer quantity, Double total) {
         this.id = id;
         this.date = date;
         this.name = name;
         this.category = category;
         this.cost = cost;
         this.quantity = quantity;
-        this.price = price;
-    }
-    
-    public Integer getNo() {
-        return no;
-    }
-    
-    public void setNo(Integer no) {
-        this.no = no;
+        this.total = total;
     }
 
     public Integer getId() {
@@ -71,14 +60,6 @@ public class InventoryInfo {
         this.quantity = quantity;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
     public String getDate() {
         return date;
     }
@@ -91,7 +72,7 @@ public class InventoryInfo {
      * @return the total
      */
     public Double getTotal() {
-        Double total = getPrice() * getQuantity();
+        Double total = getCost() * getQuantity();
         return total;
     }
 

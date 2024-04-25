@@ -12,6 +12,7 @@ import karnkha.Main;
 import component.Employee_Register;
 import component.Edit_employee_info;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 public class Manage_Employee extends javax.swing.JPanel {
@@ -32,6 +33,9 @@ public class Manage_Employee extends javax.swing.JPanel {
                 Main.body.add(new Edit_employee_info());
                 Main.body.repaint();
                 Main.body.revalidate();
+                int index = jTable.getSelectedRow();
+                showProductData(index);
+                position = index;
             }
 
         };
@@ -146,7 +150,31 @@ public class Manage_Employee extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
-        // TODO add your handling code here:
+    int selectedRow = jTable.getSelectedRow(); 
+    if(selectedRow != -1) { 
+        int id = (int) jTable.getValueAt(selectedRow, 0); 
+        if(id > 0) { 
+            String deleteQuery = "DELETE FROM employee WHERE No=?";
+            try {
+                PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+                ps.setInt(1, id);
+                int deletedRows = ps.executeUpdate(); 
+                if(deletedRows > 0) { 
+                    DefaultTableModel model = (DefaultTableModel) jTable.getModel(); 
+                    model.removeRow(selectedRow); 
+                    JOptionPane.showMessageDialog(null, "Product Deleted Successfully", "Remove Product", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to delete product", "Remove Product", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                System.out.println("Failed to remove product: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Product Not Deleted, Make Sure The ID is Valid", "Remove Product", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please select a row to delete", "Remove Product", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_delete_btActionPerformed
 
     private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
@@ -206,9 +234,9 @@ public class Manage_Employee extends javax.swing.JPanel {
             
             while(rs.next())
             {
-                employee = new EmployeeInfo(rs.getInt("No"), rs.getString("Name"),
-                                      rs.getInt("Id"), rs.getString("Job"),
-                                      rs.getDouble("Wage"));
+                employee = new EmployeeInfo(rs.getInt("No"), rs.getString("Fname"),
+                                      rs.getString("Sname"), rs.getInt("Id"), rs.getString("Job"),
+                                      rs.getDouble("Wage"), rs.getInt("Phone"), rs.getString("Address"));
                 list.add(employee);
             }
             
@@ -233,7 +261,7 @@ public class Manage_Employee extends javax.swing.JPanel {
         for(int i = 0; i < employeesList.size(); i++)
         {
             row[0] = employeesList.get(i).getNo();
-            row[1] = employeesList.get(i).getName();
+            row[1] = employeesList.get(i).getFull();
             row[2] = employeesList.get(i).getId();
             row[3] = employeesList.get(i).getJob();
             row[4] = employeesList.get(i).getWage();
@@ -242,7 +270,18 @@ public class Manage_Employee extends javax.swing.JPanel {
         }
         
     }
-
+public void showProductData(int index)
+      {
+        Edit_employee_info.txtNo.setText(employeesArray.get(index).getNo().toString());
+        Edit_employee_info.txtId.setText(employeesArray.get(index).getId().toString());
+        Edit_employee_info.txtName.setText(employeesArray.get(index).getFname().toString());
+        Edit_employee_info.txtSname.setText(employeesArray.get(index).getSname().toString());
+        //Edit_employee_info.txtSname.setText(employeesArray.get(index).getId().toString());
+        Edit_employee_info.txtPhone.setText(employeesArray.get(index).getPhone().toString());
+        Edit_employee_info.txtJob.setText(employeesArray.get(index).getJob().toString());
+        Edit_employee_info.txtSalary.setText(employeesArray.get(index).getWage().toString());
+        Edit_employee_info.txtAddress.setText(employeesArray.get(index).getAddress().toString());
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Save_bt1;
     private javax.swing.JLabel Topic;

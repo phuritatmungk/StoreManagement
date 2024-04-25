@@ -8,7 +8,7 @@ package karnkha;
  *
  * @author chait
  */
-public class InventoryInfo {
+public class SalesInfo {
     
     private Integer no;
     private Integer id;
@@ -16,17 +16,15 @@ public class InventoryInfo {
     private String category;
     private Integer quantity;
     private Double price;
-    private Double cost;
     private Double total;
     private String date;
 
-    public InventoryInfo(Integer no, Integer id, String date, String name, String category, Double cost, Integer quantity, Double price) {
+    public SalesInfo(Integer no, Integer id, String date, String name, String category, Integer quantity, Double price) {
         this.no = no;
         this.id = id;
         this.date = date;
         this.name = name;
         this.category = category;
-        this.cost = cost;
         this.quantity = quantity;
         this.price = price;
     }
@@ -100,13 +98,5 @@ public class InventoryInfo {
      */
     public void setTotal(Double total) {
         this.total = total;
-    }
-
-    public Double getCost() {
-        return cost;
-    }
-
-    public void setCost(Double cost) {
-        this.cost = cost;
     }
 }

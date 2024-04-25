@@ -26,6 +26,7 @@ public class RevenueInfo {
         this.list = list;
         this.category = category;
         this.cost = cost;
+        this.price = price;
         this.quantity = quantity;
         this.income = income;
         this.total = total;

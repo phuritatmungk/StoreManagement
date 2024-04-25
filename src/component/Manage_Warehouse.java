@@ -13,16 +13,17 @@ import raven.cell.TableActionCellRenderEdit;
 import raven.cell.TableActionEventEdit;
 import component.AddProduct;
 import component.EditProduct;
-
+import static component.EditProduct.txtNo;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.table.TableRowSorter;
+
 public class Manage_Warehouse extends javax.swing.JPanel {
     
     Connection con = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
-
+    
     public Manage_Warehouse() {
         initComponents();
         con = DB.mycon();
@@ -37,6 +38,9 @@ public class Manage_Warehouse extends javax.swing.JPanel {
                 Main.body.add(new EditProduct());
                 Main.body.repaint();
                 Main.body.revalidate();
+                int index = jTable.getSelectedRow();
+                showProductData(index);
+                position = index;
             }
         };
         jTable.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderEdit());
@@ -153,7 +157,31 @@ public class Manage_Warehouse extends javax.swing.JPanel {
 
     
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
-        // TODO add your handling code here:
+    int selectedRow = jTable.getSelectedRow(); 
+    if(selectedRow != -1) { 
+        int id = (int) jTable.getValueAt(selectedRow, 0); 
+        if(id > 0) { 
+            String deleteQuery = "DELETE FROM inventory WHERE No=?";
+            try {
+                PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+                ps.setInt(1, id);
+                int deletedRows = ps.executeUpdate(); 
+                if(deletedRows > 0) { 
+                    DefaultTableModel model = (DefaultTableModel) jTable.getModel(); 
+                    model.removeRow(selectedRow); 
+                    JOptionPane.showMessageDialog(null, "Product Deleted Successfully", "Remove Product", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to delete product", "Remove Product", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                System.out.println("Failed to remove product: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Product Not Deleted, Make Sure The ID is Valid", "Remove Product", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please select a row to delete", "Remove Product", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_delete_btActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -211,7 +239,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
             {
                 product = new InventoryInfo(rs.getInt("No"), rs.getInt("Id"),
                                       rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
-                                      rs.getInt("Quantity"), rs.getDouble("Price"));
+                                      rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price"));
                 list.add(product);
             }
             
@@ -247,7 +275,16 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         }      
     }
     
-    private JDesktopPane desktopPane;
+    public void showProductData(int index)
+    {
+        EditProduct.txtNo.setText(productsArray.get(index).getNo().toString());
+        EditProduct.txtProductid.setText(productsArray.get(index).getId().toString());
+        EditProduct.txtName.setText(productsArray.get(index).getName());
+        EditProduct.txtType.setText(productsArray.get(index).getCategory());
+        EditProduct.txtCost_price.setText(productsArray.get(index).getCost().toString());
+        EditProduct.txtPrice.setText(productsArray.get(index).getPrice().toString());
+        EditProduct.txtAmount.setText(productsArray.get(index).getQuantity().toString());
+    }
 
     
 

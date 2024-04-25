@@ -12,6 +12,7 @@ import karnkha.Main;
 import component.Distributor_Register;
 import component.Edit_dealer_info;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 public class Manage_Distributor extends javax.swing.JPanel {
@@ -32,7 +33,9 @@ public class Manage_Distributor extends javax.swing.JPanel {
                 Main.body.add(new Edit_dealer_info());
                 Main.body.repaint();
                 Main.body.revalidate();
-                
+                int index = jTable.getSelectedRow();
+                showProductData(index);
+                position = index;
             }
 
         };
@@ -99,11 +102,6 @@ public class Manage_Distributor extends javax.swing.JPanel {
 
         Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Save_bt1.setText("เพิ่ม");
-        Save_bt1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Save_bt1MouseClicked(evt);
-            }
-        });
         Save_bt1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Save_bt1ActionPerformed(evt);
@@ -156,19 +154,32 @@ public class Manage_Distributor extends javax.swing.JPanel {
     }//GEN-LAST:event_search__boxActionPerformed
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
-        // TODO add your handling code here:
+    int selectedRow = jTable.getSelectedRow(); 
+    if(selectedRow != -1) { 
+        int id = (int) jTable.getValueAt(selectedRow, 0); 
+        if(id > 0) { 
+            String deleteQuery = "DELETE FROM distributor WHERE No=?";
+            try {
+                PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+                ps.setInt(1, id);
+                int deletedRows = ps.executeUpdate(); 
+                if(deletedRows > 0) { 
+                    DefaultTableModel model = (DefaultTableModel) jTable.getModel(); 
+                    model.removeRow(selectedRow); 
+                    JOptionPane.showMessageDialog(null, "Product Deleted Successfully", "Remove Product", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to delete product", "Remove Product", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                System.out.println("Failed to remove product: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Product Not Deleted, Make Sure The ID is Valid", "Remove Product", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Please select a row to delete", "Remove Product", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_delete_btActionPerformed
-
-    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
-
-    }//GEN-LAST:event_Save_bt1ActionPerformed
-
-    private void Save_bt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Save_bt1MouseClicked
-        Main.body.removeAll();
-        Main.body.add(new Distributor_Register());
-        Main.body.repaint();
-        Main.body.revalidate();
-    }//GEN-LAST:event_Save_bt1MouseClicked
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
@@ -198,6 +209,13 @@ public class Manage_Distributor extends javax.swing.JPanel {
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter));
     }//GEN-LAST:event_search__boxKeyReleased
 
+    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
+        Main.body.removeAll();
+        Main.body.add(new Distributor_Register());
+        Main.body.repaint();
+        Main.body.revalidate();
+    }//GEN-LAST:event_Save_bt1ActionPerformed
+
     ArrayList<DistributorInfo> distributorArray = new ArrayList<>();
     
     int position = 0;
@@ -217,7 +235,8 @@ public class Manage_Distributor extends javax.swing.JPanel {
             while(rs.next())
             {
                 distributor = new DistributorInfo(rs.getInt("No"), rs.getString("Company"),
-                                      rs.getString("Salesman"), rs.getInt("Phone"));
+                                       rs.getString("Fname"),rs.getString("Sname"),
+                                       rs.getInt("Phone"),rs.getString("Address"));
                 list.add(distributor);
             }
             
@@ -242,15 +261,23 @@ public class Manage_Distributor extends javax.swing.JPanel {
         for(int i = 0; i < distributorsList.size(); i++)
         {
             row[0] = distributorsList.get(i).getNo();
-            row[1] = distributorsList.get(i).getName();
+            row[1] = distributorsList.get(i).getCompany();
             row[2] = distributorsList.get(i).getSalesman();
             row[3] = distributorsList.get(i).getPhone();
             
             model.addRow(row);
         }
-        
-    }
 
+    }
+        public void showProductData(int index)
+      {Edit_dealer_info.txtNo.setText(distributorArray.get(index).getNo().toString());
+        Edit_dealer_info.txtName.setText(distributorArray.get(index).getFname().toString());
+        Edit_dealer_info.txtSname.setText(distributorArray.get(index).getSname().toString());
+        Edit_dealer_info.txtCompany.setText(distributorArray.get(index).getCompany().toString());
+        Edit_dealer_info.txtAddress.setText(distributorArray.get(index).getAddress().toString());
+        Edit_dealer_info.txtPhone.setText(distributorArray.get(index).getPhone().toString());
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Save_bt1;
     private javax.swing.JLabel Topic;
