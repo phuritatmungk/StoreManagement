@@ -1,6 +1,7 @@
 package component;
 
 import java.sql.*;
+import java.sql.Date;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Component;
@@ -426,47 +427,40 @@ public class Repair_List_Page extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField_Item2ActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        if(checkEmptyFields())
-        {
-        Integer no = Integer.valueOf( jTextField_No2.getText());
-        String date = jTextField_Date2.getText();
+        
+        Integer no = Integer.valueOf(jTextField_No2.getText().toString());
+        String strdate = jTextField_Date2.getText();
+        Date date = Date.valueOf(strdate);
         String name =  jTextField_Name2.getText();
-        Integer phone = Integer.valueOf(jTextField_Phone2.getText());
+        Integer phone = Integer.valueOf(jTextField_Phone2.getText().toString());
         String item = jTextField_Item2.getText();
-        Integer id = Integer.valueOf(jTextField_Id2.getText());
+        Integer id = Integer.valueOf(jTextField_Id2.getText().toString());
         String repairman =  jTextField_Repairman2.getText();
         String status =  jComboBox_Status2.getSelectedItem().toString();
  
-        String updateQuery = "UPDATE `request` SET `Date`=?,`Name`=?,`Phone`=?,`Item`=? ,`Id`=? ,`Repairman`=? ,`Status`=? WHERE `No`=? ";
+        String updateQuery = "UPDATE `request` SET `Date`=?,`Name`=?,`Phone`=?,`Item`=? ,`Id`=? ,`Repairman`=? ,`Status`=? WHERE `No`=?";
         try {
             PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
-            ps.setString(1, date);
+            ps.setDate(1, date);
             ps.setString(2, name);
             ps.setInt(3, phone);
             ps.setString(4, item);
             ps.setInt(5, id);
             ps.setString(6, repairman); 
             ps.setString(7, status);
-            ps.setInt(8,no);
+            ps.setInt(8, no);
             
             if(ps.executeUpdate() > 0)
             {
-                showRequestInTable();
-                JOptionPane.showMessageDialog(null, "Product Updated", "Edit Product", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Updated");
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "Product Not Updated", "Edit Product", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Failed");
             }
             
         } catch (SQLException ex) {
-            System.out.println("Failed to Edit");
-        }
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "One Or More Fields Are Empty", "Edit Product", JOptionPane.ERROR_MESSAGE);
-            System.out.println("One Or More Fields Are Empty"); 
+            System.out.println(ex);
         }
        
     }//GEN-LAST:event_btnEditActionPerformed
