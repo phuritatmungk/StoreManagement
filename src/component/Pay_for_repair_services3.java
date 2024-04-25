@@ -274,7 +274,7 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
     public ArrayList<RepairRequest> getRequestList()
     {
         ArrayList<RepairRequest> list = new ArrayList<>();
-        String selectQuery = "SELECT * FROM `requestpaid`";
+        String selectQuery = "SELECT * FROM `request`";
         
         Statement st;
         ResultSet rs;
@@ -286,7 +286,7 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
             
             while(rs.next())
             {
-                request = new RepairRequest(rs.getInt("No"), rs.getString("Date"),
+                request = new RepairRequest(rs.getInt("No"), rs.getString("Datetime"),
                                       rs.getString("Name"), rs.getInt("Phone"), rs.getString("Item"),
                                       rs.getInt("ID"), rs.getString("Repairman"), rs.getString("Status"));
                 list.add(request);
@@ -319,10 +319,10 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
             row[4] = requestsList.get(i).getItem();
             row[5] = requestsList.get(i).getId();
             row[6] = requestsList.get(i).getRepairman();
-            row[7] = requestsList.get(i).getStatus();
-            
+            row[7] = requestsList.get(i).getStatus(); 
             model.addRow(row);
         }
+        
     }
         public void showProductData(int index)
     {

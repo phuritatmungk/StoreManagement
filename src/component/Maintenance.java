@@ -282,6 +282,7 @@ public class Maintenance extends javax.swing.JPanel {
         jSeparator8.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 370, 130, 30));
 
+        txtStatus.setEditable(false);
         txtStatus.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtStatus.setForeground(new java.awt.Color(123, 123, 123));
         txtStatus.setText("   รอดำเนินการ");

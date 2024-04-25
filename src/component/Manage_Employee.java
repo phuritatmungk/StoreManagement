@@ -276,7 +276,6 @@ public void showProductData(int index)
         Edit_employee_info.txtId.setText(employeesArray.get(index).getId().toString());
         Edit_employee_info.txtName.setText(employeesArray.get(index).getFname().toString());
         Edit_employee_info.txtSname.setText(employeesArray.get(index).getSname().toString());
-        //Edit_employee_info.txtSname.setText(employeesArray.get(index).getId().toString());
         Edit_employee_info.txtPhone.setText(employeesArray.get(index).getPhone().toString());
         Edit_employee_info.txtJob.setText(employeesArray.get(index).getJob().toString());
         Edit_employee_info.txtSalary.setText(employeesArray.get(index).getWage().toString());

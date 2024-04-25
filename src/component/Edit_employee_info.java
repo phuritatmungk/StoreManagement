@@ -348,28 +348,28 @@ public class Edit_employee_info extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSalaryFocusLost
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        Integer no = Integer.valueOf(txtNo.getText().toString()); 
+        Integer no = Integer.valueOf(txtNo.getText().toString());
         Integer id = Integer.valueOf(txtId.getText().toString());
-        String name = txtName.getText();
+        String fname = txtName.getText();
         String sname = txtSname.getText();
-        String fname = name + " " + sname;
-        Integer phone = Integer.valueOf(txtPhone.getText().toString());
-        String job = (txtJob.getText().toString());
-        Double wage = Double.valueOf(txtSalary.getText().toString());
         String address = txtAddress.getText();
+        String job = txtJob.getText();
+        Double wage = Double.valueOf(txtSalary.getText().toString());
+        Integer phone = Integer.valueOf(txtPhone.getText().toString());
 
 
  
-        String updateQuery = "UPDATE inventory SET No=?,Name=?,Name=?,Id=? ,Job=? ,Wage=?,Address=? WHERE No=?";
+        String updateQuery = "UPDATE employee SET Fname=?,SName=?,Id=?,Phone=? ,Job=? ,Wage=?,Address=? WHERE No=?";
         try {
             PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
-            ps.setInt(1, id);
-            ps.setString(2, fname);
-            ps.setInt(3, phone);
-            ps.setString(4, job);
-            ps.setDouble(5, wage); 
-            ps.setString(6, address);
-            ps.setInt(7, no);
+            ps.setString(1, fname);
+            ps.setString(2, sname);
+            ps.setInt(3, id);
+            ps.setInt(4, phone);
+            ps.setString(5, job);
+            ps.setDouble(6, wage); 
+            ps.setString(7, address);
+            ps.setInt(8, no);
 
             if(ps.executeUpdate() > 0)
             {
