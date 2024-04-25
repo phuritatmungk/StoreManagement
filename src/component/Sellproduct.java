@@ -160,7 +160,11 @@ public class Sellproduct extends javax.swing.JPanel {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         jTable.setRowSorter(sorter);
         int columnIndexToFilter = 2;
+        int columnIndexToFilter2 = 1;
+        int columnIndexToFilter3 = 3;
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim(), columnIndexToFilter));
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim(), columnIndexToFilter2));
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim(), columnIndexToFilter3));
     }//GEN-LAST:event_txtSearchKeyReleased
  
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
