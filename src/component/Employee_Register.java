@@ -1,10 +1,20 @@
 package component;
+
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Employee;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import karnkha.DB;
+import java.sql.*;
 
 public class Employee_Register extends javax.swing.JPanel {
 
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+    
     public Employee_Register() {
         initComponents();
         
@@ -167,6 +177,11 @@ public class Employee_Register extends javax.swing.JPanel {
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnSave.setText("บันทึก");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 590, 130, 50));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -324,6 +339,49 @@ public class Employee_Register extends javax.swing.JPanel {
             txtSalary.setForeground(new Color(123, 123, 123));
         }
     }//GEN-LAST:event_txtSalaryFocusLost
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        
+        Integer id = Integer.valueOf(txtId.getText().toString());
+        String name = txtName.getText();
+        String sname = txtSname.getText();
+        String fname = name + " " + sname;
+        String address = txtAddress.getText();
+        String job = txtJob.getText();
+        Double wage = Double.valueOf(txtSalary.getText().toString());
+        Integer phone = Integer.valueOf(txtPhone.getText().toString());
+        
+        String insertQuery = "INSERT INTO `employee`(`Name`, `Id`, `Phone`, `Job`, `Wage`, `Address`) VALUES (?,?,?,?,?,?)";
+        
+        try {
+                
+            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            ps.setString(1, fname);
+            ps.setInt(2, id);
+            ps.setInt(3, phone);
+            ps.setString(4, job);
+            ps.setDouble(5, wage);
+            ps.setString(6, address);
+            
+            if(ps.executeUpdate() > 0)
+            {
+                Main.body.removeAll();
+                Main.body.add(new Manage_Employee());
+                Main.body.repaint();
+                Main.body.revalidate();
+                JOptionPane.showMessageDialog(null, "New Employee Added Successfully", "Add Employee", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Added Complete");
+            }
+            else
+            {
+              JOptionPane.showMessageDialog(null, "Employee Not Added", "Add Employee", JOptionPane.ERROR_MESSAGE);
+              System.out.println("Some Error Message Here");  
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Failed to Add");
+        }                     
+    }//GEN-LAST:event_btnSaveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -12,15 +12,15 @@ import raven.cell.TableActionCellRenderEdit;
 import raven.cell.TableActionEventEdit;
 import component.AddProduct;
 import component.EditProduct;
-
 import java.awt.Color;
 import javax.swing.table.TableRowSorter;
+
 public class Manage_Warehouse extends javax.swing.JPanel {
     
     Connection con = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
-
+    
     public Manage_Warehouse() {
         initComponents();
         con = DB.mycon();
@@ -33,6 +33,9 @@ public class Manage_Warehouse extends javax.swing.JPanel {
                 Main.body.add(new EditProduct());
                 Main.body.repaint();
                 Main.body.revalidate();
+                int index = jTable.getSelectedRow();
+                showProductData(index);
+                position = index;
             }
         };
         jTable.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderEdit());
@@ -231,6 +234,16 @@ public class Manage_Warehouse extends javax.swing.JPanel {
             
             model.addRow(row);
         }      
+    }
+    
+    public void showProductData(int index)
+    {
+        EditProduct.txtProductid.setText(productsArray.get(index).getId().toString());
+        EditProduct.txtName.setText(productsArray.get(index).getName());
+        EditProduct.txtType.setText(productsArray.get(index).getCategory());
+        EditProduct.txtCost_price.setText(productsArray.get(index).getCost().toString());
+        EditProduct.txtPrice.setText(productsArray.get(index).getPrice().toString());
+        EditProduct.txtAmount.setText(productsArray.get(index).getQuantity().toString());
     }
 
     

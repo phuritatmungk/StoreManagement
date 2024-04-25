@@ -3,11 +3,23 @@ package component;
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Warehouse;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import karnkha.DB;
+import karnkha.InventoryInfo;
+import java.sql.*;
+
 public class EditProduct extends javax.swing.JPanel {
 
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+    
     public EditProduct() {
         initComponents();
-        
+        con = DB.mycon();
     }
 
     @SuppressWarnings("unchecked")
@@ -330,11 +342,11 @@ public class EditProduct extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JLabel jType;
     private javax.swing.JLabel picture_box;
-    private javax.swing.JTextField txtAmount;
-    private javax.swing.JTextField txtCost_price;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPrice;
-    private javax.swing.JTextField txtProductid;
-    private javax.swing.JTextField txtType;
+    public static javax.swing.JTextField txtAmount;
+    public static javax.swing.JTextField txtCost_price;
+    public static javax.swing.JTextField txtName;
+    public static javax.swing.JTextField txtPrice;
+    public static javax.swing.JTextField txtProductid;
+    public static javax.swing.JTextField txtType;
     // End of variables declaration//GEN-END:variables
 }

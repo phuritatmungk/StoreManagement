@@ -35,7 +35,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
             }
             public void onView(int row) {
                 System.out.println("View row : " + row);
-                jFrame1.setVisible(true);
+                jFrame1.setVisible(true);   
                 int index = jTable.getSelectedRow();
                 showProductData(index);
                 position = index;
@@ -430,7 +430,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         
         Integer no = Integer.valueOf(jTextField_No2.getText().toString());
         String strdate = jTextField_Date2.getText();
-        Date date = Date.valueOf(strdate);
+        java.util.Date date = new java.util.Date();
         String name =  jTextField_Name2.getText();
         Integer phone = Integer.valueOf(jTextField_Phone2.getText().toString());
         String item = jTextField_Item2.getText();
@@ -441,7 +441,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         String updateQuery = "UPDATE `request` SET `Date`=?,`Name`=?,`Phone`=?,`Item`=? ,`Id`=? ,`Repairman`=? ,`Status`=? WHERE `No`=?";
         try {
             PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
-            ps.setDate(1, date);
+            ps.setDate(1, new java.sql.Date(date.getTime()));
             ps.setString(2, name);
             ps.setInt(3, phone);
             ps.setString(4, item);
