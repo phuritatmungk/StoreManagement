@@ -1,14 +1,16 @@
 package component;
 
 import raven.cell.TableActionCellEditorEdit;
-import raven.cell.TableActionCellRenderEdit;
-import raven.cell.TableActionEventEdit;
+
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.OrderInfo;
+import raven.cell.TableActionCellEditorEditView;
+import raven.cell.TableActionCellRenderEditView;
+import raven.cell.TableActionEventEditView;
 
 public class Order_Record extends javax.swing.JPanel {
 
@@ -20,16 +22,20 @@ public class Order_Record extends javax.swing.JPanel {
         initComponents();
         con = DB.mycon();
         showProductsInTable();
-        TableActionEventEdit event = new TableActionEventEdit() {
+        TableActionEventEditView event = new TableActionEventEditView() {
             @Override
             public void onEdit(int row) {
+                System.out.println("Edit row : " + row);
+                jFrame2.setVisible(true);
+            }
+            public void onView(int row) {
                 System.out.println("Edit row : " + row);
                 jFrame1.setVisible(true);
             }
 
         };
-        jTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderEdit());
-        jTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorEdit(event));
+        jTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderEditView());
+        jTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorEditView(event));
     }
 
     @SuppressWarnings("unchecked")
