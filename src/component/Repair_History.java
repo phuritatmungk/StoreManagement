@@ -52,7 +52,6 @@ public class Repair_History extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
 
-        jFrame1.setPreferredSize(new java.awt.Dimension(1550, 800));
         jFrame1.setSize(new java.awt.Dimension(1550, 800));
         jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -184,6 +183,7 @@ public class Repair_History extends javax.swing.JPanel {
             }
         });
         jTable.setRowHeight(50);
+        jTable.getTableHeader().setReorderingAllowed(false);
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableMouseClicked(evt);

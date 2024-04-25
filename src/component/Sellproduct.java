@@ -182,6 +182,7 @@ public class Sellproduct extends javax.swing.JPanel {
             }
         });
         jTable.setRowHeight(50);
+        jTable.getTableHeader().setReorderingAllowed(false);
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableMouseClicked(evt);
@@ -191,6 +192,11 @@ public class Sellproduct extends javax.swing.JPanel {
             }
         });
         jScrollPane2.setViewportView(jTable);
+        if (jTable.getColumnModel().getColumnCount() > 0) {
+            jTable.getColumnModel().getColumn(1).setResizable(false);
+            jTable.getColumnModel().getColumn(2).setResizable(false);
+            jTable.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
 

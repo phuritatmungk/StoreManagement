@@ -150,6 +150,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
             }
         });
         jTable.setRowHeight(50);
+        jTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));

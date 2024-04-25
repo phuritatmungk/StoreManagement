@@ -72,7 +72,6 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
         jFrame1.setBackground(new java.awt.Color(255, 255, 255));
         jFrame1.setLocation(new java.awt.Point(800, 350));
         jFrame1.setMinimumSize(new java.awt.Dimension(440, 440));
-        jFrame1.setPreferredSize(new java.awt.Dimension(440, 440));
         jFrame1.setResizable(false);
         jFrame1.setSize(new java.awt.Dimension(440, 440));
         jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -235,6 +234,7 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
             }
         });
         jTable.setRowHeight(50);
+        jTable.getTableHeader().setReorderingAllowed(false);
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableMouseClicked(evt);

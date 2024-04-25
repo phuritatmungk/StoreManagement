@@ -139,6 +139,7 @@ public class Manage_Distributor extends javax.swing.JPanel {
             }
         });
         jTable.setRowHeight(50);
+        jTable.getTableHeader().setReorderingAllowed(false);
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableMouseClicked(evt);
