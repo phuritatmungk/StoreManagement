@@ -16,7 +16,7 @@ public class SellHistory extends javax.swing.JPanel {
     public SellHistory() {
         initComponents();
         con = DB.mycon();
-       
+        
     }
 
     

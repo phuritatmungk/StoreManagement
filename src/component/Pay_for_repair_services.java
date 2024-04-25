@@ -15,11 +15,18 @@ import karnkha.Main;
 import component.Pay_for_repair_services2;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
+import java.sql.*;
 
 public class Pay_for_repair_services extends javax.swing.JPanel {
 
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+    
     public Pay_for_repair_services() {
         initComponents();
+        con = DB.mycon();
+        showProductsInTable();
         TableActionEventAdd event = new TableActionEventAdd() {
             @Override
             public void onAdd(int row) {
@@ -217,17 +224,16 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
         
         model.setRowCount(0);
         
-        Object[] row = new Object[7];
+        Object[] row = new Object[6];
         
         for(int i = 0; i < productsList.size(); i++)
         {
             row[0] = productsList.get(i).getNo();
             row[1] = productsList.get(i).getId();
-            row[2] = productsList.get(i).getDate();
-            row[3] = productsList.get(i).getName();
-            row[4] = productsList.get(i).getCategory();
-            row[5] = productsList.get(i).getQuantity();
-            row[6] = productsList.get(i).getPrice();
+            row[2] = productsList.get(i).getName();
+            row[3] = productsList.get(i).getCategory();
+            row[4] = productsList.get(i).getQuantity();
+            row[5] = productsList.get(i).getPrice();
             
             model.addRow(row);
         }

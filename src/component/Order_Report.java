@@ -18,7 +18,7 @@ public class Order_Report extends javax.swing.JPanel {
     public Order_Report() {
         initComponents();
         con = DB.mycon();
-        //showProductsInTable();
+        showProductsInTable();
     }
 
     @SuppressWarnings("unchecked")

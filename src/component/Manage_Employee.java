@@ -233,7 +233,7 @@ public class Manage_Employee extends javax.swing.JPanel {
             {
                 employee = new EmployeeInfo(rs.getInt("No"), rs.getString("Name"),
                                       rs.getInt("Id"), rs.getString("Job"),
-                                      rs.getDouble("Wage"), rs.getString("Address"));
+                                      rs.getDouble("Wage"), rs.getInt("Phone"), rs.getString("Address"));
                 list.add(employee);
             }
             

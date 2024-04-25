@@ -15,14 +15,16 @@ public class EmployeeInfo {
     private Integer id;
     private String job;
     private Double wage;
+    private Integer phone;
     private String address;
 
-    public EmployeeInfo(Integer no, String name, Integer id, String job, Double wage, String address) {
+    public EmployeeInfo(Integer no, String name, Integer id, String job, Double wage, Integer phone, String address) {
         this.no = no;
         this.name = name;
         this.id = id;
         this.job = job;
         this.wage = wage;
+        this.phone = phone;
         this.address = address;
     }
 
@@ -72,5 +74,13 @@ public class EmployeeInfo {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Integer getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Integer phone) {
+        this.phone = phone;
     }
 }
