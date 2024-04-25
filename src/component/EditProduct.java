@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import karnkha.DB;
 import karnkha.InventoryInfo;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 public class EditProduct extends javax.swing.JPanel {
     
@@ -358,6 +359,12 @@ public class EditProduct extends javax.swing.JPanel {
 
             if(ps.executeUpdate() > 0)
             {
+                Main.body.removeAll();
+                Main.body.add(new Manage_Warehouse());
+                Main.body.repaint();
+                Main.body.revalidate();
+                JOptionPane.showMessageDialog(null, "Edit Product Successfully", "Edit Product", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("Added Complete");
                 System.out.println("Updated");
             }
             else

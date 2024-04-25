@@ -296,6 +296,11 @@ public class Edit_dealer_info extends javax.swing.JPanel {
 
             if(ps.executeUpdate() > 0)
             {
+                Main.body.removeAll();
+                Main.body.add(new Manage_Employee());
+                Main.body.repaint();
+                Main.body.revalidate();
+                JOptionPane.showMessageDialog(null, "Edit Distributor Info Successfully", "Edit Distributor Info", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("Updated");
             }
             else

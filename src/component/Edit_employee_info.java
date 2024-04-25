@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import karnkha.DB;
 
 public class Edit_employee_info extends javax.swing.JPanel {
@@ -373,6 +374,11 @@ public class Edit_employee_info extends javax.swing.JPanel {
 
             if(ps.executeUpdate() > 0)
             {
+                Main.body.removeAll();
+                Main.body.add(new Manage_Distributor());
+                Main.body.repaint();
+                Main.body.revalidate();
+                JOptionPane.showMessageDialog(null, "Edit Employee Info Successfully", "Edit Employee Info", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("Updated");
             }
             else

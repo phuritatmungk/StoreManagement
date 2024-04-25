@@ -238,6 +238,11 @@ public class Manage_Warehouse extends javax.swing.JPanel {
                 search__boxFocusLost(evt);
             }
         });
+        search__box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search__boxActionPerformed(evt);
+            }
+        });
         search__box.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 search__boxKeyReleased(evt);
@@ -432,7 +437,6 @@ public class Manage_Warehouse extends javax.swing.JPanel {
             double minPrice = Double.parseDouble(minPriceStr);
             double maxPrice = Double.parseDouble(maxPriceStr);
 
-            // เชื่อมต่อฐานข้อมูลและดึงข้อมูลสินค้าตามช่วงราคา
             con = DB.mycon();
             String query = "SELECT * FROM inventory WHERE Price BETWEEN ? AND ?";
             pst = con.prepareStatement(query);
@@ -440,9 +444,8 @@ public class Manage_Warehouse extends javax.swing.JPanel {
             pst.setDouble(2, maxPrice);
             rs = pst.executeQuery();
 
-            // อัพเดตตารางด้วยข้อมูลที่ดึงมา
             DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-            model.setRowCount(0); // Clear ข้อมูลเก่าในตาราง
+            model.setRowCount(0); 
 
             while (rs.next()) {
                 Object[] row = {
@@ -482,6 +485,10 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         String query = CategoryBox.getSelectedItem().toString();
         filter(query);
     }//GEN-LAST:event_CategoryBoxItemStateChanged
+
+    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_search__boxActionPerformed
 
     
      private void loadAllProducts() {

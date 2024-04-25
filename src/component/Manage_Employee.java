@@ -78,7 +78,7 @@ public class Manage_Employee extends javax.swing.JPanel {
 
         search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         search__box.setForeground(new java.awt.Color(123, 123, 123));
-        search__box.setText("ค้นหา");
+        search__box.setText("ค้นหารหัสพนักงาน");
         search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         search__box.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -86,6 +86,11 @@ public class Manage_Employee extends javax.swing.JPanel {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 search__boxFocusLost(evt);
+            }
+        });
+        search__box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search__boxActionPerformed(evt);
             }
         });
         search__box.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -217,6 +222,10 @@ public class Manage_Employee extends javax.swing.JPanel {
         int columnIndexToFilter2 = 2;
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter));
     }//GEN-LAST:event_search__boxKeyReleased
+
+    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
+
+    }//GEN-LAST:event_search__boxActionPerformed
 
     ArrayList<EmployeeInfo> employeesArray = new ArrayList<>();
     
