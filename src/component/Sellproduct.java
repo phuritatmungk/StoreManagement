@@ -30,7 +30,64 @@ public class Sellproduct extends javax.swing.JPanel {
             @Override
             public void onAdd(int row) {
                 System.out.println("Add row : " + row);
+                int index = jTable.getSelectedRow();
+                showProductData(index);
+                position = index;
+                Integer id = Integer.valueOf(jText_Id.getText().toString());
+                String name = jText_Name.getText().toString();
+                String category = jText_Category.getText().toString();
+                Integer quantity = Integer.valueOf(jText_Quantity.getText().toString());
+                Double price = Double.valueOf(jText_Price.getText());
+                
+                int currentQuantity = Integer.valueOf(jText_Quantity.getText().toString());
+                currentQuantity--;
+                if(currentQuantity < 1){
+                    JOptionPane.showMessageDialog(null,"Not Enough Item","Error",JOptionPane.ERROR_MESSAGE);
+                }else{
+                    String updateQuery = "UPDATE `inventory`SET`Quantity` = ? WHERE `Id`=? ";
+        
+        try {
+            
+            PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
+            ps.setInt(1, currentQuantity);
+            ps.setInt(2, id);
+            
+            if(ps.executeUpdate() > 0)
+            {
+                jTable.setValueAt(currentQuantity, row, 4);
+                JOptionPane.showMessageDialog(null, "New Product Added Successfully", "Add Product", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("New Product Added");
             }
+            else
+            {
+              JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
+              System.out.println("Some Error Message Here");  
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        String insertQuery = "INSERT INTO `cart`(`Id`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?)";
+                try {
+            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+            ps.setInt(1, id);
+            ps.setString(2, name);
+            ps.setString(3, category);
+            ps.setInt(4, 1);
+            ps.setDouble(5, price);
+
+            if (ps.executeUpdate() > 0) {
+                showProductsInTable();
+                System.out.println("New Product Added");
+            } else {
+                JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Some Error Message Here");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+}
 
         };
         jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderAdd());
@@ -48,6 +105,12 @@ public class Sellproduct extends javax.swing.JPanel {
         txtSearch = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        jText_Id = new javax.swing.JTextField();
+        jText_No = new javax.swing.JTextField();
+        jText_Name = new javax.swing.JTextField();
+        jText_Category = new javax.swing.JTextField();
+        jText_Quantity = new javax.swing.JTextField();
+        jText_Price = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -123,10 +186,60 @@ public class Sellproduct extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTableMouseEntered(evt);
+            }
         });
         jScrollPane2.setViewportView(jTable);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+
+        jText_Id.setEditable(false);
+        jText_Id.setBackground(new java.awt.Color(255, 255, 255));
+        jText_Id.setForeground(new java.awt.Color(255, 255, 255));
+        jText_Id.setText("jTextField1");
+        jText_Id.setBorder(null);
+        add(jText_Id, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 650, -1, -1));
+
+        jText_No.setEditable(false);
+        jText_No.setBackground(new java.awt.Color(255, 255, 255));
+        jText_No.setForeground(new java.awt.Color(255, 255, 255));
+        jText_No.setText("jTextField1");
+        jText_No.setBorder(null);
+        add(jText_No, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 650, -1, -1));
+
+        jText_Name.setEditable(false);
+        jText_Name.setBackground(new java.awt.Color(255, 255, 255));
+        jText_Name.setForeground(new java.awt.Color(255, 255, 255));
+        jText_Name.setText("jTextField1");
+        jText_Name.setBorder(null);
+        add(jText_Name, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 690, -1, -1));
+
+        jText_Category.setEditable(false);
+        jText_Category.setBackground(new java.awt.Color(255, 255, 255));
+        jText_Category.setForeground(new java.awt.Color(255, 255, 255));
+        jText_Category.setText("jTextField1");
+        jText_Category.setBorder(null);
+        add(jText_Category, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 730, -1, -1));
+
+        jText_Quantity.setEditable(false);
+        jText_Quantity.setBackground(new java.awt.Color(255, 255, 255));
+        jText_Quantity.setForeground(new java.awt.Color(255, 255, 255));
+        jText_Quantity.setText("jTextField1");
+        jText_Quantity.setBorder(null);
+        add(jText_Quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 690, -1, 20));
+
+        jText_Price.setEditable(false);
+        jText_Price.setBackground(new java.awt.Color(255, 255, 255));
+        jText_Price.setForeground(new java.awt.Color(255, 255, 255));
+        jText_Price.setText("jTextField1");
+        jText_Price.setBorder(null);
+        jText_Price.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_PriceActionPerformed(evt);
+            }
+        });
+        add(jText_Price, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 730, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
@@ -137,8 +250,8 @@ public class Sellproduct extends javax.swing.JPanel {
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
-        // TODO add your handling code here:
         int index = jTable.getSelectedRow();
+        showProductData(index);
         position = index;
     }//GEN-LAST:event_jTableMouseClicked
 
@@ -167,6 +280,14 @@ public class Sellproduct extends javax.swing.JPanel {
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim(), columnIndexToFilter2));
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim(), columnIndexToFilter3));
     }//GEN-LAST:event_txtSearchKeyReleased
+
+    private void jTableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableMouseEntered
+
+    private void jText_PriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_PriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_PriceActionPerformed
  
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     
@@ -222,7 +343,14 @@ public class Sellproduct extends javax.swing.JPanel {
             model.addRow(row);
         }
     }
-
+     public void showProductData(int index)
+    {
+        jText_Id.setText(productsArray.get(index).getId().toString());
+        jText_Name.setText(productsArray.get(index).getName().toString());
+        jText_Category.setText(productsArray.get(index).getCategory().toString());
+        jText_Quantity.setText(productsArray.get(index).getQuantity().toString());
+        jText_Price.setText(productsArray.get(index).getPrice().toString());
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button;
@@ -230,6 +358,12 @@ public class Sellproduct extends javax.swing.JPanel {
     private javax.swing.JButton btnNext;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
+    private javax.swing.JTextField jText_Category;
+    private javax.swing.JTextField jText_Id;
+    private javax.swing.JTextField jText_Name;
+    private javax.swing.JTextField jText_No;
+    private javax.swing.JTextField jText_Price;
+    private javax.swing.JTextField jText_Quantity;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 
