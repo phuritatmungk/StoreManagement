@@ -33,6 +33,7 @@ public class Sellproduct extends javax.swing.JPanel {
                 int index = jTable.getSelectedRow();
                 showProductData(index);
                 position = index;
+                Integer no = getNextQueueNumber();
                 Integer id = Integer.valueOf(jText_Id.getText().toString());
                 String name = jText_Name.getText().toString();
                 String category = jText_Category.getText().toString();
@@ -66,14 +67,15 @@ public class Sellproduct extends javax.swing.JPanel {
         } catch (SQLException ex) {
             System.out.println(ex);
         }        
-        String insertQuery = "INSERT INTO `cart`(`Id`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?)";
+        String insertQuery = "INSERT INTO `cart`(`No`,`Id`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?)";
                 try {
             PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
-            ps.setInt(1, id);
-            ps.setString(2, name);
-            ps.setString(3, category);
-            ps.setInt(4, 1);
-            ps.setDouble(5, price);
+            ps.setInt(1, no);
+            ps.setInt(2, id);
+            ps.setString(3, name);
+            ps.setString(4, category);
+            ps.setInt(5, 1);
+            ps.setDouble(6, price);
 
             if (ps.executeUpdate() > 0) {
                 showProductsInTable();
@@ -92,23 +94,6 @@ public class Sellproduct extends javax.swing.JPanel {
         jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderAdd());
         jTable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorAdd(event));
     }
-private int getNextQueueNumber() {
-    int nextQueueNumber = 1; 
-
-    try {
-        String query = "SELECT MAX(No) AS MaxNo FROM inventory"; 
-        PreparedStatement ps = DB.getConnection().prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            nextQueueNumber = rs.getInt("MaxNo") + 1;
-        }
-    } catch (SQLException ex) {
-        System.out.println("Failed to get next queue number: " + ex.getMessage());
-    }
-
-    return nextQueueNumber;
-}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -376,7 +361,23 @@ private int getNextQueueNumber() {
                JOptionPane.showMessageDialog(null,"Please select","Error",JOptionPane.ERROR_MESSAGE);
         }
     }   
-         
+private int getNextQueueNumber() {
+    int nextQueueNumber = 1; 
+
+    try {
+        String query = "SELECT MAX(No) AS MaxNo FROM cart"; 
+        PreparedStatement ps = DB.getConnection().prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            nextQueueNumber = rs.getInt("MaxNo") + 1;
+        }
+    } catch (SQLException ex) {
+        System.out.println("Failed to get next queue number: " + ex.getMessage());
+    }
+
+    return nextQueueNumber;
+}        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button;

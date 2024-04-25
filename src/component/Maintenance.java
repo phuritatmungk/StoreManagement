@@ -17,7 +17,7 @@ public class Maintenance extends javax.swing.JPanel {
 
     public Maintenance() {
         initComponents();
-        
+        loadEmployees();
         showDate();
         
         showTime();
@@ -459,7 +459,24 @@ public class Maintenance extends javax.swing.JPanel {
             System.out.println(ex);
         }                     
     }//GEN-LAST:event_btnSaveActionPerformed
-
+public void loadEmployees() {
+    try {
+        String query = "SELECT Id, Fname FROM employee";
+        PreparedStatement ps = DB.getConnection().prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            String employeeID = rs.getString("Id");
+            String employeeName = rs.getString("Fname");
+            
+            jComboBox1.addItem(employeeID);
+            jComboBox2.addItem(employeeName);
+        }
+        
+    } catch (SQLException ex) {
+        System.out.println("Failed to load employees: " + ex.getMessage());
+    }
+}
 private int getNextQueueNumber() {
     int nextQueueNumber = 1; 
 
