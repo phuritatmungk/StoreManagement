@@ -15,13 +15,15 @@ public class EmployeeInfo {
     private Integer id;
     private String job;
     private Double wage;
+    private String address;
 
-    public EmployeeInfo(Integer no, String name, Integer id, String job, Double wage) {
+    public EmployeeInfo(Integer no, String name, Integer id, String job, Double wage, String address) {
         this.no = no;
         this.name = name;
         this.id = id;
         this.job = job;
         this.wage = wage;
+        this.address = address;
     }
 
     public Integer getNo() {
@@ -62,5 +64,13 @@ public class EmployeeInfo {
 
     public void setWage(Double wage) {
         this.wage = wage;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

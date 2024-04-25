@@ -271,7 +271,7 @@ public class Distributor_Register extends javax.swing.JPanel {
         String company = txtCompany.getText();
         String address = txtAddress.getText();
         Integer phone = Integer.valueOf(txtPhone.getText().toString());
-        String fname = name + sname;
+        String fname = name + " " + sname;
         
         String insertQuery = "INSERT INTO `distributor`(`Company`, `Salesman`, `Phone`, `Address`) VALUES (?,?,?,?)";
         
@@ -286,12 +286,12 @@ public class Distributor_Register extends javax.swing.JPanel {
             if(ps.executeUpdate() > 0)
             {
                 //showProductsInTable();
-                JOptionPane.showMessageDialog(null, "New Product Added Successfully", "Add Product", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "New Distributor Added Successfully", "Add Distributor", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("Added Complete");
             }
             else
             {
-              JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
+              JOptionPane.showMessageDialog(null, "Distributor Not Added", "Add Distributor", JOptionPane.ERROR_MESSAGE);
               System.out.println("Some Error Message Here");  
             }
             

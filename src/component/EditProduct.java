@@ -1,13 +1,22 @@
-package component;
+    package component;
 
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Warehouse;
-public class EditProduct extends javax.swing.JPanel {
+import java.util.ArrayList;
+import karnkha.DB;
+import karnkha.InventoryInfo;
+import java.sql.*;
 
+public class EditProduct extends javax.swing.JPanel {
+    
+    Connection con = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+    
     public EditProduct() {
         initComponents();
-        
+        con = DB.mycon();
     }
 
     @SuppressWarnings("unchecked")
@@ -309,8 +318,47 @@ public class EditProduct extends javax.swing.JPanel {
         Main.body.repaint();
         Main.body.revalidate();
     }//GEN-LAST:event_back_buttonMouseClicked
-
-
+    ArrayList<InventoryInfo> productsArray = new ArrayList<>();
+    
+    int position = 0;
+    public ArrayList<InventoryInfo> getProductsList()
+    {
+        ArrayList<InventoryInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `inventory`";
+        
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            st = DB.getConnection().createStatement();
+            rs = st.executeQuery(selectQuery);
+            InventoryInfo product;
+            
+            while(rs.next())
+            {
+                product = new InventoryInfo(rs.getInt("No"), rs.getInt("Id"),
+                                      rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
+                                      rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price"));
+                list.add(product);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        productsArray = list;
+        return list;
+        
+    }
+        public void showProductData(int index)
+    {
+        txtProductid.setText(productsArray.get(index).getNo().toString());
+        txtName.setText(productsArray.get(index).getName());
+        txtType.setText(productsArray.get(index).getCategory());
+        txtCost_price.setText(productsArray.get(index).getCost().toString());
+        txtPrice.setText(productsArray.get(index).getPrice().toString());
+        txtAmount.setText(productsArray.get(index).getQuantity().toString());
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
     private javax.swing.JLabel Topic;
@@ -330,11 +378,11 @@ public class EditProduct extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JLabel jType;
     private javax.swing.JLabel picture_box;
-    private javax.swing.JTextField txtAmount;
-    private javax.swing.JTextField txtCost_price;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPrice;
-    private javax.swing.JTextField txtProductid;
-    private javax.swing.JTextField txtType;
+    public static javax.swing.JTextField txtAmount;
+    public static javax.swing.JTextField txtCost_price;
+    public static javax.swing.JTextField txtName;
+    public static javax.swing.JTextField txtPrice;
+    public static javax.swing.JTextField txtProductid;
+    public static javax.swing.JTextField txtType;
     // End of variables declaration//GEN-END:variables
 }

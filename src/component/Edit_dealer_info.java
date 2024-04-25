@@ -2,8 +2,12 @@ package component;
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Distributor;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import karnkha.DB;
 
 public class Edit_dealer_info extends javax.swing.JPanel {
+    
 
     public Edit_dealer_info() {
         initComponents();
@@ -162,6 +166,11 @@ public class Edit_dealer_info extends javax.swing.JPanel {
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnSave.setText("บันทึก");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 640, 130, 50));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -250,6 +259,10 @@ public class Edit_dealer_info extends javax.swing.JPanel {
             txtPhone.setForeground(new Color(123, 123, 123));
         }
     }//GEN-LAST:event_txtPhoneFocusLost
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+
+    }//GEN-LAST:event_btnSaveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

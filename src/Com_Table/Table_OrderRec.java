@@ -105,7 +105,6 @@ public class Table_OrderRec extends javax.swing.JPanel {
             Order_Received.body.add(new Table_RecivePro());
             Order_Received.body.repaint();
             Order_Received.body.revalidate();
-            JOptionPane.showMessageDialog(this, "คุณคลิกที่แถวที่ " + index);
     }//GEN-LAST:event_Table_Order_Record1MouseClicked
 
 
