@@ -371,11 +371,11 @@ public class Repair_List_Page extends javax.swing.JPanel {
         Status_Combo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Status_Combo.setForeground(new java.awt.Color(123, 123, 123));
         Status_Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ค้นหาสถานะ", "รอการดำเนินการ", "กำลังดำเนินการ", "เสร็จการดำเนินการ", "ชำระเสร็จสิ้น" }));
-        add(Status_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1122, 50, 170, 40));
+        add(Status_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 50, 170, 40));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("ค้นหาสถานะ");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 60, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 60, -1, -1));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(

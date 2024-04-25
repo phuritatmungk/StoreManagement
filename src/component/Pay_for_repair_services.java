@@ -293,7 +293,9 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         jTable.setRowSorter(sorter);
-        int columnIndexToFilter = 3;
+        int columnIndexToFilter = 1;
+        int columnIndexToFilter2 = 2;
+        int columnIndexToFilter3 = 5;
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch1.getText().trim(), columnIndexToFilter));
     }//GEN-LAST:event_txtSearch1KeyReleased
 

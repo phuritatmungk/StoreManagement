@@ -107,14 +107,15 @@ public class SellHistory extends javax.swing.JPanel {
 
         Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic3.setText("วันที่ :");
-        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 60, -1, 30));
+        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 60, -1, 30));
 
+        search__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         search__box.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 search__boxActionPerformed(evt);
             }
         });
-        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 60, 230, 30));
+        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 60, 270, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(

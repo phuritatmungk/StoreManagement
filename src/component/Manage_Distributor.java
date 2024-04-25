@@ -78,7 +78,7 @@ public class Manage_Distributor extends javax.swing.JPanel {
 
         search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         search__box.setForeground(new java.awt.Color(123, 123, 123));
-        search__box.setText("ค้นหาชื่อบริษัท");
+        search__box.setText("ค้นหา");
         search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         search__box.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -207,6 +207,8 @@ public class Manage_Distributor extends javax.swing.JPanel {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         jTable.setRowSorter(sorter);
         int columnIndexToFilter = 1;
+        int columnIndexToFilter2 = 2;
+        int columnIndexToFilter3 = 3;
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter));
     }//GEN-LAST:event_search__boxKeyReleased
 

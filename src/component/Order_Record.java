@@ -520,6 +520,7 @@ public class Order_Record extends javax.swing.JPanel {
 
         search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         search__box.setForeground(new java.awt.Color(123, 123, 123));
+        search__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         search__box.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

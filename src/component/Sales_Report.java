@@ -151,7 +151,7 @@ public class Sales_Report extends javax.swing.JPanel {
 
         searchdata__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         searchdata__box.setForeground(new java.awt.Color(123, 123, 123));
-        searchdata__box.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        searchdata__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         searchdata__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         searchdata__box.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -166,11 +166,11 @@ public class Sales_Report extends javax.swing.JPanel {
                 searchdata__boxActionPerformed(evt);
             }
         });
-        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 650, 190, 30));
+        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 650, 210, 30));
 
         Topic4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Topic4.setText("วันที่:");
-        add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 650, -1, 30));
+        add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 650, -1, 30));
 
         Topic5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic5.setText("จำนวนสินค้าออกจากคลังทั้งหมด");

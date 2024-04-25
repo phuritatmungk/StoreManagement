@@ -1,9 +1,16 @@
 package component;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.raven.datechooser.DateBetween;
+import com.raven.datechooser.DateChooser;
+import com.raven.datechooser.listener.DateChooserAction;
+import com.raven.datechooser.listener.DateChooserAdapter;
 import raven.cell.TableActionCellEditorView;
 import raven.cell.TableActionCellRenderView;
 import raven.cell.TableActionEventView;
 import java.sql.*;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
@@ -14,11 +21,35 @@ public class Repair_History extends javax.swing.JPanel {
     Connection con = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+    private DateChooser chDate = new DateChooser();
+    private DefaultTableModel model;
     
     public Repair_History() {
         initComponents();
+        chDate.setTextField(searchdata__box);
+        chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
+        chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+        model = (DefaultTableModel)jTable.getModel();
+        chDate.addActionDateChooserListener(new DateChooserAdapter() {
+            @Override
+            public void dateBetweenChanged(DateBetween db, DateChooserAction action) {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String dateFrom = df.format(db.getFromDate());
+                String toDate = df.format(db.getToDate());
+                loadData("SELECT * FROM `requestpaid` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
+        
+                model.fireTableDataChanged();
+            }
+        });
+                try{
+            DB.getInstance().getConnection();
+        } catch (Exception e) {
+            System.err.println(e);
+            }
+                
         con = DB.mycon();
         showRequestInTable();
+        
         TableActionEventView event = new TableActionEventView() {
             @Override
             public void onView(int row) {
@@ -31,6 +62,38 @@ public class Repair_History extends javax.swing.JPanel {
         jTable.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditorView(event));
     }
 
+    private void loadData(String sql) {
+        try {
+            model.setRowCount(0); // เคลียร์ข้อมูลในตารางก่อนโหลดข้อมูลใหม่
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            DecimalFormat f = new DecimalFormat("$ #,##0.##");
+            PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+            String No = r.getString("No");
+            String Date = r.getString("Date");
+            String Name = r.getString("Name");
+            String Phone = f.format(r.getDouble("Phone"));
+            String Item = r.getString("Item");
+            String ID = r.getString("ID");
+            String Repairman = r.getString("Repairman");
+            String Status = r.getString("Status");
+
+            // เพิ่มข้อมูลใหม่เข้าไปในตาราง
+            model.addRow(new Object[] { No,Date,Name,Phone,Item,ID,Repairman,Status});
+            
+          
+            
+            
+        }
+        r.close();
+        p.close();
+        model.fireTableDataChanged();
+    } catch (Exception e) {
+        System.err.println(e);
+    }
+}
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -44,11 +107,8 @@ public class Repair_History extends javax.swing.JPanel {
         All_prices = new javax.swing.JLabel();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        txtCustomer1 = new javax.swing.JTextField();
-        Topic2 = new javax.swing.JLabel();
         Topic3 = new javax.swing.JLabel();
-        txtCustomer2 = new javax.swing.JTextField();
-        btnNext = new javax.swing.JButton();
+        searchdata__box = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
 
@@ -117,50 +177,23 @@ public class Repair_History extends javax.swing.JPanel {
         Topic.setText("ประวัติการซ่อมสินค้า");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, -1, -1));
 
-        txtCustomer1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtCustomer1.setForeground(new java.awt.Color(123, 123, 123));
-        txtCustomer1.setText(" ##/##/##");
-        txtCustomer1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtCustomer1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCustomer1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCustomer1FocusLost(evt);
-            }
-        });
-        add(txtCustomer1, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 70, 190, 30));
-
-        Topic2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Topic2.setText("ถึง :");
-        add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 70, -1, 30));
-
         Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic3.setText("วันที่ :");
-        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 70, -1, 30));
+        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 70, -1, 30));
 
-        txtCustomer2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtCustomer2.setForeground(new java.awt.Color(123, 123, 123));
-        txtCustomer2.setText(" ##/##/##");
-        txtCustomer2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtCustomer2.addFocusListener(new java.awt.event.FocusAdapter() {
+        searchdata__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        searchdata__box.setForeground(new java.awt.Color(123, 123, 123));
+        searchdata__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        searchdata__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        searchdata__box.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCustomer2FocusGained(evt);
+                searchdata__boxFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCustomer2FocusLost(evt);
+                searchdata__boxFocusLost(evt);
             }
         });
-        add(txtCustomer2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 70, 190, 30));
-
-        btnNext.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnNext.setText("ค้นหา");
-        btnNext.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNextActionPerformed(evt);
-            }
-        });
-        add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 70, 110, 30));
+        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 70, 220, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -193,26 +226,22 @@ public class Repair_History extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 560));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtCustomer1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomer1FocusGained
+public static void main (String args []) {
+        FlatIntelliJLaf.registerCustomDefaultsSource("style");
+        FlatIntelliJLaf. setup ();
+        java.awt. EventQueue. invokeLater (new Runnable () {
+            public void run () {
+                new Order_Record() .setVisible(true);
+            }
+        });
+    }
+    private void searchdata__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCustomer1FocusGained
+    }//GEN-LAST:event_searchdata__boxFocusGained
 
-    private void txtCustomer1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomer1FocusLost
+    private void searchdata__boxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCustomer1FocusLost
-
-    private void txtCustomer2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomer2FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCustomer2FocusGained
-
-    private void txtCustomer2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomer2FocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCustomer2FocusLost
-
-    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNextActionPerformed
+    }//GEN-LAST:event_searchdata__boxFocusLost
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
@@ -289,16 +318,13 @@ public class Repair_History extends javax.swing.JPanel {
     private javax.swing.JScrollPane ScrollPane_Note;
     private javax.swing.JTable Table_Order_Record1;
     private javax.swing.JLabel Topic;
-    private javax.swing.JLabel Topic2;
     private javax.swing.JLabel Topic3;
     private javax.swing.JLabel back_button1;
-    private javax.swing.JButton btnNext;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
-    private javax.swing.JTextField txtCustomer1;
-    private javax.swing.JTextField txtCustomer2;
+    private javax.swing.JTextField searchdata__box;
     // End of variables declaration//GEN-END:variables
 
 }

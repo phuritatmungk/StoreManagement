@@ -155,7 +155,7 @@ public class Revenue_Report extends javax.swing.JPanel {
 
         Topic4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Topic4.setText("วันที่:");
-        add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 640, -1, 30));
+        add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 640, -1, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -190,7 +190,7 @@ public class Revenue_Report extends javax.swing.JPanel {
 
         searchdata__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         searchdata__box.setForeground(new java.awt.Color(123, 123, 123));
-        searchdata__box.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        searchdata__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         searchdata__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         searchdata__box.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -200,7 +200,7 @@ public class Revenue_Report extends javax.swing.JPanel {
                 searchdata__boxFocusLost(evt);
             }
         });
-        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 640, 190, 30));
+        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 640, 200, 30));
     }// </editor-fold>//GEN-END:initComponents
 public static void main (String args []) {
         FlatIntelliJLaf.registerCustomDefaultsSource("style");
