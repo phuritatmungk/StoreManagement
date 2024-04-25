@@ -19,6 +19,9 @@ import karnkha.DB;
 import karnkha.Main;
 import karnkha.OrderInfo;
 import com.raven.datechooser.*;
+import raven.cell.TableActionCellEditorEditView;
+import raven.cell.TableActionCellRenderEditView;
+import raven.cell.TableActionEventEditView;
 
 
 public class Order_Record extends javax.swing.JPanel {
@@ -34,16 +37,19 @@ public class Order_Record extends javax.swing.JPanel {
         initComponents();
         chDate.setTextField(search__box);
         chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
-        chDate.setDateFormat(new SimpleDateFormat("dd/MM/yyyy"));
+        chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
         model = (DefaultTableModel)jTable.getModel();
         chDate.addActionDateChooserListener(new DateChooserAdapter() {
             @Override
             public void dateBetweenChanged(DateBetween db, DateChooserAction action) {
-                SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String dateFrom = df.format(db.getFromDate());
                 String toDate = df.format(db.getToDate());
-                loadData("select * from order where Date");
-            }   
+                loadData("SELECT * FROM `order` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
+        
+                // หลังจากโหลดข้อมูลเสร็จแล้วให้อัพเดตแสดงบนตาราง
+                model.fireTableDataChanged(); // แจ้งให้ตารางทราบว่าข้อมูลเปลี่ยนแปลง
+            }
         });
                 try{
             DB.getInstance().getConnection();
@@ -74,28 +80,28 @@ public class Order_Record extends javax.swing.JPanel {
     }
     
     private void loadData(String sql) {
-            try{
-                
-                        model.setRowCount(0);
-                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                        DecimalFormat f = new DecimalFormat("$ #,##0.##");
-                        PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
-                        ResultSet r = p.executeQuery();
-                        while (r.next()) {
-                            String No = r.getString("No");
-                            String Date = r.getString("Date");
-                            String Company =  r.getString("Company");
-                            String Quantity = f.format (r.getDouble("Quantity"));
-                            String Total = f.format (r.getDouble("Total"));
-                            
-                        }
-                        r.close();
-                        p.close();
-                } catch (Exception e) {
-                    
-                        System.err.println(e);
-                }
-     }
+        try {
+            model.setRowCount(0); // เคลียร์ข้อมูลในตารางก่อนโหลดข้อมูลใหม่
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            DecimalFormat f = new DecimalFormat("$ #,##0.##");
+            PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+            String No = r.getString("No");
+            String Date = r.getString("Date");
+            String Company = r.getString("Company");
+            String Quantity = f.format(r.getDouble("Quantity"));
+            String Total = f.format(r.getDouble("Total"));
+            // เพิ่มข้อมูลใหม่เข้าไปในตาราง
+            model.addRow(new Object[] { No, Date, Company, Quantity, Total });
+        }
+        r.close();
+        p.close();
+        model.fireTableDataChanged();
+    } catch (Exception e) {
+        System.err.println(e);
+    }
+}
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
