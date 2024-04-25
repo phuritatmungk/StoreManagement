@@ -15,6 +15,7 @@ import raven.cell.TableActionCellRenderTrash;
 import raven.cell.TableActionEventTrash;
 import component.Sellproduct3;
 import component.Sellproduct;
+import static component.Sellproduct.jTable;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -24,7 +25,7 @@ public class Sellproduct2 extends javax.swing.JPanel {
     Connection con = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
-
+    
     public Sellproduct2() {
         initComponents();
         con = DB.mycon();
@@ -34,40 +35,38 @@ public class Sellproduct2 extends javax.swing.JPanel {
             public void onDelete(int row) {
                 if (jTable.isEditing()) {
                     jTable.getCellEditor().stopCellEditing();
-                        int selectedRow = jTable.getSelectedRow(); 
-    if(selectedRow != -1) { 
-        int id = (int) jTable.getValueAt(selectedRow, 0); 
-        if(id > 0) { 
-            String deleteQuery = "DELETE FROM cart WHERE No=?";
-            try {
-                PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
-                ps.setInt(1, id);
-                int deletedRows = ps.executeUpdate(); 
-                if(deletedRows > 0) { 
-                    DefaultTableModel model = (DefaultTableModel) jTable.getModel(); 
-                    model.removeRow(selectedRow); 
-                    JOptionPane.showMessageDialog(null, "Product Deleted Successfully", "Remove Product", JOptionPane.INFORMATION_MESSAGE);
+                }
+                int selectedRow = jTable.getSelectedRow(); 
+                if(selectedRow != -1) { 
+                    int id = (int) jTable.getValueAt(selectedRow, 0); 
+                    if(id > 0) { 
+                        String deleteQuery = "DELETE FROM cart WHERE No=?";
+                        try {
+                            PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+                            ps.setInt(1, id);
+                            int deletedRows = ps.executeUpdate(); 
+                            if(deletedRows > 0) { 
+                                DefaultTableModel model = (DefaultTableModel) jTable.getModel(); 
+                                model.removeRow(selectedRow); 
+                                JOptionPane.showMessageDialog(null, "Product Deleted Successfully", "Remove Product", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Failed to delete product", "Remove Product", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (SQLException ex) {
+                            System.out.println("Failed to remove product: " + ex.getMessage());
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Product Not Deleted, Make Sure The ID is Valid", "Remove Product", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Failed to delete product", "Remove Product", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please select a row to delete", "Remove Product", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (SQLException ex) {
-                System.out.println("Failed to remove product: " + ex.getMessage());
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Product Not Deleted, Make Sure The ID is Valid", "Remove Product", JOptionPane.ERROR_MESSAGE);
-        }
-    } else {
-        JOptionPane.showMessageDialog(null, "Please select a row to delete", "Remove Product", JOptionPane.ERROR_MESSAGE);
-    }
-                }
-                DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-                model.removeRow(row);
             }
         };
         jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderTrash());
         jTable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorTrash(event));
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -152,7 +151,7 @@ public class Sellproduct2 extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, true, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -172,10 +171,11 @@ public class Sellproduct2 extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        Main.body.removeAll();
-        Main.body.add(new Sellproduct3());
-        Main.body.repaint();
-        Main.body.revalidate();
+            Main.body.removeAll();
+            Main.body.add(new Sellproduct3());
+            Main.body.repaint();
+            Main.body.revalidate();
+
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
@@ -279,7 +279,7 @@ public class Sellproduct2 extends javax.swing.JPanel {
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnNext;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable;
+    public static javax.swing.JTable jTable;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 

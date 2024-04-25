@@ -39,61 +39,42 @@ public class Sellproduct extends javax.swing.JPanel {
                 String category = jText_Category.getText().toString();
                 Integer quantity = Integer.valueOf(jText_Quantity.getText().toString());
                 Double price = Double.valueOf(jText_Price.getText());
-                int currentQuantity = Integer.valueOf(jText_Quantity.getText().toString());
-        
-                currentQuantity--;
-                if(currentQuantity < 1){
-                    JOptionPane.showMessageDialog(null,"Not Enough Item","Error",JOptionPane.ERROR_MESSAGE);
-                }else{
-                    String updateQuery = "UPDATE `inventory` SET `Quantity` = ? WHERE `Id`=? ";
-
-        try {
-
-            PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
-            ps.setInt(1, currentQuantity);
-            ps.setInt(2, id);
-
-            if(ps.executeUpdate() > 0)
-            {
-                jTable.setValueAt(currentQuantity, row, 4);
-                System.out.println("New Product Added");
+                if (quantity == 0) {
+                JOptionPane.showMessageDialog(null, "The product is out of stock.", "Add Product", JOptionPane.ERROR_MESSAGE);
+                return; // ออกจากเมทอดเพื่อหยุดการดำเนินการต่อ
             }
-            else
-            {
-              JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
-              System.out.println("Some Error Message Here");
-            }
+                String insertQuery = "INSERT INTO `cart`(`No`,`Id`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?)";
+                        try {
+                    PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+                    ps.setInt(1, no);
+                    ps.setInt(2, id);
+                    ps.setString(3, name);
+                    ps.setString(4, category);
+                    ps.setInt(5, 1);
+                    ps.setDouble(6, price);
 
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }        
-        String insertQuery = "INSERT INTO `cart`(`No`,`Id`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?)";
-                try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
-            ps.setInt(1, no);
-            ps.setInt(2, id);
-            ps.setString(3, name);
-            ps.setString(4, category);
-            ps.setInt(5, 1);
-            ps.setDouble(6, price);
+                    if (ps.executeUpdate() > 0) {
+                        showProductsInTable();
+                        Main.body.removeAll();
+                        Main.body.add(new Sellproduct());
+                        Main.body.repaint();
+                        Main.body.revalidate();
+                        System.out.println("New Product Added");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
+                        System.out.println("Some Error Message Here");
+                    }
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
 
-            if (ps.executeUpdate() > 0) {
-                showProductsInTable();
-                System.out.println("New Product Added");
-            } else {
-                JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
-                System.out.println("Some Error Message Here");
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex);
         }
-    
-}
+                };
+                jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderAdd());
+                jTable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorAdd(event));
             }
-        };
-        jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderAdd());
-        jTable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorAdd(event));
-    }
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -351,16 +332,13 @@ public class Sellproduct extends javax.swing.JPanel {
     }
      public void showProductData(int index)
     {
-         if (index >= 0 && index < productsArray.size()) {
         jText_Id.setText(productsArray.get(index).getId().toString());
         jText_Name.setText(productsArray.get(index).getName().toString());
         jText_Category.setText(productsArray.get(index).getCategory().toString());
         jText_Quantity.setText(productsArray.get(index).getQuantity().toString());
         jText_Price.setText(productsArray.get(index).getPrice().toString());
-        }else {
-               JOptionPane.showMessageDialog(null,"Please select","Error",JOptionPane.ERROR_MESSAGE);
-        }
     }   
+     
 private int getNextQueueNumber() {
     int nextQueueNumber = 1; 
 
@@ -384,7 +362,7 @@ private int getNextQueueNumber() {
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnNext;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable;
+    public static javax.swing.JTable jTable;
     private javax.swing.JTextField jText_Category;
     private javax.swing.JTextField jText_Id;
     private javax.swing.JTextField jText_Name;

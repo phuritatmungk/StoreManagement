@@ -14,6 +14,10 @@ import component.Order_Record;
 import component.Manage_Distributor;
 import component.Order_Received;
 import component.Repair_History;
+import component.Sellproduct2;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -32,6 +36,7 @@ public class Main extends javax.swing.JFrame {
             public void selected(int index, int subIndex) {
                 if (index == 0) {
                     showForm(new Sellproduct());
+                    clearAllData(); 
                 } 
                 else if (index == 1) {
                     showForm(new Pay_for_repair_services());
@@ -68,6 +73,7 @@ public class Main extends javax.swing.JFrame {
                 else {
                     showForm(new DefaultForm("Form : " + index + " " + subIndex));
                 }
+                clearAllData(); 
             }
         });
     }
@@ -77,6 +83,22 @@ public class Main extends javax.swing.JFrame {
         body.add(com);
         body.repaint();
         body.revalidate();
+}
+      private void clearAllData() {
+        if (Sellproduct2.jTable != null) {
+            // Clear table data
+            DefaultTableModel model = (DefaultTableModel) Sellproduct2.jTable.getModel();
+            model.setRowCount(0);
+        }
+
+        // Clear database data
+        try {
+            String deleteQuery = "DELETE FROM cart";
+            PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Failed to clear database data: " + ex.getMessage());
+        }
     }
 
     @SuppressWarnings("unchecked")
