@@ -12,7 +12,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import karnkha.DB;
-
+import java.sql.ResultSet;
 public class Maintenance extends javax.swing.JPanel {
 
     public Maintenance() {
@@ -128,7 +128,6 @@ public class Maintenance extends javax.swing.JPanel {
         add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, -1, -1));
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
         jComboBox1.setBorder(null);
         add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 190, 30));
 
@@ -137,7 +136,6 @@ public class Maintenance extends javax.swing.JPanel {
         add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 340, -1, -1));
 
         jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.setBorder(null);
         jComboBox2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 340, 190, 30));
@@ -287,6 +285,7 @@ public class Maintenance extends javax.swing.JPanel {
         txtStatus.setForeground(new java.awt.Color(123, 123, 123));
         txtStatus.setText("   รอดำเนินการ");
         txtStatus.setBorder(null);
+        txtStatus.setFocusable(false);
         txtStatus.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtStatusFocusGained(evt);
@@ -415,8 +414,7 @@ public class Maintenance extends javax.swing.JPanel {
     }//GEN-LAST:event_DateActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        
-        Integer no = Integer.valueOf(txtQueue.getText().toString());
+        Integer no = getNextQueueNumber();
         java.util.Date date = new java.util.Date();
         java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
         String name = txtCustomer.getText();
@@ -458,11 +456,27 @@ public class Maintenance extends javax.swing.JPanel {
             }
             
         } catch (SQLException ex) {
-            System.out.println("Failed to Add");
+            System.out.println(ex);
         }                     
     }//GEN-LAST:event_btnSaveActionPerformed
 
+private int getNextQueueNumber() {
+    int nextQueueNumber = 1; 
 
+    try {
+        String query = "SELECT MAX(No) AS MaxNo FROM request"; 
+        PreparedStatement ps = DB.getConnection().prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            nextQueueNumber = rs.getInt("MaxNo") + 1;
+        }
+    } catch (SQLException ex) {
+        System.out.println("Failed to get next queue number: " + ex.getMessage());
+    }
+
+    return nextQueueNumber;
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Date;
     private javax.swing.JTextField Time;

@@ -47,8 +47,7 @@ public class Order_Record extends javax.swing.JPanel {
                 String toDate = df.format(db.getToDate());
                 loadData("SELECT * FROM `order` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
         
-                // หลังจากโหลดข้อมูลเสร็จแล้วให้อัพเดตแสดงบนตาราง
-                model.fireTableDataChanged(); // แจ้งให้ตารางทราบว่าข้อมูลเปลี่ยนแปลง
+                model.fireTableDataChanged();
             }
         });
                 try{
@@ -68,6 +67,7 @@ public class Order_Record extends javax.swing.JPanel {
             public void onEdit(int row) {
                 System.out.println("Edit row : " + row);
                 jFrame2.setVisible(true);
+                showProductsInTable2();
             }
             public void onView(int row) {
                 System.out.println("Edit row : " + row);
@@ -143,6 +143,29 @@ public class Order_Record extends javax.swing.JPanel {
         TextField_Date = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jFrame3 = new javax.swing.JFrame();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        btnSave1 = new javax.swing.JButton();
+        Field_Quantity1 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        Btt_Calender1 = new javax.swing.JLabel();
+        ComboBox_Type2 = new javax.swing.JComboBox<>();
+        ComboBox_Company2 = new javax.swing.JComboBox<>();
+        btnDelete1 = new javax.swing.JButton();
+        Field_Cost1 = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTextArea_Information2 = new javax.swing.JTextArea();
+        btnAdd2 = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        Table_Receive_Pro1 = new javax.swing.JTable();
+        Field_Product3 = new javax.swing.JTextField();
+        TextField_Date1 = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         search__box = new javax.swing.JTextField();
@@ -246,7 +269,7 @@ public class Order_Record extends javax.swing.JPanel {
                 btnSaveActionPerformed(evt);
             }
         });
-        jPanel2.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 650, 170, 50));
+        jPanel2.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 650, 170, 50));
 
         Field_Quantity.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Field_Quantity.setText("0");
@@ -355,6 +378,132 @@ public class Order_Record extends javax.swing.JPanel {
 
         jFrame2.getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
 
+        jFrame3.setSize(new java.awt.Dimension(1550, 800));
+        jFrame3.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setText("บริษัทที่เป็นตัวแทนจำหน่าย :");
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 430, -1, -1));
+
+        btnSave1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnSave1.setText("บันทึก");
+        btnSave1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSave1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnSave1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 650, 170, 50));
+
+        Field_Quantity1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Quantity1.setText("0");
+        jPanel3.add(Field_Quantity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 500, 210, -1));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel11.setText("จำนวนสินค้า :");
+        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 500, -1, -1));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel12.setText("ประเภทสินค้า :");
+        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 570, 110, -1));
+
+        Btt_Calender1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/calendar.png"))); // NOI18N
+        jPanel3.add(Btt_Calender1, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 435, -1, -1));
+
+        ComboBox_Type2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ComboBox_Type2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "kuy" }));
+        jPanel3.add(ComboBox_Type2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 570, 210, 30));
+
+        ComboBox_Company2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ComboBox_Company2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Test", "asd" }));
+        jPanel3.add(ComboBox_Company2, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 430, 210, 30));
+
+        btnDelete1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnDelete1.setText("ลบ");
+        btnDelete1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDelete1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 650, 170, 50));
+
+        Field_Cost1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Cost1.setText("0");
+        jPanel3.add(Field_Cost1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 570, 210, -1));
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel13.setText("หมายเหตุ :");
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 430, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel14.setText("ชื่อสินค้า :");
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 500, -1, -1));
+
+        jScrollPane6.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+
+        jTextArea_Information2.setEditable(false);
+        jTextArea_Information2.setColumns(20);
+        jTextArea_Information2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextArea_Information2.setLineWrap(true);
+        jTextArea_Information2.setRows(5);
+        jScrollPane6.setViewportView(jTextArea_Information2);
+
+        jPanel3.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 430, 280, 170));
+
+        btnAdd2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnAdd2.setText("เพิ่ม");
+        btnAdd2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdd2ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnAdd2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 650, 170, 50));
+
+        Table_Receive_Pro1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "No.", "Product", "Product Type", "Quantity", "Product Cost", "All Prices"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Table_Receive_Pro1.getTableHeader().setReorderingAllowed(false);
+        jScrollPane7.setViewportView(Table_Receive_Pro1);
+
+        jPanel3.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 1470, 350));
+
+        Field_Product3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Product3.setText("ชื่อสินค้า");
+        jPanel3.add(Field_Product3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 500, 210, -1));
+
+        TextField_Date1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        TextField_Date1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TextField_Date1.setText("DD/MM/YYYY");
+        jPanel3.add(TextField_Date1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, 210, 30));
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel15.setText("ราคาต้นทุนสินค้า :");
+        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(625, 570, -1, -1));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel16.setText("วันที :");
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 430, -1, -1));
+
+        jFrame3.getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
+
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -454,7 +603,7 @@ public class Order_Record extends javax.swing.JPanel {
     if(selectedRow != -1) { 
         int id = (int) jTable.getValueAt(selectedRow, 0); 
         if(id > 0) { 
-            String deleteQuery = "DELETE FROM order WHERE No=?";
+            String deleteQuery = "DELETE FROM `order` WHERE No=?";
             try {
                 PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
                 ps.setInt(1, id);
@@ -467,7 +616,7 @@ public class Order_Record extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Failed to delete product", "Remove Product", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (SQLException ex) {
-                System.out.println("Failed to remove product: " + ex.getMessage());
+                System.out.println(ex);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Product Not Deleted, Make Sure The ID is Valid", "Remove Product", JOptionPane.ERROR_MESSAGE);
@@ -482,9 +631,20 @@ public class Order_Record extends javax.swing.JPanel {
     }//GEN-LAST:event_Save_bt1MouseClicked
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
-        // TODO add your handling code here:
-        int index = jTable.getSelectedRow();
-        position = index;
+        int selectedRow = jTable.getSelectedRow();
+        if (selectedRow != -1) {
+        DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro.getModel();
+        model.setRowCount(0); 
+
+
+        Object[] rowData = new Object[6];
+        for (int i = 0; i < jTable.getColumnCount(); i++) {
+            rowData[i] = jTable.getValueAt(selectedRow, i);
+        }
+
+ 
+        model.addRow(rowData);
+    }
     }//GEN-LAST:event_jTableMouseClicked
 
     private void Table_Order_Record1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_Order_Record1MouseClicked
@@ -500,7 +660,6 @@ public class Order_Record extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
-        
         String name = Field_Product2.getText();
         String category = ComboBox_Type1.getSelectedItem().toString();
         String company = ComboBox_Company1.getSelectedItem().toString();
@@ -542,12 +701,24 @@ public class Order_Record extends javax.swing.JPanel {
             
         } catch (SQLException ex) {
             System.out.println(ex);
-        }                     
+        }                                                                        
     }//GEN-LAST:event_btnAdd1ActionPerformed
 
     private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Save_bt1ActionPerformed
+
+    private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSave1ActionPerformed
+
+    private void btnDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDelete1ActionPerformed
+
+    private void btnAdd2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAdd2ActionPerformed
 
     ArrayList<OrderInfo> productsArray = new ArrayList<>();
     
@@ -603,53 +774,93 @@ public class Order_Record extends javax.swing.JPanel {
         }
         
     }
-    
+     public void showProductsInTable2()
+    {
+        ArrayList<OrderInfo> productsList = getProductsList();
+        DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro.getModel();
         
+        model.setRowCount(0);
+        
+    Object[] row = new Object[6];
+
+    for(int i = 0; i < productsList.size(); i++) {
+        row[0] = productsList.get(i).getNo();
+        row[1] = productsList.get(i).getName();
+        row[2] = productsList.get(i).getCategory();
+        row[3] = productsList.get(i).getQuantity();
+        row[4] = productsList.get(i).getCost();
+        row[5] = productsList.get(i).getTotal();
+        model.addRow(row);
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel All_prices;
     private javax.swing.JLabel Btt_Calender;
+    private javax.swing.JLabel Btt_Calender1;
     private javax.swing.JComboBox<String> ComboBox_Company1;
+    private javax.swing.JComboBox<String> ComboBox_Company2;
     private javax.swing.JComboBox<String> ComboBox_Type1;
+    private javax.swing.JComboBox<String> ComboBox_Type2;
     private javax.swing.JLabel Company_label;
     private javax.swing.JLabel Date_Text;
     private javax.swing.JLabel Date_Text1;
     private javax.swing.JLabel Date_label1;
     private javax.swing.JTextField Field_Cost;
+    private javax.swing.JTextField Field_Cost1;
     private javax.swing.JTextField Field_Product2;
+    private javax.swing.JTextField Field_Product3;
     private javax.swing.JTextField Field_Quantity;
+    private javax.swing.JTextField Field_Quantity1;
     private javax.swing.JLabel Label_Aprices1;
     private javax.swing.JLabel Label_Note;
     private javax.swing.JButton Save_bt1;
     private javax.swing.JScrollPane ScrollPane_Note;
     private javax.swing.JTable Table_Order_Record1;
     private javax.swing.JTable Table_Receive_Pro;
+    private javax.swing.JTable Table_Receive_Pro1;
     private javax.swing.JTextField TextField_Date;
+    private javax.swing.JTextField TextField_Date1;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnAdd1;
+    private javax.swing.JButton btnAdd2;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDelete1;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSave1;
     private javax.swing.JButton delete_bt;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
+    private javax.swing.JFrame jFrame3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTable jTable;
     private javax.swing.JTextArea jTextArea_Information;
     private javax.swing.JTextArea jTextArea_Information1;
+    private javax.swing.JTextArea jTextArea_Information2;
     private javax.swing.JTextField search__box;
     // End of variables declaration//GEN-END:variables
 

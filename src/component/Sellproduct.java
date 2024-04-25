@@ -38,35 +38,34 @@ public class Sellproduct extends javax.swing.JPanel {
                 String category = jText_Category.getText().toString();
                 Integer quantity = Integer.valueOf(jText_Quantity.getText().toString());
                 Double price = Double.valueOf(jText_Price.getText());
-                
                 int currentQuantity = Integer.valueOf(jText_Quantity.getText().toString());
+        
                 currentQuantity--;
                 if(currentQuantity < 1){
                     JOptionPane.showMessageDialog(null,"Not Enough Item","Error",JOptionPane.ERROR_MESSAGE);
                 }else{
-                    String updateQuery = "UPDATE `inventory`SET`Quantity` = ? WHERE `Id`=? ";
-        
+                    String updateQuery = "UPDATE `inventory` SET `Quantity` = ? WHERE `Id`=? ";
+
         try {
-            
+
             PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
             ps.setInt(1, currentQuantity);
             ps.setInt(2, id);
-            
+
             if(ps.executeUpdate() > 0)
             {
                 jTable.setValueAt(currentQuantity, row, 4);
-                JOptionPane.showMessageDialog(null, "New Product Added Successfully", "Add Product", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("New Product Added");
             }
             else
             {
               JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
-              System.out.println("Some Error Message Here");  
+              System.out.println("Some Error Message Here");
             }
-            
+
         } catch (SQLException ex) {
             System.out.println(ex);
-        }
+        }        
         String insertQuery = "INSERT INTO `cart`(`Id`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?)";
                 try {
             PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
@@ -86,14 +85,30 @@ public class Sellproduct extends javax.swing.JPanel {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-    }
+    
 }
-
+            }
         };
         jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderAdd());
         jTable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorAdd(event));
     }
+private int getNextQueueNumber() {
+    int nextQueueNumber = 1; 
 
+    try {
+        String query = "SELECT MAX(No) AS MaxNo FROM inventory"; 
+        PreparedStatement ps = DB.getConnection().prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            nextQueueNumber = rs.getInt("MaxNo") + 1;
+        }
+    } catch (SQLException ex) {
+        System.out.println("Failed to get next queue number: " + ex.getMessage());
+    }
+
+    return nextQueueNumber;
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -351,12 +366,17 @@ public class Sellproduct extends javax.swing.JPanel {
     }
      public void showProductData(int index)
     {
+         if (index >= 0 && index < productsArray.size()) {
         jText_Id.setText(productsArray.get(index).getId().toString());
         jText_Name.setText(productsArray.get(index).getName().toString());
         jText_Category.setText(productsArray.get(index).getCategory().toString());
         jText_Quantity.setText(productsArray.get(index).getQuantity().toString());
         jText_Price.setText(productsArray.get(index).getPrice().toString());
-    }
+        }else {
+               JOptionPane.showMessageDialog(null,"Please select","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }   
+         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button;

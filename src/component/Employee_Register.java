@@ -342,6 +342,7 @@ public class Employee_Register extends javax.swing.JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         
+        Integer no = getNextQueueNumber();
         Integer id = Integer.valueOf(txtId.getText().toString());
         String fname = txtName.getText();
         String sname = txtSname.getText();
@@ -350,18 +351,19 @@ public class Employee_Register extends javax.swing.JPanel {
         Double wage = Double.valueOf(txtSalary.getText().toString());
         Integer phone = Integer.valueOf(txtPhone.getText().toString());
         
-        String insertQuery = "INSERT INTO `employee`(`Fname`, `Sname`, `Id`, `Phone`, `Job`, `Wage`, `Address`) VALUES (?,?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO `employee`(`No`,`Fname`, `Sname`, `Id`, `Phone`, `Job`, `Wage`, `Address`) VALUES (?,?,?,?,?,?,?,?)";
         
         try {
                 
             PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
-            ps.setString(1, fname);
-            ps.setString(2, sname);
-            ps.setInt(3, id);
-            ps.setInt(4, phone);
-            ps.setString(5, job);
-            ps.setDouble(6, wage);
-            ps.setString(7, address);
+            ps.setInt(1, no);
+            ps.setString(2, fname);
+            ps.setString(3, sname);
+            ps.setInt(4, id);
+            ps.setInt(5, phone);
+            ps.setString(6, job);
+            ps.setDouble(7, wage);
+            ps.setString(8, address);
             
             if(ps.executeUpdate() > 0)
             {
@@ -379,10 +381,26 @@ public class Employee_Register extends javax.swing.JPanel {
             }
             
         } catch (SQLException ex) {
-            System.out.println("Failed to Add");
+            System.out.println(ex);
         }                     
     }//GEN-LAST:event_btnSaveActionPerformed
+private int getNextQueueNumber() {
+    int nextQueueNumber = 1; 
 
+    try {
+        String query = "SELECT MAX(No) AS MaxNo FROM employee"; 
+        PreparedStatement ps = DB.getConnection().prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            nextQueueNumber = rs.getInt("MaxNo") + 1;
+        }
+    } catch (SQLException ex) {
+        System.out.println("Failed to get next queue number: " + ex.getMessage());
+    }
+
+    return nextQueueNumber;
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
