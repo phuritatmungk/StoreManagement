@@ -7,6 +7,7 @@ import karnkha.DB;
 import karnkha.ExpenseInfo;
 import component.ReportMenu;
 import java.text.SimpleDateFormat;
+import static karnkha.DB.getConnection;
 import karnkha.Main;
 
 public class Order_Report extends javax.swing.JPanel {
@@ -18,7 +19,46 @@ public class Order_Report extends javax.swing.JPanel {
     public Order_Report() {
         initComponents();
         con = DB.mycon();
-        //showProductsInTable();
+        showProductsInTable();
+    }
+    
+    public void showData(String d1, String d2)
+    {
+        Connection con = getConnection();
+        PreparedStatement st;
+        ResultSet rs;
+        
+        try{
+            // if no date selected display all data
+            if(d1.equals("") || d2.equals(""))
+            {
+                st = con.prepareStatement("SELECT * FROM `reportorder`");
+            }else{
+                st = con.prepareStatement("SELECT * FROM reportorder WHERE Date BETWEEN ? AND ?");
+                st.setString(1, d1);
+                st.setString(2, d2);
+            }
+            
+            rs = st.executeQuery();
+            DefaultTableModel model = (DefaultTableModel)jTable.getModel();
+            
+            Object[] row;
+            
+            while(rs.next()){
+                row = new Object[4];
+                row[0] = rs.getInt(1);
+                row[1] = rs.getString(2);
+                row[2] = rs.getString(3);
+                row[3] = rs.getString(4);
+                
+                model.addRow(row);
+            }
+            
+        }catch(Exception e){
+
+            System.out.println(e.getMessage());
+
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -136,8 +176,8 @@ public class Order_Report extends javax.swing.JPanel {
             }
         });
         add(txtSum2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 660, 200, 70));
-        add(Date1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 660, 190, 30));
-        add(Date2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 660, 190, 30));
+        add(Date1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 660, 190, 30));
+        add(Date2, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 660, 190, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -175,18 +215,19 @@ public class Order_Report extends javax.swing.JPanel {
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        try{
+          try{
             
-            jTable.setModel(new DefaultTableModel(null, new Object[]{"No","Date","Product ID","Product Name","Category","Cost","Quantity","Total"}));
+            jTable.setModel(new DefaultTableModel(null, new Object[]{"Date","Product ID","Product Name","Categorye","Cost","Quantity","Total"}));
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             String date1 = df.format(Date1.getDate());
             String date2 = df.format(Date2.getDate());
             
-            //getProductsList(date1, date2);
+            showData(date1, date2);
             
         }catch(Exception e){
             
         }
+    
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void txtSumFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSumFocusGained
