@@ -1,5 +1,16 @@
 package karnkha;
 
+import component.Manage_Distributor;
+import component.Manage_Employee;
+import component.Manage_Warehouse;
+import component.Order_Received;
+import component.Order_Record;
+import component.Pay_for_repair_services;
+import component.Repair_List_Page;
+import component.ReportMenu;
+import component.SellHistory;
+import component.Sellproduct;
+
 /**
  *
  * @author RAVEN
@@ -75,6 +86,11 @@ public class Home extends javax.swing.JFrame {
         icon2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         icon2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         icon2.setName(""); // NOI18N
+        icon2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon2MouseClicked(evt);
+            }
+        });
         body.add(icon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 110, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -94,6 +110,11 @@ public class Home extends javax.swing.JFrame {
         icon3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         icon3.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         icon3.setName(""); // NOI18N
+        icon3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon3MouseClicked(evt);
+            }
+        });
         body.add(icon3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 110, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -112,6 +133,11 @@ public class Home extends javax.swing.JFrame {
         icon4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         icon4.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         icon4.setName(""); // NOI18N
+        icon4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon4MouseClicked(evt);
+            }
+        });
         body.add(icon4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 110, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -125,6 +151,11 @@ public class Home extends javax.swing.JFrame {
         icon5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         icon5.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         icon5.setName(""); // NOI18N
+        icon5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                icon5MouseClicked(evt);
+            }
+        });
         body.add(icon5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 110, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -255,27 +286,92 @@ public class Home extends javax.swing.JFrame {
 
     private void icon1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon1MouseClicked
         new Main().setVisible(true);
+        Main.body.removeAll();
+        Main.body.add(new Sellproduct());
+        Main.body.repaint();
+        Main.body.revalidate();
         this.dispose();
     }//GEN-LAST:event_icon1MouseClicked
 
+    private void icon2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon2MouseClicked
+        new Main().setVisible(true);
+        Main.body.removeAll();
+        Main.body.add(new Pay_for_repair_services());
+        Main.body.repaint();
+        Main.body.revalidate();
+        this.dispose();
+    }//GEN-LAST:event_icon2MouseClicked
+
+    private void icon3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon3MouseClicked
+        new Main().setVisible(true);
+        Main.body.removeAll();
+        Main.body.add(new Repair_List_Page());
+        Main.body.repaint();
+        Main.body.revalidate();
+        this.dispose();
+    }//GEN-LAST:event_icon3MouseClicked
+
+    private void icon4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon4MouseClicked
+        new Main().setVisible(true);
+        Main.body.removeAll();
+        Main.body.add(new Manage_Warehouse());
+        Main.body.repaint();
+        Main.body.revalidate();
+        this.dispose();
+    }//GEN-LAST:event_icon4MouseClicked
+
+    private void icon5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon5MouseClicked
+        new Main().setVisible(true);
+        Main.body.removeAll();
+        Main.body.add(new Order_Record());
+        Main.body.repaint();
+        Main.body.revalidate();
+        this.dispose();
+    }//GEN-LAST:event_icon5MouseClicked
+
     private void icon6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon6MouseClicked
-        // TODO add your handling code here:
+        new Main().setVisible(true);
+        Main.body.removeAll();
+        Main.body.add(new Order_Received());
+        Main.body.repaint();
+        Main.body.revalidate();
+        this.dispose();
     }//GEN-LAST:event_icon6MouseClicked
 
     private void icon7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon7MouseClicked
-        // TODO add your handling code here:
+        new Main().setVisible(true);
+        Main.body.removeAll();
+        Main.body.add(new SellHistory());
+        Main.body.repaint();
+        Main.body.revalidate();
+        this.dispose();
     }//GEN-LAST:event_icon7MouseClicked
 
     private void icon8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon8MouseClicked
-        // TODO add your handling code here:
+        new Main().setVisible(true);
+        Main.body.removeAll();
+        Main.body.add(new Manage_Employee());
+        Main.body.repaint();
+        Main.body.revalidate();
+        this.dispose();
     }//GEN-LAST:event_icon8MouseClicked
 
     private void icon9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon9MouseClicked
-        // TODO add your handling code here:
+       new Main().setVisible(true);
+        Main.body.removeAll();
+        Main.body.add(new Manage_Distributor());
+        Main.body.repaint();
+        Main.body.revalidate();
+        this.dispose();
     }//GEN-LAST:event_icon9MouseClicked
 
     private void icon10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icon10MouseClicked
-        // TODO add your handling code here:
+        new Main().setVisible(true);
+        Main.body.removeAll();
+        Main.body.add(new ReportMenu());
+        Main.body.repaint();
+        Main.body.revalidate();
+        this.dispose();
     }//GEN-LAST:event_icon10MouseClicked
 
     /**

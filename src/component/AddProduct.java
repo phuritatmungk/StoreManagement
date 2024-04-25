@@ -331,7 +331,10 @@ public class AddProduct extends javax.swing.JPanel {
             
             if(ps.executeUpdate() > 0)
             {
-                //showProductsInTable();
+                Main.body.removeAll();
+                Main.body.add(new Manage_Warehouse());
+                Main.body.repaint();
+                Main.body.revalidate();
                 JOptionPane.showMessageDialog(null, "New Product Added Successfully", "Add Product", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("Added Complete");
             }
