@@ -66,12 +66,12 @@ public class Order_Received extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextArea_Information = new javax.swing.JTextArea();
         Field_Cost = new javax.swing.JTextField();
-        Field_Product2 = new javax.swing.JTextField();
-        ComboBox_Type1 = new javax.swing.JComboBox<>();
+        Field_type = new javax.swing.JTextField();
         ComboBox_Employee = new javax.swing.JComboBox<>();
         btnSave = new javax.swing.JButton();
         btnAdd1 = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        Field_Product4 = new javax.swing.JTextField();
         jFrame2 = new javax.swing.JFrame();
         btnAdd2 = new javax.swing.JButton();
         btnDelete1 = new javax.swing.JButton();
@@ -219,12 +219,9 @@ public class Order_Received extends javax.swing.JPanel {
         Field_Cost.setText("0");
         jPanel1.add(Field_Cost, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 500, 210, -1));
 
-        Field_Product2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Field_Product2.setText("ชื่อสินค้า");
-        jPanel1.add(Field_Product2, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 440, 210, -1));
-
-        ComboBox_Type1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jPanel1.add(ComboBox_Type1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 500, 210, 30));
+        Field_type.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_type.setText("ประเภทสินค้า");
+        jPanel1.add(Field_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 500, 210, -1));
 
         ComboBox_Employee.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel1.add(ComboBox_Employee, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 560, 210, 30));
@@ -255,6 +252,10 @@ public class Order_Received extends javax.swing.JPanel {
             }
         });
         jPanel1.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 690, 170, 50));
+
+        Field_Product4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Product4.setText("ชื่อสินค้า");
+        jPanel1.add(Field_Product4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 440, 210, -1));
 
         jFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
 
@@ -587,15 +588,15 @@ public class Order_Received extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> ComboBox_Employee;
     private javax.swing.JComboBox<String> ComboBox_Employee1;
     private javax.swing.JComboBox<String> ComboBox_Type;
-    private javax.swing.JComboBox<String> ComboBox_Type1;
     private javax.swing.JComboBox<String> ComboBox_Type2;
     private javax.swing.JComboBox<String> ComboBox_Type3;
     private javax.swing.JTextField Field_Cost;
     private javax.swing.JTextField Field_Cost1;
-    private javax.swing.JTextField Field_Product2;
     private javax.swing.JTextField Field_Product3;
+    private javax.swing.JTextField Field_Product4;
     private javax.swing.JTextField Field_Quantity;
     private javax.swing.JTextField Field_Quantity1;
+    private javax.swing.JTextField Field_type;
     private javax.swing.JButton Save_bt1;
     private javax.swing.JTable Table_Receive_Pro;
     private javax.swing.JTable Table_Receive_Pro1;
