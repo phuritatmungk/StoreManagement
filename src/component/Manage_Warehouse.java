@@ -92,6 +92,11 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
 
         CategoryBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CategoryBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CategoryBoxActionPerformed(evt);
+            }
+        });
         jPanel1.add(CategoryBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 120, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -413,7 +418,46 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     }//GEN-LAST:event_BmaxFocusLost
 
     private void BgoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BgoActionPerformed
-        // TODO add your handling code here:
+         String minPriceStr = Bmin.getText().trim();
+         String maxPriceStr = Bmax.getText().trim();
+         if (!minPriceStr.isEmpty() && !maxPriceStr.isEmpty()) {
+        try {
+            double minPrice = Double.parseDouble(minPriceStr);
+            double maxPrice = Double.parseDouble(maxPriceStr);
+
+            // เชื่อมต่อฐานข้อมูลและดึงข้อมูลสินค้าตามช่วงราคา
+            con = DB.mycon();
+            String query = "SELECT * FROM inventory WHERE Price BETWEEN ? AND ?";
+            pst = con.prepareStatement(query);
+            pst.setDouble(1, minPrice);
+            pst.setDouble(2, maxPrice);
+            rs = pst.executeQuery();
+
+            // อัพเดตตารางด้วยข้อมูลที่ดึงมา
+            DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+            model.setRowCount(0); // Clear ข้อมูลเก่าในตาราง
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("No"),
+                    rs.getInt("Id"),
+                    rs.getString("Date"),
+                    rs.getString("Name"),
+                    rs.getString("Category"),
+                    rs.getInt("Quantity"),
+                    rs.getDouble("Price")
+                };
+                model.addRow(row); // เพิ่มแถวใหม่ในตาราง
+            }
+
+        } catch (NumberFormatException | SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    } else {
+        // แจ้งให้ผู้ใช้กรอกข้อมูลในทั้ง Bmin และ Bmax
+        JOptionPane.showMessageDialog(this, "กรุณากรอกค่า Price ทั้งสอง", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
+    }
+  
     }//GEN-LAST:event_BgoActionPerformed
 
     private void BminKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BminKeyReleased
@@ -423,6 +467,10 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     private void BmaxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BmaxKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_BmaxKeyReleased
+
+    private void CategoryBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoryBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CategoryBoxActionPerformed
 
     
      private void loadAllProducts() {
