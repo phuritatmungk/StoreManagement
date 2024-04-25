@@ -47,6 +47,7 @@ public class EditProduct extends javax.swing.JPanel {
         jAmount = new javax.swing.JLabel();
         txtAmount = new javax.swing.JTextField();
         jSeparator9 = new javax.swing.JSeparator();
+        txtNo = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -125,6 +126,11 @@ public class EditProduct extends javax.swing.JPanel {
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnSave.setText("บันทึก");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 710, 130, 50));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
@@ -216,6 +222,14 @@ public class EditProduct extends javax.swing.JPanel {
 
         jSeparator9.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 570, 370, 30));
+
+        txtNo.setEditable(false);
+        txtNo.setBackground(new java.awt.Color(255, 255, 255));
+        txtNo.setForeground(new java.awt.Color(255, 255, 255));
+        txtNo.setText("1");
+        txtNo.setBorder(null);
+        txtNo.setFocusable(false);
+        add(txtNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 850, -1, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtProductidFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductidFocusLost
@@ -319,6 +333,43 @@ public class EditProduct extends javax.swing.JPanel {
         Main.body.revalidate();
     }//GEN-LAST:event_back_buttonMouseClicked
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        Integer no = Integer.valueOf(txtNo.getText().toString()); 
+        Integer id = Integer.valueOf(txtProductid.getText().toString());
+        java.util.Date date = new java.util.Date();
+        String name = txtName.getText();
+        String category = txtType.getText();
+        Double cost = Double.valueOf(txtCost_price.getText().toString());
+        Integer quantity = Integer.valueOf(txtAmount.getText().toString());
+        Double price = Double.valueOf(txtPrice.getText().toString());
+
+ 
+        String updateQuery = "UPDATE inventory SET Id=?,Date=?,Name=?,Category=? ,Cost=? ,Quantity=? ,Price=? WHERE No=?";
+        try {
+            PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
+            ps.setInt(1, id);
+            ps.setDate(2, new java.sql.Date(date.getTime()));
+            ps.setString(3, name);
+            ps.setString(4, category);
+            ps.setDouble(5, cost);
+            ps.setInt(6, quantity); 
+            ps.setDouble(7, price);
+            ps.setInt(8, no);
+
+            if(ps.executeUpdate() > 0)
+            {
+                System.out.println("Updated");
+            }
+            else
+            {
+                System.out.println("Failed");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
     private javax.swing.JLabel Topic;
@@ -341,6 +392,7 @@ public class EditProduct extends javax.swing.JPanel {
     public static javax.swing.JTextField txtAmount;
     public static javax.swing.JTextField txtCost_price;
     public static javax.swing.JTextField txtName;
+    public static javax.swing.JTextField txtNo;
     public static javax.swing.JTextField txtPrice;
     public static javax.swing.JTextField txtProductid;
     public static javax.swing.JTextField txtType;

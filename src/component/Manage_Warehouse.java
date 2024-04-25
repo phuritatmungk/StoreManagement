@@ -12,6 +12,7 @@ import raven.cell.TableActionCellRenderEdit;
 import raven.cell.TableActionEventEdit;
 import component.AddProduct;
 import component.EditProduct;
+import static component.EditProduct.txtNo;
 import java.awt.Color;
 import javax.swing.table.TableRowSorter;
 
@@ -262,6 +263,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     
     public void showProductData(int index)
     {
+        EditProduct.txtNo.setText(productsArray.get(index).getNo().toString());
         EditProduct.txtProductid.setText(productsArray.get(index).getId().toString());
         EditProduct.txtName.setText(productsArray.get(index).getName());
         EditProduct.txtType.setText(productsArray.get(index).getCategory());

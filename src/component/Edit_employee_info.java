@@ -2,12 +2,19 @@ package component;
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Employee;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import karnkha.DB;
 
 public class Edit_employee_info extends javax.swing.JPanel {
-
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement pst = null;
     public Edit_employee_info() {
         initComponents();
-        
+        con = DB.mycon();
     }
 
     @SuppressWarnings("unchecked")
@@ -41,6 +48,7 @@ public class Edit_employee_info extends javax.swing.JPanel {
         jSeparator5 = new javax.swing.JSeparator();
         txtSalary = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
+        txtNo = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -167,6 +175,11 @@ public class Edit_employee_info extends javax.swing.JPanel {
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnSave.setText("บันทึก");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 590, 130, 50));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -222,6 +235,15 @@ public class Edit_employee_info extends javax.swing.JPanel {
 
         jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 260, 220, 30));
+
+        txtNo.setEditable(false);
+        txtNo.setBackground(new java.awt.Color(255, 255, 255));
+        txtNo.setForeground(new java.awt.Color(255, 255, 255));
+        txtNo.setText("1");
+        txtNo.setBorder(null);
+        txtNo.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtNo.setFocusable(false);
+        add(txtNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 870, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImgActionPerformed
@@ -325,6 +347,44 @@ public class Edit_employee_info extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtSalaryFocusLost
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        Integer no = Integer.valueOf(txtNo.getText().toString()); 
+        Integer id = Integer.valueOf(txtId.getText().toString());
+        String name = txtName.getText();
+        String sname = txtSname.getText();
+        String fname = name + " " + sname;
+        Integer phone = Integer.valueOf(txtPhone.getText().toString());
+        String job = (txtJob.getText().toString());
+        Double wage = Double.valueOf(txtSalary.getText().toString());
+        String address = txtAddress.getText();
+
+
+ 
+        String updateQuery = "UPDATE inventory SET No=?,Name=?,Name=?,Id=? ,Job=? ,Wage=?,Address=? WHERE No=?";
+        try {
+            PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
+            ps.setInt(1, id);
+            ps.setString(2, fname);
+            ps.setInt(3, phone);
+            ps.setString(4, job);
+            ps.setDouble(5, wage); 
+            ps.setString(6, address);
+            ps.setInt(7, no);
+
+            if(ps.executeUpdate() > 0)
+            {
+                System.out.println("Updated");
+            }
+            else
+            {
+                System.out.println("Failed");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
@@ -347,12 +407,13 @@ public class Edit_employee_info extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JLabel picture_box;
-    private javax.swing.JTextArea txtAddress;
-    private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtJob;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPhone;
-    private javax.swing.JTextField txtSalary;
-    private javax.swing.JTextField txtSname;
+    public static javax.swing.JTextArea txtAddress;
+    public static javax.swing.JTextField txtId;
+    public static javax.swing.JTextField txtJob;
+    public static javax.swing.JTextField txtName;
+    public static javax.swing.JTextField txtNo;
+    public static javax.swing.JTextField txtPhone;
+    public static javax.swing.JTextField txtSalary;
+    public static javax.swing.JTextField txtSname;
     // End of variables declaration//GEN-END:variables
 }
