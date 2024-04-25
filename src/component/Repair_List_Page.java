@@ -212,8 +212,13 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jPanel1.add(jTextField_Behavior, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 330, 120));
 
         jComboBox_Status.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox_Status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "กำลังดำเนินการ", "เสร็จสิ้น" }));
+        jComboBox_Status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "รอดําเนินการ", "กำลังดำเนินการ", "เสร็จสิ้น" }));
         jComboBox_Status.setEnabled(false);
+        jComboBox_Status.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_StatusActionPerformed(evt);
+            }
+        });
         jPanel1.add(jComboBox_Status, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 140, 30));
 
         jFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 630));
@@ -299,7 +304,13 @@ public class Repair_List_Page extends javax.swing.JPanel {
         });
         jPanel2.add(jTextField_Item2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 140, 25));
 
-        jComboBox_Status2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_Status2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_Status2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "รอดําเนินการ", "กำลังดำเนินการ", "เสร็จสิ้น" }));
+        jComboBox_Status2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_Status2ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jComboBox_Status2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 140, 30));
 
         jTextField_Behavior2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -489,6 +500,14 @@ public class Repair_List_Page extends javax.swing.JPanel {
         }
        
     }//GEN-LAST:event_btnEditActionPerformed
+
+    private void jComboBox_Status2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Status2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_Status2ActionPerformed
+
+    private void jComboBox_StatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_StatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_StatusActionPerformed
 
     ArrayList<RepairRequest> requestArray = new ArrayList<>();
     
