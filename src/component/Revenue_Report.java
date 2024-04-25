@@ -1,5 +1,10 @@
 package component;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.raven.datechooser.DateBetween;
+import com.raven.datechooser.DateChooser;
+import com.raven.datechooser.listener.DateChooserAction;
+import com.raven.datechooser.listener.DateChooserAdapter;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -7,6 +12,7 @@ import karnkha.DB;
 import karnkha.Main;
 import karnkha.RevenueInfo;
 import component.ReportMenu;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 public class Revenue_Report extends javax.swing.JPanel {
@@ -14,13 +20,68 @@ public class Revenue_Report extends javax.swing.JPanel {
     Connection con = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+    private DateChooser chDate = new DateChooser();
+    private DefaultTableModel model;
     
     public Revenue_Report() {
         initComponents();
+        chDate.setTextField(searchdata__box);
+        chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
+        chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+        model = (DefaultTableModel)jTable.getModel();
+        chDate.addActionDateChooserListener(new DateChooserAdapter() {
+            @Override
+            public void dateBetweenChanged(DateBetween db, DateChooserAction action) {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String dateFrom = df.format(db.getFromDate());
+                String toDate = df.format(db.getToDate());
+                loadData("SELECT * FROM `reportrevenue` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
+        
+                model.fireTableDataChanged();
+            }
+        });
+                try{
+            DB.getInstance().getConnection();
+        } catch (Exception e) {
+            System.err.println(e);
+            }
+                
         con = DB.mycon();
         showProductsInTable();
     }
 
+    private void loadData(String sql) {
+        try {
+            model.setRowCount(0); // เคลียร์ข้อมูลในตารางก่อนโหลดข้อมูลใหม่
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            DecimalFormat f = new DecimalFormat("$ #,##0.##");
+            PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+            String Date = r.getString("Date");
+            String Id = r.getString("Id");
+            String List = r.getString("List");
+            String Category = r.getString("Category");
+            String Cost = f.format(r.getDouble("Cost"));
+            String Price = f.format(r.getDouble("Price"));
+            String Quantity = f.format(r.getDouble("Quantity"));
+            String Income = f.format(r.getDouble("Income"));
+            String Total = f.format(r.getDouble("Total"));
+            // เพิ่มข้อมูลใหม่เข้าไปในตาราง
+            model.addRow(new Object[] { Date,Id,List,Category,Cost,Price,Quantity,Income, Total});
+            
+           
+            
+            
+        }
+        r.close();
+        p.close();
+        model.fireTableDataChanged();
+    } catch (Exception e) {
+        System.err.println(e);
+    }
+}
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -31,13 +92,10 @@ public class Revenue_Report extends javax.swing.JPanel {
         Topic1 = new javax.swing.JLabel();
         txtSum = new javax.swing.JTextField();
         Topic2 = new javax.swing.JLabel();
-        Topic3 = new javax.swing.JLabel();
         Topic4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
-        Date2 = new com.toedter.calendar.JDateChooser();
-        Date1 = new com.toedter.calendar.JDateChooser();
-        btnSearch = new javax.swing.JButton();
+        searchdata__box = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -95,13 +153,9 @@ public class Revenue_Report extends javax.swing.JPanel {
         Topic2.setText("รายงานสรุปรายรับ");
         add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, -1, -1));
 
-        Topic3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        Topic3.setText("ถึง:");
-        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 660, -1, -1));
-
         Topic4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        Topic4.setText("เลือกวันที่:");
-        add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 660, -1, -1));
+        Topic4.setText("วันที่:");
+        add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 640, -1, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -133,19 +187,30 @@ public class Revenue_Report extends javax.swing.JPanel {
         jScrollPane2.setViewportView(jTable);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
-        add(Date2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 660, 190, 30));
-        add(Date1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 660, 190, 30));
 
-        btnSearch.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnSearch.setText("ค้นหา");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
+        searchdata__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        searchdata__box.setForeground(new java.awt.Color(123, 123, 123));
+        searchdata__box.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        searchdata__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        searchdata__box.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchdata__boxFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchdata__boxFocusLost(evt);
             }
         });
-        add(btnSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 650, 170, 50));
+        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 640, 190, 30));
     }// </editor-fold>//GEN-END:initComponents
-
+public static void main (String args []) {
+        FlatIntelliJLaf.registerCustomDefaultsSource("style");
+        FlatIntelliJLaf. setup ();
+        java.awt. EventQueue. invokeLater (new Runnable () {
+            public void run () {
+                new Order_Record() .setVisible(true);
+            }
+        });
+    }
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPrintActionPerformed
@@ -175,20 +240,13 @@ public class Revenue_Report extends javax.swing.JPanel {
         Main.body.revalidate();
     }//GEN-LAST:event_back_button1MouseClicked
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        try{
+    private void searchdata__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchdata__boxFocusGained
 
-            jTable.setModel(new DefaultTableModel(null, new Object[]{"No","Date","List","Category","Cost","Price","Quantity","Income","Total"}));
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String date1 = df.format(Date1.getDate());
-            String date2 = df.format(Date2.getDate());
-
-            //showData(date1, date2);
-
-        }catch(Exception e){
-
-        }
-    }//GEN-LAST:event_btnSearchActionPerformed
+    private void searchdata__boxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchdata__boxFocusLost
 
     ArrayList<RevenueInfo> revenueArray = new ArrayList<>();
     
@@ -250,18 +308,15 @@ public class Revenue_Report extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser Date1;
-    private com.toedter.calendar.JDateChooser Date2;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel Topic1;
     private javax.swing.JLabel Topic2;
-    private javax.swing.JLabel Topic3;
     private javax.swing.JLabel Topic4;
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnPrint;
-    private javax.swing.JButton btnSearch;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
+    private javax.swing.JTextField searchdata__box;
     private javax.swing.JTextField txtSum;
     // End of variables declaration//GEN-END:variables
 

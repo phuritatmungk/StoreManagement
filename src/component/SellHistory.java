@@ -65,17 +65,10 @@ public class SellHistory extends javax.swing.JPanel {
             String Date = r.getString("Date");
             String Name = r.getString("Name");
             String Category = r.getString("Category");
-            
             String Quantity = f.format(r.getDouble("Quantity"));
-            String Total = f.format(r.getDouble("Total"));
+            String Price = f.format(r.getDouble("Price"));
             
-            //product = new SalesInfo(rs.getInt("No"), rs.getInt("Id"),
-                                     // rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
-                                      //rs.getInt("Quantity"), rs.getDouble("Price"));
-                //list.add(product);
-            
-            // เพิ่มข้อมูลใหม่เข้าไปในตาราง
-            model.addRow(new Object[] { No, Date, Company, Quantity, Total });
+            model.addRow(new Object[] { No,Id, Date, Name,Category, Quantity, Price });
         }
         r.close();
         p.close();
@@ -85,6 +78,7 @@ public class SellHistory extends javax.swing.JPanel {
     }
 }
 
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
