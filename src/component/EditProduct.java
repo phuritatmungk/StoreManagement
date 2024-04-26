@@ -132,7 +132,7 @@ public class EditProduct extends javax.swing.JPanel {
                 btnSaveActionPerformed(evt);
             }
         });
-        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 710, 130, 50));
+        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 620, 130, 50));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 370, 30));

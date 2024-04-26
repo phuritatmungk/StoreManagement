@@ -541,6 +541,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
             System.out.println(ex);
         }
 
+        productsArray = list;
         return list;
     }
     
