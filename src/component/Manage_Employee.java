@@ -221,6 +221,7 @@ public class Manage_Employee extends javax.swing.JPanel {
         int columnIndexToFilter = 1;
         int columnIndexToFilter2 = 2;
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter));
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter2));
     }//GEN-LAST:event_search__boxKeyReleased
 
     private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
