@@ -213,7 +213,9 @@ public class Sellproduct2 extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         jTable.setRowSorter(sorter);
-        int columnIndexToFilter = 2;
+        int columnIndexToFilter = 1;
+        int columnIndexToFilter2 = 3;
+
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + txtSearch.getText().trim(), columnIndexToFilter));
     }//GEN-LAST:event_txtSearchKeyReleased
 

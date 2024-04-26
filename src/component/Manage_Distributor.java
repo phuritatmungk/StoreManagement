@@ -208,8 +208,8 @@ public class Manage_Distributor extends javax.swing.JPanel {
         jTable.setRowSorter(sorter);
         int columnIndexToFilter = 1;
         int columnIndexToFilter2 = 2;
-        int columnIndexToFilter3 = 3;
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter));
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter2));
     }//GEN-LAST:event_search__boxKeyReleased
 
     private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
