@@ -42,7 +42,7 @@ public class Main extends javax.swing.JFrame {
                     showForm(new Pay_for_repair_services());
                 }
                 else if (index == 2) {
-                    showForm(new loginfrom());
+                    showForm(new Repair_List_Page());
                 }
                 else if (index == 3) {
                     showForm(new Manage_Warehouse());
