@@ -176,7 +176,8 @@ public class Sellproduct2 extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-            Main.body.removeAll();
+            updateQuantitiesInDatabase();
+            Main.body.removeAll();            
             Main.body.add(new Sellproduct3());
             Main.body.repaint();
             Main.body.revalidate();
@@ -289,8 +290,38 @@ public class Sellproduct2 extends javax.swing.JPanel {
             
             model.addRow(row);
         }
-        
     }
+    
+    private void updateQuantitiesInDatabase() {
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        int rowCount = model.getRowCount();
+    
+            for (int i = 0; i < rowCount; i++) {
+                int productId = (int) model.getValueAt(i, 1);
+                int quantity = (int) model.getValueAt(i, 4); 
+        
+
+            updateQuantityInDatabase(productId, quantity);
+            }
+        }
+    
+    private void updateQuantityInDatabase(int productId, int quantity) {
+        String updateQuery = "UPDATE cart SET Quantity = ? WHERE Id = ?";
+        try {
+            Connection con = DB.getConnection();
+            PreparedStatement ps = con.prepareStatement(updateQuery);
+            ps.setInt(1, quantity);
+            ps.setInt(2, productId);
+            int updatedRows = ps.executeUpdate();
+        if (updatedRows > 0) {
+            System.out.println("Quantity for product ID " + productId + " updated successfully.");
+        } else {
+            System.out.println("Failed to update quantity for product ID " + productId);
+        }
+    } catch (SQLException ex) {
+        System.out.println("Failed to update quantity: " + ex.getMessage());
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
