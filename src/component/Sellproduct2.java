@@ -17,9 +17,14 @@ import component.Sellproduct3;
 import component.Sellproduct;
 import static component.Sellproduct.jTable;
 import java.awt.Color;
+import java.awt.Component;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
+
 public class Sellproduct2 extends javax.swing.JPanel {
     
     Connection con = null;
@@ -171,11 +176,7 @@ public class Sellproduct2 extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-            Main.body.removeAll();
-            Main.body.add(new Sellproduct3());
-            Main.body.repaint();
-            Main.body.revalidate();
-
+            updateQuantitiesInDatabase();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
@@ -206,7 +207,7 @@ public class Sellproduct2 extends javax.swing.JPanel {
         Main.body.removeAll();
         Main.body.add(new Sellproduct());
         Main.body.repaint();
-        Main.body.revalidate();
+        Main.body.revalidate(); 
     }//GEN-LAST:event_back_button1MouseClicked
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
@@ -256,11 +257,24 @@ public class Sellproduct2 extends javax.swing.JPanel {
     {
         ArrayList<CartInfo> productsList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        
         model.setRowCount(0);
         
         Object[] row = new Object[6];
         
+        jTable.getColumnModel().getColumn(4).setCellEditor(new QtyCellEditor(new EventCellInputChange() {
+            @Override
+            public void inputChanged() {
+                System.out.println("Changed");
+            }
+        }));
+        jTable.getColumnModel().getColumn(4).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                setHorizontalAlignment(SwingConstants.CENTER);
+                return this;
+            }
+        });        
         for(int i = 0; i < productsList.size(); i++)
         {
             row[0] = productsList.get(i).getNo();
@@ -272,9 +286,71 @@ public class Sellproduct2 extends javax.swing.JPanel {
             
             model.addRow(row);
         }
-        
     }
+    
+    private void updateQuantitiesInDatabase() {
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        int rowCount = model.getRowCount();
+        boolean quantityExceedsInventory = false; // เพิ่มตัวแปรเพื่อตรวจสอบว่ามีการกำหนดจำนวนเกินจำนวนใน inventory หรือไม่
 
+        for (int i = 0; i < rowCount; i++) {
+            int productId = (int) model.getValueAt(i, 1);
+            int quantity = (int) model.getValueAt(i, 4);
+        
+            int inventoryQuantity = getInventoryQuantity(productId);
+
+        if (quantity > inventoryQuantity) {
+            quantityExceedsInventory = true;
+            break;
+            }
+
+            updateQuantityInDatabase(productId, quantity);
+        }
+
+        if (quantityExceedsInventory) {
+            JOptionPane.showMessageDialog(this, "Insufficient quantity of products", "Error", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Main.body.removeAll();            
+            Main.body.add(new Sellproduct3());
+            Main.body.repaint();
+            Main.body.revalidate();
+        }
+    }
+    
+        private void updateQuantityInDatabase(int productId, int quantity) {
+            String updateQuery = "UPDATE cart SET Quantity = ? WHERE Id = ?";
+            try {
+                Connection con = DB.getConnection();
+                PreparedStatement ps = con.prepareStatement(updateQuery);
+                ps.setInt(1, quantity);
+                ps.setInt(2, productId);
+                int updatedRows = ps.executeUpdate();
+            if (updatedRows > 0) {
+                System.out.println("Quantity for product ID " + productId + " updated successfully.");
+            } else {
+                System.out.println("Failed to update quantity for product ID " + productId);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Failed to update quantity: " + ex.getMessage());
+        }
+    }
+    
+    private int getInventoryQuantity(int productId) {
+        int inventoryQuantity = 0;
+        String selectQuery = "SELECT Quantity FROM inventory WHERE Id = ?";
+        try {
+            Connection con = DB.getConnection();
+            PreparedStatement ps = con.prepareStatement(selectQuery);
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                inventoryQuantity = rs.getInt("Quantity");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Failed to fetch inventory quantity: " + ex.getMessage());
+        }
+        return inventoryQuantity;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button;
