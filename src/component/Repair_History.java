@@ -64,7 +64,7 @@ public class Repair_History extends javax.swing.JPanel {
 
     private void loadData(String sql) {
         try {
-            model.setRowCount(0); // เคลียร์ข้อมูลในตารางก่อนโหลดข้อมูลใหม่
+            model.setRowCount(0);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
             PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);

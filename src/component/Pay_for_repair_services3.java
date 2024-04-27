@@ -247,16 +247,15 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
     int index = jTable.getSelectedRow();
-    if(index != -1) { 
+    if (index != -1) {
+        RepairRequest selectedRequest = requestArray.get(index);
         Main.body.removeAll();
-        Main.body.add(new Pay_for_repair_services4());
+        Main.body.add(new Pay_for_repair_services4(selectedRequest));
         Main.body.repaint();
         Main.body.revalidate();
-        showProductData2(index);
-        position = index;
     } else {
-        JOptionPane.showMessageDialog(this, "Please Select", "WARNING", JOptionPane.WARNING_MESSAGE);
-    }                              
+        JOptionPane.showMessageDialog(this, "Please select a request", "Warning", JOptionPane.WARNING_MESSAGE);
+    }
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
@@ -309,16 +308,18 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
         
     }
     
-    public void showRequestInTable()
+public void showRequestInTable()
+{
+    ArrayList<RepairRequest> requestsList = getRequestList();
+    DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+    
+    model.setRowCount(0);
+    
+    Object[] row = new Object[8];
+    
+    for(int i = 0; i < requestsList.size(); i++)
     {
-        ArrayList<RepairRequest> requestsList = getRequestList();
-        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        
-        model.setRowCount(0);
-        
-        Object[] row = new Object[8];
-        
-        for(int i = 0; i < requestsList.size(); i++)
+        if(requestsList.get(i).getStatus().equals("เสร็จสิ้น"))
         {
             row[0] = requestsList.get(i).getNo();
             row[1] = requestsList.get(i).getDate();
@@ -330,7 +331,9 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
             row[7] = requestsList.get(i).getStatus(); 
             model.addRow(row);
         }
-        
+    }
+    
+
     }
         public void showProductData(int index)
     {
@@ -343,14 +346,6 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
         jTextField_Repairman.setText(requestArray.get(index).getRepairman());
         jComboBox_Status.setSelectedItem(requestArray.get(index).getStatus());
         jTextField_Behavior.setText(requestArray.get(index).getName());
-    }
-     public void showProductData2(int index)
-    {
-        Pay_for_repair_services4.txtName.setText(requestArray.get(index).getName().toString());
-        Pay_for_repair_services4.txtProduct.setText(requestArray.get(index).getItem().toString());
-        Pay_for_repair_services4.txtPhone.setText(requestArray.get(index).getPhone().toString());
-        Pay_for_repair_services4.txtRepairman.setText(requestArray.get(index).getRepairman());
-        Pay_for_repair_services4.txtId.setText(requestArray.get(index).getId().toString());
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;

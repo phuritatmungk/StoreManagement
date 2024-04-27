@@ -102,7 +102,7 @@ public class SellHistory extends javax.swing.JPanel {
         add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Topic.setText("ประวัติการซื้อสินค้า");
+        Topic.setText("ประวัติการขายสินค้า");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
 
         Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -232,5 +232,9 @@ public static void main (String args []) {
     private javax.swing.JTable jTable;
     private javax.swing.JTextField search__box;
     // End of variables declaration//GEN-END:variables
+
+    void addSale(int id, String name, String category, int quantity, double price) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }

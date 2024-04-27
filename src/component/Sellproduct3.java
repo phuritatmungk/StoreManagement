@@ -158,7 +158,6 @@ public class Sellproduct3 extends javax.swing.JPanel {
             }
         });
         jTable.setRowHeight(50);
-        jTable.getTableHeader().setReorderingAllowed(false);
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableMouseClicked(evt);
@@ -208,7 +207,38 @@ public class Sellproduct3 extends javax.swing.JPanel {
     }//GEN-LAST:event_DateFocusLost
 
     private void btnNext1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNext1ActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+        int id = (int) model.getValueAt(i, 1);
+        String name = (String) model.getValueAt(i, 2);
+        String category = (String) model.getValueAt(i, 3);
+        int quantity = (int) model.getValueAt(i, 4);
+        double price = (double) model.getValueAt(i, 5);
+        java.util.Date date = new java.util.Date();
+
+        String insertQuery = "INSERT INTO `sales` (`Id`, `Name`, `Date`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?)";
+        try {
+            Connection con = DB.getConnection();
+            PreparedStatement ps = con.prepareStatement(insertQuery);
+            ps.setInt(1, id);
+            ps.setString(2, name);
+            ps.setDate(3, new java.sql.Date(date.getTime())); 
+            ps.setString(4, category);
+            ps.setInt(5, quantity);
+            ps.setDouble(6, price);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+}
+        String deleteQuery = "DELETE FROM `cart` WHERE `No` = ?";
+        try {
+            PreparedStatement pst = DB.getConnection().prepareStatement(deleteQuery);
+            pst.setInt(1, (int) jTable.getValueAt(i, 0));
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        }
     }//GEN-LAST:event_btnNext1ActionPerformed
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
@@ -292,6 +322,7 @@ public class Sellproduct3 extends javax.swing.JPanel {
        
         
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Date;
