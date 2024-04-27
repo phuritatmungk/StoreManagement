@@ -308,16 +308,18 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
         
     }
     
-    public void showRequestInTable()
+public void showRequestInTable()
+{
+    ArrayList<RepairRequest> requestsList = getRequestList();
+    DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+    
+    model.setRowCount(0);
+    
+    Object[] row = new Object[8];
+    
+    for(int i = 0; i < requestsList.size(); i++)
     {
-        ArrayList<RepairRequest> requestsList = getRequestList();
-        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        
-        model.setRowCount(0);
-        
-        Object[] row = new Object[8];
-        
-        for(int i = 0; i < requestsList.size(); i++)
+        if(requestsList.get(i).getStatus().equals("เสร็จสิ้น"))
         {
             row[0] = requestsList.get(i).getNo();
             row[1] = requestsList.get(i).getDate();
@@ -329,7 +331,9 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
             row[7] = requestsList.get(i).getStatus(); 
             model.addRow(row);
         }
-        
+    }
+    
+
     }
         public void showProductData(int index)
     {
