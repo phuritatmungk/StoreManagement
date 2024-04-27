@@ -286,8 +286,8 @@ public class Order_Record extends javax.swing.JPanel {
         Btt_Calender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/calendar.png"))); // NOI18N
         jPanel2.add(Btt_Calender, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 435, -1, -1));
 
-        ComboBox_Type1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        ComboBox_Type1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "kuy" }));
+        ComboBox_Type1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ComboBox_Type1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ประเภทสินค้า" }));
         jPanel2.add(ComboBox_Type1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 570, 210, 30));
 
         ComboBox_Company1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N

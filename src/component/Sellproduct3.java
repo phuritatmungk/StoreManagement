@@ -289,6 +289,7 @@ public class Sellproduct3 extends javax.swing.JPanel {
             
             model.addRow(row);
         }
+       
         
     }
 
