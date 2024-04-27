@@ -15,6 +15,7 @@ import component.Manage_Distributor;
 import component.Order_Received;
 import component.Repair_History;
 import component.Sellproduct2;
+import component.loginfrom;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
@@ -41,7 +42,7 @@ public class Main extends javax.swing.JFrame {
                     showForm(new Pay_for_repair_services());
                 }
                 else if (index == 2) {
-                    showForm(new Repair_List_Page());
+                    showForm(new loginfrom());
                 }
                 else if (index == 3) {
                     showForm(new Manage_Warehouse());
