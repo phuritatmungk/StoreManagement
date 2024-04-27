@@ -59,7 +59,6 @@ public class Sellproduct3 extends javax.swing.JPanel {
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         btnNext = new javax.swing.JButton();
-        Topic1 = new javax.swing.JLabel();
         Topic2 = new javax.swing.JLabel();
         Date = new javax.swing.JTextField();
         btnNext1 = new javax.swing.JButton();
@@ -68,6 +67,7 @@ public class Sellproduct3 extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
         Time = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -97,10 +97,6 @@ public class Sellproduct3 extends javax.swing.JPanel {
             }
         });
         add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 570, 190, 50));
-
-        Topic1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Topic1.setText("6,000 บาท");
-        add(Topic1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 580, -1, -1));
 
         Topic2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic2.setText("วันที่ :");
@@ -185,6 +181,13 @@ public class Sellproduct3 extends javax.swing.JPanel {
             }
         });
         add(Time, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 90, 80, 30));
+
+        txtTotal.setEditable(false);
+        txtTotal.setBackground(new java.awt.Color(255, 255, 255));
+        txtTotal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtTotal.setBorder(null);
+        txtTotal.setFocusable(false);
+        add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 580, 160, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
@@ -299,36 +302,47 @@ public class Sellproduct3 extends javax.swing.JPanel {
         
     }
     
-    public void showProductsInTable()
-    {
+    public void showProductsInTable(){
         ArrayList<CartInfo> productsList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        
+    
         model.setRowCount(0);
-        
+    
         Object[] row = new Object[6];
-        
-        for(int i = 0; i < productsList.size(); i++)
-        {
+
+        for (int i = 0; i < productsList.size(); i++) {
             row[0] = productsList.get(i).getNo();
             row[1] = productsList.get(i).getId();
             row[2] = productsList.get(i).getName();
             row[3] = productsList.get(i).getCategory();
             row[4] = productsList.get(i).getQuantity();
             row[5] = productsList.get(i).getPrice();
-            
-            model.addRow(row);
-        }
-       
         
+            model.addRow(row);
+}
+    
+    calculateTotalPrice();
+}
+    
+    private void calculateTotalPrice() {
+        double total = 0;
+    
+        for (int i = 0; i < jTable.getRowCount(); i++) {
+            int quantity = (int) jTable.getValueAt(i, 4);
+            double price = (double) jTable.getValueAt(i, 5);
+        
+            double productTotal = quantity * price;
+        
+            total += productTotal;
+        }
+    
+        txtTotal.setText(String.format("%.2f", total));
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Date;
     private javax.swing.JTextField Time;
     private javax.swing.JLabel Topic;
-    private javax.swing.JLabel Topic1;
     private javax.swing.JLabel Topic2;
     private javax.swing.JLabel Topic3;
     private javax.swing.JLabel Topic4;
@@ -337,6 +351,7 @@ public class Sellproduct3 extends javax.swing.JPanel {
     private javax.swing.JButton btnNext1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 
 }

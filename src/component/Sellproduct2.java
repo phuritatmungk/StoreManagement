@@ -17,8 +17,12 @@ import component.Sellproduct3;
 import component.Sellproduct;
 import static component.Sellproduct.jTable;
 import java.awt.Color;
+import java.awt.Component;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 public class Sellproduct2 extends javax.swing.JPanel {
     
@@ -175,7 +179,6 @@ public class Sellproduct2 extends javax.swing.JPanel {
             Main.body.add(new Sellproduct3());
             Main.body.repaint();
             Main.body.revalidate();
-
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
@@ -206,7 +209,7 @@ public class Sellproduct2 extends javax.swing.JPanel {
         Main.body.removeAll();
         Main.body.add(new Sellproduct());
         Main.body.repaint();
-        Main.body.revalidate();
+        Main.body.revalidate(); 
     }//GEN-LAST:event_back_button1MouseClicked
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
@@ -256,11 +259,24 @@ public class Sellproduct2 extends javax.swing.JPanel {
     {
         ArrayList<CartInfo> productsList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        
         model.setRowCount(0);
         
         Object[] row = new Object[6];
         
+        jTable.getColumnModel().getColumn(4).setCellEditor(new QtyCellEditor(new EventCellInputChange() {
+            @Override
+            public void inputChanged() {
+                System.out.println("Changed");
+            }
+        }));
+        jTable.getColumnModel().getColumn(4).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                setHorizontalAlignment(SwingConstants.CENTER);
+                return this;
+            }
+        });        
         for(int i = 0; i < productsList.size(); i++)
         {
             row[0] = productsList.get(i).getNo();
