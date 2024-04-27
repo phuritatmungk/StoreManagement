@@ -17,6 +17,7 @@ import static component.EditProduct.txtNo;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.table.TableRowSorter;
+import karnkha.Home;
 
 public class Manage_Warehouse extends javax.swing.JPanel {
     
@@ -214,6 +215,11 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         back_button1.setForeground(new java.awt.Color(139, 139, 139));
         back_button1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/back-button.png"))); // NOI18N
+        back_button1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back_button1MouseClicked(evt);
+            }
+        });
         add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -490,6 +496,10 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_search__boxActionPerformed
 
+    private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
+        
+    }//GEN-LAST:event_back_button1MouseClicked
+
     
      private void loadAllProducts() {
         ArrayList<InventoryInfo> productsList = getProductsList(""); // Fetch all products
@@ -541,6 +551,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
             System.out.println(ex);
         }
 
+        productsArray = list;
         return list;
     }
     
