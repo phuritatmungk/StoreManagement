@@ -341,10 +341,8 @@ public class Sellproduct extends javax.swing.JPanel {
         ArrayList<InventoryInfo> productsList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
 
-        // Clear the existing rows in the table
         model.setRowCount(0);
 
-        // Iterate through the productsList and add each item to the table model
         for (InventoryInfo product : productsList) {
             Object[] row = new Object[6];
             row[0] = product.getNo();
@@ -354,7 +352,6 @@ public class Sellproduct extends javax.swing.JPanel {
             row[4] = product.getQuantity();
             row[5] = product.getPrice();
         
-            // Add the new row to the table model
             model.addRow(row);
         }
     }
