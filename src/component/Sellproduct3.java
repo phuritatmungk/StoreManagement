@@ -219,8 +219,6 @@ public class Sellproduct3 extends javax.swing.JPanel {
         double price = (double) model.getValueAt(i, 5);
         java.util.Date date = new java.util.Date();
 
-        updateInventory(id, quantity);
-        deleteFromCart((int) jTable.getValueAt(i, 0));
         String insertQuery = "INSERT INTO `sales` (`Id`, `Name`, `Date`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?)";
         try {
             Connection con = DB.getConnection();
@@ -340,30 +338,6 @@ public class Sellproduct3 extends javax.swing.JPanel {
     
         txtTotal.setText(String.format("%.2f", total));
     }
-private void updateInventory(int productId, int soldQuantity) {
-    try {
-        Connection con = DB.getConnection();
-        String updateQuery = "UPDATE inventory SET Quantity = Quantity - ? WHERE Id = ?";
-        PreparedStatement ps = con.prepareStatement(updateQuery);
-        ps.setInt(1, soldQuantity);
-        ps.setInt(2, productId);
-        ps.executeUpdate();
-    } catch (SQLException ex) {
-        System.out.println(ex);
-    }
-}
-
-private void deleteFromCart(int cartItemId) {
-    try {
-        Connection con = DB.getConnection();
-        String deleteQuery = "DELETE FROM cart WHERE No = ?";
-        PreparedStatement pst = con.prepareStatement(deleteQuery);
-        pst.setInt(1, cartItemId);
-        pst.executeUpdate();
-    } catch (SQLException ex) {
-        System.out.println(ex);
-    }
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Date;

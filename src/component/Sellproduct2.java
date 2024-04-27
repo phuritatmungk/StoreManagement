@@ -177,6 +177,10 @@ public class Sellproduct2 extends javax.swing.JPanel {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
             updateQuantitiesInDatabase();
+            Main.body.removeAll();            
+            Main.body.add(new Sellproduct3());
+            Main.body.repaint();
+            Main.body.revalidate();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
@@ -291,66 +295,34 @@ public class Sellproduct2 extends javax.swing.JPanel {
     private void updateQuantitiesInDatabase() {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         int rowCount = model.getRowCount();
-        boolean quantityExceedsInventory = false; // เพิ่มตัวแปรเพื่อตรวจสอบว่ามีการกำหนดจำนวนเกินจำนวนใน inventory หรือไม่
-
-        for (int i = 0; i < rowCount; i++) {
-            int productId = (int) model.getValueAt(i, 1);
-            int quantity = (int) model.getValueAt(i, 4);
+    
+            for (int i = 0; i < rowCount; i++) {
+                int productId = (int) model.getValueAt(i, 1);
+                int quantity = (int) model.getValueAt(i, 4); 
         
-            int inventoryQuantity = getInventoryQuantity(productId);
-
-        if (quantity > inventoryQuantity) {
-            quantityExceedsInventory = true;
-            break;
-            }
 
             updateQuantityInDatabase(productId, quantity);
-        }
-
-        if (quantityExceedsInventory) {
-            JOptionPane.showMessageDialog(this, "Insufficient quantity of products", "Error", JOptionPane.WARNING_MESSAGE);
-        } else {
-            Main.body.removeAll();            
-            Main.body.add(new Sellproduct3());
-            Main.body.repaint();
-            Main.body.revalidate();
-        }
-    }
-    
-        private void updateQuantityInDatabase(int productId, int quantity) {
-            String updateQuery = "UPDATE cart SET Quantity = ? WHERE Id = ?";
-            try {
-                Connection con = DB.getConnection();
-                PreparedStatement ps = con.prepareStatement(updateQuery);
-                ps.setInt(1, quantity);
-                ps.setInt(2, productId);
-                int updatedRows = ps.executeUpdate();
-            if (updatedRows > 0) {
-                System.out.println("Quantity for product ID " + productId + " updated successfully.");
-            } else {
-                System.out.println("Failed to update quantity for product ID " + productId);
             }
-        } catch (SQLException ex) {
-            System.out.println("Failed to update quantity: " + ex.getMessage());
         }
-    }
     
-    private int getInventoryQuantity(int productId) {
-        int inventoryQuantity = 0;
-        String selectQuery = "SELECT Quantity FROM inventory WHERE Id = ?";
+    private void updateQuantityInDatabase(int productId, int quantity) {
+        String updateQuery = "UPDATE cart SET Quantity = ? WHERE Id = ?";
         try {
             Connection con = DB.getConnection();
-            PreparedStatement ps = con.prepareStatement(selectQuery);
-            ps.setInt(1, productId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                inventoryQuantity = rs.getInt("Quantity");
-            }
-        } catch (SQLException ex) {
-            System.out.println("Failed to fetch inventory quantity: " + ex.getMessage());
+            PreparedStatement ps = con.prepareStatement(updateQuery);
+            ps.setInt(1, quantity);
+            ps.setInt(2, productId);
+            int updatedRows = ps.executeUpdate();
+        if (updatedRows > 0) {
+            System.out.println("Quantity for product ID " + productId + " updated successfully.");
+        } else {
+            System.out.println("Failed to update quantity for product ID " + productId);
         }
-        return inventoryQuantity;
+    } catch (SQLException ex) {
+        System.out.println("Failed to update quantity: " + ex.getMessage());
     }
+}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button;
