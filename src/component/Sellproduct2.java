@@ -24,6 +24,7 @@ import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
+
 public class Sellproduct2 extends javax.swing.JPanel {
     
     Connection con = null;

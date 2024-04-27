@@ -42,6 +42,7 @@ public class ModelItemSell {
     public void setPrice(double price) {
         this.price = price;
     }
+    
 
     public ModelItemSell(int productId, String productName, String productType, int qty, double price) {
         this.productId = productId;
@@ -53,7 +54,6 @@ public class ModelItemSell {
 
     public ModelItemSell() {
     }
-
     private int productId;
     private String productName;
     private String productType;
