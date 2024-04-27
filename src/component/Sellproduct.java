@@ -40,10 +40,14 @@ public class Sellproduct extends javax.swing.JPanel {
                 String category = jText_Category.getText().toString();
                 Integer quantity = Integer.valueOf(jText_Quantity.getText().toString());
                 Double price = Double.valueOf(jText_Price.getText());
-                if (quantity == 0) {
-                JOptionPane.showMessageDialog(null, "The product is out of stock.", "Add Product", JOptionPane.ERROR_MESSAGE);
-                return; // ออกจากเมทอดเพื่อหยุดการดำเนินการต่อ
-            }
+                    if (quantity == 0) {
+                        JOptionPane.showMessageDialog(null, "The product is out of stock.", "Add Product", JOptionPane.ERROR_MESSAGE);
+                    return; 
+                    }
+                if (isItemInCart(id)) {
+                    JOptionPane.showMessageDialog(null, "The product is already in the cart.", "Add Product", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 String insertQuery = "INSERT INTO `cart`(`No`,`Id`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?)";
                         try {
                     PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
@@ -74,7 +78,21 @@ public class Sellproduct extends javax.swing.JPanel {
                 jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderAdd());
                 jTable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorAdd(event));
             }
-    
+        private boolean isItemInCart(int id) {
+            String query = "SELECT COUNT(*) AS count FROM cart WHERE Id = ?";
+            try {
+                PreparedStatement ps = DB.getConnection().prepareStatement(query);
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+           if (rs.next()) {
+                int count = rs.getInt("count");
+                return count > 0;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return false;
+        }    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
