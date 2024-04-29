@@ -12,18 +12,18 @@ import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import static java.time.Clock.system;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import java.util.*;
+import javax.swing.*;
 import karnkha.DB;
 import karnkha.Main;
 import karnkha.OrderInfo;
 import com.raven.datechooser.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.TreeMap;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import raven.cell.TableActionCellEditorEditView;
 import raven.cell.TableActionCellRenderEditView;
 import raven.cell.TableActionEventEditView;
@@ -115,6 +115,9 @@ public class Order_Record extends javax.swing.JPanel {
                    ex.printStackTrace();
                }
                jFrame3.setVisible(true);
+               Table_Receive_Pro1.setDefaultEditor(Object.class, null); // ไม่ให้แก้ไขเซลล์ในตาราง
+               addTableMouseListener() ;
+               
            }
         public void onView(int row) {
             System.out.println("Edit row : " + row);
@@ -195,6 +198,7 @@ public class Order_Record extends javax.swing.JPanel {
             }
 
             jFrame1.setVisible(true);
+            Table_Order_Record1.setDefaultEditor(Object.class, null);
         }
 
         };
@@ -323,7 +327,7 @@ public class Order_Record extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "No.", "Product", "Product Type", "Quantity", "Cost", "All Prices"
+                "No.", "Product", "Category", "Quantity", "Cost", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -335,11 +339,6 @@ public class Order_Record extends javax.swing.JPanel {
             }
         });
         Table_Order_Record1.getTableHeader().setReorderingAllowed(false);
-        Table_Order_Record1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Table_Order_Record1MouseClicked(evt);
-            }
-        });
         ScrollPane_Note.setViewportView(Table_Order_Record1);
 
         jFrame1.getContentPane().add(ScrollPane_Note, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 1440, 590));
@@ -457,7 +456,7 @@ public class Order_Record extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No.", "Product", "Product Type", "Quantity", "Product Cost", "All Prices"
+                "No.", "Product", "Category", "Quantity", "Cost", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -589,7 +588,7 @@ public class Order_Record extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No.", "Product", "Product Type", "Quantity", "Product Cost", "All Prices"
+                "No.", "Product", "Category", "Quantity", "Cost", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -624,6 +623,11 @@ public class Order_Record extends javax.swing.JPanel {
 
         btnEdit.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnEdit.setText("แก้ไข");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 650, 170, 50));
 
         jFrame3.getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
@@ -684,7 +688,7 @@ public class Order_Record extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "No", "Date", "Company Name", "Quantity", "Total", ""
+                "No", "Date", "Company", "Quantity", "Total", ""
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -719,7 +723,48 @@ public class Order_Record extends javax.swing.JPanel {
     }//GEN-LAST:event_search__boxActionPerformed
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
+        int selectedRow = jTable.getSelectedRow();
+        if (selectedRow == -1) {
+            // ไม่มีแถวที่ถูกเลือก แสดงข้อความข้อผิดพลาดหรือจัดการตามความเหมาะสม
+            JOptionPane.showMessageDialog(null, "กรุณาเลือกแถวที่ต้องการลบ", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
+        // ดึงวันที่และบริษัทจากแถวที่เลือก
+        String date = jTable.getValueAt(selectedRow, 1).toString();
+        String company = jTable.getValueAt(selectedRow, 2).toString();
+
+        // สร้างคำสั่ง SQL DELETE
+        String deleteQuery = "DELETE FROM `order` WHERE `Date` = ? AND `Company` = ?";
+
+        try {
+            // เชื่อมต่อกับฐานข้อมูลและเตรียมคำสั่ง
+            Connection con = DB.mycon();
+            PreparedStatement pst = con.prepareStatement(deleteQuery);
+            pst.setString(1, date);
+            pst.setString(2, company);
+
+            // ดำเนินการลบ
+            int rowsAffected = pst.executeUpdate();
+            if (rowsAffected > 0) {
+                // ลบแถวสำเร็จ
+                JOptionPane.showMessageDialog(null, "ลบแถวสำเร็จ", "สำเร็จ", JOptionPane.INFORMATION_MESSAGE);
+
+                // รีเฟรชตาราง
+                showProductsInTable();
+            } else {
+                // ไม่มีแถวถูกลบ
+                JOptionPane.showMessageDialog(null, "ไม่มีแถวถูกลบ", "คำเตือน", JOptionPane.WARNING_MESSAGE);
+            }
+
+            // ปิดทรัพยากร
+            pst.close();
+            con.close();
+        } catch (SQLException ex) {
+            // จัดการข้อผิดพลาด SQL
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "เกิดข้อผิดพลาดในการลบแถว: " + ex.getMessage(), "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_delete_btActionPerformed
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
@@ -738,10 +783,6 @@ public class Order_Record extends javax.swing.JPanel {
         model.addRow(rowData);
     }
     }//GEN-LAST:event_jTableMouseClicked
-
-    private void Table_Order_Record1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_Order_Record1MouseClicked
-
-    }//GEN-LAST:event_Table_Order_Record1MouseClicked
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
             // เช็คว่ามีข้อมูลในตารางหรือไม่
@@ -881,22 +922,45 @@ public class Order_Record extends javax.swing.JPanel {
     }//GEN-LAST:event_Save_bt1ActionPerformed
 
     private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
-        // TODO add your handling code here:
+           jFrame3.setVisible(false);
+           
+           try {
+            Connection con = DB.mycon();
+
+            // อัปเดตข้อมูลในตาราง order ทั้งหมดที่มีข้อมูลว่าง (null) ในฟิลด์ Date, Company, และ Remark
+            String updateAllQuery = "UPDATE `order` SET `Date` = ?, `Company` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Remark` IS NOT NULL";
+            PreparedStatement psUpdateAll = con.prepareStatement(updateAllQuery);
+            psUpdateAll.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
+            psUpdateAll.setString(2, ComboBox_Company2.getSelectedItem().toString());
+            psUpdateAll.setString(3, jTextArea_Information2.getText());
+            psUpdateAll.executeUpdate(); // สั่งให้อัปเดตข้อมูลในตารางทั้งหมด
+
+            // ปิดการเชื่อมต่อกับฐานข้อมูล
+            psUpdateAll.close();
+            con.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+           
+           Main.body.removeAll();
+           Main.body.add(new Order_Record());
+           Main.body.repaint();
+           Main.body.revalidate();
+           JOptionPane.showMessageDialog(null, "บันทึกข้อมูลเรียบร้อยแล้ว", "บันทึกข้อมูล", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnSave1ActionPerformed
 
     private void btnAdd2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd2ActionPerformed
-       String name = Field_Product3.getText();
+        String name = Field_Product3.getText();
         String category = ComboBox_Type2.getSelectedItem().toString();
         String costText = Field_Cost1.getText();
         String quantityText = Field_Quantity1.getText();
 
-        // ตรวจสอบว่ามีข้อมูลทุกฟิลด์หรือไม่
+        // ตรวจสอบว่าข้อมูลว่างหรือไม่
         if (name.isEmpty() || category.isEmpty() || costText.isEmpty() || quantityText.isEmpty()) {
             JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบทุกฟิลด์", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // แปลงค่าราคาเป็น Double
         Double cost;
         try {
             cost = Double.valueOf(costText);
@@ -905,31 +969,64 @@ public class Order_Record extends javax.swing.JPanel {
             return;
         }
 
-        // แปลงค่าจำนวนเป็น Integer
         Integer quantity;
         try {
-            // แปลงค่าจำนวนเป็น Integer โดยตัดทศนิยมทิ้ง
-            quantity = Double.valueOf(quantityText).intValue();
+            quantity = Integer.valueOf(quantityText);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "กรุณากรอกจำนวนให้เป็นตัวเลขจำนวนเต็ม", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // คำนวณค่ารวม
         Double total = cost * quantity;
         String remark = jTextArea_Information2.getText();
 
-        DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
-        // สร้างข้อมูลที่จะเพิ่มลงในตารางโดยรวมลำดับข้างหน้าด้วย
-        Object[] rowData = new Object[]{model.getRowCount() + 1, name, category, quantity, cost, total, remark};
-        model.addRow(rowData);
+        try {
+            Connection con = DB.mycon();
 
-        // เคลียร์ข้อมูลในฟิลด์หลังจากการเพิ่มข้อมูล
-        Field_Product3.setText("");
-        ComboBox_Type2.setSelectedIndex(0);
-        Field_Cost1.setText("");
-        Field_Quantity1.setText("");
-        jTextArea_Information2.setText("");
+            // อัปเดตแถวทั้งหมดในตาราง order ที่มีข้อมูลว่าง (null) ในฟิลด์ Date, Company, และ Remark
+            String updateAllQuery = "UPDATE `order` SET `Date` = ?, `Company` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Remark` IS NOT NULL";
+            PreparedStatement psUpdateAll = con.prepareStatement(updateAllQuery);
+            psUpdateAll.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
+            psUpdateAll.setString(2, ComboBox_Company2.getSelectedItem().toString());
+            psUpdateAll.setString(3, remark);
+            psUpdateAll.executeUpdate(); // สั่งให้อัปเดตแถว
+
+            // เพิ่มข้อมูลใหม่ลงในตาราง order
+            String insertQuery = "INSERT INTO `order`(`Date`, `Company`, `Name`, `Category`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement psInsert = con.prepareStatement(insertQuery);
+            psInsert.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
+            psInsert.setString(2, ComboBox_Company2.getSelectedItem().toString());
+            psInsert.setString(3, name);
+            psInsert.setString(4, category);
+            psInsert.setDouble(5, cost);
+            psInsert.setInt(6, quantity);
+            psInsert.setDouble(7, total);
+            psInsert.setString(8, remark);
+            psInsert.executeUpdate(); // สั่งให้เพิ่มข้อมูลใหม่
+
+            // อัปเดตข้อมูลในตาราง GUI
+            DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
+            Object[] rowData = new Object[]{model.getRowCount() + 1, name, category, quantity, cost, total, remark};
+            model.addRow(rowData);
+
+            // ล้างข้อมูลในฟิลด์และ JTextArea
+            Field_Product3.setText("");
+            ComboBox_Type2.setSelectedIndex(0);
+            Field_Cost1.setText("");
+            Field_Quantity1.setText("");
+            jTextArea_Information2.setText("");
+
+            // ปิดการเชื่อมต่อกับฐานข้อมูล
+            psInsert.close();
+            psUpdateAll.close();
+            con.close();
+           Main.body.removeAll();
+           Main.body.add(new Order_Record());
+           Main.body.repaint();
+           Main.body.revalidate();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnAdd2ActionPerformed
 
     private void btnDelete2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete2ActionPerformed
@@ -968,6 +1065,92 @@ public class Order_Record extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDelete1ActionPerformed
 
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+            int row = Table_Receive_Pro1.getSelectedRow();
+            if (row >= 0) {
+                DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
+                Field_Product3.setText(model.getValueAt(row, 1).toString());
+                ComboBox_Type2.setSelectedItem(model.getValueAt(row, 2).toString());
+                Field_Cost1.setText(model.getValueAt(row, 4).toString());
+                Field_Quantity1.setText(model.getValueAt(row, 3).toString());
+                jTextArea_Information2.setText(model.getValueAt(row, 6).toString());
+            } else {
+                JOptionPane.showMessageDialog(null, "กรุณาเลือกแถวที่ต้องการแก้ไข", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
+        }
+
+            String name = Field_Product3.getText();
+            String category = ComboBox_Type2.getSelectedItem().toString();
+            String costText = Field_Cost1.getText();
+            String quantityText = Field_Quantity1.getText();
+            String remark = jTextArea_Information2.getText();
+
+            // ตรวจสอบว่าข้อมูลว่างหรือไม่
+            if (name.isEmpty() || category.isEmpty() || costText.isEmpty() || quantityText.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบทุกฟิลด์", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Double cost;
+            try {
+                cost = Double.valueOf(costText);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "กรุณากรอกราคาให้เป็นตัวเลข", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Integer quantity;
+            try {
+                quantity = Integer.valueOf(quantityText);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "กรุณากรอกจำนวนให้เป็นตัวเลขจำนวนเต็ม", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            
+
+            Double total = cost * quantity;
+
+            try {
+                Connection con = DB.mycon();
+
+                // อัปเดตข้อมูลในตาราง order
+                String updateQuery = "UPDATE `order` SET `Date` = ?, `Company` = ?, `Name` = ?, `Category` = ?, `Cost` = ?, `Quantity` = ?, `Total` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Remark` IS NOT NULL AND `Name` = ?";
+                PreparedStatement psUpdate = con.prepareStatement(updateQuery);
+                psUpdate.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
+                psUpdate.setString(2, ComboBox_Company2.getSelectedItem().toString());
+                psUpdate.setString(3, name);
+                psUpdate.setString(4, category);
+                psUpdate.setDouble(5, cost);
+                psUpdate.setInt(6, quantity);
+                psUpdate.setDouble(7, total);
+                psUpdate.setString(8, remark);
+                psUpdate.setString(9, Field_Product3.getText()); // ใช้ชื่อสินค้าเดิมเพื่ออัปเดตแถวที่ถูกเลือก
+                psUpdate.executeUpdate(); // สั่งให้อัปเดตแถว
+
+                // อัปเดตข้อมูลในตาราง GUI
+                DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
+                model.setValueAt(name, row, 1);
+                model.setValueAt(category, row, 2);
+                model.setValueAt(quantity, row, 3);
+                model.setValueAt(cost, row, 4);
+                model.setValueAt(total, row, 5);
+                model.setValueAt(remark, row, 6);
+
+                // ล้างข้อมูลในฟิลด์และ JTextArea
+                Field_Product3.setText("");
+                ComboBox_Type2.setSelectedIndex(0);
+                Field_Cost1.setText("");
+                Field_Quantity1.setText("");
+                jTextArea_Information2.setText("");
+
+                // ปิดการเชื่อมต่อกับฐานข้อมูล
+                psUpdate.close();
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Error: " + ex.getMessage());
+            }
+    }//GEN-LAST:event_btnEditActionPerformed
+
     ArrayList<OrderInfo> productsArray = new ArrayList<>();
     
     int position = 0;
@@ -1000,6 +1183,7 @@ public class Order_Record extends javax.swing.JPanel {
         return list;
         
     }
+    
     
     public void showProductsInTable()
     {
@@ -1062,11 +1246,25 @@ public class Order_Record extends javax.swing.JPanel {
                 Object[] rowData = new Object[]{newRowNumber++, date, company,  values[0], values[1]}; // ลำดับ, บริษัท, วันที่, จำนวน, รวม
                 model.addRow(rowData);
             }
+ 
         }
     }
 
-
-    
+    private void addTableMouseListener() {
+    Table_Receive_Pro1.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            int row = Table_Receive_Pro1.getSelectedRow();
+            if (row >= 0) {
+                DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
+                Field_Product3.setText(model.getValueAt(row, 1).toString());
+                ComboBox_Type2.setSelectedItem(model.getValueAt(row, 2).toString());
+                Field_Cost1.setText(model.getValueAt(row, 4).toString());
+                Field_Quantity1.setText(model.getValueAt(row, 3).toString());
+            }
+        }
+    });
+ }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel All_prices;

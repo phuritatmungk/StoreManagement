@@ -66,19 +66,50 @@
                   <Table columnCount="6" rowCount="4">
                     <Column editable="false" title="No." type="java.lang.Object"/>
                     <Column editable="false" title="Product" type="java.lang.Object"/>
-                    <Column editable="false" title="Product Type" type="java.lang.Object"/>
+                    <Column editable="false" title="Category" type="java.lang.Object"/>
                     <Column editable="false" title="Quantity" type="java.lang.Object"/>
                     <Column editable="false" title="Cost" type="java.lang.Object"/>
-                    <Column editable="false" title="All Prices" type="java.lang.Object"/>
+                    <Column editable="false" title="Total" type="java.lang.Object"/>
                   </Table>
+                </Property>
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                  <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                  </TableColumnModel>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Table_Order_Record1MouseClicked"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -449,10 +480,10 @@
                       <Table columnCount="6" rowCount="0">
                         <Column editable="false" title="No." type="java.lang.Object"/>
                         <Column editable="false" title="Product" type="java.lang.Object"/>
-                        <Column editable="false" title="Product Type" type="java.lang.Object"/>
+                        <Column editable="false" title="Category" type="java.lang.Object"/>
                         <Column editable="false" title="Quantity" type="java.lang.Object"/>
-                        <Column editable="false" title="Product Cost" type="java.lang.Object"/>
-                        <Column editable="false" title="All Prices" type="java.lang.Object"/>
+                        <Column editable="false" title="Cost" type="java.lang.Object"/>
+                        <Column editable="false" title="Total" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -840,10 +871,10 @@
                       <Table columnCount="6" rowCount="0">
                         <Column editable="false" title="No." type="java.lang.Object"/>
                         <Column editable="false" title="Product" type="java.lang.Object"/>
-                        <Column editable="false" title="Product Type" type="java.lang.Object"/>
+                        <Column editable="false" title="Category" type="java.lang.Object"/>
                         <Column editable="false" title="Quantity" type="java.lang.Object"/>
-                        <Column editable="false" title="Product Cost" type="java.lang.Object"/>
-                        <Column editable="false" title="All Prices" type="java.lang.Object"/>
+                        <Column editable="false" title="Cost" type="java.lang.Object"/>
+                        <Column editable="false" title="Total" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -947,6 +978,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="&#xe41;&#xe01;&#xe49;&#xe44;&#xe02;"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditActionPerformed"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                   <AbsoluteConstraints x="790" y="650" width="170" height="50"/>
@@ -1105,7 +1139,7 @@
               <Table columnCount="6" rowCount="4">
                 <Column editable="false" title="No" type="java.lang.Object"/>
                 <Column editable="false" title="Date" type="java.lang.Object"/>
-                <Column editable="false" title="Company Name" type="java.lang.Object"/>
+                <Column editable="false" title="Company" type="java.lang.Object"/>
                 <Column editable="false" title="Quantity" type="java.lang.Object"/>
                 <Column editable="false" title="Total" type="java.lang.Object"/>
                 <Column editable="true" title="" type="java.lang.Object"/>
