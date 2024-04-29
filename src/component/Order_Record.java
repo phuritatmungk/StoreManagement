@@ -750,8 +750,13 @@ public class Order_Record extends javax.swing.JPanel {
                 // ลบแถวสำเร็จ
                 JOptionPane.showMessageDialog(null, "ลบแถวสำเร็จ", "สำเร็จ", JOptionPane.INFORMATION_MESSAGE);
 
-                // รีเฟรชตาราง
-                showProductsInTable();
+                // รีเฟรชตาราง;
+                mergeAndRefreshTable();
+                Main.body.removeAll();
+                Main.body.add(new Order_Record());
+                Main.body.repaint();
+                Main.body.revalidate();
+                
             } else {
                 // ไม่มีแถวถูกลบ
                 JOptionPane.showMessageDialog(null, "ไม่มีแถวถูกลบ", "คำเตือน", JOptionPane.WARNING_MESSAGE);
