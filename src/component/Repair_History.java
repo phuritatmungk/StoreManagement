@@ -222,15 +222,7 @@ public class Repair_History extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 560));
     }// </editor-fold>//GEN-END:initComponents
-public static void main (String args []) {
-        FlatIntelliJLaf.registerCustomDefaultsSource("style");
-        FlatIntelliJLaf. setup ();
-        java.awt. EventQueue. invokeLater (new Runnable () {
-            public void run () {
-                new Order_Record() .setVisible(true);
-            }
-        });
-    }
+
     private void searchdata__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_searchdata__boxFocusGained

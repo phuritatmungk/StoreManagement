@@ -556,15 +556,7 @@ public class Order_Received extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
-public static void main (String args []) {
-        FlatIntelliJLaf.registerCustomDefaultsSource("style");
-        FlatIntelliJLaf. setup ();
-        java.awt. EventQueue. invokeLater (new Runnable () {
-            public void run () {
-                new Order_Record() .setVisible(true);
-            }
-        });
-    }
+
     private void searchDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchDateActionPerformed

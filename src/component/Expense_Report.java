@@ -1,7 +1,6 @@
 package component;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.mysql.cj.protocol.Resultset;
 import com.raven.datechooser.DateBetween;
 import com.raven.datechooser.DateChooser;
 import com.raven.datechooser.listener.DateChooserAction;
@@ -12,10 +11,8 @@ import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.ExpenseInfo;
 import karnkha.Main;
-import component.ReportMenu;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import static karnkha.DB.getConnection;
 public class Expense_Report extends javax.swing.JPanel {
 
     Connection con = null;
@@ -198,15 +195,7 @@ public class Expense_Report extends javax.swing.JPanel {
         });
         add(searchDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 640, 260, 30));
     }// </editor-fold>//GEN-END:initComponents
-public static void main (String args []) {
-        FlatIntelliJLaf.registerCustomDefaultsSource("style");
-        FlatIntelliJLaf. setup ();
-        java.awt. EventQueue. invokeLater (new Runnable () {
-            public void run () {
-                new Order_Record() .setVisible(true);
-            }
-        });
-    }
+
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPrintActionPerformed

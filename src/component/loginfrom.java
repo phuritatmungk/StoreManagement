@@ -20,7 +20,6 @@ public class loginfrom extends javax.swing.JPanel {
      */
     public loginfrom() {
         initComponents();
-        setupPasswordFields();
     }
     
 
@@ -147,31 +146,6 @@ public class loginfrom extends javax.swing.JPanel {
         eye_hide.setVisible(true);
         P_Pass1.setEchoChar('*');
     }//GEN-LAST:event_eye_hideMouseReleased
-   private void setupPasswordFields() {
-        P_Pass1.setForeground(new Color(153, 153, 153));
-        P_Pass1.setText("Password");
-        P_Pass1.setEchoChar((char) 0);
-        P_Pass1.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (P_Pass1.getText().equals("Password")) {
-                    P_Pass1.setText("");
-                    P_Pass1.setForeground(Color.BLACK); 
-                    P_Pass1.setEchoChar('*'); 
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (P_Pass1.getText().isEmpty()) {
-                    P_Pass1.setText("Password");
-                    P_Pass1.setForeground(new Color(123, 123, 123)); 
-                    P_Pass1.setEchoChar((char) 0);
-                }
-            }
-        });
-    }
-
 
     
 

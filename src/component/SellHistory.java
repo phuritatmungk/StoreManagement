@@ -1,6 +1,5 @@
 package component;
 
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.raven.datechooser.DateBetween;
 import com.raven.datechooser.DateChooser;
 import com.raven.datechooser.listener.DateChooserAction;
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.SalesInfo;
+import karnkha.SalesReport;
 
 public class SellHistory extends javax.swing.JPanel {
     
@@ -44,10 +44,6 @@ public class SellHistory extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println(e);
             }
-                
-                
-                
-                
         con = DB.mycon();
         showProductsInTable();
     }
@@ -77,9 +73,6 @@ public class SellHistory extends javax.swing.JPanel {
         System.err.println(e);
     }
 }
-
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -120,17 +113,17 @@ public class SellHistory extends javax.swing.JPanel {
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "No", "Date", "Product ID", "Product Name", "Category", "Quantity", "Price"
+                "Date", "Product ID", "Product Name", "Category", "Quantity", "Price"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -148,15 +141,6 @@ public class SellHistory extends javax.swing.JPanel {
 
         add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
-public static void main (String args []) {
-        FlatIntelliJLaf.registerCustomDefaultsSource("style");
-        FlatIntelliJLaf. setup ();
-        java.awt. EventQueue. invokeLater (new Runnable () {
-            public void run () {
-                new Order_Record() .setVisible(true);
-            }
-        });
-    }
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
         int index = jTable.getSelectedRow();
@@ -167,13 +151,13 @@ public static void main (String args []) {
         // TODO add your handling code here:
     }//GEN-LAST:event_search__boxActionPerformed
 
-    ArrayList<SalesInfo> productsArray = new ArrayList<>();
+    ArrayList<SalesReport> salesArray = new ArrayList<>();
     
     int position = 0;
-    public ArrayList<SalesInfo> getProductsList()
+    public ArrayList<SalesReport> getProductsList()
     {
-        ArrayList<SalesInfo> list = new ArrayList<>();
-        String selectQuery = "SELECT * FROM `sales`";
+        ArrayList<SalesReport> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `reportsales`";
         
         Statement st;
         ResultSet rs;
@@ -181,43 +165,42 @@ public static void main (String args []) {
         try {
             st = DB.getConnection().createStatement();
             rs = st.executeQuery(selectQuery);
-            SalesInfo product;
+            SalesReport sales;
             
             while(rs.next())
             {
-                product = new SalesInfo(rs.getInt("No"), rs.getString("Id"),
-                                      rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
-                                      rs.getInt("Quantity"), rs.getDouble("Price"));
-                list.add(product);
+                sales = new SalesReport(rs.getString("Date"), rs.getString("Id"),
+                                      rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
+                                      rs.getInt("Quantity"), rs.getDouble("Price"), rs.getDouble("Total"));
+                list.add(sales);
             }
             
         } catch (SQLException ex) {
             System.out.println(ex);
         }
         
-        productsArray = list;
+        salesArray = list;
         return list;
         
     }
     
     public void showProductsInTable()
     {
-        ArrayList<SalesInfo> productsList = getProductsList();
+        ArrayList<SalesReport> salessList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         
         model.setRowCount(0);
         
-        Object[] row = new Object[7];
+        Object[] row = new Object[6];
         
-        for(int i = 0; i < productsList.size(); i++)
+        for(int i = 0; i < salessList.size(); i++)
         {
-            row[0] = productsList.get(i).getNo();
-            row[1] = productsList.get(i).getDate();
-            row[2] = productsList.get(i).getId();
-            row[3] = productsList.get(i).getName();
-            row[4] = productsList.get(i).getCategory();
-            row[5] = productsList.get(i).getQuantity();
-            row[6] = productsList.get(i).getPrice();
+            row[0] = salessList.get(i).getDate();
+            row[1] = salessList.get(i).getId();
+            row[2] = salessList.get(i).getName();
+            row[3] = salessList.get(i).getCategory();
+            row[4] = salessList.get(i).getQuantity();
+            row[5] = salessList.get(i).getPrice();
             
             model.addRow(row);
         }
@@ -232,9 +215,4 @@ public static void main (String args []) {
     private javax.swing.JTable jTable;
     private javax.swing.JTextField search__box;
     // End of variables declaration//GEN-END:variables
-
-    void addSale(int id, String name, String category, int quantity, double price) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }

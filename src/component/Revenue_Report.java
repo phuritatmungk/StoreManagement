@@ -203,15 +203,7 @@ public class Revenue_Report extends javax.swing.JPanel {
         });
         add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 640, 200, 30));
     }// </editor-fold>//GEN-END:initComponents
-public static void main (String args []) {
-        FlatIntelliJLaf.registerCustomDefaultsSource("style");
-        FlatIntelliJLaf. setup ();
-        java.awt. EventQueue. invokeLater (new Runnable () {
-            public void run () {
-                new Order_Record() .setVisible(true);
-            }
-        });
-    }
+
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPrintActionPerformed

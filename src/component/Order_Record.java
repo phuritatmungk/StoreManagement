@@ -11,7 +11,6 @@ import raven.cell.TableActionCellEditorEdit;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import static java.time.Clock.system;
 import java.util.*;
 import javax.swing.*;
 import karnkha.DB;
@@ -735,15 +734,7 @@ public class Order_Record extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
-    public static void main (String args []) {
-        FlatIntelliJLaf.registerCustomDefaultsSource("style");
-        FlatIntelliJLaf. setup ();
-        java.awt. EventQueue. invokeLater (new Runnable () {
-            public void run () {
-                new Order_Record() .setVisible(true);
-            }
-        });
-    }
+
     private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_search__boxActionPerformed
