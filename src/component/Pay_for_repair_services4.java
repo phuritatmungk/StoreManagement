@@ -8,6 +8,8 @@ import karnkha.CartInfo;
 import karnkha.DB;
 import karnkha.Main;
 import component.Pay_for_repair_services3;
+import static component.Sellproduct2.jTable;
+import javax.swing.JOptionPane;
 import karnkha.RepairRequest;
 public class Pay_for_repair_services4 extends javax.swing.JPanel {
 
@@ -42,6 +44,8 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         jTable = new javax.swing.JTable();
         txtDate = new javax.swing.JTextField();
         txtStatus = new javax.swing.JTextField();
+        txtService = new javax.swing.JTextField();
+        Topic4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -106,13 +110,12 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         add(Topic1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, -1, -1));
 
         Topic2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Topic2.setText("Total :");
-        add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 50, -1, 30));
+        Topic2.setText("ค่าบริการ :");
+        add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 610, -1, 30));
 
         txtTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtTotal.setForeground(new java.awt.Color(123, 123, 123));
         txtTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtTotal.setText("240 บาท");
         txtTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtTotal.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -287,6 +290,33 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             }
         });
         add(txtStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 680, 150, 30));
+
+        txtService.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtService.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtService.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtService.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtServiceFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtServiceFocusLost(evt);
+            }
+        });
+        txtService.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtServiceActionPerformed(evt);
+            }
+        });
+        txtService.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtServiceKeyReleased(evt);
+            }
+        });
+        add(txtService, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 610, 200, 30));
+
+        Topic4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Topic4.setText("Total :");
+        add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 50, -1, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
@@ -294,7 +324,12 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnpayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpayActionPerformed
-DefaultTableModel model = (DefaultTableModel) jTable.getModel();        
+
+        if (txtService.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter the service fee before proceeding with the payment.", "Error", JOptionPane.WARNING_MESSAGE);
+        return; 
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();       
         for (int i = 0; i < model.getRowCount(); i++) {
         String name = txtName.getText();
         String item = txtItem.getText();
@@ -327,10 +362,12 @@ DefaultTableModel model = (DefaultTableModel) jTable.getModel();
             ps.setString(12, status);    
             
             ps.executeUpdate();
+            updateInventory(pid, quantity);
         } catch (SQLException ex) {
             System.out.println(ex);
         }
         }
+        
     }//GEN-LAST:event_btnpayActionPerformed
 
     private void txtRepairFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRepairFocusGained
@@ -442,6 +479,35 @@ DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         // TODO add your handling code here:
     }//GEN-LAST:event_txtStatusActionPerformed
 
+    private void txtServiceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtServiceFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtServiceFocusGained
+
+    private void txtServiceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtServiceFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtServiceFocusLost
+
+    private void txtServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServiceActionPerformed
+        calculateTotalPrice();
+    }//GEN-LAST:event_txtServiceActionPerformed
+
+    private void txtServiceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtServiceKeyReleased
+        try {
+        String text = txtService.getText();
+
+            if (!isNumericOrDecimal(text)) {
+
+                evt.consume();
+                return;
+            }
+
+        Double.valueOf(text);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Price value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            txtService.setText("");
+        }
+    }//GEN-LAST:event_txtServiceKeyReleased
+
     ArrayList<CartInfo> productsArray = new ArrayList<>();
     
     int position = 0;
@@ -528,29 +594,52 @@ DefaultTableModel model = (DefaultTableModel) jTable.getModel();
             model.addRow(row);
             
         }
-        calculateTotalPrice();
     }
 
     private void calculateTotalPrice() {
-        double total = 0;
-    
-        for (int i = 0; i < jTable.getRowCount(); i++) {
-            int quantity = (int) jTable.getValueAt(i, 4);
-            double price = (double) jTable.getValueAt(i, 5);
-        
-            double productTotal = quantity * price;
-        
-            total += productTotal;
-        }
-    
-        txtTotal.setText(String.format("%.2f", total));
+    DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+    double totalPrice = 0.0;
+
+    for (int i = 0; i < model.getRowCount(); i++) {
+        int quantity = (int) model.getValueAt(i, 4);
+        double price = (double) model.getValueAt(i, 5);
+        totalPrice += quantity * price;
     }
-    
+
+    if (!txtService.getText().isEmpty()) {
+        double serviceCost = Double.parseDouble(txtService.getText());
+        totalPrice += serviceCost;
+    }
+
+    txtTotal.setText(String.format("%.2f บาท", totalPrice));
+    }
+    private boolean isNumericOrDecimal(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c) && c != '.') {
+                return true;
+            }
+        }
+        return false;
+    }   
+private void updateInventory(String productId, int soldQuantity) {
+    try {
+        Connection con = DB.getConnection();
+        String updateQuery = "UPDATE inventory SET Quantity = Quantity - ? WHERE Id = ?";
+        PreparedStatement ps = con.prepareStatement(updateQuery);
+        ps.setInt(1, soldQuantity);
+        ps.setString(2, productId);
+        ps.executeUpdate();
+    } catch (SQLException ex) {
+        System.out.println(ex);
+    }
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel Topic1;
     private javax.swing.JLabel Topic2;
     private javax.swing.JLabel Topic3;
+    private javax.swing.JLabel Topic4;
     private javax.swing.JLabel back_button1;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnpay;
@@ -562,6 +651,7 @@ DefaultTableModel model = (DefaultTableModel) jTable.getModel();
     public static javax.swing.JTextField txtName;
     public static javax.swing.JTextField txtPhone;
     public static javax.swing.JTextField txtRepair;
+    private javax.swing.JTextField txtService;
     public static javax.swing.JTextField txtStatus;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables

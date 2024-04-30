@@ -74,6 +74,7 @@ public class Main extends javax.swing.JFrame {
                     showForm(new DefaultForm("Form : " + index + " " + subIndex));
                 }
                 clearAllData(); 
+                clearAllData2();
             }
         });
     }
@@ -100,7 +101,22 @@ public class Main extends javax.swing.JFrame {
             System.out.println("Failed to clear database data: " + ex.getMessage());
         }
     }
-      
+      private void clearAllData2() {
+        if (Sellproduct2.jTable != null) {
+            // Clear table data
+            DefaultTableModel model = (DefaultTableModel) Sellproduct2.jTable.getModel();
+            model.setRowCount(0);
+        }
+
+        // Clear database data
+        try {
+            String deleteQuery = "DELETE FROM repaircart";
+            PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Failed to clear database data: " + ex.getMessage());
+        }
+    }      
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

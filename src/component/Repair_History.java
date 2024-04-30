@@ -1,4 +1,4 @@
-package component;
+    package component;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.raven.datechooser.DateBetween;
@@ -309,10 +309,10 @@ public class Repair_History extends javax.swing.JPanel {
 
             // วนลูปผ่านแถวของตาราง
             for (int i = 0; i < rowCount; i++) {
-                String name = model.getValueAt(i, 2).toString(); // อ้างถึงคอลัมน์ที่ 1 (บริษัท)
-                String date = model.getValueAt(i, 1).toString(); // อ้างถึงคอลัมน์ที่ 2 (วันที่)
+                String name = model.getValueAt(i, 2).toString();
+                String date = model.getValueAt(i, 1).toString(); 
 
-                String key = name + date; // สร้าง key โดยรวมชื่อบริษัทและวันที่
+                String key = name + date; 
 
                 if (dateMap.containsKey(key)) {
                     String[] values = dateMap.get(key);

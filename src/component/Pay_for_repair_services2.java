@@ -15,6 +15,7 @@ import raven.cell.TableActionCellRenderTrash;
 import raven.cell.TableActionEventTrash;
 import component.Pay_for_repair_services3;
 import component.Pay_for_repair_services2;
+import static component.Sellproduct2.jTable;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -40,14 +41,36 @@ public class Pay_for_repair_services2 extends javax.swing.JPanel {
                 if (jTable.isEditing()) {
                     jTable.getCellEditor().stopCellEditing();
                 }
-                DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-                model.removeRow(row);
+                int selectedRow = jTable.getSelectedRow(); 
+                if(selectedRow != -1) { 
+                    int id = (int) jTable.getValueAt(selectedRow, 0); 
+                    if(id > 0) { 
+                        String deleteQuery = "DELETE FROM repaircart WHERE No=?";
+                        try {
+                            PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+                            ps.setInt(1, id);
+                            int deletedRows = ps.executeUpdate(); 
+                            if(deletedRows > 0) { 
+                                DefaultTableModel model = (DefaultTableModel) jTable.getModel(); 
+                                model.removeRow(selectedRow); 
+                                JOptionPane.showMessageDialog(null, "Product Deleted Successfully", "Remove Product", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Failed to delete product", "Remove Product", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (SQLException ex) {
+                            System.out.println("Failed to remove product: " + ex.getMessage());
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Product Not Deleted, Make Sure The ID is Valid", "Remove Product", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please select a row to delete", "Remove Product", JOptionPane.ERROR_MESSAGE);
+                }
             }
         };
         jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderTrash());
         jTable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorTrash(event));
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -153,10 +176,6 @@ public class Pay_for_repair_services2 extends javax.swing.JPanel {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         updateQuantitiesInDatabase();
-        Main.body.removeAll();
-        Main.body.add(new Pay_for_repair_services3());
-        Main.body.repaint();
-        Main.body.revalidate();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void txtSearch1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch1FocusGained
@@ -270,15 +289,31 @@ public class Pay_for_repair_services2 extends javax.swing.JPanel {
     private void updateQuantitiesInDatabase() {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         int rowCount = model.getRowCount();
-    
-            for (int i = 0; i < rowCount; i++) {
-                String productId = (String) model.getValueAt(i, 1);
-                int quantity = (int) model.getValueAt(i, 4); 
-        
+        boolean quantityExceedsInventory = false; 
+
+        for (int i = 0; i < rowCount; i++) {
+            String productId = (String) model.getValueAt(i, 1);
+            int quantity = (int) model.getValueAt(i, 4);
+            
+            int inventoryQuantity = getInventoryQuantity(productId);
+            
+            if (quantity > inventoryQuantity) {
+            quantityExceedsInventory = true;
+            break;
+            }
 
             updateQuantityInDatabase(productId, quantity);
-            }
         }
+
+        if (quantityExceedsInventory) {
+            JOptionPane.showMessageDialog(this, "Insufficient quantity of products", "Error", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Main.body.removeAll();            
+            Main.body.add(new Pay_for_repair_services3());
+            Main.body.repaint();
+            Main.body.revalidate();
+        }
+    }
     
     private void updateQuantityInDatabase(String productId, int quantity) {
         String updateQuery = "UPDATE repaircart SET Quantity = ? WHERE Id = ?";
@@ -293,10 +328,27 @@ public class Pay_for_repair_services2 extends javax.swing.JPanel {
         } else {
             System.out.println("Failed to update quantity for product ID " + productId);
         }
-    } catch (SQLException ex) {
+        } catch (SQLException ex) {
         System.out.println("Failed to update quantity: " + ex.getMessage());
     }
-}
+    }
+    
+    private int getInventoryQuantity(String productId) {
+        int inventoryQuantity = 0;
+        String selectQuery = "SELECT Quantity FROM inventory WHERE Id = ?";
+        try {
+            Connection con = DB.getConnection();
+            PreparedStatement ps = con.prepareStatement(selectQuery);
+            ps.setString(1, productId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                inventoryQuantity = rs.getInt("Quantity");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Failed to fetch inventory quantity: " + ex.getMessage());
+        }
+        return inventoryQuantity;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
