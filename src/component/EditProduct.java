@@ -74,7 +74,7 @@ public class EditProduct extends javax.swing.JPanel {
         add(jProductid, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, -1, -1));
 
         txtProductid.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtProductid.setForeground(new java.awt.Color(123, 123, 123));
+        txtProductid.setForeground(new java.awt.Color(0, 0, 0));
         txtProductid.setText("000000001");
         txtProductid.setBorder(null);
         txtProductid.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -92,7 +92,7 @@ public class EditProduct extends javax.swing.JPanel {
         add(jName, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, -1, -1));
 
         txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtName.setForeground(new java.awt.Color(123, 123, 123));
+        txtName.setForeground(new java.awt.Color(0, 0, 0));
         txtName.setText("ชื่อสินค้า");
         txtName.setBorder(null);
         txtName.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -145,7 +145,7 @@ public class EditProduct extends javax.swing.JPanel {
         add(jType, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, -1, -1));
 
         txtType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtType.setForeground(new java.awt.Color(123, 123, 123));
+        txtType.setForeground(new java.awt.Color(0, 0, 0));
         txtType.setText("ประเภทสินค้า");
         txtType.setBorder(null);
         txtType.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -169,7 +169,7 @@ public class EditProduct extends javax.swing.JPanel {
         add(jCost_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, -1, -1));
 
         txtCost_price.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtCost_price.setForeground(new java.awt.Color(123, 123, 123));
+        txtCost_price.setForeground(new java.awt.Color(0, 0, 0));
         txtCost_price.setText("0");
         txtCost_price.setBorder(null);
         txtCost_price.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -180,10 +180,15 @@ public class EditProduct extends javax.swing.JPanel {
                 txtCost_priceFocusLost(evt);
             }
         });
+        txtCost_price.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCost_priceKeyReleased(evt);
+            }
+        });
         add(txtCost_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 370, 30));
 
         txtPrice.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtPrice.setForeground(new java.awt.Color(123, 123, 123));
+        txtPrice.setForeground(new java.awt.Color(0, 0, 0));
         txtPrice.setText("0");
         txtPrice.setBorder(null);
         txtPrice.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -192,6 +197,11 @@ public class EditProduct extends javax.swing.JPanel {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtPriceFocusLost(evt);
+            }
+        });
+        txtPrice.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPriceKeyReleased(evt);
             }
         });
         add(txtPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 470, 370, 30));
@@ -208,7 +218,7 @@ public class EditProduct extends javax.swing.JPanel {
         add(jAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 540, -1, -1));
 
         txtAmount.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtAmount.setForeground(new java.awt.Color(123, 123, 123));
+        txtAmount.setForeground(new java.awt.Color(0, 0, 0));
         txtAmount.setText("0");
         txtAmount.setBorder(null);
         txtAmount.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -217,6 +227,11 @@ public class EditProduct extends javax.swing.JPanel {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtAmountFocusLost(evt);
+            }
+        });
+        txtAmount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAmountKeyReleased(evt);
             }
         });
         add(txtAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 540, 370, 30));
@@ -235,7 +250,7 @@ public class EditProduct extends javax.swing.JPanel {
 
     private void txtProductidFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductidFocusLost
         if (txtProductid.getText ().length() ==0){
-            txtProductid.setText ("000000001") ;
+            txtProductid.setText ("ABC00000") ;
             txtProductid.setForeground(new Color(123, 123, 123));
         }
     }//GEN-LAST:event_txtProductidFocusLost
@@ -280,7 +295,7 @@ public class EditProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_txtAmountFocusLost
 
     private void txtProductidFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductidFocusGained
-        if (txtProductid.getText().equals("000000001"))
+        if (txtProductid.getText().equals("ABC00000"))
         {
             txtProductid.setText("");
             txtProductid.setForeground(new Color(0, 0, 0));
@@ -335,48 +350,152 @@ public class EditProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_back_buttonMouseClicked
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        Integer no = Integer.valueOf(txtNo.getText().toString()); 
-        Integer id = Integer.valueOf(txtProductid.getText().toString());
-        java.util.Date date = new java.util.Date();
-        String name = txtName.getText();
-        String category = txtType.getText();
-        Double cost = Double.valueOf(txtCost_price.getText().toString());
-        Integer quantity = Integer.valueOf(txtAmount.getText().toString());
-        Double price = Double.valueOf(txtPrice.getText().toString());
+        
+        Double price_var = Double.valueOf(txtPrice.getText());
+        Double cost_var = Double.valueOf(txtCost_price.getText());
+        String id_var = txtProductid.getText();
+        
+        if(checkEmptyFields()) {
+            if (id_var.length() == 8) {
+                if (price_var >= cost_var) {
+                    Integer no = Integer.valueOf(txtNo.getText().toString()); 
+                    String id = txtProductid.getText();
+                    java.util.Date date = new java.util.Date();
+                    String name = txtName.getText();
+                    String category = txtType.getText();
+                    Double cost = Double.valueOf(txtCost_price.getText().toString());
+                    Integer quantity = Integer.valueOf(txtAmount.getText().toString());
+                    Double price = Double.valueOf(txtPrice.getText().toString());
 
- 
-        String updateQuery = "UPDATE inventory SET Id=?,Date=?,Name=?,Category=? ,Cost=? ,Quantity=? ,Price=? WHERE No=?";
-        try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
-            ps.setInt(1, id);
-            ps.setDate(2, new java.sql.Date(date.getTime()));
-            ps.setString(3, name);
-            ps.setString(4, category);
-            ps.setDouble(5, cost);
-            ps.setInt(6, quantity); 
-            ps.setDouble(7, price);
-            ps.setInt(8, no);
 
-            if(ps.executeUpdate() > 0)
-            {
-                Main.body.removeAll();
-                Main.body.add(new Manage_Warehouse());
-                Main.body.repaint();
-                Main.body.revalidate();
-                JOptionPane.showMessageDialog(null, "Edit Product Successfully", "Edit Product", JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("Added Complete");
-                System.out.println("Updated");
+                    String updateQuery = "UPDATE inventory SET Id=?, Date=?, Name=?, Category=?, Cost=? , Quantity=? , Price=? WHERE No=?";
+                    try {
+                        PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
+
+                        ps.setString(1, id);
+                        ps.setDate(2, new java.sql.Date(date.getTime()));
+                        ps.setString(3, name);
+                        ps.setString(4, category);
+                        ps.setDouble(5, cost);
+                        ps.setInt(6, quantity); 
+                        ps.setDouble(7, price);
+                        ps.setInt(8, no);
+
+                        if(ps.executeUpdate() > 0)
+                        {
+                            Main.body.removeAll();
+                            Main.body.add(new Manage_Warehouse());
+                            Main.body.repaint();
+                            Main.body.revalidate();
+                            JOptionPane.showMessageDialog(null, "Edit Product Successfully", "Edit Product", JOptionPane.INFORMATION_MESSAGE);
+                            System.out.println("Updated");
+                        }
+                        else
+                        {
+                            System.out.println("Failed");
+                        }
+
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Price must equal or higher than cost", "Error", JOptionPane.WARNING_MESSAGE);
+                    txtPrice.requestFocus();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Product ID must contains only 8 characters", "Error", JOptionPane.WARNING_MESSAGE);
+                txtProductid.requestFocus();
             }
-            else
-            {
-                System.out.println("Failed");
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex);
+        } else {
+            JOptionPane.showMessageDialog(null, "You must insert all fields", "ERROR", JOptionPane.WARNING_MESSAGE);
+            System.out.println("Updated");
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void txtPriceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceKeyReleased
+        try {
+        String text = txtPrice.getText();
+
+            if (!isNumericOrDecimal(text)) {
+
+                evt.consume();
+                return;
+            }
+
+        Double.valueOf(text);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Price value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            txtPrice.setText("");
+        }
+    }//GEN-LAST:event_txtPriceKeyReleased
+
+    private void txtCost_priceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCost_priceKeyReleased
+        try {
+        String text = txtCost_price.getText();
+
+            if (!isNumericOrDecimal(text)) {
+
+                evt.consume();
+                return;
+            }
+
+            Double.valueOf(text);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Cost value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            txtCost_price.setText("");
+        }
+    }//GEN-LAST:event_txtCost_priceKeyReleased
+
+    private void txtAmountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAmountKeyReleased
+        String text = txtAmount.getText();
+        
+        if (!isNumeric(text)) {
+            evt.consume();
+            return;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Amount value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            txtAmount.setText("");
+        }
+    }//GEN-LAST:event_txtAmountKeyReleased
+
+    private boolean isNumericOrDecimal(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c) && c != '.') {
+                return true;
+            }
+        }
+        return false;
+    }   
+    
+    private boolean isNumeric(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
+    }   
+    
+    public boolean checkEmptyFields() {
+        String name = txtName.getText().trim();
+        String quantity = txtAmount.getText().trim();
+        String price = txtPrice.getText().trim();
+        String cost = txtCost_price.getText().trim();
+        String id = txtProductid.getText().trim();
+        String category = txtType.getText().trim();
+        
+        if(name.equals("") || name.equals("ชื่อสินค้า") || quantity.equals("") || quantity.equals("0") || price.equals("") || price.equals("0") || cost.equals("") || cost.equals("0")
+                || id.equals("") || id.equals("ABC00000") || category.equals("") || category.equals("ประเภทสินค้า")) {
+            return false;
+        }
+        else {
+          return true;    
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
     private javax.swing.JLabel Topic;

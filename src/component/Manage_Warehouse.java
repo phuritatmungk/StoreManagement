@@ -456,7 +456,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
             while (rs.next()) {
                 Object[] row = {
                     rs.getInt("No"),
-                    rs.getInt("Id"),
+                    rs.getString("Id"),
                     rs.getString("Date"),
                     rs.getString("Name"),
                     rs.getString("Category"),
@@ -540,7 +540,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
 
             while (rs.next()) {
                 InventoryInfo product = new InventoryInfo(
-                    rs.getInt("No"), rs.getInt("Id"),
+                    rs.getInt("No"), rs.getString("Id"),
                     rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
                     rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price")
                 );

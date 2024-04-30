@@ -77,7 +77,7 @@ public class Employee_Register extends javax.swing.JPanel {
 
         txtId.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtId.setForeground(new java.awt.Color(123, 123, 123));
-        txtId.setText("รหัสพนักงาน");
+        txtId.setText("1234567890");
         txtId.setBorder(null);
         txtId.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -85,6 +85,11 @@ public class Employee_Register extends javax.swing.JPanel {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtIdFocusLost(evt);
+            }
+        });
+        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtIdKeyReleased(evt);
             }
         });
         add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, 220, 30));
@@ -151,6 +156,11 @@ public class Employee_Register extends javax.swing.JPanel {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtPhoneFocusLost(evt);
+            }
+        });
+        txtPhone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPhoneKeyReleased(evt);
             }
         });
         add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 410, 220, 30));
@@ -223,7 +233,7 @@ public class Employee_Register extends javax.swing.JPanel {
 
         txtSalary.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtSalary.setForeground(new java.awt.Color(123, 123, 123));
-        txtSalary.setText("จำนวนเงิน");
+        txtSalary.setText("0");
         txtSalary.setBorder(null);
         txtSalary.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -231,6 +241,11 @@ public class Employee_Register extends javax.swing.JPanel {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtSalaryFocusLost(evt);
+            }
+        });
+        txtSalary.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSalaryKeyReleased(evt);
             }
         });
         add(txtSalary, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 230, 220, 30));
@@ -244,7 +259,7 @@ public class Employee_Register extends javax.swing.JPanel {
     }//GEN-LAST:event_btnImgActionPerformed
 
     private void txtIdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFocusGained
-        if(txtId.getText().equals("รหัสพนักงาน"))
+        if(txtId.getText().equals("1234567890"))
        {
            txtId.setText("");
            txtId.setForeground(new Color(0, 0, 0));
@@ -253,7 +268,7 @@ public class Employee_Register extends javax.swing.JPanel {
 
     private void txtIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFocusLost
         if (txtId.getText().length()==0) {
-            txtId.setText("รหัสพนักงาน");
+            txtId.setText("1234567890");
             txtId.setForeground(new Color(123, 123, 123));
         }
     }//GEN-LAST:event_txtIdFocusLost
@@ -326,7 +341,7 @@ public class Employee_Register extends javax.swing.JPanel {
     }//GEN-LAST:event_txtJobFocusLost
 
     private void txtSalaryFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSalaryFocusGained
-        if(txtSalary.getText().equals("จำนวนเงิน"))
+        if(txtSalary.getText().equals("0"))
        {
            txtSalary.setText("");
            txtSalary.setForeground(new Color(0, 0, 0));
@@ -335,72 +350,173 @@ public class Employee_Register extends javax.swing.JPanel {
 
     private void txtSalaryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSalaryFocusLost
         if (txtSalary.getText().length()==0) {
-            txtSalary.setText("จำนวนเงิน");
+            txtSalary.setText("0");
             txtSalary.setForeground(new Color(123, 123, 123));
         }
     }//GEN-LAST:event_txtSalaryFocusLost
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         
-        Integer no = getNextQueueNumber();
-        Integer id = Integer.valueOf(txtId.getText().toString());
-        String fname = txtName.getText();
-        String sname = txtSname.getText();
-        String address = txtAddress.getText();
-        String job = txtJob.getText();
-        Double wage = Double.valueOf(txtSalary.getText().toString());
-        Integer phone = Integer.valueOf(txtPhone.getText().toString());
+        String id_var = txtId.getText();
+        String phone_var = txtPhone.getText();
         
-        String insertQuery = "INSERT INTO `employee`(`No`,`Fname`, `Sname`, `Id`, `Phone`, `Job`, `Wage`, `Address`) VALUES (?,?,?,?,?,?,?,?)";
+        if (checkEmptyFields()) {
+            if (phone_var.length() == 10) {
+                if (id_var.length () == 10) {
         
-        try {
-                
-            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
-            ps.setInt(1, no);
-            ps.setString(2, fname);
-            ps.setString(3, sname);
-            ps.setInt(4, id);
-            ps.setInt(5, phone);
-            ps.setString(6, job);
-            ps.setDouble(7, wage);
-            ps.setString(8, address);
-            
-            if(ps.executeUpdate() > 0)
-            {
-                Main.body.removeAll();
-                Main.body.add(new Manage_Employee());
-                Main.body.repaint();
-                Main.body.revalidate();
-                JOptionPane.showMessageDialog(null, "New Employee Added Successfully", "Add Employee", JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("Added Complete");
-            }
-            else
-            {
-              JOptionPane.showMessageDialog(null, "Employee Not Added", "Add Employee", JOptionPane.ERROR_MESSAGE);
-              System.out.println("Some Error Message Here");  
-            }
-            
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }                     
-    }//GEN-LAST:event_btnSaveActionPerformed
-private int getNextQueueNumber() {
-    int nextQueueNumber = 1; 
+                    Integer no = getNextQueueNumber();
+                    Integer id = Integer.valueOf(txtId.getText().toString());
+                    String fname = txtName.getText();
+                    String sname = txtSname.getText();
+                    String address = txtAddress.getText();
+                    String job = txtJob.getText();
+                    Double wage = Double.valueOf(txtSalary.getText().toString());
+                    Integer phone = Integer.valueOf(txtPhone.getText().toString());
 
-    try {
-        String query = "SELECT MAX(No) AS MaxNo FROM employee"; 
-        PreparedStatement ps = DB.getConnection().prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
+                    String insertQuery = "INSERT INTO `employee`(`No`,`Fname`, `Sname`, `Id`, `Phone`, `Job`, `Wage`, `Address`) VALUES (?,?,?,?,?,?,?,?)";
 
-        if (rs.next()) {
-            nextQueueNumber = rs.getInt("MaxNo") + 1;
+                    try {
+
+                        PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+                        ps.setInt(1, no);
+                        ps.setString(2, fname);
+                        ps.setString(3, sname);
+                        ps.setInt(4, id);
+                        ps.setInt(5, phone);
+                        ps.setString(6, job);
+                        ps.setDouble(7, wage);
+                        ps.setString(8, address);
+
+                        if(ps.executeUpdate() > 0)
+                        {
+                            Main.body.removeAll();
+                            Main.body.add(new Manage_Employee());
+                            Main.body.repaint();
+                            Main.body.revalidate();
+                            JOptionPane.showMessageDialog(null, "New Employee Added Successfully", "Add Employee", JOptionPane.INFORMATION_MESSAGE);
+                            System.out.println("Added Complete");
+                        }
+                        else
+                        {
+                          JOptionPane.showMessageDialog(null, "Employee Not Added", "Add Employee", JOptionPane.ERROR_MESSAGE);
+                          System.out.println("Some Error Message Here");  
+                        }
+
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }     
+                } else {
+                    JOptionPane.showMessageDialog(null, "Employee ID must contains only 10 numbers", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    txtPhone.requestFocus();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Phone must contains only 10 numbers", "ERROR", JOptionPane.ERROR_MESSAGE);
+                txtPhone.requestFocus();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "You must insert all fields", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
-    } catch (SQLException ex) {
-        System.out.println("Failed to get next queue number: " + ex.getMessage());
-    }
+    }//GEN-LAST:event_btnSaveActionPerformed
 
-    return nextQueueNumber;
-}
+    private void txtIdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyReleased
+        String text = txtId.getText();
+        
+        if (!isNumeric(text)) {
+            evt.consume();
+            return;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "ID value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            txtId.setText("");
+        }
+    }//GEN-LAST:event_txtIdKeyReleased
+
+    private void txtSalaryKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSalaryKeyReleased
+        try {
+        String text = txtSalary.getText();
+
+            if (!isNumericOrDecimal(text)) {
+
+                evt.consume();
+                return;
+            }
+
+        Double.valueOf(text);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Wage value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            txtSalary.setText("");
+        }
+    }//GEN-LAST:event_txtSalaryKeyReleased
+
+    private void txtPhoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneKeyReleased
+        String text = txtPhone.getText();
+        
+        if (!isNumeric(text)) {
+            evt.consume();
+            return;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Phone value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            txtPhone.setText("");
+        }
+    }//GEN-LAST:event_txtPhoneKeyReleased
+    
+    private boolean isNumericOrDecimal(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c) && c != '.') {
+                return true;
+            }
+        }
+        return false;
+    }   
+    
+    private boolean isNumeric(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
+    }   
+    
+    public boolean checkEmptyFields() {
+        
+        String id = txtId.getText().trim();
+        String name = txtName.getText().trim();
+        String sname = txtSname.getText().trim();
+        String job = txtJob.getText().trim();
+        String wage = txtSalary.getText().trim();
+        String address = txtAddress.getText().trim();
+        String phone = txtPhone.getText().trim();
+        
+        if(id.equals("") || id.equals("1234567890") || name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || job.equals("") || job.equals("ตำแหน่ง") || address.equals("")
+                || wage.equals("") || wage.equals("0") || phone.equals("") || phone.equals("เบอร์โทรศัพท์")) {
+            return false;
+        }
+        else {
+          return true;    
+        }
+    }
+            
+    private int getNextQueueNumber() {
+        int nextQueueNumber = 1; 
+
+        try {
+            String query = "SELECT MAX(No) AS MaxNo FROM employee"; 
+            PreparedStatement ps = DB.getConnection().prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                nextQueueNumber = rs.getInt("MaxNo") + 1;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Failed to get next queue number: " + ex.getMessage());
+        }
+
+        return nextQueueNumber;
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
