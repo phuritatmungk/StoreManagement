@@ -117,6 +117,9 @@ public class Order_Record extends javax.swing.JPanel {
                }
                jFrame3.setVisible(true);
                Table_Receive_Pro1.setDefaultEditor(Object.class, null); // ไม่ให้แก้ไขเซลล์ในตาราง
+               chDate.setTextField(TextField_Date1);
+                chDate.setDateSelectionMode(DateChooser.DateSelectionMode.SINGLE_DATE_SELECTED);
+                chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
                addTableMouseListener() ;
                
            }
@@ -1084,7 +1087,6 @@ public class Order_Record extends javax.swing.JPanel {
                 ComboBox_Type2.setSelectedItem(model.getValueAt(row, 2).toString());
                 Field_Cost1.setText(model.getValueAt(row, 4).toString());
                 Field_Quantity1.setText(model.getValueAt(row, 3).toString());
-                jTextArea_Information2.setText(model.getValueAt(row, 6).toString());
             } else {
                 JOptionPane.showMessageDialog(null, "กรุณาเลือกแถวที่ต้องการแก้ไข", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
         }
