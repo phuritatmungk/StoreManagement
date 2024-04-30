@@ -6,6 +6,8 @@ package component;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import java.awt.Color;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 /**
  *
@@ -18,6 +20,7 @@ public class loginfrom extends javax.swing.JPanel {
      */
     public loginfrom() {
         initComponents();
+        setupPasswordFields();
     }
     
 
@@ -32,11 +35,13 @@ public class loginfrom extends javax.swing.JPanel {
 
         Login = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        P_Pass1 = new javax.swing.JTextField();
+        eye_hide = new javax.swing.JLabel();
+        eye = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         T_User1 = new javax.swing.JTextField();
         BLogin = new javax.swing.JButton();
+        P_Pass1 = new javax.swing.JPasswordField();
 
         Login.setBackground(new java.awt.Color(255, 255, 255));
         Login.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -46,17 +51,21 @@ public class loginfrom extends javax.swing.JPanel {
         jLabel4.setText("Login");
         Login.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 70, 50));
 
-        P_Pass1.setForeground(new java.awt.Color(153, 153, 153));
-        P_Pass1.setText("Password");
-        P_Pass1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                P_Pass1FocusGained(evt);
+        eye_hide.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        eye_hide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/eye_hide.png"))); // NOI18N
+        eye_hide.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                eye_hideMousePressed(evt);
             }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                P_Pass1FocusLost(evt);
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                eye_hideMouseReleased(evt);
             }
         });
-        Login.add(P_Pass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 280, 40));
+        Login.add(eye_hide, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 30, 40));
+
+        eye.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        eye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/eye.png"))); // NOI18N
+        Login.add(eye, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 30, 40));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Password");
@@ -86,6 +95,9 @@ public class loginfrom extends javax.swing.JPanel {
             }
         });
         Login.add(BLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 280, 30));
+
+        P_Pass1.setForeground(new java.awt.Color(153, 153, 153));
+        Login.add(P_Pass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 280, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -120,31 +132,57 @@ public class loginfrom extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_T_User1FocusLost
 
-    private void P_Pass1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_P_Pass1FocusGained
-        if(P_Pass1.getText().equals("Password"))
-       {
-           P_Pass1.setText("");
-           P_Pass1.setForeground(new Color(0, 0, 0));
-       }
-    }//GEN-LAST:event_P_Pass1FocusGained
-
-    private void P_Pass1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_P_Pass1FocusLost
-        if (P_Pass1.getText().length()==0) {
-            P_Pass1.setText("Password");
-            P_Pass1.setForeground(new Color(123, 123, 123));
-        }
-    }//GEN-LAST:event_P_Pass1FocusLost
-
     private void BLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BLoginActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BLoginActionPerformed
+
+    private void eye_hideMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eye_hideMousePressed
+       eye.setVisible(true);
+       eye_hide.setVisible(false);
+       P_Pass1.setEchoChar((char)0);
+    }//GEN-LAST:event_eye_hideMousePressed
+
+    private void eye_hideMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eye_hideMouseReleased
+        eye.setVisible(false);
+        eye_hide.setVisible(true);
+        P_Pass1.setEchoChar('*');
+    }//GEN-LAST:event_eye_hideMouseReleased
+   private void setupPasswordFields() {
+        P_Pass1.setForeground(new Color(153, 153, 153));
+        P_Pass1.setText("Password");
+        P_Pass1.setEchoChar((char) 0);
+        P_Pass1.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (P_Pass1.getText().equals("Password")) {
+                    P_Pass1.setText("");
+                    P_Pass1.setForeground(Color.BLACK); 
+                    P_Pass1.setEchoChar('*'); 
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (P_Pass1.getText().isEmpty()) {
+                    P_Pass1.setText("Password");
+                    P_Pass1.setForeground(new Color(123, 123, 123)); 
+                    P_Pass1.setEchoChar((char) 0);
+                }
+            }
+        });
+    }
+
+
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BLogin;
     private javax.swing.JPanel Login;
-    private javax.swing.JTextField P_Pass1;
+    private javax.swing.JPasswordField P_Pass1;
     private javax.swing.JTextField T_User1;
+    private javax.swing.JLabel eye;
+    private javax.swing.JLabel eye_hide;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

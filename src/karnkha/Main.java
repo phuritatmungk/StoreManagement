@@ -15,6 +15,7 @@ import component.Manage_Distributor;
 import component.Order_Received;
 import component.Repair_History;
 import component.Sellproduct2;
+import component.loginfrom;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +30,8 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    private Order_Record orderRecord;
+    
     public Main() {
         initComponents();
         menu1.setEvent(new MenuEvent() {
@@ -99,6 +102,7 @@ public class Main extends javax.swing.JFrame {
             System.out.println("Failed to clear database data: " + ex.getMessage());
         }
     }
+      
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
