@@ -54,7 +54,7 @@ public class SellHistory extends javax.swing.JPanel {
     
     private void loadData(String sql) {
         try {
-            model.setRowCount(0); // เคลียร์ข้อมูลในตารางก่อนโหลดข้อมูลใหม่
+            model.setRowCount(0);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
             PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
@@ -185,7 +185,7 @@ public static void main (String args []) {
             
             while(rs.next())
             {
-                product = new SalesInfo(rs.getInt("No"), rs.getInt("Id"),
+                product = new SalesInfo(rs.getInt("No"), rs.getString("Id"),
                                       rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
                                       rs.getInt("Quantity"), rs.getDouble("Price"));
                 list.add(product);

@@ -35,7 +35,7 @@ public class Sellproduct extends javax.swing.JPanel {
                 showProductData(index);
                 position = index;
                 Integer no = getNextQueueNumber();
-                Integer id = Integer.valueOf(jText_Id.getText().toString());
+                String id = (jText_Id.getText().toString());
                 String name = jText_Name.getText().toString();
                 String category = jText_Category.getText().toString();
                 Integer quantity = Integer.valueOf(jText_Quantity.getText().toString());
@@ -52,7 +52,7 @@ public class Sellproduct extends javax.swing.JPanel {
                         try {
                     PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
                     ps.setInt(1, no);
-                    ps.setInt(2, id);
+                    ps.setString(2, id);
                     ps.setString(3, name);
                     ps.setString(4, category);
                     ps.setInt(5, 1);
@@ -78,21 +78,21 @@ public class Sellproduct extends javax.swing.JPanel {
                 jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderAdd());
                 jTable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorAdd(event));
             }
-        private boolean isItemInCart(int id) {
-            String query = "SELECT COUNT(*) AS count FROM cart WHERE Id = ?";
-            try {
-                PreparedStatement ps = DB.getConnection().prepareStatement(query);
-                ps.setInt(1, id);
-                ResultSet rs = ps.executeQuery();
-           if (rs.next()) {
-                int count = rs.getInt("count");
-                return count > 0;
-            }
+    private boolean isItemInCart(String id) {
+        String query = "SELECT COUNT(*) AS count FROM cart WHERE Id = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int count = rs.getInt("count");
+            return count > 0;
+        }
         } catch (SQLException ex) {
             System.out.println(ex);
         }
         return false;
-        }    
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -341,10 +341,8 @@ public class Sellproduct extends javax.swing.JPanel {
         ArrayList<InventoryInfo> productsList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
 
-        // Clear the existing rows in the table
         model.setRowCount(0);
 
-        // Iterate through the productsList and add each item to the table model
         for (InventoryInfo product : productsList) {
             Object[] row = new Object[6];
             row[0] = product.getNo();
@@ -354,7 +352,6 @@ public class Sellproduct extends javax.swing.JPanel {
             row[4] = product.getQuantity();
             row[5] = product.getPrice();
         
-            // Add the new row to the table model
             model.addRow(row);
         }
     }
@@ -384,6 +381,7 @@ private int getNextQueueNumber() {
 
     return nextQueueNumber;
 }        
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button;

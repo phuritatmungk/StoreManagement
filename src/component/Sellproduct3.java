@@ -212,7 +212,7 @@ public class Sellproduct3 extends javax.swing.JPanel {
     private void btnNext1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNext1ActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
-        int id = (int) model.getValueAt(i, 1);
+        String id = (String) model.getValueAt(i, 1);
         String name = (String) model.getValueAt(i, 2);
         String category = (String) model.getValueAt(i, 3);
         int quantity = (int) model.getValueAt(i, 4);
@@ -223,7 +223,7 @@ public class Sellproduct3 extends javax.swing.JPanel {
         try {
             Connection con = DB.getConnection();
             PreparedStatement ps = con.prepareStatement(insertQuery);
-            ps.setInt(1, id);
+            ps.setString(1, id);
             ps.setString(2, name);
             ps.setDate(3, new java.sql.Date(date.getTime())); 
             ps.setString(4, category);
@@ -287,7 +287,7 @@ public class Sellproduct3 extends javax.swing.JPanel {
             
             while(rs.next())
             {
-                product = new CartInfo(rs.getInt("No"), rs.getInt("Id"),
+                product = new CartInfo(rs.getInt("No"), rs.getString("Id"),
                                       rs.getString("Name"), rs.getString("Category"),
                                       rs.getInt("Quantity"), rs.getDouble("Price"));
                 list.add(product);

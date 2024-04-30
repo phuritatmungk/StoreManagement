@@ -11,14 +11,14 @@ package karnkha;
 public class CartInfo {
     
     private Integer no;
-    private Integer id;
+    private String id;
     private String name;
     private String category;
     private Integer quantity;
     private Double price;
     private Double total;
 
-    public CartInfo(Integer no, Integer id, String name, String category, Integer quantity, Double price) {
+    public CartInfo(Integer no, String id, String name, String category, Integer quantity, Double price) {
         this.no = no;
         this.id = id;
         this.name = name;
@@ -35,11 +35,11 @@ public class CartInfo {
         this.no = no;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

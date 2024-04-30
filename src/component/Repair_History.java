@@ -78,13 +78,9 @@ public class Repair_History extends javax.swing.JPanel {
             String ID = r.getString("ID");
             String Repairman = r.getString("Repairman");
             String Status = r.getString("Status");
-
-            // เพิ่มข้อมูลใหม่เข้าไปในตาราง
+            
             model.addRow(new Object[] { No,Date,Name,Phone,Item,ID,Repairman,Status});
-            
-          
-            
-            
+
         }
         r.close();
         p.close();

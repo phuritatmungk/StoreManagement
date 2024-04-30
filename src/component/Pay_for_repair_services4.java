@@ -283,6 +283,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
 
     private void btnpayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpayActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model2 = (DefaultTableModel) jTable.getModel();        
         for (int i = 0; i < model.getRowCount(); i++) {
         java.util.Date date = new java.util.Date();
         String name = (String) model.getValueAt(i, 2);
@@ -291,18 +292,29 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         int id = (int) model.getValueAt(i, 5);
         String repair = (String) model.getValueAt(i, 6);
         String status = (String) model.getValueAt(i, 7);
-
-        String insertQuery = "INSERT INTO `requestpaid` (`Date`, `Name`, `Phone`, `Item`, `Id`, `Repairman`,`Status`) VALUES (?,?,?,?,?,?,?)";
+        String pid = (String) model2.getValueAt(i,1);
+        String pname = (String) model2.getValueAt(i,2);
+        String category = (String)  model2.getValueAt(i,3);
+        int quantity = (int) model2.getValueAt(i, 4);
+        double price = (double) model2.getValueAt(i, 5);
+        
+        String insertQuery = "INSERT INTO `requestpaid` (`Date`, `Name`, `Phone`, `PId`, `Pname`, `Category`,`Quantity`,`Price`,`Item`,`Id`,`Repairman`,`Status`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             Connection con = DB.getConnection();
             PreparedStatement ps = con.prepareStatement(insertQuery);
             ps.setDate(1, new java.sql.Date(date.getTime())); 
             ps.setString(2, name);
             ps.setInt(3, phone);
-            ps.setString(4, item);
-            ps.setInt(5, id);
-            ps.setString(6, repair);
-            ps.setString(7, status);
+            ps.setString(4, pid);
+            ps.setString(5, pname);
+            ps.setString(6, category);
+            ps.setInt(7, quantity);
+            ps.setDouble(8, price);
+            ps.setString(9, item);
+            ps.setInt(10, id);
+            ps.setString(11, repair);
+            ps.setString(12, status);    
+            
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -419,7 +431,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             
             while(rs.next())
             {
-                product = new CartInfo(rs.getInt("No"), rs.getInt("Id"),
+                product = new CartInfo(rs.getInt("No"), rs.getString("Id"),
                                       rs.getString("Name"), rs.getString("Category"),
                                       rs.getInt("Quantity"), rs.getDouble("Price"));
                 list.add(product);

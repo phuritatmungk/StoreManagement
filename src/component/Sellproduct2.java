@@ -242,7 +242,7 @@ public class Sellproduct2 extends javax.swing.JPanel {
             
             while(rs.next())
             {
-                product = new CartInfo(rs.getInt("No"), rs.getInt("Id"),
+                product = new CartInfo(rs.getInt("No"), rs.getString("Id"),
                                       rs.getString("Name"), rs.getString("Category"),
                                       rs.getInt("Quantity"), rs.getDouble("Price"));
                 list.add(product);
@@ -297,7 +297,7 @@ public class Sellproduct2 extends javax.swing.JPanel {
         int rowCount = model.getRowCount();
     
             for (int i = 0; i < rowCount; i++) {
-                int productId = (int) model.getValueAt(i, 1);
+                String productId = (String) model.getValueAt(i, 1);
                 int quantity = (int) model.getValueAt(i, 4); 
         
 
@@ -305,13 +305,13 @@ public class Sellproduct2 extends javax.swing.JPanel {
             }
         }
     
-    private void updateQuantityInDatabase(int productId, int quantity) {
+    private void updateQuantityInDatabase(String productId, int quantity) {
         String updateQuery = "UPDATE cart SET Quantity = ? WHERE Id = ?";
         try {
             Connection con = DB.getConnection();
             PreparedStatement ps = con.prepareStatement(updateQuery);
             ps.setInt(1, quantity);
-            ps.setInt(2, productId);
+            ps.setString(2, productId);
             int updatedRows = ps.executeUpdate();
         if (updatedRows > 0) {
             System.out.println("Quantity for product ID " + productId + " updated successfully.");
