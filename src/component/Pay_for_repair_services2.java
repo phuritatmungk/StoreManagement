@@ -15,7 +15,6 @@ import raven.cell.TableActionCellRenderTrash;
 import raven.cell.TableActionEventTrash;
 import component.Pay_for_repair_services3;
 import component.Pay_for_repair_services2;
-import static component.Sellproduct2.jTable;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JOptionPane;

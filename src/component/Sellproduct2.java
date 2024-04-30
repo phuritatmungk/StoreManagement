@@ -300,7 +300,13 @@ public class Sellproduct2 extends javax.swing.JPanel {
         for (int i = 0; i < rowCount; i++) {
             String productId = (String) model.getValueAt(i, 1);
             int quantity = (int) model.getValueAt(i, 4);
-        
+            
+            int inventoryQuantity = getInventoryQuantity(productId);
+            
+            if (quantity > inventoryQuantity) {
+            quantityExceedsInventory = true;
+            break;
+            }
 
             updateQuantityInDatabase(productId, quantity);
         }
@@ -315,20 +321,23 @@ public class Sellproduct2 extends javax.swing.JPanel {
         }
     }
     
-        private void updateQuantityInDatabase(String productId, int quantity) {
-            String updateQuery = "UPDATE cart SET Quantity = ? WHERE Id = ?";
-            try {
-                Connection con = DB.getConnection();
-                PreparedStatement ps = con.prepareStatement(updateQuery);
-                ps.setInt(1, quantity);
-                ps.setString(2, productId);
-                int updatedRows = ps.executeUpdate();
-            if (updatedRows > 0) {
-                System.out.println("Quantity for product ID " + productId + " updated successfully.");
-            } else {
-                System.out.println("Failed to update quantity for product ID " + productId);
-            }
+    private void updateQuantityInDatabase(String productId, int quantity) {
+        String updateQuery = "UPDATE cart SET Quantity = ? WHERE Id = ?";
+        try {
+            Connection con = DB.getConnection();
+            PreparedStatement ps = con.prepareStatement(updateQuery);
+            ps.setInt(1, quantity);
+            ps.setString(2, productId);
+            int updatedRows = ps.executeUpdate();
+        if (updatedRows > 0) {
+            System.out.println("Quantity for product ID " + productId + " updated successfully.");
+        } else {
+            System.out.println("Failed to update quantity for product ID " + productId);
         }
+        } catch (SQLException ex) {
+        System.out.println("Failed to update quantity: " + ex.getMessage());
+    }
+    }
     
     private int getInventoryQuantity(String productId) {
         int inventoryQuantity = 0;
@@ -344,10 +353,8 @@ public class Sellproduct2 extends javax.swing.JPanel {
         } catch (SQLException ex) {
             System.out.println("Failed to fetch inventory quantity: " + ex.getMessage());
         }
-    } catch (SQLException ex) {
-        System.out.println("Failed to update quantity: " + ex.getMessage());
+        return inventoryQuantity;
     }
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
