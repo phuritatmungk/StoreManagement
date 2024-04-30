@@ -12,6 +12,8 @@ import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.RepairRequest;
@@ -37,7 +39,7 @@ public class Repair_History extends javax.swing.JPanel {
                 String dateFrom = df.format(db.getFromDate());
                 String toDate = df.format(db.getToDate());
                 loadData("SELECT * FROM `requestpaid` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
-        
+                mergeAndRefreshTable();
                 model.fireTableDataChanged();
             }
         });
@@ -60,6 +62,7 @@ public class Repair_History extends javax.swing.JPanel {
         };
         jTable.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRenderView());
         jTable.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditorView(event));
+        mergeAndRefreshTable();
     }
 
     private void loadData(String sql) {
@@ -298,7 +301,54 @@ public class Repair_History extends javax.swing.JPanel {
         }
         
     }
+    private void mergeAndRefreshTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        if (jTable != null && model != null) {
+            int rowCount = model.getRowCount();
+            HashMap<String, String[]> dateMap = new HashMap<>();
 
+            // วนลูปผ่านแถวของตาราง
+            for (int i = 0; i < rowCount; i++) {
+                String name = model.getValueAt(i, 2).toString(); // อ้างถึงคอลัมน์ที่ 1 (บริษัท)
+                String date = model.getValueAt(i, 1).toString(); // อ้างถึงคอลัมน์ที่ 2 (วันที่)
+
+                String key = name + date; // สร้าง key โดยรวมชื่อบริษัทและวันที่
+
+                if (dateMap.containsKey(key)) {
+                    String[] values = dateMap.get(key);
+                    values[0] = String.valueOf(model.getValueAt(i, 3)); 
+                    values[1] = String.valueOf(model.getValueAt(i, 4)); 
+                    values[2] = String.valueOf(model.getValueAt(i, 5)); 
+                    values[3] = String.valueOf(model.getValueAt(i, 6)); 
+                    values[4] = String.valueOf(model.getValueAt(i, 7)); 
+                } else {
+                    String[] values = new String[5];
+                    values[0] = String.valueOf(model.getValueAt(i, 3)); 
+                    values[1] = String.valueOf(model.getValueAt(i, 4)); 
+                    values[2] = String.valueOf(model.getValueAt(i, 5)); 
+                    values[3] = String.valueOf(model.getValueAt(i, 6)); 
+                    values[4] = String.valueOf(model.getValueAt(i, 7)); 
+                    dateMap.put(key, values);
+                }
+            }
+
+            model.setRowCount(0);
+            int newRowNumber = 1;
+
+            for (Map.Entry<String, String[]> entry : dateMap.entrySet()) {
+                String key = entry.getKey();
+                String[] values = entry.getValue();
+
+                String name = key.substring(0, key.length() - 10); // แยกชื่อบริษัทจาก key
+                String date = key.substring(key.length() - 10); // แยกวันที่จาก key
+
+                Object[] rowData = new Object[]{newRowNumber++, date, name,  values[0], values[1], values[2], values[3], values[4]}; // ลำดับ, บริษัท, วันที่, จำนวน, รวม
+                model.addRow(rowData);
+            }
+ 
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel All_prices;
     private javax.swing.JLabel Company_label;
