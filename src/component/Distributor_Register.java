@@ -147,6 +147,11 @@ public class Distributor_Register extends javax.swing.JPanel {
                 txtPhoneFocusLost(evt);
             }
         });
+        txtPhone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPhoneKeyReleased(evt);
+            }
+        });
         add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 570, 370, 30));
 
         Add_dealer_information.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -266,56 +271,109 @@ public class Distributor_Register extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNameFocusGained
 
     private void btnSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseClicked
-
-        Integer no = getNextQueueNumber();
-        String name = txtName.getText();        
-        String sname = txtSname.getText();
-        String company = txtCompany.getText();
-        String address = txtAddress.getText();
-        Integer phone = Integer.valueOf(txtPhone.getText().toString());
+        String phone_var = txtPhone.getText();
         
-        String insertQuery = "INSERT INTO `distributor`(`No`,`Company`, `FName`, `Sname`, `Phone`, `Address`) VALUES (?,?,?,?,?,?)";
-        
-        try {
-                
-            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
-            ps.setInt(1, no);
-            ps.setString(2, company);
-            ps.setString(3, name);
-            ps.setString(4, sname);
-            ps.setInt(5, phone);
-            ps.setString(6, address);
-            
-            if(ps.executeUpdate() > 0)
-            {
-                //showProductsInTable();
-                JOptionPane.showMessageDialog(null, "New Distributor Added Successfully", "Add Distributor", JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("Added Complete");
-            }
-            else
-            {
-              JOptionPane.showMessageDialog(null, "Distributor Not Added", "Add Distributor", JOptionPane.ERROR_MESSAGE);
-              System.out.println("Some Error Message Here");  
-            }
-            
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }                     
-    }//GEN-LAST:event_btnSaveMouseClicked
-private int getNextQueueNumber() {
-    int nextQueueNumber = 1; 
+        if (checkEmptyFields()) {
+            if (phone_var.length() == 10) {
+                Integer no = getNextQueueNumber();
+                String name = txtName.getText();        
+                String sname = txtSname.getText();
+                String company = txtCompany.getText();
+                String address = txtAddress.getText();
+                Integer phone = Integer.valueOf(txtPhone.getText().toString());
 
-    try {
-        String query = "SELECT MAX(No) AS MaxNo FROM distributor"; 
-        PreparedStatement ps = DB.getConnection().prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
+                String insertQuery = "INSERT INTO `distributor`(`No`,`Company`, `FName`, `Sname`, `Phone`, `Address`) VALUES (?,?,?,?,?,?)";
 
-        if (rs.next()) {
-            nextQueueNumber = rs.getInt("MaxNo") + 1;
+                try {
+
+                    PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+                    ps.setInt(1, no);
+                    ps.setString(2, company);
+                    ps.setString(3, name);
+                    ps.setString(4, sname);
+                    ps.setInt(5, phone);
+                    ps.setString(6, address);
+
+                    if(ps.executeUpdate() > 0)
+                    {
+                        Main.body.removeAll();
+                        Main.body.add(new Manage_Distributor());
+                        Main.body.repaint();
+                        Main.body.revalidate();
+                        JOptionPane.showMessageDialog(null, "New Distributor Added Successfully", "Add Distributor", JOptionPane.INFORMATION_MESSAGE);
+                        System.out.println("Added Complete");
+                    }
+                    else
+                    {
+                      JOptionPane.showMessageDialog(null, "Distributor Not Added", "Add Distributor", JOptionPane.ERROR_MESSAGE);
+                      System.out.println("Some Error Message Here");  
+                    }
+
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Phone must contains only 10 numbers", "ERROR", JOptionPane.ERROR_MESSAGE);
+                txtPhone.requestFocus();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "You must insert all fields", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
-    } catch (SQLException ex) {
-        System.out.println("Failed to get next queue number: " + ex.getMessage());
+    }//GEN-LAST:event_btnSaveMouseClicked
+
+    private void txtPhoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneKeyReleased
+        String text = txtPhone.getText();
+        
+        if (!isNumeric(text)) {
+            evt.consume();
+            return;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Phone value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            txtPhone.setText("");
+        }
+    }//GEN-LAST:event_txtPhoneKeyReleased
+    
+    private boolean isNumeric(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
+    }   
+    
+    public boolean checkEmptyFields() {
+        String name = txtName.getText().trim();
+        String sname = txtSname.getText().trim();
+        String company = txtCompany.getText().trim();
+        String address = txtAddress.getText().trim();
+        String phone = txtPhone.getText().trim();
+        
+        if(name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || company.equals("") || company.equals("ชื่อบริษัท") || address.equals("")
+                || phone.equals("") || phone.equals("เบอร์โทรศัพท์")) {
+            return false;
+        }
+        else {
+          return true;    
+        }
     }
+    
+    private int getNextQueueNumber() {
+        int nextQueueNumber = 1; 
+
+        try {
+            String query = "SELECT MAX(No) AS MaxNo FROM distributor"; 
+            PreparedStatement ps = DB.getConnection().prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                nextQueueNumber = rs.getInt("MaxNo") + 1;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Failed to get next queue number: " + ex.getMessage());
+        }
 
     return nextQueueNumber;
 }

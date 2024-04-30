@@ -322,7 +322,7 @@ public class Sellproduct extends javax.swing.JPanel {
             
             while(rs.next())
             {
-                product = new InventoryInfo(rs.getInt("No"), rs.getInt("Id"),
+                product = new InventoryInfo(rs.getInt("No"), rs.getString("Id"),
                                       rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
                                       rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price"));
                 list.add(product);

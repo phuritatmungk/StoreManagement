@@ -75,8 +75,8 @@ public class Edit_employee_info extends javax.swing.JPanel {
         add(JId, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, -1, -1));
 
         txtId.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtId.setForeground(new java.awt.Color(123, 123, 123));
-        txtId.setText("รหัสพนักงาน");
+        txtId.setForeground(new java.awt.Color(0, 0, 0));
+        txtId.setText("1234567890");
         txtId.setBorder(null);
         txtId.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -86,6 +86,11 @@ public class Edit_employee_info extends javax.swing.JPanel {
                 txtIdFocusLost(evt);
             }
         });
+        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtIdKeyReleased(evt);
+            }
+        });
         add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, 220, 30));
 
         JName.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -93,7 +98,7 @@ public class Edit_employee_info extends javax.swing.JPanel {
         add(JName, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, -1, -1));
 
         txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtName.setForeground(new java.awt.Color(123, 123, 123));
+        txtName.setForeground(new java.awt.Color(0, 0, 0));
         txtName.setText("ชื่อ");
         txtName.setBorder(null);
         txtName.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -111,7 +116,7 @@ public class Edit_employee_info extends javax.swing.JPanel {
         add(JSname, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 320, -1, -1));
 
         txtSname.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSname.setForeground(new java.awt.Color(123, 123, 123));
+        txtSname.setForeground(new java.awt.Color(0, 0, 0));
         txtSname.setText("นามสกุล");
         txtSname.setBorder(null);
         txtSname.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -141,7 +146,7 @@ public class Edit_employee_info extends javax.swing.JPanel {
         add(JPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 410, -1, -1));
 
         txtPhone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtPhone.setForeground(new java.awt.Color(123, 123, 123));
+        txtPhone.setForeground(new java.awt.Color(0, 0, 0));
         txtPhone.setText("เบอร์โทรศัพท์");
         txtPhone.setBorder(null);
         txtPhone.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -150,6 +155,11 @@ public class Edit_employee_info extends javax.swing.JPanel {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtPhoneFocusLost(evt);
+            }
+        });
+        txtPhone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPhoneKeyReleased(evt);
             }
         });
         add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 410, 220, 30));
@@ -204,7 +214,7 @@ public class Edit_employee_info extends javax.swing.JPanel {
         add(JSalary, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 230, -1, -1));
 
         txtJob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtJob.setForeground(new java.awt.Color(123, 123, 123));
+        txtJob.setForeground(new java.awt.Color(0, 0, 0));
         txtJob.setText("ตำแหน่ง");
         txtJob.setBorder(null);
         txtJob.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -221,8 +231,8 @@ public class Edit_employee_info extends javax.swing.JPanel {
         add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 180, 220, 30));
 
         txtSalary.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSalary.setForeground(new java.awt.Color(123, 123, 123));
-        txtSalary.setText("จำนวนเงิน");
+        txtSalary.setForeground(new java.awt.Color(0, 0, 0));
+        txtSalary.setText("0");
         txtSalary.setBorder(null);
         txtSalary.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -230,6 +240,11 @@ public class Edit_employee_info extends javax.swing.JPanel {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtSalaryFocusLost(evt);
+            }
+        });
+        txtSalary.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSalaryKeyReleased(evt);
             }
         });
         add(txtSalary, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 230, 220, 30));
@@ -252,7 +267,7 @@ public class Edit_employee_info extends javax.swing.JPanel {
     }//GEN-LAST:event_btnImgActionPerformed
 
     private void txtIdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFocusGained
-        if(txtId.getText().equals("รหัสพนักงาน"))
+        if(txtId.getText().equals("1234567890"))
        {
            txtId.setText("");
            txtId.setForeground(new Color(0, 0, 0));
@@ -261,7 +276,7 @@ public class Edit_employee_info extends javax.swing.JPanel {
 
     private void txtIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFocusLost
         if (txtId.getText().length()==0) {
-            txtId.setText("รหัสพนักงาน");
+            txtId.setText("1234567890");
             txtId.setForeground(new Color(123, 123, 123));
         }
     }//GEN-LAST:event_txtIdFocusLost
@@ -334,7 +349,7 @@ public class Edit_employee_info extends javax.swing.JPanel {
     }//GEN-LAST:event_txtJobFocusLost
 
     private void txtSalaryFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSalaryFocusGained
-        if(txtSalary.getText().equals("จำนวนเงิน"))
+        if(txtSalary.getText().equals("0"))
        {
            txtSalary.setText("");
            txtSalary.setForeground(new Color(0, 0, 0));
@@ -343,54 +358,153 @@ public class Edit_employee_info extends javax.swing.JPanel {
 
     private void txtSalaryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSalaryFocusLost
         if (txtSalary.getText().length()==0) {
-            txtSalary.setText("จำนวนเงิน");
+            txtSalary.setText("0");
             txtSalary.setForeground(new Color(123, 123, 123));
         }
     }//GEN-LAST:event_txtSalaryFocusLost
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        Integer no = Integer.valueOf(txtNo.getText().toString());
-        Integer id = Integer.valueOf(txtId.getText().toString());
-        String fname = txtName.getText();
-        String sname = txtSname.getText();
-        String address = txtAddress.getText();
-        String job = txtJob.getText();
-        Double wage = Double.valueOf(txtSalary.getText().toString());
-        Integer phone = Integer.valueOf(txtPhone.getText().toString());
+        
+        String id_var = txtId.getText();
+        String phone_var = txtPhone.getText();
+        
+        if (checkEmptyFields()) {
+            if (phone_var.length() == 10) {
+                if (id_var.length () == 10) {
+                    Integer no = Integer.valueOf(txtNo.getText().toString());
+                    Integer id = Integer.valueOf(txtId.getText().toString());
+                    String fname = txtName.getText();
+                    String sname = txtSname.getText();
+                    String address = txtAddress.getText();
+                    String job = txtJob.getText();
+                    Double wage = Double.valueOf(txtSalary.getText().toString());
+                    Integer phone = Integer.valueOf(txtPhone.getText().toString());
 
 
- 
-        String updateQuery = "UPDATE employee SET Fname=?,SName=?,Id=?,Phone=? ,Job=? ,Wage=?,Address=? WHERE No=?";
-        try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
-            ps.setString(1, fname);
-            ps.setString(2, sname);
-            ps.setInt(3, id);
-            ps.setInt(4, phone);
-            ps.setString(5, job);
-            ps.setDouble(6, wage); 
-            ps.setString(7, address);
-            ps.setInt(8, no);
 
-            if(ps.executeUpdate() > 0)
-            {
-                Main.body.removeAll();
-                Main.body.add(new Manage_Employee());
-                Main.body.repaint();
-                Main.body.revalidate();
-                JOptionPane.showMessageDialog(null, "Edit Employee Info Successfully", "Edit Employee Info", JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("Updated");
+                    String updateQuery = "UPDATE employee SET Fname=?,SName=?,Id=?,Phone=? ,Job=? ,Wage=?,Address=? WHERE No=?";
+                    try {
+                        PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
+                        ps.setString(1, fname);
+                        ps.setString(2, sname);
+                        ps.setInt(3, id);
+                        ps.setInt(4, phone);
+                        ps.setString(5, job);
+                        ps.setDouble(6, wage); 
+                        ps.setString(7, address);
+                        ps.setInt(8, no);
+
+                        if(ps.executeUpdate() > 0)
+                        {
+                            Main.body.removeAll();
+                            Main.body.add(new Manage_Employee());
+                            Main.body.repaint();
+                            Main.body.revalidate();
+                            JOptionPane.showMessageDialog(null, "Edit Employee Info Successfully", "Edit Employee Info", JOptionPane.INFORMATION_MESSAGE);
+                            System.out.println("Updated");
+                        }
+                        else
+                        {
+                            System.out.println("Failed");
+                        }
+
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Employee ID must contains only 10 numbers", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    txtPhone.requestFocus();
             }
-            else
-            {
-                System.out.println("Failed");
+            } else {
+                JOptionPane.showMessageDialog(null, "Phone must contains only 10 numbers", "ERROR", JOptionPane.ERROR_MESSAGE);
+                txtPhone.requestFocus();
             }
-
-        } catch (SQLException ex) {
-            System.out.println(ex);
+        } else {
+            JOptionPane.showMessageDialog(null, "You must insert all fields", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void txtIdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyReleased
+        String text = txtId.getText();
+        
+        if (!isNumeric(text)) {
+            evt.consume();
+            return;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Employee ID value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            txtId.setText("");
+        }
+    }//GEN-LAST:event_txtIdKeyReleased
+
+    private void txtPhoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneKeyReleased
+        String text = txtPhone.getText();
+        
+        if (!isNumeric(text)) {
+            evt.consume();
+            return;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Phone value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            txtPhone.setText("");
+        }
+    }//GEN-LAST:event_txtPhoneKeyReleased
+
+    private void txtSalaryKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSalaryKeyReleased
+        try {
+        String text = txtSalary.getText();
+
+            if (!isNumericOrDecimal(text)) {
+
+                evt.consume();
+                return;
+            }
+
+        Double.valueOf(text);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Wage value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            txtSalary.setText("");
+        }
+    }//GEN-LAST:event_txtSalaryKeyReleased
+
+    private boolean isNumericOrDecimal(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c) && c != '.') {
+                return true;
+            }
+        }
+        return false;
+    }   
+    
+    private boolean isNumeric(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
+    }   
+    
+    public boolean checkEmptyFields() {
+        
+        String id = txtId.getText().trim();
+        String name = txtName.getText().trim();
+        String sname = txtSname.getText().trim();
+        String job = txtJob.getText().trim();
+        String wage = txtSalary.getText().trim();
+        String address = txtAddress.getText().trim();
+        String phone = txtPhone.getText().trim();
+        
+        if(id.equals("") || id.equals("1234567890") || name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || job.equals("") || job.equals("ตำแหน่ง") || address.equals("")
+                || wage.equals("") || wage.equals("0") || phone.equals("") || phone.equals("เบอร์โทรศัพท์")) {
+            return false;
+        }
+        else {
+          return true;    
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;

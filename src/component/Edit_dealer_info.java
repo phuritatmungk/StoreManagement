@@ -73,7 +73,7 @@ public class Edit_dealer_info extends javax.swing.JPanel {
         add(JName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, -1, -1));
 
         txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtName.setForeground(new java.awt.Color(123, 123, 123));
+        txtName.setForeground(new java.awt.Color(0, 0, 0));
         txtName.setText("ชื่อ");
         txtName.setBorder(null);
         txtName.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -91,7 +91,7 @@ public class Edit_dealer_info extends javax.swing.JPanel {
         add(JSurname, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
 
         txtSname.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSname.setForeground(new java.awt.Color(123, 123, 123));
+        txtSname.setForeground(new java.awt.Color(0, 0, 0));
         txtSname.setText("นามสกุล");
         txtSname.setBorder(null);
         txtSname.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -109,7 +109,7 @@ public class Edit_dealer_info extends javax.swing.JPanel {
         add(JCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, -1, -1));
 
         txtCompany.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtCompany.setForeground(new java.awt.Color(123, 123, 123));
+        txtCompany.setForeground(new java.awt.Color(0, 0, 0));
         txtCompany.setText("ชื่อบริษัท");
         txtCompany.setBorder(null);
         txtCompany.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -139,7 +139,7 @@ public class Edit_dealer_info extends javax.swing.JPanel {
         add(JPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 570, -1, -1));
 
         txtPhone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtPhone.setForeground(new java.awt.Color(123, 123, 123));
+        txtPhone.setForeground(new java.awt.Color(0, 0, 0));
         txtPhone.setText("เบอร์โทรศัพท์");
         txtPhone.setBorder(null);
         txtPhone.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -148,6 +148,11 @@ public class Edit_dealer_info extends javax.swing.JPanel {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtPhoneFocusLost(evt);
+            }
+        });
+        txtPhone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPhoneKeyReleased(evt);
             }
         });
         add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 570, 370, 30));
@@ -276,43 +281,93 @@ public class Edit_dealer_info extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPhoneFocusLost
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        Integer no = Integer.valueOf(txtNo.getText().toString()); 
-        String fname = txtName.getText();
-        String sname = txtSname.getText();
-        String company = txtCompany.getText();
-        String address = txtAddress.getText();
-        Integer phone = Integer.valueOf(txtPhone.getText().toString());
+        
+        String phone_var = txtPhone.getText();
+        
+        if (checkEmptyFields()) {
+            if (phone_var.length() == 10) {
+                Integer no = Integer.valueOf(txtNo.getText().toString()); 
+                String fname = txtName.getText();
+                String sname = txtSname.getText();
+                String company = txtCompany.getText();
+                String address = txtAddress.getText();
+                Integer phone = Integer.valueOf(txtPhone.getText().toString());
 
- 
-        String updateQuery = "UPDATE distributor SET Company=?,Fname=?,Sname=? ,Phone=?,Address=?  WHERE No=?";
-        try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
-            ps.setString(1, company);
-            ps.setString(2, fname);
-            ps.setString(3, sname);
-            ps.setInt(4, phone);
-            ps.setString(5, address); 
-            ps.setInt(6, no);
 
-            if(ps.executeUpdate() > 0)
-            {
-                Main.body.removeAll();
-                Main.body.add(new Manage_Employee());
-                Main.body.repaint();
-                Main.body.revalidate();
-                JOptionPane.showMessageDialog(null, "Edit Distributor Info Successfully", "Edit Distributor Info", JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("Updated");
+                String updateQuery = "UPDATE distributor SET Company=?,Fname=?,Sname=? ,Phone=?,Address=?  WHERE No=?";
+                try {
+                    PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
+                    ps.setString(1, company);
+                    ps.setString(2, fname);
+                    ps.setString(3, sname);
+                    ps.setInt(4, phone);
+                    ps.setString(5, address); 
+                    ps.setInt(6, no);
+
+                    if(ps.executeUpdate() > 0)
+                    {
+                        Main.body.removeAll();
+                        Main.body.add(new Manage_Distributor());
+                        Main.body.repaint();
+                        Main.body.revalidate();
+                        JOptionPane.showMessageDialog(null, "Edit Distributor Info Successfully", "Edit Distributor Info", JOptionPane.INFORMATION_MESSAGE);
+                        System.out.println("Updated");
+                    }
+                    else
+                    {
+                        System.out.println("Failed");
+                    }
+
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Phone must contains only 10 numbers", "ERROR", JOptionPane.ERROR_MESSAGE);
+                txtPhone.requestFocus();
             }
-            else
-            {
-                System.out.println("Failed");
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex);
+        } else {
+            JOptionPane.showMessageDialog(null, "You must insert all fields", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void txtPhoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneKeyReleased
+        String text = txtPhone.getText();
+        
+        if (!isNumeric(text)) {
+            evt.consume();
+            return;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Phone value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            txtPhone.setText("");
+        }
+    }//GEN-LAST:event_txtPhoneKeyReleased
+
+    private boolean isNumeric(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
+    }   
+    
+    public boolean checkEmptyFields() {
+        String name = txtName.getText().trim();
+        String sname = txtSname.getText().trim();
+        String company = txtCompany.getText().trim();
+        String address = txtAddress.getText().trim();
+        String phone = txtPhone.getText().trim();
+        
+        if(name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || company.equals("") || company.equals("ชื่อบริษัท") || address.equals("")
+                || phone.equals("") || phone.equals("เบอร์โทรศัพท์")) {
+            return false;
+        }
+        else {
+          return true;    
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
