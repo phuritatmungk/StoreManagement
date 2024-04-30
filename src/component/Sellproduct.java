@@ -94,7 +94,7 @@ public class Sellproduct extends javax.swing.JPanel {
             System.out.println(ex);
         }
         return false;
-        }    
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -392,6 +392,7 @@ private int getNextQueueNumber() {
 
     return nextQueueNumber;
 }        
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button;

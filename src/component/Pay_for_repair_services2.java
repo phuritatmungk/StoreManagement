@@ -1,18 +1,28 @@
 package component;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.CartInfo;
+import karnkha.Main;
 import raven.cell.TableActionCellEditorTrash;
 import raven.cell.TableActionCellRenderTrash;
 import raven.cell.TableActionEventTrash;
-import karnkha.Main;
 import component.Pay_for_repair_services3;
 import component.Pay_for_repair_services2;
+import static component.Sellproduct2.jTable;
 import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
 public class Pay_for_repair_services2 extends javax.swing.JPanel {
@@ -123,7 +133,7 @@ public class Pay_for_repair_services2 extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, true, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -143,6 +153,7 @@ public class Pay_for_repair_services2 extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        updateQuantitiesInDatabase();
         Main.body.removeAll();
         Main.body.add(new Pay_for_repair_services3());
         Main.body.repaint();
@@ -227,11 +238,24 @@ public class Pay_for_repair_services2 extends javax.swing.JPanel {
     {
         ArrayList<CartInfo> productsList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        
         model.setRowCount(0);
         
         Object[] row = new Object[6];
         
+        jTable.getColumnModel().getColumn(4).setCellEditor(new QtyCellEditor(new EventCellInputChange() {
+            @Override
+            public void inputChanged() {
+                System.out.println("Changed");
+            }
+        }));
+        jTable.getColumnModel().getColumn(4).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                setHorizontalAlignment(SwingConstants.CENTER);
+                return this;
+            }
+        });        
         for(int i = 0; i < productsList.size(); i++)
         {
             row[0] = productsList.get(i).getNo();
@@ -243,8 +267,37 @@ public class Pay_for_repair_services2 extends javax.swing.JPanel {
             
             model.addRow(row);
         }
-        
     }
+    private void updateQuantitiesInDatabase() {
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        int rowCount = model.getRowCount();
+    
+            for (int i = 0; i < rowCount; i++) {
+                String productId = (String) model.getValueAt(i, 1);
+                int quantity = (int) model.getValueAt(i, 4); 
+        
+
+            updateQuantityInDatabase(productId, quantity);
+            }
+        }
+    
+    private void updateQuantityInDatabase(String productId, int quantity) {
+        String updateQuery = "UPDATE repaircart SET Quantity = ? WHERE Id = ?";
+        try {
+            Connection con = DB.getConnection();
+            PreparedStatement ps = con.prepareStatement(updateQuery);
+            ps.setInt(1, quantity);
+            ps.setString(2, productId);
+            int updatedRows = ps.executeUpdate();
+        if (updatedRows > 0) {
+            System.out.println("Quantity for product ID " + productId + " updated successfully.");
+        } else {
+            System.out.println("Failed to update quantity for product ID " + productId);
+        }
+    } catch (SQLException ex) {
+        System.out.println("Failed to update quantity: " + ex.getMessage());
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;

@@ -13,6 +13,7 @@ import karnkha.DB;
 import karnkha.InventoryInfo;
 import karnkha.Main;
 import component.Pay_for_repair_services2;
+import static component.Sellproduct.jTable;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 import java.sql.*;
@@ -31,73 +32,70 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
         TableActionEventAdd event = new TableActionEventAdd() {
             @Override
             public void onAdd(int row) {
-                System.out.println("Edit row : " + row);
                 System.out.println("Add row : " + row);
                 int index = jTable.getSelectedRow();
                 showProductData(index);
                 position = index;
-                Integer id = Integer.valueOf(jText_Id.getText().toString());
+                Integer no = getNextQueueNumber();
+                String id = (jText_Id.getText().toString());
                 String name = jText_Name.getText().toString();
                 String category = jText_Category.getText().toString();
                 Integer quantity = Integer.valueOf(jText_Quantity.getText().toString());
                 Double price = Double.valueOf(jText_Price.getText());
-                
-                int currentQuantity = Integer.valueOf(jText_Quantity.getText().toString());
-                currentQuantity--;
-                if(currentQuantity < 1){
-                    JOptionPane.showMessageDialog(null,"Not Enough Item","Error",JOptionPane.ERROR_MESSAGE);
-                }else{
-                    String updateQuery = "UPDATE `inventory`SET`Quantity` = ? WHERE `Id`=? ";
-        
+                    if (quantity == 0) {
+                        JOptionPane.showMessageDialog(null, "The product is out of stock.", "Add Product", JOptionPane.ERROR_MESSAGE);
+                    return; 
+                    }
+                if (isItemInCart(id)) {
+                    JOptionPane.showMessageDialog(null, "The product is already in the cart.", "Add Product", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                String insertQuery = "INSERT INTO `repaircart`(`No`,`Id`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?)";
+                        try {
+                    PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
+                    ps.setInt(1, no);
+                    ps.setString(2, id);
+                    ps.setString(3, name);
+                    ps.setString(4, category);
+                    ps.setInt(5, 1);
+                    ps.setDouble(6, price);
+
+                    if (ps.executeUpdate() > 0) {
+                        showProductsInTable();
+                        Main.body.removeAll();
+                        Main.body.add(new Sellproduct());
+                        Main.body.repaint();
+                        Main.body.revalidate();
+                        System.out.println("New Product Added");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
+                        System.out.println("Some Error Message Here");
+                    }
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+
+        }
+                };
+                jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderAdd());
+                jTable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorAdd(event));
+            }
+        private boolean isItemInCart(String id) {
+        String query = "SELECT COUNT(*) AS count FROM repaircart WHERE Id = ?";
         try {
-            
-            PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
-            ps.setInt(1, currentQuantity);
-            ps.setInt(2, id);
-            
-            if(ps.executeUpdate() > 0)
-            {
-                jTable.setValueAt(currentQuantity, row, 4);
-                JOptionPane.showMessageDialog(null, "New Product Added Successfully", "Add Product", JOptionPane.INFORMATION_MESSAGE);
-                System.out.println("New Product Added");
-            }
-            else
-            {
-              JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
-              System.out.println("Some Error Message Here");  
-            }
-            
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int count = rs.getInt("count");
+            return count > 0;
+        }
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        String insertQuery = "INSERT INTO `repaircart`(`Id`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?)";
-                try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
-            ps.setInt(1, id);
-            ps.setString(2, name);
-            ps.setString(3, category);
-            ps.setInt(4, 1);
-            ps.setDouble(5, price);
-
-            if (ps.executeUpdate() > 0) {
-                showProductsInTable();
-                System.out.println("New Product Added");
-            } else {
-                JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
-                System.out.println("Some Error Message Here");
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
+        return false;
     }
-}
-
-        };
-        jTable.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRenderAdd());
-        jTable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditorAdd(event));
-   
-    }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -367,6 +365,24 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
         jText_Quantity.setText(productsArray.get(index).getQuantity().toString());
         jText_Price.setText(productsArray.get(index).getPrice().toString());
     }
+     
+    private int getNextQueueNumber() {
+        int nextQueueNumber = 1; 
+
+        try {
+            String query = "SELECT MAX(No) AS MaxNo FROM repaircart"; 
+            PreparedStatement ps = DB.getConnection().prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            nextQueueNumber = rs.getInt("MaxNo") + 1;
+        }
+        } catch (SQLException ex) {
+            System.out.println("Failed to get next queue number: " + ex.getMessage());
+        }
+
+    return nextQueueNumber;
+}        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button;

@@ -177,6 +177,10 @@ public class Sellproduct2 extends javax.swing.JPanel {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
             updateQuantitiesInDatabase();
+            Main.body.removeAll();            
+            Main.body.add(new Sellproduct3());
+            Main.body.repaint();
+            Main.body.revalidate();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
@@ -297,12 +301,6 @@ public class Sellproduct2 extends javax.swing.JPanel {
             String productId = (String) model.getValueAt(i, 1);
             int quantity = (int) model.getValueAt(i, 4);
         
-            int inventoryQuantity = getInventoryQuantity(productId);
-
-        if (quantity > inventoryQuantity) {
-            quantityExceedsInventory = true;
-            break;
-            }
 
             updateQuantityInDatabase(productId, quantity);
         }
@@ -330,10 +328,7 @@ public class Sellproduct2 extends javax.swing.JPanel {
             } else {
                 System.out.println("Failed to update quantity for product ID " + productId);
             }
-        } catch (SQLException ex) {
-            System.out.println("Failed to update quantity: " + ex.getMessage());
         }
-    }
     
     private int getInventoryQuantity(String productId) {
         int inventoryQuantity = 0;
@@ -349,8 +344,11 @@ public class Sellproduct2 extends javax.swing.JPanel {
         } catch (SQLException ex) {
             System.out.println("Failed to fetch inventory quantity: " + ex.getMessage());
         }
-        return inventoryQuantity;
+    } catch (SQLException ex) {
+        System.out.println("Failed to update quantity: " + ex.getMessage());
     }
+}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button;

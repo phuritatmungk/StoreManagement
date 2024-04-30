@@ -11,7 +11,7 @@ package karnkha;
 public class SalesInfo {
     
     private Integer no;
-    private Integer id;
+    private String id;
     private String name;
     private String category;
     private Integer quantity;
@@ -19,7 +19,7 @@ public class SalesInfo {
     private Double total;
     private String date;
 
-    public SalesInfo(Integer no, Integer id, String date, String name, String category, Integer quantity, Double price) {
+    public SalesInfo(Integer no, String id, String date, String name, String category, Integer quantity, Double price) {
         this.no = no;
         this.id = id;
         this.date = date;
@@ -37,11 +37,11 @@ public class SalesInfo {
         this.no = no;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
