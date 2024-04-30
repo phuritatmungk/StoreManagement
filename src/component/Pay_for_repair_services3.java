@@ -14,9 +14,9 @@ import component.Pay_for_repair_services2;
 import static component.Pay_for_repair_services4.txtId;
 import static component.Pay_for_repair_services4.txtName;
 import static component.Pay_for_repair_services4.txtPhone;
-import static component.Pay_for_repair_services4.txtProduct;
-import static component.Pay_for_repair_services4.txtRepairman;
 import javax.swing.JOptionPane;
+import static component.Pay_for_repair_services4.txtItem;
+import static component.Pay_for_repair_services4.txtRepair;
 public class Pay_for_repair_services3 extends javax.swing.JPanel {
     
     Connection con = null;
@@ -357,9 +357,11 @@ public void showRequestInTable()
     {
         Pay_for_repair_services4.txtName.setText(requestArray.get(index).getName());
         Pay_for_repair_services4.txtPhone.setText(requestArray.get(index).getPhone().toString());
-        Pay_for_repair_services4.txtProduct.setText(requestArray.get(index).getItem());
+        Pay_for_repair_services4.txtItem.setText(requestArray.get(index).getItem());
         Pay_for_repair_services4.txtId.setText(String.valueOf(requestArray.get(index).getId()));
-        Pay_for_repair_services4.txtRepairman.setText(requestArray.get(index).getRepairman());
+        Pay_for_repair_services4.txtRepair.setText(requestArray.get(index).getRepairman());
+        Pay_for_repair_services4.txtDate.setText(requestArray.get(index).getDate());
+        Pay_for_repair_services4.txtStatus.setText(requestArray.get(index).getStatus());
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;

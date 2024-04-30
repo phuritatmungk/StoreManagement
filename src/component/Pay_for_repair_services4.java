@@ -18,7 +18,6 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
     public Pay_for_repair_services4(RepairRequest request) {
         initComponents();
         con = DB.mycon();
-        showSelectedRequestInTable(request.getId());
         showProductsInTable();
     }
 
@@ -30,19 +29,19 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         Topic = new javax.swing.JLabel();
         btnPrint = new javax.swing.JButton();
         btnpay = new javax.swing.JButton();
-        txtRepairman = new javax.swing.JTextField();
+        txtRepair = new javax.swing.JTextField();
         Topic1 = new javax.swing.JLabel();
         Topic2 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
         txtPhone = new javax.swing.JTextField();
         txtName = new javax.swing.JTextField();
-        txtProduct = new javax.swing.JTextField();
+        txtItem = new javax.swing.JTextField();
         txtId = new javax.swing.JTextField();
         Topic3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        txtDate = new javax.swing.JTextField();
+        txtStatus = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -82,25 +81,25 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         });
         add(btnpay, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 650, 200, 50));
 
-        txtRepairman.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtRepairman.setForeground(new java.awt.Color(123, 123, 123));
-        txtRepairman.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtRepairman.setText("wdsawdsadw");
-        txtRepairman.setBorder(null);
-        txtRepairman.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtRepair.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtRepair.setForeground(new java.awt.Color(123, 123, 123));
+        txtRepair.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtRepair.setText("wdsawdsadw");
+        txtRepair.setBorder(null);
+        txtRepair.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtRepairmanFocusGained(evt);
+                txtRepairFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtRepairmanFocusLost(evt);
+                txtRepairFocusLost(evt);
             }
         });
-        txtRepairman.addActionListener(new java.awt.event.ActionListener() {
+        txtRepair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRepairmanActionPerformed(evt);
+                txtRepairActionPerformed(evt);
             }
         });
-        add(txtRepairman, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 650, 110, 30));
+        add(txtRepair, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 650, 110, 30));
 
         Topic1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Topic1.setText("ชำระเงินค่าบริการซ่อม และอุปกรณ์การเกษตร");
@@ -170,25 +169,25 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         });
         add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 600, 110, 30));
 
-        txtProduct.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtProduct.setForeground(new java.awt.Color(123, 123, 123));
-        txtProduct.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtProduct.setText("dawdsa");
-        txtProduct.setBorder(null);
-        txtProduct.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtItem.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtItem.setForeground(new java.awt.Color(123, 123, 123));
+        txtItem.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtItem.setText("dawdsa");
+        txtItem.setBorder(null);
+        txtItem.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtProductFocusGained(evt);
+                txtItemFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtProductFocusLost(evt);
+                txtItemFocusLost(evt);
             }
         });
-        txtProduct.addActionListener(new java.awt.event.ActionListener() {
+        txtItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtProductActionPerformed(evt);
+                txtItemActionPerformed(evt);
             }
         });
-        add(txtProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 600, 60, 30));
+        add(txtItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 600, 60, 30));
 
         txtId.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtId.setForeground(new java.awt.Color(123, 123, 123));
@@ -245,36 +244,49 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 480));
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "No", "Date", "Customer Name", "Phone", "Item", "Employee ID", "Repairman", "Status", ""
+        txtDate.setEditable(false);
+        txtDate.setBackground(new java.awt.Color(255, 255, 255));
+        txtDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtDate.setForeground(new java.awt.Color(255, 255, 255));
+        txtDate.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtDate.setText("dawdasdas");
+        txtDate.setBorder(null);
+        txtDate.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDateFocusGained(evt);
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDateFocusLost(evt);
             }
         });
-        jTable1.setRowHeight(50);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+        txtDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDateActionPerformed(evt);
             }
         });
-        jScrollPane3.setViewportView(jTable1);
+        add(txtDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 680, 150, 30));
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 590, 1240, 520));
+        txtStatus.setEditable(false);
+        txtStatus.setBackground(new java.awt.Color(255, 255, 255));
+        txtStatus.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtStatus.setForeground(new java.awt.Color(255, 255, 255));
+        txtStatus.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtStatus.setText("dawdasdas");
+        txtStatus.setBorder(null);
+        txtStatus.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtStatusFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtStatusFocusLost(evt);
+            }
+        });
+        txtStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStatusActionPerformed(evt);
+            }
+        });
+        add(txtStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 680, 150, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
@@ -282,21 +294,20 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnpayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpayActionPerformed
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        DefaultTableModel model2 = (DefaultTableModel) jTable.getModel();        
+DefaultTableModel model = (DefaultTableModel) jTable.getModel();        
         for (int i = 0; i < model.getRowCount(); i++) {
-        java.util.Date date = new java.util.Date();
-        String name = (String) model.getValueAt(i, 2);
-        int phone = (int) model.getValueAt(i, 3);
-        String item = (String) model.getValueAt(i, 4);
-        int id = (int) model.getValueAt(i, 5);
-        String repair = (String) model.getValueAt(i, 6);
-        String status = (String) model.getValueAt(i, 7);
-        String pid = (String) model2.getValueAt(i,1);
-        String pname = (String) model2.getValueAt(i,2);
-        String category = (String)  model2.getValueAt(i,3);
-        int quantity = (int) model2.getValueAt(i, 4);
-        double price = (double) model2.getValueAt(i, 5);
+        String name = txtName.getText();
+        String item = txtItem.getText();
+        Integer phone = Integer.valueOf(txtPhone.getText().toString());
+        String repair = txtRepair.getText();
+        Integer id = Integer.valueOf(txtId.getText().toString());
+        String status = txtStatus.getText();
+        java.util.Date date  = new java.util.Date();
+        String pid = (String) model.getValueAt(i,1);
+        String pname = (String) model.getValueAt(i,2);
+        String category = (String)  model.getValueAt(i,3);
+        int quantity = (int) model.getValueAt(i, 4);
+        double price = (double) model.getValueAt(i, 5);
         
         String insertQuery = "INSERT INTO `requestpaid` (`Date`, `Name`, `Phone`, `PId`, `Pname`, `Category`,`Quantity`,`Price`,`Item`,`Id`,`Repairman`,`Status`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
@@ -322,17 +333,17 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnpayActionPerformed
 
-    private void txtRepairmanFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRepairmanFocusGained
+    private void txtRepairFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRepairFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtRepairmanFocusGained
+    }//GEN-LAST:event_txtRepairFocusGained
 
-    private void txtRepairmanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRepairmanFocusLost
+    private void txtRepairFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRepairFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtRepairmanFocusLost
+    }//GEN-LAST:event_txtRepairFocusLost
 
-    private void txtRepairmanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRepairmanActionPerformed
+    private void txtRepairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRepairActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtRepairmanActionPerformed
+    }//GEN-LAST:event_txtRepairActionPerformed
 
     private void txtTotalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTotalFocusGained
         // TODO add your handling code here:
@@ -370,17 +381,17 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNameActionPerformed
 
-    private void txtProductFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductFocusGained
+    private void txtItemFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtItemFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtProductFocusGained
+    }//GEN-LAST:event_txtItemFocusGained
 
-    private void txtProductFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductFocusLost
+    private void txtItemFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtItemFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtProductFocusLost
+    }//GEN-LAST:event_txtItemFocusLost
 
-    private void txtProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductActionPerformed
+    private void txtItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtItemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtProductActionPerformed
+    }//GEN-LAST:event_txtItemActionPerformed
 
     private void txtIdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFocusGained
         // TODO add your handling code here:
@@ -407,11 +418,29 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         Main.body.revalidate();
     }//GEN-LAST:event_back_button1MouseClicked
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void txtDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusGained
         // TODO add your handling code here:
-        int index = jTable.getSelectedRow();
-        position = index;
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_txtDateFocusGained
+
+    private void txtDateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDateFocusLost
+
+    private void txtDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDateActionPerformed
+
+    private void txtStatusFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtStatusFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStatusFocusGained
+
+    private void txtStatusFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtStatusFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStatusFocusLost
+
+    private void txtStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStatusActionPerformed
 
     ArrayList<CartInfo> productsArray = new ArrayList<>();
     
@@ -501,29 +530,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         }
         calculateTotalPrice();
     }
-public void showSelectedRequestInTable(int id) {
-        ArrayList<RepairRequest> requestList = getRequestList();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
-        model.setRowCount(0);
-
-        for(int i = 0; i < requestList.size(); i++) {
-            if(requestList.get(i).getId() == id) {
-                Object[] row = new Object[8];
-
-                row[0] = requestList.get(i).getNo();
-                row[1] = requestList.get(i).getDate();
-                row[2] = requestList.get(i).getName();
-                row[3] = requestList.get(i).getPhone();
-                row[4] = requestList.get(i).getItem();
-                row[5] = requestList.get(i).getId();
-                row[6] = requestList.get(i).getRepairman();
-                row[7] = requestList.get(i).getStatus();
-                model.addRow(row);
-
-            }
-        }
-}
     private void calculateTotalPrice() {
         double total = 0;
     
@@ -548,14 +555,14 @@ public void showSelectedRequestInTable(int id) {
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnpay;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable;
-    private javax.swing.JTable jTable1;
+    public static javax.swing.JTextField txtDate;
     public static javax.swing.JTextField txtId;
+    public static javax.swing.JTextField txtItem;
     public static javax.swing.JTextField txtName;
     public static javax.swing.JTextField txtPhone;
-    public static javax.swing.JTextField txtProduct;
-    public static javax.swing.JTextField txtRepairman;
+    public static javax.swing.JTextField txtRepair;
+    public static javax.swing.JTextField txtStatus;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 
