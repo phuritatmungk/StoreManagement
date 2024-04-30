@@ -56,6 +56,8 @@ public class Sellproduct3 extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         btnNext = new javax.swing.JButton();
@@ -68,6 +70,34 @@ public class Sellproduct3 extends javax.swing.JPanel {
         jTable = new javax.swing.JTable();
         Time = new javax.swing.JTextField();
         txtTotal = new javax.swing.JTextField();
+
+        jTable2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "No", "Product ID", "Product Name", "Category", "Cost", "Quantity", "Price", "Total"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2.setRowHeight(50);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jTable2);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -136,17 +166,17 @@ public class Sellproduct3 extends javax.swing.JPanel {
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "No", "Product ID", "Product Name", "Category", "Quantity", "Price", ""
+                "No", "Product ID", "Product Name", "Category", "Quantity", "Price"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -210,39 +240,45 @@ public class Sellproduct3 extends javax.swing.JPanel {
     }//GEN-LAST:event_DateFocusLost
 
     private void btnNext1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNext1ActionPerformed
-        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        
         for (int i = 0; i < model.getRowCount(); i++) {
-        int id = (int) model.getValueAt(i, 1);
-        String name = (String) model.getValueAt(i, 2);
-        String category = (String) model.getValueAt(i, 3);
-        int quantity = (int) model.getValueAt(i, 4);
-        double price = (double) model.getValueAt(i, 5);
-        java.util.Date date = new java.util.Date();
+            String id = (String) model.getValueAt(i, 1);
+            String name = (String) model.getValueAt(i, 2);
+            String category = (String) model.getValueAt(i, 3);
+            double cost = (double) model.getValueAt(i, 4);
+            int quantity = (int) model.getValueAt(i, 5);
+            double price = (double) model.getValueAt(i, 6);
+            java.util.Date date = new java.util.Date();
+            double total = (double) model.getValueAt(i, 7);
 
-        updateInventory(id, quantity);
-        deleteFromCart((int) jTable.getValueAt(i, 0));
-        String insertQuery = "INSERT INTO `sales` (`Id`, `Name`, `Date`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?)";
-        try {
-            Connection con = DB.getConnection();
-            PreparedStatement ps = con.prepareStatement(insertQuery);
-            ps.setInt(1, id);
-            ps.setString(2, name);
-            ps.setDate(3, new java.sql.Date(date.getTime())); 
-            ps.setString(4, category);
-            ps.setInt(5, quantity);
-            ps.setDouble(6, price);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex);
-}
-        String deleteQuery = "DELETE FROM `cart` WHERE `No` = ?";
-        try {
-            PreparedStatement pst = DB.getConnection().prepareStatement(deleteQuery);
-            pst.setInt(1, (int) jTable.getValueAt(i, 0));
-            pst.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
+
+            updateInventory(id, quantity);
+            deleteFromCart((int) jTable.getValueAt(i, 0));
+            String insertQuery = "INSERT INTO `reportsales` (`Date`, `Id`, `List`, `Category`, `Cost`, `Quantity`, `Price`, `Total`) VALUES (?,?,?,?,?,?,?,?)";
+            try {
+                Connection con = DB.getConnection();
+                PreparedStatement ps = con.prepareStatement(insertQuery);
+                ps.setDate(1, new java.sql.Date(date.getTime()));
+                ps.setString(2, id);
+                ps.setString(3, name); 
+                ps.setString(4, category);
+                ps.setDouble(5, cost);
+                ps.setInt(6, quantity);
+                ps.setDouble(7, price);
+                ps.setDouble(8, total);
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+            String deleteQuery = "DELETE FROM `cart` WHERE `No` = ?";
+            try {
+                PreparedStatement pst = DB.getConnection().prepareStatement(deleteQuery);
+                pst.setInt(1, (int) jTable.getValueAt(i, 0));
+                pst.executeUpdate();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
         }
     }//GEN-LAST:event_btnNext1ActionPerformed
 
@@ -271,6 +307,10 @@ public class Sellproduct3 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_TimeActionPerformed
 
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable2MouseClicked
+
     ArrayList<CartInfo> productsArray = new ArrayList<>();
     
     int position = 0;
@@ -289,8 +329,8 @@ public class Sellproduct3 extends javax.swing.JPanel {
             
             while(rs.next())
             {
-                product = new CartInfo(rs.getInt("No"), rs.getInt("Id"),
-                                      rs.getString("Name"), rs.getString("Category"),
+                product = new CartInfo(rs.getInt("No"), rs.getString("Id"),
+                                      rs.getString("Name"), rs.getString("Category"), rs.getDouble("Cost"),
                                       rs.getInt("Quantity"), rs.getDouble("Price"));
                 list.add(product);
             }
@@ -307,10 +347,13 @@ public class Sellproduct3 extends javax.swing.JPanel {
     public void showProductsInTable(){
         ArrayList<CartInfo> productsList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        DefaultTableModel model2 = (DefaultTableModel) jTable2.getModel();
     
         model.setRowCount(0);
+        model2.setRowCount(0);
     
         Object[] row = new Object[6];
+        Object[] row2 = new Object[8];
 
         for (int i = 0; i < productsList.size(); i++) {
             row[0] = productsList.get(i).getNo();
@@ -321,9 +364,21 @@ public class Sellproduct3 extends javax.swing.JPanel {
             row[5] = productsList.get(i).getPrice();
         
             model.addRow(row);
-}
-    
-    calculateTotalPrice();
+        }
+        
+        for (int i = 0; i < productsList.size(); i++) {
+            row2[0] = productsList.get(i).getNo();
+            row2[1] = productsList.get(i).getId();
+            row2[2] = productsList.get(i).getName();
+            row2[3] = productsList.get(i).getCategory();
+            row2[4] = productsList.get(i).getCost();
+            row2[5] = productsList.get(i).getQuantity();
+            row2[6] = productsList.get(i).getPrice();
+            row2[7] = productsList.get(i).getTotal();
+            
+            model2.addRow(row2);
+        }
+        calculateTotalPrice();
 }
     
     private void calculateTotalPrice() {
@@ -340,13 +395,13 @@ public class Sellproduct3 extends javax.swing.JPanel {
     
         txtTotal.setText(String.format("%.2f", total));
     }
-private void updateInventory(int productId, int soldQuantity) {
+private void updateInventory(String productId, int soldQuantity) {
     try {
         Connection con = DB.getConnection();
         String updateQuery = "UPDATE inventory SET Quantity = Quantity - ? WHERE Id = ?";
         PreparedStatement ps = con.prepareStatement(updateQuery);
         ps.setInt(1, soldQuantity);
-        ps.setInt(2, productId);
+        ps.setString(2, productId);
         ps.executeUpdate();
     } catch (SQLException ex) {
         System.out.println(ex);
@@ -376,7 +431,9 @@ private void deleteFromCart(int cartItemId) {
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnNext1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 

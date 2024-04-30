@@ -208,8 +208,8 @@ public class Pay_for_repair_services2 extends javax.swing.JPanel {
             
             while(rs.next())
             {
-                product = new CartInfo(rs.getInt("No"), rs.getInt("Id"),
-                                      rs.getString("Name"), rs.getString("Category"),
+                product = new CartInfo(rs.getInt("No"), rs.getString("Id"),
+                                      rs.getString("Name"), rs.getString("Category"), rs.getDouble("Cost"),
                                       rs.getInt("Quantity"), rs.getDouble("Price"));
                 list.add(product);
             }

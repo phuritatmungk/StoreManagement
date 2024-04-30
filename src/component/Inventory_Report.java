@@ -14,6 +14,7 @@ import karnkha.Main;
 import component.ReportMenu;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import karnkha.InventoryInfo;
 public class Inventory_Report extends javax.swing.JPanel {
 
     Connection con = null;
@@ -181,17 +182,17 @@ public class Inventory_Report extends javax.swing.JPanel {
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Date", "Product ID", "Product Name", "Category", "Cost", "Quantity", "Total"
+                "Date", "Product ID", "Product Name", "Category", "Cost", "Quantity", "Price", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -274,47 +275,40 @@ public static void main (String args []) {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchDateActionPerformed
 
-    ArrayList<InvReport> inventoryArray = new ArrayList<>();
-    
+    ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     int position = 0;
-    public ArrayList<InvReport> getProductsList()
-    {
-        ArrayList<InvReport> list = new ArrayList<>();
-        String selectQuery = "SELECT * FROM `reportinventory`";
-        
-        Statement st;
-        ResultSet rs;
-        
-        try {
-            st = DB.getConnection().createStatement();
-            rs = st.executeQuery(selectQuery);
-            InvReport inventory;
-            
-            while(rs.next())
-            {
-                inventory = new InvReport(rs.getString("Date"), rs.getInt("Id"),
-                                      rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
-                                      rs.getInt("Quantity"), rs.getDouble("Total"));
-                list.add(inventory);
+    private ArrayList<InventoryInfo> getProductsList(String orderBy) {
+        ArrayList<InventoryInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `inventory` " + orderBy;
+
+        try (Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(selectQuery)) {
+
+            while (rs.next()) {
+                InventoryInfo product = new InventoryInfo(
+                    rs.getInt("No"), rs.getString("Id"),
+                    rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
+                    rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price")
+                );
+                list.add(product);
             }
-            
+
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        
-        inventoryArray = list;
+
+        productsArray = list;
         return list;
-        
     }
     
     public void showProductsInTable()
     {
-        ArrayList<InvReport> inventorysList = getProductsList();
+        ArrayList<InventoryInfo> inventorysList = getProductsList("");
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         
         model.setRowCount(0);
         
-        Object[] row = new Object[7];
+        Object[] row = new Object[8];
         
         for(int i = 0; i < inventorysList.size(); i++)
         {
@@ -324,7 +318,8 @@ public static void main (String args []) {
             row[3] = inventorysList.get(i).getCategory();
             row[4] = inventorysList.get(i).getCost();
             row[5] = inventorysList.get(i).getQuantity();
-            row[6] = inventorysList.get(i).getTotal();
+            row[6] = inventorysList.get(i).getPrice();
+            row[7] = inventorysList.get(i).getTotal();
             
             model.addRow(row);
         }

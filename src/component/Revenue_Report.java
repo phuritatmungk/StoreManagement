@@ -14,6 +14,7 @@ import karnkha.RevenueInfo;
 import component.ReportMenu;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import karnkha.SalesReport;
 
 public class Revenue_Report extends javax.swing.JPanel {
 
@@ -160,17 +161,17 @@ public class Revenue_Report extends javax.swing.JPanel {
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Date", "Product ID", "List", "Category", "Cost", "Price", "Quantity", "Income", "Total"
+                "Date", "Product ID", "List", "Category", "Cost", "Price", "Quantity", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -248,13 +249,13 @@ public static void main (String args []) {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchdata__boxFocusLost
 
-    ArrayList<RevenueInfo> revenueArray = new ArrayList<>();
+    ArrayList<SalesReport> salesArray = new ArrayList<>();
     
     int position = 0;
-    public ArrayList<RevenueInfo> getProductsList()
+    public ArrayList<SalesReport> getProductsList()
     {
-        ArrayList<RevenueInfo> list = new ArrayList<>();
-        String selectQuery = "SELECT * FROM `reportrevenue`";
+        ArrayList<SalesReport> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `reportsales`";
         
         Statement st;
         ResultSet rs;
@@ -262,49 +263,47 @@ public static void main (String args []) {
         try {
             st = DB.getConnection().createStatement();
             rs = st.executeQuery(selectQuery);
-            RevenueInfo revenue;
+            SalesReport sales;
             
             while(rs.next())
             {
-                revenue = new RevenueInfo(rs.getString("Date"), rs.getInt("Id"),
+                sales = new SalesReport(rs.getString("Date"), rs.getString("Id"),
                                       rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
-                                      rs.getDouble("Price"), rs.getInt("Quantity"), rs.getDouble("Income"), rs.getDouble("Total"));
-                list.add(revenue);
+                                      rs.getInt("Quantity"), rs.getDouble("Price"), rs.getDouble("Total"));
+                list.add(sales);
             }
             
         } catch (SQLException ex) {
             System.out.println(ex);
         }
         
-        revenueArray = list;
+        salesArray = list;
         return list;
         
     }
     
     public void showProductsInTable()
     {
-        ArrayList<RevenueInfo> revenuesList = getProductsList();
+        ArrayList<SalesReport> salessList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         
         model.setRowCount(0);
         
-        Object[] row = new Object[9];
+        Object[] row = new Object[8];
         
-        for(int i = 0; i < revenuesList.size(); i++)
+        for(int i = 0; i < salessList.size(); i++)
         {
-            row[0] = revenuesList.get(i).getDate();
-            row[1] = revenuesList.get(i).getId();
-            row[2] = revenuesList.get(i).getList();
-            row[3] = revenuesList.get(i).getCategory();
-            row[4] = revenuesList.get(i).getCost();
-            row[5] = revenuesList.get(i).getPrice();
-            row[6] = revenuesList.get(i).getQuantity();
-            row[7] = revenuesList.get(i).getIncome();
-            row[8] = revenuesList.get(i).getTotal();
+            row[0] = salessList.get(i).getDate();
+            row[1] = salessList.get(i).getId();
+            row[2] = salessList.get(i).getName();
+            row[3] = salessList.get(i).getCategory();
+            row[4] = salessList.get(i).getCost();
+            row[5] = salessList.get(i).getQuantity();
+            row[6] = salessList.get(i).getPrice();
+            row[7] = salessList.get(i).getTotal();
             
             model.addRow(row);
         }
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

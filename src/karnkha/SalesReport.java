@@ -8,33 +8,26 @@ package karnkha;
  *
  * @author chait
  */
-public class CartInfo {
+public class SalesReport {
     
-    private Integer no;
     private String id;
     private String name;
     private String category;
     private Integer quantity;
-    private Double price;
-    private Double total;
     private Double cost;
+    private Double total;
+    private String date;
+    private Double price;
 
-    public CartInfo(Integer no, String id, String name, String category, Double cost, Integer quantity, Double price) {
-        this.no = no;
+    public SalesReport(String date, String id, String name, String category, Double cost, Integer quantity, Double price, Double total) {
         this.id = id;
+        this.date = date;
         this.name = name;
         this.category = category;
         this.cost = cost;
         this.quantity = quantity;
         this.price = price;
-    }
-    
-    public Integer getNo() {
-        return no;
-    }
-    
-    public void setNo(Integer no) {
-        this.no = no;
+        this.total = total;
     }
 
     public String getId() {
@@ -69,19 +62,18 @@ public class CartInfo {
         this.quantity = quantity;
     }
 
-    public Double getPrice() {
-        return price;
+    public String getDate() {
+        return date;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setDate(String date) {
+        this.date = date;
     }
     
     /**
      * @return the total
      */
     public Double getTotal() {
-        Double total = getPrice() * getQuantity();
         return total;
     }
 
@@ -98,5 +90,13 @@ public class CartInfo {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

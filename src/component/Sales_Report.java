@@ -14,6 +14,7 @@ import component.ReportMenu;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import karnkha.Main;
+import karnkha.SalesReport;
 public class Sales_Report extends javax.swing.JPanel {
 
     Connection con = null;
@@ -198,17 +199,17 @@ public class Sales_Report extends javax.swing.JPanel {
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Date", "Product ID", "Product Name", "Category", "Cost", "Quantity", "Total"
+                "Date", "Product ID", "Product Name", "Category", "Cost", "Quantity", "Price", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -288,12 +289,12 @@ public static void main (String args []) {
         Main.body.revalidate();
     }//GEN-LAST:event_back_button1MouseClicked
 
-    ArrayList<InvReport> salesArray = new ArrayList<>();
+    ArrayList<SalesReport> salesArray = new ArrayList<>();
     
     int position = 0;
-    public ArrayList<InvReport> getProductsList()
+    public ArrayList<SalesReport> getProductsList()
     {
-        ArrayList<InvReport> list = new ArrayList<>();
+        ArrayList<SalesReport> list = new ArrayList<>();
         String selectQuery = "SELECT * FROM `reportsales`";
         
         Statement st;
@@ -302,13 +303,13 @@ public static void main (String args []) {
         try {
             st = DB.getConnection().createStatement();
             rs = st.executeQuery(selectQuery);
-            InvReport sales;
+            SalesReport sales;
             
             while(rs.next())
             {
-                sales = new InvReport(rs.getString("Date"), rs.getInt("Id"),
+                sales = new SalesReport(rs.getString("Date"), rs.getString("Id"),
                                       rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
-                                      rs.getInt("Quantity"), rs.getDouble("Total"));
+                                      rs.getInt("Quantity"), rs.getDouble("Price"), rs.getDouble("Total"));
                 list.add(sales);
             }
             
@@ -323,12 +324,12 @@ public static void main (String args []) {
     
     public void showProductsInTable()
     {
-        ArrayList<InvReport> salessList = getProductsList();
+        ArrayList<SalesReport> salessList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         
         model.setRowCount(0);
         
-        Object[] row = new Object[7];
+        Object[] row = new Object[8];
         
         for(int i = 0; i < salessList.size(); i++)
         {
@@ -338,7 +339,8 @@ public static void main (String args []) {
             row[3] = salessList.get(i).getCategory();
             row[4] = salessList.get(i).getCost();
             row[5] = salessList.get(i).getQuantity();
-            row[6] = salessList.get(i).getTotal();
+            row[6] = salessList.get(i).getPrice();
+            row[7] = salessList.get(i).getTotal();
             
             model.addRow(row);
         }
