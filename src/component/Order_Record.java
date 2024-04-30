@@ -1135,8 +1135,8 @@ public class Order_Record extends javax.swing.JPanel {
                 psUpdate.setInt(6, quantity);
                 psUpdate.setDouble(7, total);
                 psUpdate.setString(8, remark);
-                psUpdate.setString(9, Field_Product3.getText()); // ใช้ชื่อสินค้าเดิมเพื่ออัปเดตแถวที่ถูกเลือก
-                psUpdate.executeUpdate(); // สั่งให้อัปเดตแถว
+                psUpdate.setString(9, Field_Product3.getText()); 
+                psUpdate.executeUpdate();
 
                 // อัปเดตข้อมูลในตาราง GUI
                 DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
