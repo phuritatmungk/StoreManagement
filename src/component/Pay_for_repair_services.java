@@ -42,6 +42,7 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
                 String category = jText_Category.getText().toString();
                 Integer quantity = Integer.valueOf(jText_Quantity.getText().toString());
                 Double price = Double.valueOf(jText_Price.getText());
+                Double cost = Double.valueOf(jText_Cost.getText());
                     if (quantity == 0) {
                         JOptionPane.showMessageDialog(null, "The product is out of stock.", "Add Product", JOptionPane.ERROR_MESSAGE);
                     return; 
@@ -50,22 +51,19 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "The product is already in the cart.", "Add Product", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                String insertQuery = "INSERT INTO `repaircart`(`No`,`Id`, `Name`, `Category`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?)";
+                String insertQuery = "INSERT INTO `repaircart`(`No`,`Id`, `Name`, `Category`,`Cost`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?,?)";
                         try {
                     PreparedStatement ps = DB.getConnection().prepareStatement(insertQuery);
                     ps.setInt(1, no);
                     ps.setString(2, id);
                     ps.setString(3, name);
                     ps.setString(4, category);
-                    ps.setInt(5, 1);
-                    ps.setDouble(6, price);
+                    ps.setDouble(5, cost);
+                    ps.setInt(6, 1);
+                    ps.setDouble(7, price);
 
                     if (ps.executeUpdate() > 0) {
                         showProductsInTable();
-                        Main.body.removeAll();
-                        Main.body.add(new Sellproduct());
-                        Main.body.repaint();
-                        Main.body.revalidate();
                         System.out.println("New Product Added");
                     } else {
                         JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
@@ -113,6 +111,7 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
         jText_Category = new javax.swing.JTextField();
         jText_Quantity = new javax.swing.JTextField();
         jText_Price = new javax.swing.JTextField();
+        jText_Cost = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -230,7 +229,7 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
         jText_Category.setForeground(new java.awt.Color(255, 255, 255));
         jText_Category.setText("jTextField1");
         jText_Category.setBorder(null);
-        add(jText_Category, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 730, -1, -1));
+        add(jText_Category, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 810, -1, -1));
 
         jText_Quantity.setEditable(false);
         jText_Quantity.setBackground(new java.awt.Color(255, 255, 255));
@@ -250,6 +249,18 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
             }
         });
         add(jText_Price, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 730, -1, -1));
+
+        jText_Cost.setEditable(false);
+        jText_Cost.setBackground(new java.awt.Color(255, 255, 255));
+        jText_Cost.setForeground(new java.awt.Color(255, 255, 255));
+        jText_Cost.setText("0");
+        jText_Cost.setBorder(null);
+        jText_Cost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jText_CostActionPerformed(evt);
+            }
+        });
+        add(jText_Cost, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 730, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
@@ -300,6 +311,10 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
     private void jText_PriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_PriceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jText_PriceActionPerformed
+
+    private void jText_CostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jText_CostActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jText_CostActionPerformed
 
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
     
@@ -362,6 +377,7 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
         jText_Id.setText(productsArray.get(index).getId().toString());
         jText_Name.setText(productsArray.get(index).getName().toString());
         jText_Category.setText(productsArray.get(index).getCategory().toString());
+        jText_Cost.setText(productsArray.get(index).getCost().toString());
         jText_Quantity.setText(productsArray.get(index).getQuantity().toString());
         jText_Price.setText(productsArray.get(index).getPrice().toString());
     }
@@ -391,6 +407,7 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
     private javax.swing.JTextField jText_Category;
+    private javax.swing.JTextField jText_Cost;
     private javax.swing.JTextField jText_Id;
     private javax.swing.JTextField jText_Name;
     private javax.swing.JTextField jText_No;

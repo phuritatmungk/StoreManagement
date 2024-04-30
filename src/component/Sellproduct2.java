@@ -177,10 +177,6 @@ public class Sellproduct2 extends javax.swing.JPanel {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
             updateQuantitiesInDatabase();
-            Main.body.removeAll();            
-            Main.body.add(new Sellproduct3());
-            Main.body.repaint();
-            Main.body.revalidate();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
@@ -295,7 +291,7 @@ public class Sellproduct2 extends javax.swing.JPanel {
     private void updateQuantitiesInDatabase() {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         int rowCount = model.getRowCount();
-        boolean quantityExceedsInventory = false; // เพิ่มตัวแปรเพื่อตรวจสอบว่ามีการกำหนดจำนวนเกินจำนวนใน inventory หรือไม่
+        boolean quantityExceedsInventory = false; 
 
         for (int i = 0; i < rowCount; i++) {
             String productId = (String) model.getValueAt(i, 1);

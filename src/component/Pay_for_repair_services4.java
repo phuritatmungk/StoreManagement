@@ -274,7 +274,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(jTable1);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 930, 1240, 520));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 590, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
@@ -520,13 +520,7 @@ public void showSelectedRequestInTable(int id) {
                 row[6] = requestList.get(i).getRepairman();
                 row[7] = requestList.get(i).getStatus();
                 model.addRow(row);
-                
-                txtName.setText(requestList.get(i).getName());
-                txtPhone.setText(requestList.get(i).getPhone().toString());
-                txtProduct.setText(requestList.get(i).getItem());
-                txtId.setText(String.valueOf(requestList.get(i).getId()));
-                txtRepairman.setText(requestList.get(i).getRepairman());
-                break;
+
             }
         }
 }
