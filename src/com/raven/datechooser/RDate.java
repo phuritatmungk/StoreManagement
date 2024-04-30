@@ -6,14 +6,14 @@ import java.util.Calendar;
 import java.util.Date;
 
 class RDate {
-
-    public int getDay() {
-        return day;
+    public int getYear() {
+        return year;
     }
 
-    public void setDay(int day) {
-        this.day = day;
+    public void setYear(int year) {
+        this.year = year;
     }
+
 
     public int getMonth() {
         return month;
@@ -23,18 +23,18 @@ class RDate {
         this.month = month;
     }
 
-    public int getYear() {
-        return year;
+    public int getDay() {
+        return day;
     }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public RDate(int day, int month, int year) {
+    public void setDay(int day) {
         this.day = day;
-        this.month = month;
+    }
+
+    public RDate(int year, int month, int day) {
         this.year = year;
+        this.month = month;
+        this.day = day;
     }
 
     public RDate(Date date) {
@@ -52,14 +52,14 @@ class RDate {
     }
 
     public void init(Calendar calendar) {
-        day = calendar.get(Calendar.DATE);
-        month = calendar.get(Calendar.MONTH) + 1;
         year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH) + 1;
+        day = calendar.get(Calendar.DATE);
     }
 
-    private int day;
-    private int month;
     private int year;
+    private int month;
+    private int day;
 
     public int compareTo(RDate date) {
         return toDate().compareTo(date.toDate());
@@ -67,7 +67,7 @@ class RDate {
 
     @Override
     public String toString() {
-        return year + "" + month + "" + day;
+        return day + "" + month + "" + year;
     }
 
     public boolean equals(RDate date) {
@@ -80,8 +80,8 @@ class RDate {
     }
 
     public Date toDate() {
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        String st = day + "-" + month + "-" + year;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String st = year + "-" + month + "-" + day;
         try {
             return df.parse(st);
         } catch (ParseException e) {
@@ -90,6 +90,6 @@ class RDate {
     }
 
     public RDate copy() {
-        return new RDate(day, month, year);
+        return new RDate(year, month, day);
     }
 }

@@ -42,9 +42,10 @@ public class Order_Record extends javax.swing.JPanel {
     
     public Order_Record() {
         initComponents();
-        chDate.setTextField(search__box);
         chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
+        chDate.setLabelCurrentDayVisible(false);
+        chDate.setTextField(search__box);
         model = (DefaultTableModel)jTable.getModel();
         chDate.addActionDateChooserListener(new DateChooserAdapter() {
             @Override
@@ -55,13 +56,14 @@ public class Order_Record extends javax.swing.JPanel {
                 loadData("SELECT * FROM `order` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
                 mergeAndRefreshTable();
                 model.fireTableDataChanged();
+                
             }
         });
-                try{
+        try {
             DB.getInstance().getConnection();
         } catch (Exception e) {
             System.err.println(e);
-            }
+    }
                 
         con = DB.mycon();
         showProductsInTable();
@@ -107,7 +109,7 @@ public class Order_Record extends javax.swing.JPanel {
                            allPrices
                        };
                        model.addRow(rowData);
-                       rowCount++; // เพิ่มค่า rowCount ให้เพื่อเปลี่ยนเลข No ในแถวถัดไป
+                       rowCount++; 
                    }
 
                    resultSet.close();
@@ -118,7 +120,8 @@ public class Order_Record extends javax.swing.JPanel {
                }
                jFrame3.setVisible(true);
                Table_Receive_Pro1.setDefaultEditor(Object.class, null); // ไม่ให้แก้ไขเซลล์ในตาราง
-               chDate.setTextField(TextField_Date1);
+               //Dateเพิ่ม
+                chDate.setTextField(TextField_Date1);
                 chDate.setDateSelectionMode(DateChooser.DateSelectionMode.SINGLE_DATE_SELECTED);
                 chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
                addTableMouseListener() ;
@@ -326,6 +329,7 @@ public class Order_Record extends javax.swing.JPanel {
         jLabel16 = new javax.swing.JLabel();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
+        B_date = new javax.swing.JButton();
         search__box = new javax.swing.JTextField();
         Save_bt1 = new javax.swing.JButton();
         delete_bt = new javax.swing.JButton();
@@ -438,6 +442,11 @@ public class Order_Record extends javax.swing.JPanel {
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 570, 110, -1));
 
         Btt_Calender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/calendar.png"))); // NOI18N
+        Btt_Calender.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btt_CalenderMouseClicked(evt);
+            }
+        });
         jPanel2.add(Btt_Calender, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 435, -1, -1));
 
         ComboBox_Type1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -508,6 +517,7 @@ public class Order_Record extends javax.swing.JPanel {
         TextField_Date.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         TextField_Date.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TextField_Date.setText("DD/MM/YYYY");
+        TextField_Date.setEnabled(false);
         jPanel2.add(TextField_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, 210, 30));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -561,6 +571,11 @@ public class Order_Record extends javax.swing.JPanel {
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 570, 110, -1));
 
         Btt_Calender1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/calendar.png"))); // NOI18N
+        Btt_Calender1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btt_Calender1MouseClicked(evt);
+            }
+        });
         jPanel3.add(Btt_Calender1, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 435, -1, -1));
 
         ComboBox_Type2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -640,6 +655,7 @@ public class Order_Record extends javax.swing.JPanel {
         TextField_Date1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         TextField_Date1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TextField_Date1.setText("DD/MM/YYYY");
+        TextField_Date1.setEnabled(false);
         jPanel3.add(TextField_Date1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, 210, 30));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -671,15 +687,22 @@ public class Order_Record extends javax.swing.JPanel {
         Topic.setText("บันทึกการสั่งซื้อสินค้า");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, -1, -1));
 
+        B_date.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/calendar1_1.png"))); // NOI18N
+        B_date.setBorder(null);
+        B_date.setContentAreaFilled(false);
+        B_date.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_dateActionPerformed(evt);
+            }
+        });
+        add(B_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 50, 40, 30));
+
         search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         search__box.setForeground(new java.awt.Color(123, 123, 123));
         search__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        search__box.setText("เลือกช่วงเวลา");
         search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        search__box.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search__boxActionPerformed(evt);
-            }
-        });
+        search__box.setEnabled(false);
         add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 50, 290, 30));
 
         Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -734,10 +757,6 @@ public class Order_Record extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search__boxActionPerformed
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
         int selectedRow = jTable.getSelectedRow();
@@ -938,12 +957,13 @@ public class Order_Record extends javax.swing.JPanel {
         Field_Quantity.setText("");
         jTextArea_Information1.setText("");
     }//GEN-LAST:event_btnAdd1ActionPerformed
-
+//Date เพิ่ม
     private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
         jFrame2.setVisible(true);
         chDate.setTextField(TextField_Date);
         chDate.setDateSelectionMode(DateChooser.DateSelectionMode.SINGLE_DATE_SELECTED);
         chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+        
     }//GEN-LAST:event_Save_bt1ActionPerformed
 
     private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
@@ -1097,6 +1117,18 @@ public class Order_Record extends javax.swing.JPanel {
          thisFrame.dispose();
     }//GEN-LAST:event_back_button1MouseClicked
 
+    private void B_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_dateActionPerformed
+        chDate.showPopup();
+    }//GEN-LAST:event_B_dateActionPerformed
+
+    private void Btt_CalenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btt_CalenderMouseClicked
+        chDate.showPopup();
+    }//GEN-LAST:event_Btt_CalenderMouseClicked
+
+    private void Btt_Calender1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btt_Calender1MouseClicked
+        chDate.showPopup();
+    }//GEN-LAST:event_Btt_Calender1MouseClicked
+
     ArrayList<OrderInfo> productsArray = new ArrayList<>();
     
     int position = 0;
@@ -1214,6 +1246,7 @@ public class Order_Record extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel All_prices;
+    private javax.swing.JButton B_date;
     private javax.swing.JLabel Btt_Calender;
     private javax.swing.JLabel Btt_Calender1;
     private javax.swing.JComboBox<String> ComboBox_Company1;

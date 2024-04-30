@@ -39,7 +39,7 @@ public class DateChooser extends JPanel {
     private RDate[] selectedDateBetween = new RDate[2];
     private int selectedCount = 0;
     private Color themeColor = new Color(67, 127, 251);
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-mm-dd");
     private DateSelectionMode dateSelectionMode = DateSelectionMode.SINGLE_DATE_SELECTED;
     private JPopupMenu popup;
     private JTextField textField;
@@ -173,28 +173,29 @@ public class DateChooser extends JPanel {
 
     public void toDay() {
         setSelectedDate(new Date());
+        setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
     }
 
-    public void setSelectedDate(int day, int month, int year) {
-        setSelectedDate(new RDate(day, month, year));
+    public void setSelectedDate(int year, int month, int day) {
+        setSelectedDate(new RDate(year, month, day));
     }
 
     public void setSelectedDateBetween(
-            int fromDay, int fromMonth, int fromYear, int toDay, int toMonth, int toYear) {
+            int fromYear, int fromMonth, int fromDay, int toYear, int toMonth, int toDay) {
         setSelectedDateBetween(
-                new RDate(fromDay, fromMonth, fromYear), new RDate(toDay, toMonth, toYear), false);
+                new RDate(fromYear, fromMonth, fromDay), new RDate(toYear, toMonth, toDay), false);
     }
 
     public void setSelectedDateBetween(
-            int fromDay,
-            int fromMonth,
             int fromYear,
-            int toDay,
-            int toMonth,
+            int fromMonth,
+            int fromDay,
             int toYear,
+            int toMonth,
+            int toDay,
             boolean displayLast) {
         setSelectedDateBetween(
-                new RDate(fromDay, fromMonth, fromYear), new RDate(toDay, toMonth, toYear), displayLast);
+                new RDate(fromYear, fromMonth, fromDay), new RDate(toYear, toMonth, toDay), displayLast);
     }
 
     public void setSelectedDateBetween(DateBetween dateBetween, boolean displayLast) {
