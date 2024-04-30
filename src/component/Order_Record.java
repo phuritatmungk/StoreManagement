@@ -1080,84 +1080,42 @@ public class Order_Record extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDelete1ActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-            int row = Table_Receive_Pro1.getSelectedRow();
-            if (row >= 0) {
-                DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
-                Field_Product3.setText(model.getValueAt(row, 1).toString());
-                ComboBox_Type2.setSelectedItem(model.getValueAt(row, 2).toString());
-                Field_Cost1.setText(model.getValueAt(row, 4).toString());
-                Field_Quantity1.setText(model.getValueAt(row, 3).toString());
-            } else {
-                JOptionPane.showMessageDialog(null, "กรุณาเลือกแถวที่ต้องการแก้ไข", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-        }
 
+            java.util.Date date = new java.util.Date();
             String name = Field_Product3.getText();
             String category = ComboBox_Type2.getSelectedItem().toString();
-            String costText = Field_Cost1.getText();
-            String quantityText = Field_Quantity1.getText();
+            String company = ComboBox_Company2.getSelectedItem().toString();
+            Double cost = Double.valueOf(Field_Cost1.getText().toString());
+            Integer quantity = Integer.valueOf(Field_Quantity1.getText().toString());
             String remark = jTextArea_Information2.getText();
-
-            // ตรวจสอบว่าข้อมูลว่างหรือไม่
-            if (name.isEmpty() || category.isEmpty() || costText.isEmpty() || quantityText.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบทุกฟิลด์", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            Double cost;
-            try {
-                cost = Double.valueOf(costText);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "กรุณากรอกราคาให้เป็นตัวเลข", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            Integer quantity;
-            try {
-                quantity = Integer.valueOf(quantityText);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "กรุณากรอกจำนวนให้เป็นตัวเลขจำนวนเต็ม", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
             Double total = cost * quantity;
 
+            String updateQuery = "UPDATE `order` SET `Date`=?, `Company`=?, `Name`=?, `Category`=?, `Cost`=?, `Quantity`=?, `Total`=?, `Remark`=? WHERE `Company`=?";
             try {
-                Connection con = DB.mycon();
+                PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
 
-                // อัปเดตข้อมูลในตาราง order
-                String updateQuery = "UPDATE `order` SET `Date` = ?, `Company` = ?, `Name` = ?, `Category` = ?, `Cost` = ?, `Quantity` = ?, `Total` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Remark` IS NOT NULL AND `Name` = ?";
-                PreparedStatement psUpdate = con.prepareStatement(updateQuery);
-                psUpdate.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
-                psUpdate.setString(2, ComboBox_Company2.getSelectedItem().toString());
-                psUpdate.setString(3, name);
-                psUpdate.setString(4, category);
-                psUpdate.setDouble(5, cost);
-                psUpdate.setInt(6, quantity);
-                psUpdate.setDouble(7, total);
-                psUpdate.setString(8, remark);
-                psUpdate.setString(9, Field_Product3.getText()); // ใช้ชื่อสินค้าเดิมเพื่ออัปเดตแถวที่ถูกเลือก
-                psUpdate.executeUpdate(); // สั่งให้อัปเดตแถว
+                ps.setDate(1, new java.sql.Date(date.getTime()));
+                ps.setString(2, company);
+                ps.setString(3, name);
+                ps.setString(4, category);
+                ps.setDouble(5, cost);
+                ps.setInt(6, quantity); 
+                ps.setDouble(7, total);
+                ps.setString(8, remark);
+                ps.setString(9, company);
 
-                // อัปเดตข้อมูลในตาราง GUI
-                DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
-                model.setValueAt(name, row, 1);
-                model.setValueAt(category, row, 2);
-                model.setValueAt(quantity, row, 3);
-                model.setValueAt(cost, row, 4);
-                model.setValueAt(total, row, 5);
+                if(ps.executeUpdate() > 0)
+                {
+                    JOptionPane.showMessageDialog(null, "Edit Product Successfully", "Edit Product", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println("Updated");
+                }
+                else
+                {
+                    System.out.println("Failed");
+                }
 
-                // ล้างข้อมูลในฟิลด์และ JTextArea
-                Field_Product3.setText("");
-                ComboBox_Type2.setSelectedIndex(0);
-                Field_Cost1.setText("");
-                Field_Quantity1.setText("");
-                jTextArea_Information2.setText("");
-
-                // ปิดการเชื่อมต่อกับฐานข้อมูล
-                psUpdate.close();
-                con.close();
             } catch (SQLException ex) {
-                System.out.println("Error: " + ex.getMessage());
+                System.out.println(ex);
             }
     }//GEN-LAST:event_btnEditActionPerformed
 
