@@ -53,7 +53,7 @@ public class Revenue_Report extends javax.swing.JPanel {
 
     private void loadData(String sql) {
         try {
-            model.setRowCount(0); // เคลียร์ข้อมูลในตารางก่อนโหลดข้อมูลใหม่
+            model.setRowCount(0); 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
             PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
@@ -68,7 +68,6 @@ public class Revenue_Report extends javax.swing.JPanel {
             String Quantity = f.format(r.getDouble("Quantity"));
             String Income = f.format(r.getDouble("Income"));
             String Total = f.format(r.getDouble("Total"));
-            // เพิ่มข้อมูลใหม่เข้าไปในตาราง
             model.addRow(new Object[] { Date,Id,List,Category,Cost,Price,Quantity,Income, Total});
             
            

@@ -327,24 +327,35 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
 
         if (txtService.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter the service fee before proceeding with the payment.", "Error", JOptionPane.WARNING_MESSAGE);
-        return; 
+            return; 
         }
-        DefaultTableModel model = (DefaultTableModel) jTable.getModel();       
+
+            double serviceCost = Double.parseDouble(txtService.getText());
+            double total = serviceCost;
+
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
-        String name = txtName.getText();
-        String item = txtItem.getText();
-        Integer phone = Integer.valueOf(txtPhone.getText().toString());
-        String repair = txtRepair.getText();
-        Integer id = Integer.valueOf(txtId.getText().toString());
-        String status = txtStatus.getText();
-        java.util.Date date  = new java.util.Date();
-        String pid = (String) model.getValueAt(i,1);
-        String pname = (String) model.getValueAt(i,2);
-        String category = (String)  model.getValueAt(i,3);
-        int quantity = (int) model.getValueAt(i, 4);
-        double price = (double) model.getValueAt(i, 5);
+            int quantity = (int) model.getValueAt(i, 4);
+            double price = (double) model.getValueAt(i, 5);
+            total += quantity * price; 
+        }
+
+        txtTotal.setText(String.format("%.2f บาท", total));     
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String name = txtName.getText();
+            String item = txtItem.getText();
+            Integer phone = Integer.valueOf(txtPhone.getText().toString());
+            String repair = txtRepair.getText();
+            Integer id = Integer.valueOf(txtId.getText().toString());
+            String status = txtStatus.getText();
+            java.util.Date date  = new java.util.Date();
+            String pid = (String) model.getValueAt(i,1);
+            String pname = (String) model.getValueAt(i,2);
+            String category = (String)  model.getValueAt(i,3);
+            int quantity = (int) model.getValueAt(i, 4);
+            double price = (double) model.getValueAt(i, 5);
         
-        String insertQuery = "INSERT INTO `requestpaid` (`Date`, `Name`, `Phone`, `PId`, `Pname`, `Category`,`Quantity`,`Price`,`Item`,`Id`,`Repairman`,`Status`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+            String insertQuery = "INSERT INTO `requestpaid` (`Date`, `Name`, `Phone`, `PId`, `Pname`, `Category`,`Quantity`,`Price`,`Item`,`Id`,`Repairman`,`Status`,`Total`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             Connection con = DB.getConnection();
             PreparedStatement ps = con.prepareStatement(insertQuery);
@@ -359,7 +370,8 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             ps.setString(9, item);
             ps.setInt(10, id);
             ps.setString(11, repair);
-            ps.setString(12, status);    
+            ps.setString(12, status);
+            ps.setDouble(13,total);
             
             ps.executeUpdate();
             updateInventory(pid, quantity);
@@ -492,20 +504,12 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
     }//GEN-LAST:event_txtServiceActionPerformed
 
     private void txtServiceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtServiceKeyReleased
-        try {
-        String text = txtService.getText();
-
-            if (!isNumericOrDecimal(text)) {
-
-                evt.consume();
-                return;
-            }
-
-        Double.valueOf(text);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Price value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
-            txtService.setText("");
-        }
+    try {
+        Double.parseDouble(txtService.getText());
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(null, "Please enter a valid number for the service fee.", "Error", JOptionPane.WARNING_MESSAGE);
+    return;
+    }
     }//GEN-LAST:event_txtServiceKeyReleased
 
     ArrayList<CartInfo> productsArray = new ArrayList<>();

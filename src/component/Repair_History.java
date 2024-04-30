@@ -1,4 +1,4 @@
-    package component;
+package component;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.raven.datechooser.DateBetween;
@@ -13,7 +13,9 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.RepairRequest;
@@ -55,9 +57,69 @@ public class Repair_History extends javax.swing.JPanel {
         TableActionEventView event = new TableActionEventView() {
             @Override
             public void onView(int row) {
-                System.out.println("View row : " + row);
-                jFrame1.setVisible(true);
+            System.out.println("Edit row : " + row);
+            String date = jTable.getValueAt(row, 1).toString();
+            String company = jTable.getValueAt(row, 2).toString();
+
+            String query = "SELECT * FROM requestpaid WHERE `Date` = ? AND `Name` = ?";
+            try {
+                Connection connection = DB.mycon();
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, date);
+                statement.setString(2, company);
+                ResultSet resultSet = statement.executeQuery();
+
+                DefaultTableModel model = new DefaultTableModel();
+                Table_Order_Record1.setModel(model);
+
+                model.addColumn("No");
+                model.addColumn("PId");
+                model.addColumn("Pname");
+                model.addColumn("Category");
+                model.addColumn("Quantity");
+                model.addColumn("Price");
+
+                double totalAmount = 0.0;
+                int rowCount = 1;
+
+                while (resultSet.next()) {
+                    String pid = resultSet.getString("PId");
+                    String pname = resultSet.getString("Pname");
+                    String category = resultSet.getString("Category");
+                    String quantity = resultSet.getString("Quantity");
+                    String price = resultSet.getString("Price");
+                    String total = resultSet.getString("Total");
+
+                    Object[] rowData = {
+                        rowCount, 
+                        pid,
+                        pname,
+                        category,
+                        quantity,
+                        price,
+                        total
+                    };
+                    model.addRow(rowData);
+                    rowCount++; 
+
+
+                    totalAmount = Double.parseDouble(total);
+                }
+
+                txtTotal.setText(Double.toString(totalAmount));
+
+                resultSet.close();
+                statement.close();
+                connection.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
+
+            jFrame1.setVisible(true);
+            Table_Order_Record1.setDefaultEditor(Object.class, null);
+        }
+
 
         };
         jTable.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRenderView());
@@ -103,7 +165,7 @@ public class Repair_History extends javax.swing.JPanel {
         Company_label = new javax.swing.JLabel();
         ScrollPane_Note = new javax.swing.JScrollPane();
         Table_Order_Record1 = new javax.swing.JTable();
-        All_prices = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JTextField();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         Topic3 = new javax.swing.JLabel();
@@ -155,10 +217,9 @@ public class Repair_History extends javax.swing.JPanel {
 
         jPanel1.add(ScrollPane_Note, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 1440, 590));
 
-        All_prices.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        All_prices.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        All_prices.setText("00.00");
-        jPanel1.add(All_prices, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 680, 250, -1));
+        txtTotal.setEditable(false);
+        txtTotal.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 680, 110, -1));
 
         jFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
 
@@ -307,7 +368,6 @@ public class Repair_History extends javax.swing.JPanel {
             int rowCount = model.getRowCount();
             HashMap<String, String[]> dateMap = new HashMap<>();
 
-            // วนลูปผ่านแถวของตาราง
             for (int i = 0; i < rowCount; i++) {
                 String name = model.getValueAt(i, 2).toString();
                 String date = model.getValueAt(i, 1).toString(); 
@@ -339,10 +399,10 @@ public class Repair_History extends javax.swing.JPanel {
                 String key = entry.getKey();
                 String[] values = entry.getValue();
 
-                String name = key.substring(0, key.length() - 10); // แยกชื่อบริษัทจาก key
-                String date = key.substring(key.length() - 10); // แยกวันที่จาก key
+                String name = key.substring(0, key.length() - 10); 
+                String date = key.substring(key.length() - 10);
 
-                Object[] rowData = new Object[]{newRowNumber++, date, name,  values[0], values[1], values[2], values[3], values[4]}; // ลำดับ, บริษัท, วันที่, จำนวน, รวม
+                Object[] rowData = new Object[]{newRowNumber++, date, name,  values[0], values[1], values[2], values[3], values[4]};
                 model.addRow(rowData);
             }
  
@@ -350,7 +410,6 @@ public class Repair_History extends javax.swing.JPanel {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel All_prices;
     private javax.swing.JLabel Company_label;
     private javax.swing.JLabel Label_Aprices1;
     private javax.swing.JScrollPane ScrollPane_Note;
@@ -363,6 +422,7 @@ public class Repair_History extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
     private javax.swing.JTextField searchdata__box;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 
 }
