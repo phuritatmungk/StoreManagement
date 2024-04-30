@@ -33,7 +33,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         txtRepairman = new javax.swing.JTextField();
         Topic1 = new javax.swing.JLabel();
         Topic2 = new javax.swing.JLabel();
-        txtSearch3 = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
         txtPhone = new javax.swing.JTextField();
         txtName = new javax.swing.JTextField();
         txtProduct = new javax.swing.JTextField();
@@ -110,25 +110,25 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         Topic2.setText("Total :");
         add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 50, -1, 30));
 
-        txtSearch3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSearch3.setForeground(new java.awt.Color(123, 123, 123));
-        txtSearch3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtSearch3.setText("240 บาท");
-        txtSearch3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        txtSearch3.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtTotal.setForeground(new java.awt.Color(123, 123, 123));
+        txtTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtTotal.setText("240 บาท");
+        txtTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtTotal.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSearch3FocusGained(evt);
+                txtTotalFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtSearch3FocusLost(evt);
+                txtTotalFocusLost(evt);
             }
         });
-        txtSearch3.addActionListener(new java.awt.event.ActionListener() {
+        txtTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearch3ActionPerformed(evt);
+                txtTotalActionPerformed(evt);
             }
         });
-        add(txtSearch3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 50, 200, 30));
+        add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 50, 200, 30));
 
         txtPhone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtPhone.setForeground(new java.awt.Color(123, 123, 123));
@@ -334,17 +334,17 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRepairmanActionPerformed
 
-    private void txtSearch3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch3FocusGained
+    private void txtTotalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTotalFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch3FocusGained
+    }//GEN-LAST:event_txtTotalFocusGained
 
-    private void txtSearch3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch3FocusLost
+    private void txtTotalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTotalFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch3FocusLost
+    }//GEN-LAST:event_txtTotalFocusLost
 
-    private void txtSearch3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearch3ActionPerformed
+    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch3ActionPerformed
+    }//GEN-LAST:event_txtTotalActionPerformed
 
     private void txtPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPhoneFocusGained
         // TODO add your handling code here:
@@ -497,7 +497,9 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             row[5] = productsList.get(i).getPrice();
             
             model.addRow(row);
+            
         }
+        calculateTotalPrice();
     }
 public void showSelectedRequestInTable(int id) {
         ArrayList<RepairRequest> requestList = getRequestList();
@@ -528,6 +530,20 @@ public void showSelectedRequestInTable(int id) {
             }
         }
 }
+    private void calculateTotalPrice() {
+        double total = 0;
+    
+        for (int i = 0; i < jTable.getRowCount(); i++) {
+            int quantity = (int) jTable.getValueAt(i, 4);
+            double price = (double) jTable.getValueAt(i, 5);
+        
+            double productTotal = quantity * price;
+        
+            total += productTotal;
+        }
+    
+        txtTotal.setText(String.format("%.2f", total));
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
@@ -546,7 +562,7 @@ public void showSelectedRequestInTable(int id) {
     public static javax.swing.JTextField txtPhone;
     public static javax.swing.JTextField txtProduct;
     public static javax.swing.JTextField txtRepairman;
-    private javax.swing.JTextField txtSearch3;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 
 }
