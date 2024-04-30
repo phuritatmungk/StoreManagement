@@ -43,7 +43,7 @@ public class Order_Record extends javax.swing.JPanel {
         initComponents();
         chDate.setTextField(search__box);
         chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
-        chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+        chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         model = (DefaultTableModel)jTable.getModel();
         chDate.addActionDateChooserListener(new DateChooserAdapter() {
             @Override
@@ -119,7 +119,7 @@ public class Order_Record extends javax.swing.JPanel {
                Table_Receive_Pro1.setDefaultEditor(Object.class, null); // ไม่ให้แก้ไขเซลล์ในตาราง
                chDate.setTextField(TextField_Date1);
                 chDate.setDateSelectionMode(DateChooser.DateSelectionMode.SINGLE_DATE_SELECTED);
-                chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+                chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
                addTableMouseListener() ;
                
            }
@@ -1119,8 +1119,6 @@ public class Order_Record extends javax.swing.JPanel {
                 return;
             }
             
-            
-
             Double total = cost * quantity;
 
             try {
@@ -1147,7 +1145,6 @@ public class Order_Record extends javax.swing.JPanel {
                 model.setValueAt(quantity, row, 3);
                 model.setValueAt(cost, row, 4);
                 model.setValueAt(total, row, 5);
-                model.setValueAt(remark, row, 6);
 
                 // ล้างข้อมูลในฟิลด์และ JTextArea
                 Field_Product3.setText("");
