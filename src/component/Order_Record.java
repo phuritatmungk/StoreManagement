@@ -20,6 +20,8 @@ import karnkha.OrderInfo;
 import com.raven.datechooser.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.TreeMap;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -42,8 +44,8 @@ public class Order_Record extends javax.swing.JPanel {
     public Order_Record() {
         initComponents();
         chDate.setTextField(search__box);
+        chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
-        chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
         model = (DefaultTableModel)jTable.getModel();
         chDate.addActionDateChooserListener(new DateChooserAdapter() {
             @Override
@@ -117,6 +119,9 @@ public class Order_Record extends javax.swing.JPanel {
                }
                jFrame3.setVisible(true);
                Table_Receive_Pro1.setDefaultEditor(Object.class, null); // ไม่ให้แก้ไขเซลล์ในตาราง
+               chDate.setTextField(TextField_Date1);
+                chDate.setDateSelectionMode(DateChooser.DateSelectionMode.SINGLE_DATE_SELECTED);
+                chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
                addTableMouseListener() ;
                
            }
@@ -200,12 +205,37 @@ public class Order_Record extends javax.swing.JPanel {
 
             jFrame1.setVisible(true);
             Table_Order_Record1.setDefaultEditor(Object.class, null);
+            
         }
 
         };
         jTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderEditView());
         jTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditorEditView(event));
         mergeAndRefreshTable();
+        
+         jFrame2.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                e.getWindow().dispose();
+                Main.body.removeAll();
+                Main.body.add(new Order_Record());
+                Main.body.repaint();
+                Main.body.revalidate();
+            }
+        });
+
+        jFrame3.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                e.getWindow().dispose(); 
+                Main.body.removeAll();
+                Main.body.add(new Order_Record());
+                Main.body.repaint();
+                Main.body.revalidate();
+            }
+        });
     }
     
     private void loadData(String sql) {
@@ -295,7 +325,6 @@ public class Order_Record extends javax.swing.JPanel {
         TextField_Date1 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        btnEdit = new javax.swing.JButton();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         search__box = new javax.swing.JTextField();
@@ -550,7 +579,7 @@ public class Order_Record extends javax.swing.JPanel {
                 btnDelete1ActionPerformed(evt);
             }
         });
-        jPanel3.add(btnDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 650, 170, 50));
+        jPanel3.add(btnDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 650, 170, 50));
 
         Field_Cost1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Field_Cost1.setText("0");
@@ -581,7 +610,7 @@ public class Order_Record extends javax.swing.JPanel {
                 btnAdd2ActionPerformed(evt);
             }
         });
-        jPanel3.add(btnAdd2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 650, 170, 50));
+        jPanel3.add(btnAdd2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 650, 170, 50));
 
         Table_Receive_Pro1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         Table_Receive_Pro1.setModel(new javax.swing.table.DefaultTableModel(
@@ -621,15 +650,6 @@ public class Order_Record extends javax.swing.JPanel {
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel16.setText("วันที :");
         jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 430, -1, -1));
-
-        btnEdit.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnEdit.setText("แก้ไข");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 650, 170, 50));
 
         jFrame3.getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
 
@@ -930,6 +950,9 @@ public class Order_Record extends javax.swing.JPanel {
 
     private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
         jFrame2.setVisible(true);
+        chDate.setTextField(TextField_Date);
+        chDate.setDateSelectionMode(DateChooser.DateSelectionMode.SINGLE_DATE_SELECTED);
+        chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
     }//GEN-LAST:event_Save_bt1ActionPerformed
 
     private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
@@ -1075,92 +1098,6 @@ public class Order_Record extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Please select a row to delete", "Remove Product", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnDelete1ActionPerformed
-
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-            int row = Table_Receive_Pro1.getSelectedRow();
-            if (row >= 0) {
-                DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
-                Field_Product3.setText(model.getValueAt(row, 1).toString());
-                ComboBox_Type2.setSelectedItem(model.getValueAt(row, 2).toString());
-                Field_Cost1.setText(model.getValueAt(row, 4).toString());
-                Field_Quantity1.setText(model.getValueAt(row, 3).toString());
-                jTextArea_Information2.setText(model.getValueAt(row, 6).toString());
-            } else {
-                JOptionPane.showMessageDialog(null, "กรุณาเลือกแถวที่ต้องการแก้ไข", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-        }
-
-            String name = Field_Product3.getText();
-            String category = ComboBox_Type2.getSelectedItem().toString();
-            String costText = Field_Cost1.getText();
-            String quantityText = Field_Quantity1.getText();
-            String remark = jTextArea_Information2.getText();
-
-            // ตรวจสอบว่าข้อมูลว่างหรือไม่
-            if (name.isEmpty() || category.isEmpty() || costText.isEmpty() || quantityText.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบทุกฟิลด์", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            Double cost;
-            try {
-                cost = Double.valueOf(costText);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "กรุณากรอกราคาให้เป็นตัวเลข", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            Integer quantity;
-            try {
-                quantity = Integer.valueOf(quantityText);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "กรุณากรอกจำนวนให้เป็นตัวเลขจำนวนเต็ม", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            
-
-            Double total = cost * quantity;
-
-            try {
-                Connection con = DB.mycon();
-
-                // อัปเดตข้อมูลในตาราง order
-                String updateQuery = "UPDATE `order` SET `Date` = ?, `Company` = ?, `Name` = ?, `Category` = ?, `Cost` = ?, `Quantity` = ?, `Total` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Remark` IS NOT NULL AND `Name` = ?";
-                PreparedStatement psUpdate = con.prepareStatement(updateQuery);
-                psUpdate.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
-                psUpdate.setString(2, ComboBox_Company2.getSelectedItem().toString());
-                psUpdate.setString(3, name);
-                psUpdate.setString(4, category);
-                psUpdate.setDouble(5, cost);
-                psUpdate.setInt(6, quantity);
-                psUpdate.setDouble(7, total);
-                psUpdate.setString(8, remark);
-                psUpdate.setString(9, Field_Product3.getText()); 
-                psUpdate.executeUpdate();
-
-                // อัปเดตข้อมูลในตาราง GUI
-                DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
-                model.setValueAt(name, row, 1);
-                model.setValueAt(category, row, 2);
-                model.setValueAt(quantity, row, 3);
-                model.setValueAt(cost, row, 4);
-                model.setValueAt(total, row, 5);
-                model.setValueAt(remark, row, 6);
-
-                // ล้างข้อมูลในฟิลด์และ JTextArea
-                Field_Product3.setText("");
-                ComboBox_Type2.setSelectedIndex(0);
-                Field_Cost1.setText("");
-                Field_Quantity1.setText("");
-                jTextArea_Information2.setText("");
-
-                // ปิดการเชื่อมต่อกับฐานข้อมูล
-                psUpdate.close();
-                con.close();
-            } catch (SQLException ex) {
-                System.out.println("Error: " + ex.getMessage());
-            }
-    }//GEN-LAST:event_btnEditActionPerformed
 
     private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
          Home homePage = new Home();
@@ -1317,7 +1254,6 @@ public class Order_Record extends javax.swing.JPanel {
     private javax.swing.JButton btnAdd2;
     private javax.swing.JButton btnDelete1;
     private javax.swing.JButton btnDelete2;
-    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSave1;
     private javax.swing.JButton delete_bt;

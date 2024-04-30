@@ -32,7 +32,7 @@ public class Order_Received extends javax.swing.JPanel {
         initComponents();
         chDate.setTextField(searchDate);
         chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
-        chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+        chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         model = (DefaultTableModel)jTable.getModel();
         chDate.addActionDateChooserListener(new DateChooserAdapter() {
             @Override
