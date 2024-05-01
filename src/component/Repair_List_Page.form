@@ -872,17 +872,17 @@
           <Color blue="7b" green="7b" red="7b" type="rgb"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="5">
+          <StringArray count="4">
             <StringItem index="0" value="&#xe04;&#xe49;&#xe19;&#xe2b;&#xe32;&#xe2a;&#xe16;&#xe32;&#xe19;&#xe30;"/>
-            <StringItem index="1" value="&#xe23;&#xe2d;&#xe14;&#xe33;&#xe40;&#xe19;&#xe34;&#xe19;&#xe01;&#xe32;&#xe23;"/>
+            <StringItem index="1" value="&#xe23;&#xe2d;&#xe14;&#xe4d;&#xe32;&#xe40;&#xe19;&#xe34;&#xe19;&#xe01;&#xe32;&#xe23;"/>
             <StringItem index="2" value="&#xe01;&#xe33;&#xe25;&#xe31;&#xe07;&#xe14;&#xe33;&#xe40;&#xe19;&#xe34;&#xe19;&#xe01;&#xe32;&#xe23;"/>
             <StringItem index="3" value="&#xe40;&#xe2a;&#xe23;&#xe47;&#xe08;&#xe2a;&#xe34;&#xe49;&#xe19;"/>
-            <StringItem index="4" value="&#xe0a;&#xe33;&#xe23;&#xe30;&#xe40;&#xe2a;&#xe23;&#xe47;&#xe08;&#xe2a;&#xe34;&#xe49;&#xe19;"/>
           </StringArray>
         </Property>
       </Properties>
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="Status_ComboItemStateChanged"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Status_ComboActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

@@ -69,44 +69,44 @@ public class Maintenance extends javax.swing.JPanel {
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel6.setText("ผู้ส่งซ่อม :");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel7.setText("หมายเลขโทรศัพท์ :");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, -1, -1));
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel8.setText("อุปกรณ์ที่รับซ่อม :");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 190, -1, -1));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 160, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel9.setText("รหัสพนักงาน :");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, -1, -1));
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "เลือกรหัสพนักงาน" }));
         jComboBox1.setToolTipText("");
         jComboBox1.setBorder(null);
-        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 190, 30));
+        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 190, 30));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel10.setText("ผู้รับซ่อม :");
-        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 290, -1, -1));
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 270, -1, -1));
 
         jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "เลือกพนักงาน" }));
         jComboBox2.setToolTipText("");
         jComboBox2.setBorder(null);
         jComboBox2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 290, 190, 30));
+        add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 270, 190, 30));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel11.setText("อาการเสีย :");
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, -1, -1));
+        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel12.setText("สถานะสินค้า :");
-        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 290, -1, -1));
+        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 270, -1, -1));
 
         jTextArea2.setColumns(20);
         jTextArea2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -114,7 +114,7 @@ public class Maintenance extends javax.swing.JPanel {
         jTextArea2.setBorder(null);
         jScrollPane3.setViewportView(jTextArea2);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 360, 160));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, 360, 160));
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnSave.setText("บันทึก");
@@ -124,7 +124,7 @@ public class Maintenance extends javax.swing.JPanel {
                 btnSaveActionPerformed(evt);
             }
         });
-        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 590, 130, 50));
+        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 610, 130, 50));
 
         txtCustomer.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtCustomer.setForeground(new java.awt.Color(123, 123, 123));
@@ -138,10 +138,10 @@ public class Maintenance extends javax.swing.JPanel {
                 txtCustomerFocusLost(evt);
             }
         });
-        add(txtCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 210, 30));
+        add(txtCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 210, 30));
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 210, 30));
+        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 210, 30));
 
         txtPhone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtPhone.setForeground(new java.awt.Color(123, 123, 123));
@@ -160,10 +160,10 @@ public class Maintenance extends javax.swing.JPanel {
                 txtPhoneKeyReleased(evt);
             }
         });
-        add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, 210, 30));
+        add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 160, 210, 30));
 
         jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 220, 210, 30));
+        add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, 210, 30));
 
         txtBrokenItem.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtBrokenItem.setForeground(new java.awt.Color(123, 123, 123));
@@ -177,18 +177,18 @@ public class Maintenance extends javax.swing.JPanel {
                 txtBrokenItemFocusLost(evt);
             }
         });
-        add(txtBrokenItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 190, 210, 30));
+        add(txtBrokenItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 160, 210, 30));
 
         jSeparator7.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 220, 210, 30));
+        add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 190, 210, 30));
 
         jSeparator8.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 320, 130, 30));
+        add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 300, 130, 30));
 
         txtStatus.setEditable(false);
         txtStatus.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtStatus.setForeground(new java.awt.Color(123, 123, 123));
-        txtStatus.setText("   รอดำเนินการ");
+        txtStatus.setText("รอดำเนินการ");
         txtStatus.setBorder(null);
         txtStatus.setFocusable(false);
         txtStatus.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -197,6 +197,11 @@ public class Maintenance extends javax.swing.JPanel {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtStatusFocusLost(evt);
+            }
+        });
+        txtStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStatusActionPerformed(evt);
             }
         });
         add(txtStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 290, 130, 30));
@@ -341,6 +346,10 @@ public class Maintenance extends javax.swing.JPanel {
             txtBrokenItem.setForeground(new Color(0, 0, 0));
         }
     }//GEN-LAST:event_txtBrokenItemFocusGained
+
+    private void txtStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStatusActionPerformed
     
     private boolean isNumeric(String input) {
 
