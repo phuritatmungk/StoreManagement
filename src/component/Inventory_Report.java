@@ -48,6 +48,7 @@ public class Inventory_Report extends javax.swing.JPanel {
         
         con = DB.mycon();
         showProductsInTable();
+        calculateQuantity();
     }
 
     private void loadData(String sql) {
@@ -73,6 +74,7 @@ public class Inventory_Report extends javax.swing.JPanel {
         r.close();
         p.close();
         model.fireTableDataChanged();
+        calculateQuantity();
     } catch (Exception e) {
         System.err.println(e);
     }
@@ -341,7 +343,20 @@ public class Inventory_Report extends javax.swing.JPanel {
         txtSum.setText(String.format("%.2f บาท", total));
         
     }
-
+private void calculateQuantity() {
+    double total = 0.0;
+    DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+    int rowCount = model.getRowCount();
+    
+    for (int i = 0; i < rowCount; i++) {
+        Object value = model.getValueAt(i, 5); 
+        if (value != null) {
+            total += Double.parseDouble(value.toString());
+        }
+    }
+    
+    txtSum2.setText(String.valueOf(total));
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel B_Date;
     private javax.swing.JLabel Topic;
