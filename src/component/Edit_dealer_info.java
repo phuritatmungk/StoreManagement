@@ -320,7 +320,7 @@ public class Edit_dealer_info extends javax.swing.JPanel {
                 String sname = txtSname.getText();
                 String company = txtCompany.getText();
                 String address = txtAddress.getText();
-                Integer phone = Integer.valueOf(txtPhone.getText().toString());
+                String phone = txtPhone.getText();
                 String img = jTextField_imgPath.getText();
 
                 if (!isDistributorNameExists(company_var,no)) {
@@ -330,7 +330,7 @@ public class Edit_dealer_info extends javax.swing.JPanel {
                     ps.setString(1, company);
                     ps.setString(2, fname);
                     ps.setString(3, sname);
-                    ps.setInt(4, phone);
+                    ps.setString(4, phone);
                     ps.setString(5, address); 
                     ps.setString(6,img);
                     ps.setInt(7, no);

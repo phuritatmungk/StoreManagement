@@ -4,6 +4,7 @@ import com.raven.datechooser.DateBetween;
 import com.raven.datechooser.DateChooser;
 import com.raven.datechooser.listener.DateChooserAction;
 import com.raven.datechooser.listener.DateChooserAdapter;
+import java.awt.Color;
 
 import java.sql.*;
 import java.text.DecimalFormat;
@@ -421,7 +422,21 @@ public class Order_Record extends javax.swing.JPanel {
         jPanel2.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 650, 170, 50));
 
         Field_Quantity.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Quantity.setForeground(new java.awt.Color(123, 123, 123));
         Field_Quantity.setText("0");
+        Field_Quantity.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Field_QuantityFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Field_QuantityFocusLost(evt);
+            }
+        });
+        Field_Quantity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Field_QuantityKeyReleased(evt);
+            }
+        });
         jPanel2.add(Field_Quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 500, 210, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -449,7 +464,21 @@ public class Order_Record extends javax.swing.JPanel {
         jPanel2.add(ComboBox_Company1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 430, 210, 30));
 
         Field_Cost.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Cost.setForeground(new java.awt.Color(123, 123, 123));
         Field_Cost.setText("0");
+        Field_Cost.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Field_CostFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Field_CostFocusLost(evt);
+            }
+        });
+        Field_Cost.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Field_CostKeyReleased(evt);
+            }
+        });
         jPanel2.add(Field_Cost, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 570, 210, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -502,7 +531,16 @@ public class Order_Record extends javax.swing.JPanel {
         jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 1470, 350));
 
         Field_Product2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Product2.setForeground(new java.awt.Color(123, 123, 123));
         Field_Product2.setText("ชื่อสินค้า");
+        Field_Product2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Field_Product2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Field_Product2FocusLost(evt);
+            }
+        });
         jPanel2.add(Field_Product2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 500, 280, -1));
 
         TextField_Date.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -550,7 +588,21 @@ public class Order_Record extends javax.swing.JPanel {
         jPanel3.add(btnSave1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 650, 170, 50));
 
         Field_Quantity1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Quantity1.setForeground(new java.awt.Color(123, 123, 123));
         Field_Quantity1.setText("0");
+        Field_Quantity1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Field_Quantity1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Field_Quantity1FocusLost(evt);
+            }
+        });
+        Field_Quantity1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Field_Quantity1KeyReleased(evt);
+            }
+        });
         jPanel3.add(Field_Quantity1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 500, 210, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -573,8 +625,8 @@ public class Order_Record extends javax.swing.JPanel {
         ComboBox_Type2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ประเภทสินค้า", "เครื่องยนต์และอุปกรณ์การเกษตร", "อะไหล่เครื่องดีเซล", "อะไหล่เครื่องเบนซิน", "อะไหล่เครื่องตัดหญ้า", "อะไหล่เครื่องตัดไม้", "อะไหล่เป้เครื่องพ่นยา", "อะไหล่เป้พ่นยาไฟฟ้า", "อะไหล่ปั้มพ่นยา", "อะไหล่เครื่องเจาะดิน", "อะไหล่ปั้มน้ำ", "อะไหล่ปั้มน้ำไฟฟ้า", "อุปกรณ์อื่นๆ" }));
         jPanel3.add(ComboBox_Type2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 570, 290, 30));
 
-        ComboBox_Company2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        ComboBox_Company2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Test", "asd" }));
+        ComboBox_Company2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        ComboBox_Company2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "เลือกบริษัท" }));
         jPanel3.add(ComboBox_Company2, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 430, 210, 30));
 
         btnDelete1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -587,7 +639,21 @@ public class Order_Record extends javax.swing.JPanel {
         jPanel3.add(btnDelete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 650, 170, 50));
 
         Field_Cost1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Cost1.setForeground(new java.awt.Color(123, 123, 123));
         Field_Cost1.setText("0");
+        Field_Cost1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Field_Cost1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Field_Cost1FocusLost(evt);
+            }
+        });
+        Field_Cost1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Field_Cost1KeyReleased(evt);
+            }
+        });
         jPanel3.add(Field_Cost1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 570, 210, -1));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -640,7 +706,16 @@ public class Order_Record extends javax.swing.JPanel {
         jPanel3.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 1470, 350));
 
         Field_Product3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Product3.setForeground(new java.awt.Color(123, 123, 123));
         Field_Product3.setText("ชื่อสินค้า");
+        Field_Product3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Field_Product3FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Field_Product3FocusLost(evt);
+            }
+        });
         jPanel3.add(Field_Product3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 500, 290, -1));
 
         TextField_Date1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -820,63 +895,65 @@ public class Order_Record extends javax.swing.JPanel {
            JOptionPane.showMessageDialog(null, "ไม่มีข้อมูลในตารางที่จะบันทึก", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
            return;
        }
+       String comstr = ComboBox_Company1.getSelectedItem().toString();
+       if(comstr.equals("เลือกบริษัท")) {
+           JOptionPane.showMessageDialog(null, "You must select distributor", "Error", JOptionPane.WARNING_MESSAGE);
+       } else {
+            String insertQuery = "INSERT INTO `order`(`Date`, `Company`, `Name`, `Category`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
+            String updateQuery = "UPDATE `order` SET `Name` = ?, `Company` = ?, `Remark` = ? WHERE `Date` = ? AND `Name` = ? AND `Company` = ?";
 
-       String insertQuery = "INSERT INTO `order`(`Date`, `Company`, `Name`, `Category`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            try {
 
+                Connection con = DB.mycon();
+                PreparedStatement psInsert = con.prepareStatement(insertQuery);
+                PreparedStatement psUpdate = con.prepareStatement(updateQuery);
 
-       String updateQuery = "UPDATE `order` SET `Name` = ?, `Company` = ?, `Remark` = ? WHERE `Date` = ? AND `Name` = ? AND `Company` = ?";
+                for (int i = 0; i < Table_Receive_Pro.getRowCount(); i++) {
 
-       try {
+                    String date = TextField_Date.getText(); 
+                    String company = ComboBox_Company1.getSelectedItem().toString(); 
+                    String name = Table_Receive_Pro.getValueAt(i, 1).toString();
+                    String category = Table_Receive_Pro.getValueAt(i, 2).toString();
+                    Double cost = Double.parseDouble(Table_Receive_Pro.getValueAt(i, 4).toString());
+                    Integer quantity = Integer.parseInt(Table_Receive_Pro.getValueAt(i, 3).toString());
+                    Double total = Double.parseDouble(Table_Receive_Pro.getValueAt(i, 5).toString());
+                    String remark = jTextArea_Information1.getText();
 
-           Connection con = DB.mycon();
-           PreparedStatement psInsert = con.prepareStatement(insertQuery);
-           PreparedStatement psUpdate = con.prepareStatement(updateQuery);
+                    if (isDataExists(date, company, name, con)) {
+                        psUpdate.setString(1, name);
+                        psUpdate.setString(2, company);
+                        psUpdate.setString(3, remark);
+                        psUpdate.setString(4, date);
+                        psUpdate.setString(5, name);
+                        psUpdate.setString(6, company);
+                        psUpdate.executeUpdate();
+                    } else {
+                        psInsert.setString(1, date); // ปรับรูปแบบของวันที่เป็น java.sql.Date
+                        psInsert.setString(2, company);
+                        psInsert.setString(3, name);
+                        psInsert.setString(4, category);
+                        psInsert.setDouble(5, cost);
+                        psInsert.setInt(6, quantity);
+                        psInsert.setDouble(7, total);
+                        psInsert.setString(8, remark);
+                        psInsert.executeUpdate();
+                    }
+                }
 
-           for (int i = 0; i < Table_Receive_Pro.getRowCount(); i++) {
+                jFrame2.setVisible(false);
+                Main.body.removeAll();
+                Main.body.add(new Order_Record());
+                Main.body.repaint();
+                Main.body.revalidate();
+                JOptionPane.showMessageDialog(null, "บันทึกข้อมูลเรียบร้อยแล้ว", "บันทึกข้อมูล", JOptionPane.INFORMATION_MESSAGE);
 
-               String date = TextField_Date.getText(); 
-               String company = ComboBox_Company1.getSelectedItem().toString(); 
-               String name = Table_Receive_Pro.getValueAt(i, 1).toString();
-               String category = Table_Receive_Pro.getValueAt(i, 2).toString();
-               Double cost = Double.parseDouble(Table_Receive_Pro.getValueAt(i, 4).toString());
-               Integer quantity = Integer.parseInt(Table_Receive_Pro.getValueAt(i, 3).toString());
-               Double total = Double.parseDouble(Table_Receive_Pro.getValueAt(i, 5).toString());
-               String remark = jTextArea_Information1.getText();
-
-               if (isDataExists(date, company, name, con)) {
-                   psUpdate.setString(1, name);
-                   psUpdate.setString(2, company);
-                   psUpdate.setString(3, remark);
-                   psUpdate.setString(4, date);
-                   psUpdate.setString(5, name);
-                   psUpdate.setString(6, company);
-                   psUpdate.executeUpdate();
-               } else {
-                   psInsert.setString(1, date); // ปรับรูปแบบของวันที่เป็น java.sql.Date
-                   psInsert.setString(2, company);
-                   psInsert.setString(3, name);
-                   psInsert.setString(4, category);
-                   psInsert.setDouble(5, cost);
-                   psInsert.setInt(6, quantity);
-                   psInsert.setDouble(7, total);
-                   psInsert.setString(8, remark);
-                   psInsert.executeUpdate();
-               }
-           }
-
-           jFrame2.setVisible(false);
-           Main.body.removeAll();
-           Main.body.add(new Order_Record());
-           Main.body.repaint();
-           Main.body.revalidate();
-           JOptionPane.showMessageDialog(null, "บันทึกข้อมูลเรียบร้อยแล้ว", "บันทึกข้อมูล", JOptionPane.INFORMATION_MESSAGE);
-
-           psInsert.close();
-           psUpdate.close();
-           con.close();
-       } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, "เกิดข้อผิดพลาดในการบันทึกข้อมูล: " + ex.getMessage(), "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
+                psInsert.close();
+                psUpdate.close();
+                con.close();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "เกิดข้อผิดพลาดในการบันทึกข้อมูล: " + ex.getMessage(), "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
+            }
        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -908,42 +985,23 @@ public class Order_Record extends javax.swing.JPanel {
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
         String name = Field_Product2.getText();
         String category = ComboBox_Type1.getSelectedItem().toString();
-        String costText = Field_Cost.getText();
-        String quantityText = Field_Quantity.getText();
-
-        if (name.isEmpty() || category.isEmpty() || costText.isEmpty() || quantityText.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบทุกฟิลด์", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Double cost;
-        try {
-            cost = Double.valueOf(costText);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "กรุณากรอกราคาให้เป็นตัวเลข", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Integer quantity;
-        try {
-            quantity = Double.valueOf(quantityText).intValue();
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "กรุณากรอกจำนวนให้เป็นตัวเลขจำนวนเต็ม", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
+        Double cost = Double.valueOf(Field_Cost.getText());
+        Integer quantity = Integer.valueOf(Field_Quantity.getText());
         Double total = cost * quantity;
         String remark = jTextArea_Information1.getText();
+        if (checkEmptyFields()) {
+            DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro.getModel();
+            Object[] rowData = new Object[]{model.getRowCount() + 1, name, category, quantity, cost, total, remark};
+            model.addRow(rowData);
 
-        DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro.getModel();
-        Object[] rowData = new Object[]{model.getRowCount() + 1, name, category, quantity, cost, total, remark};
-        model.addRow(rowData);
-
-        Field_Product2.setText("");
-        ComboBox_Type1.setSelectedIndex(0);
-        Field_Cost.setText("");
-        Field_Quantity.setText("");
-        jTextArea_Information1.setText("");
+            Field_Product2.setText("");
+            ComboBox_Type1.setSelectedIndex(0);
+            Field_Cost.setText("");
+            Field_Quantity.setText("");
+            jTextArea_Information1.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "You must insert all fields", "Error", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnAdd1ActionPerformed
 
     private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
@@ -955,104 +1013,89 @@ public class Order_Record extends javax.swing.JPanel {
     }//GEN-LAST:event_Save_bt1ActionPerformed
 
     private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
-           jFrame3.setVisible(false);
-           
-           try {
-            Connection con = DB.mycon();
+ 
+        String comstr2 = ComboBox_Company2.getSelectedItem().toString();
+        if (comstr2.equals("เลือกบริษัท")) {
+            JOptionPane.showMessageDialog(null, "You must select distributor", "Error", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                Connection con = DB.mycon();
 
-            String updateAllQuery = "UPDATE `order` SET `Date` = ?, `Company` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Remark` IS NOT NULL";
-            PreparedStatement psUpdateAll = con.prepareStatement(updateAllQuery);
-            psUpdateAll.setString(1, TextField_Date1.getText());
-            psUpdateAll.setString(2, ComboBox_Company2.getSelectedItem().toString());
-            psUpdateAll.setString(3, jTextArea_Information2.getText());
-            psUpdateAll.executeUpdate(); // สั่งให้อัปเดตข้อมูลในตารางทั้งหมด
+                String updateAllQuery = "UPDATE `order` SET `Date` = ?, `Company` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Remark` IS NOT NULL";
+                PreparedStatement psUpdateAll = con.prepareStatement(updateAllQuery);
+                psUpdateAll.setString(1, TextField_Date1.getText());
+                psUpdateAll.setString(2, ComboBox_Company2.getSelectedItem().toString());
+                psUpdateAll.setString(3, jTextArea_Information2.getText());
+                psUpdateAll.executeUpdate(); // สั่งให้อัปเดตข้อมูลในตารางทั้งหมด
 
-            psUpdateAll.close();
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
+                psUpdateAll.close();
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Error: " + ex.getMessage());
+            }
+
+            Main.body.removeAll();
+            Main.body.add(new Order_Record());
+            Main.body.repaint();
+            Main.body.revalidate();
+            JOptionPane.showMessageDialog(null, "บันทึกข้อมูลเรียบร้อยแล้ว", "บันทึกข้อมูล", JOptionPane.INFORMATION_MESSAGE);
+            jFrame3.setVisible(false);
         }
-           
-           Main.body.removeAll();
-           Main.body.add(new Order_Record());
-           Main.body.repaint();
-           Main.body.revalidate();
-           JOptionPane.showMessageDialog(null, "บันทึกข้อมูลเรียบร้อยแล้ว", "บันทึกข้อมูล", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnSave1ActionPerformed
 
     private void btnAdd2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd2ActionPerformed
         String name = Field_Product3.getText();
         String category = ComboBox_Type2.getSelectedItem().toString();
-        String costText = Field_Cost1.getText();
-        String quantityText = Field_Quantity1.getText();
-
-        if (name.isEmpty() || category.isEmpty() || costText.isEmpty() || quantityText.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบทุกฟิลด์", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Double cost;
-        try {
-            cost = Double.valueOf(costText);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "กรุณากรอกราคาให้เป็นตัวเลข", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Integer quantity;
-        try {
-            quantity = Integer.valueOf(quantityText);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "กรุณากรอกจำนวนให้เป็นตัวเลขจำนวนเต็ม", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
+        Double cost = Double.valueOf(Field_Cost.getText());
+        Integer quantity = Integer.valueOf(Field_Quantity.getText());
         Double total = cost * quantity;
         String remark = jTextArea_Information2.getText();
+        
+        if (checkEmptyFields2()) {
+            try {
+                Connection con = DB.mycon();
 
-        try {
-            Connection con = DB.mycon();
+                String updateAllQuery = "UPDATE `order` SET `Date` = ?, `Company` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Remark` IS NOT NULL";
+                PreparedStatement psUpdateAll = con.prepareStatement(updateAllQuery);
+                psUpdateAll.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
+                psUpdateAll.setString(2, ComboBox_Company2.getSelectedItem().toString());
+                psUpdateAll.setString(3, remark);
+                psUpdateAll.executeUpdate(); 
 
-            // อัปเดตแถวทั้งหมดในตาราง order ที่มีข้อมูลว่าง (null) ในฟิลด์ Date, Company, และ Remark
-            String updateAllQuery = "UPDATE `order` SET `Date` = ?, `Company` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Remark` IS NOT NULL";
-            PreparedStatement psUpdateAll = con.prepareStatement(updateAllQuery);
-            psUpdateAll.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
-            psUpdateAll.setString(2, ComboBox_Company2.getSelectedItem().toString());
-            psUpdateAll.setString(3, remark);
-            psUpdateAll.executeUpdate(); 
+                String insertQuery = "INSERT INTO `order`(`Date`, `Company`, `Name`, `Category`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement psInsert = con.prepareStatement(insertQuery);
+                psInsert.setString(1, TextField_Date1.getText());
+                psInsert.setString(2, ComboBox_Company2.getSelectedItem().toString());
+                psInsert.setString(3, name);
+                psInsert.setString(4, category);
+                psInsert.setDouble(5, cost);
+                psInsert.setInt(6, quantity);
+                psInsert.setDouble(7, total);
+                psInsert.setString(8, remark);
+                psInsert.executeUpdate(); 
 
-            String insertQuery = "INSERT INTO `order`(`Date`, `Company`, `Name`, `Category`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement psInsert = con.prepareStatement(insertQuery);
-            psInsert.setString(1, TextField_Date1.getText());
-            psInsert.setString(2, ComboBox_Company2.getSelectedItem().toString());
-            psInsert.setString(3, name);
-            psInsert.setString(4, category);
-            psInsert.setDouble(5, cost);
-            psInsert.setInt(6, quantity);
-            psInsert.setDouble(7, total);
-            psInsert.setString(8, remark);
-            psInsert.executeUpdate(); 
+                DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
+                Object[] rowData = new Object[]{model.getRowCount() + 1, name, category, quantity, cost, total, remark};
+                model.addRow(rowData);
 
-            // อัปเดตข้อมูลในตาราง GUI
-            DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
-            Object[] rowData = new Object[]{model.getRowCount() + 1, name, category, quantity, cost, total, remark};
-            model.addRow(rowData);
+                Field_Product3.setText("");
+                ComboBox_Type2.setSelectedIndex(0);
+                Field_Cost1.setText("");
+                Field_Quantity1.setText("");
+                jTextArea_Information2.setText("");
 
-            Field_Product3.setText("");
-            ComboBox_Type2.setSelectedIndex(0);
-            Field_Cost1.setText("");
-            Field_Quantity1.setText("");
-            jTextArea_Information2.setText("");
-
-            psInsert.close();
-            psUpdateAll.close();
-            con.close();
-           Main.body.removeAll();
-           Main.body.add(new Order_Record());
-           Main.body.repaint();
-           Main.body.revalidate();
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
+                psInsert.close();
+                psUpdateAll.close();
+                con.close();
+               Main.body.removeAll();
+               Main.body.add(new Order_Record());
+               Main.body.repaint();
+               Main.body.revalidate();
+            } catch (SQLException ex) {
+                System.out.println("Error: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "You must insert all fields", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAdd2ActionPerformed
 
@@ -1111,6 +1154,156 @@ public class Order_Record extends javax.swing.JPanel {
         chDate.showPopup();
     }//GEN-LAST:event_Btt_Calender1MouseClicked
 
+    private void Field_Product2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_Product2FocusGained
+        if (Field_Product2.getText().equals("ชื่อสินค้า"))
+        {
+            Field_Product2.setText("");
+            Field_Product2.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_Field_Product2FocusGained
+
+    private void Field_Product2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_Product2FocusLost
+        if (Field_Product2.getText ().length() ==0){
+            Field_Product2.setText ("ชื่อสินค้า") ;
+            Field_Product2.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_Field_Product2FocusLost
+
+    private void Field_QuantityFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_QuantityFocusGained
+        if (Field_Quantity.getText().equals("0"))
+        {
+            Field_Quantity.setText("");
+            Field_Quantity.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_Field_QuantityFocusGained
+
+    private void Field_QuantityFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_QuantityFocusLost
+        if (Field_Quantity.getText ().length() ==0){
+            Field_Quantity.setText ("0") ;
+            Field_Quantity.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_Field_QuantityFocusLost
+
+    private void Field_CostFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_CostFocusGained
+        if (Field_Cost.getText().equals("0"))
+        {
+            Field_Cost.setText("");
+            Field_Cost.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_Field_CostFocusGained
+
+    private void Field_CostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_CostFocusLost
+        if (Field_Cost.getText ().length() ==0){
+            Field_Cost.setText ("0") ;
+            Field_Cost.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_Field_CostFocusLost
+
+    private void Field_QuantityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Field_QuantityKeyReleased
+        String text = Field_Quantity.getText();
+        
+        if (!isNumeric(text)) {
+            evt.consume();
+            return;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Quantity value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            Field_Quantity.setText("");
+        }
+    }//GEN-LAST:event_Field_QuantityKeyReleased
+
+    private void Field_CostKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Field_CostKeyReleased
+        try {
+        String text = Field_Cost.getText();
+
+            if (!isNumericOrDecimal(text)) {
+
+                evt.consume();
+                return;
+            }
+
+            Double.valueOf(text);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Cost value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            Field_Cost.setText("");
+        }
+    }//GEN-LAST:event_Field_CostKeyReleased
+
+    private void Field_Product3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_Product3FocusGained
+        if (Field_Product3.getText().equals("ชื่อสินค้า"))
+        {
+            Field_Product3.setText("");
+            Field_Product3.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_Field_Product3FocusGained
+
+    private void Field_Product3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_Product3FocusLost
+        if (Field_Product3.getText ().length() ==0){
+            Field_Product3.setText ("ชื่อสินค้า") ;
+            Field_Product3.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_Field_Product3FocusLost
+
+    private void Field_Quantity1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_Quantity1FocusGained
+        if (Field_Quantity1.getText().equals("0"))
+        {
+            Field_Quantity1.setText("");
+            Field_Quantity1.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_Field_Quantity1FocusGained
+
+    private void Field_Quantity1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_Quantity1FocusLost
+        if (Field_Quantity1.getText ().length() ==0){
+            Field_Quantity1.setText ("0") ;
+            Field_Quantity1.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_Field_Quantity1FocusLost
+
+    private void Field_Cost1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_Cost1FocusGained
+        if (Field_Cost1.getText().equals("0"))
+        {
+            Field_Cost1.setText("");
+            Field_Cost1.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_Field_Cost1FocusGained
+
+    private void Field_Cost1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_Cost1FocusLost
+        if (Field_Cost1.getText ().length() ==0){
+            Field_Cost1.setText ("0") ;
+            Field_Cost1.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_Field_Cost1FocusLost
+
+    private void Field_Quantity1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Field_Quantity1KeyReleased
+        String text = Field_Quantity1.getText();
+        
+        if (!isNumeric(text)) {
+            evt.consume();
+            return;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Quantity value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            Field_Quantity1.setText("");
+        }
+    }//GEN-LAST:event_Field_Quantity1KeyReleased
+
+    private void Field_Cost1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Field_Cost1KeyReleased
+        try {
+        String text = Field_Cost.getText();
+
+            if (!isNumericOrDecimal(text)) {
+
+                evt.consume();
+                return;
+            }
+
+            Double.valueOf(text);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Cost value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            Field_Cost.setText("");
+        }
+    }//GEN-LAST:event_Field_Cost1KeyReleased
+
     ArrayList<OrderInfo> productsArray = new ArrayList<>();
     
     int position = 0;
@@ -1167,7 +1360,7 @@ public class Order_Record extends javax.swing.JPanel {
         
     }
     
-        public void loadCompany() {
+    public void loadCompany() {
         try {
             String query = "SELECT Company FROM distributor";
             PreparedStatement ps = DB.getConnection().prepareStatement(query);
@@ -1183,7 +1376,60 @@ public class Order_Record extends javax.swing.JPanel {
         } catch (SQLException ex) {
             System.out.println("Failed to load company: " + ex.getMessage());
         }
-}
+    }
+        
+    private boolean isNumericOrDecimal(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c) && c != '.') {
+                return true;
+            }
+        }
+        return false;
+    }   
+    
+    private boolean isNumeric(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
+
+    }   
+    
+    public boolean checkEmptyFields() {
+        String name = Field_Product2.getText().trim();
+        String quantity = Field_Quantity.getText().trim();
+        String cost = Field_Cost.getText().trim();
+        String category = ComboBox_Type1.getSelectedItem().toString().trim();
+        String remark = jTextArea_Information1.getText().trim();
+        
+        if(name.equals("") || name.equals("ชื่อสินค้า") || quantity.equals("") || quantity.equals("0") || cost.equals("") || cost.equals("0")
+                || category.equals("") || category.equals("ประเภทสินค้า") || remark.equals("")) {
+            return false;
+        }
+        else {
+          return true;    
+        }
+    }
+    
+    public boolean checkEmptyFields2() {
+        String name = Field_Product3.getText().trim();
+        String quantity = Field_Quantity1.getText().trim();
+        String cost = Field_Cost1.getText().trim();
+        String category = ComboBox_Type2.getSelectedItem().toString().trim();
+        String remark = jTextArea_Information2.getText().trim();
+        
+        if(name.equals("") || name.equals("ชื่อสินค้า") || quantity.equals("") || quantity.equals("0") || cost.equals("") || cost.equals("0")
+                || category.equals("") || category.equals("ประเภทสินค้า") || remark.equals("")) {
+            return false;
+        }
+        else {
+          return true;    
+        }
+    }
 
 
     private void mergeAndRefreshTable() {

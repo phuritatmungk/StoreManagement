@@ -247,7 +247,7 @@ public class EditProduct extends javax.swing.JPanel {
 
     private void txtProductidFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductidFocusLost
         if (txtProductid.getText ().length() ==0){
-            txtProductid.setText ("ABC00000") ;
+            txtProductid.setText ("XXX00000") ;
             txtProductid.setForeground(new Color(123, 123, 123));
         }
     }//GEN-LAST:event_txtProductidFocusLost
@@ -303,7 +303,7 @@ public class EditProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_txtAmountFocusLost
 
     private void txtProductidFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductidFocusGained
-        if (txtProductid.getText().equals("ABC00000"))
+        if (txtProductid.getText().equals("XXX00000"))
         {
             txtProductid.setText("");
             txtProductid.setForeground(new Color(0, 0, 0));
@@ -514,7 +514,7 @@ public class EditProduct extends javax.swing.JPanel {
         String img = jTextField_imgPath.getText().trim();
         
         if(name.equals("") || name.equals("ชื่อสินค้า") || quantity.equals("") || quantity.equals("0") || price.equals("") || price.equals("0") || cost.equals("") || cost.equals("0")
-                || id.equals("") || id.equals("ABC00000") || category.equals("") || category.equals("ประเภทสินค้า") || img.equals("")) {
+                || id.equals("") || id.equals("XXX00000") || category.equals("") || category.equals("เลือกประเภทสินค้า") || img.equals("")) {
             return false;
         }
         else {

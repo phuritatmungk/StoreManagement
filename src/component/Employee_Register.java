@@ -372,17 +372,13 @@ public class Employee_Register extends javax.swing.JPanel {
                 if (id_var.length () == 10) {
         
                     Integer no = getNextQueueNumber();
-                    Integer id = Integer.valueOf(txtId.getText().toString());
+                    String id = txtId.getText();
                     String fname = txtName.getText();
                     String sname = txtSname.getText();
                     String address = txtAddress.getText();
                     String job = comboJob.getSelectedItem().toString();
                     Double wage = Double.valueOf(txtSalary.getText().toString());
-                    Integer phone = Integer.valueOf(txtPhone.getText());
-                    if (txtPhone.getText().charAt(0)=='0') {
-                        String phonestr = txtPhone.getText();
-                        phone = phone + '6';
-                    }
+                    String phone = txtPhone.getText();
                     String img = jTextField_imgPath.getText();
                     
                     if (!isEmployeeIDExists(id_var)) {
@@ -394,8 +390,8 @@ public class Employee_Register extends javax.swing.JPanel {
                         ps.setInt(1, no);
                         ps.setString(2, fname);
                         ps.setString(3, sname);
-                        ps.setInt(4, id);
-                        ps.setInt(5, phone);
+                        ps.setString(4, id);
+                        ps.setString(5, phone);
                         ps.setString(6, job);
                         ps.setDouble(7, wage);
                         ps.setString(8, address);
@@ -528,7 +524,7 @@ public class Employee_Register extends javax.swing.JPanel {
         String img = jTextField_imgPath.getText().trim();
         
         if(id.equals("") || id.equals("1234567890") || name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || address.equals("")
-                || wage.equals("") || wage.equals("0") || phone.equals("") || img.equals("")) {
+                || wage.equals("") || wage.equals("0") || phone.equals("") || phone.equals("เบอร์โทรศัพท์") || img.equals("")) {
             return false;
         }
         else {
