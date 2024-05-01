@@ -17,14 +17,16 @@ public class DistributorInfo {
     private Integer phone;
     private String address;
     private String salesman;
+    private String img;
             
-    public DistributorInfo(Integer no, String company, String fname, String sname, Integer phone,String address) {
+    public DistributorInfo(Integer no, String company, String fname, String sname, Integer phone,String address,String img) {
         this.no = no;
         this.company = company;
         this.fname = fname;
         this.sname = sname;
         this.phone = phone;
         this.address = address; 
+        this.img = img;
     }
 
     public Integer getNo() {
@@ -81,5 +83,19 @@ public class DistributorInfo {
 
     public void setSalesman(String salesman) {
         this.salesman = salesman;
+    }
+
+    /**
+     * @return the img
+     */
+    public String getImg() {
+        return img;
+    }
+
+    /**
+     * @param img the img to set
+     */
+    public void setImg(String img) {
+        this.img = img;
     }
 }

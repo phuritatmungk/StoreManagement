@@ -3,11 +3,18 @@ package component;
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Warehouse;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.io.File;
 import java.util.ArrayList;
 import karnkha.DB;
 import karnkha.InventoryInfo;
 import java.sql.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class EditProduct extends javax.swing.JPanel {
     
@@ -19,7 +26,7 @@ public class EditProduct extends javax.swing.JPanel {
         initComponents();
         con = DB.mycon();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -49,6 +56,7 @@ public class EditProduct extends javax.swing.JPanel {
         txtAmount = new javax.swing.JTextField();
         jSeparator9 = new javax.swing.JSeparator();
         txtNo = new javax.swing.JTextField();
+        jTextField_imgPath = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -74,7 +82,6 @@ public class EditProduct extends javax.swing.JPanel {
         add(jProductid, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, -1, -1));
 
         txtProductid.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtProductid.setForeground(new java.awt.Color(0, 0, 0));
         txtProductid.setText("000000001");
         txtProductid.setBorder(null);
         txtProductid.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -92,7 +99,6 @@ public class EditProduct extends javax.swing.JPanel {
         add(jName, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, -1, -1));
 
         txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtName.setForeground(new java.awt.Color(0, 0, 0));
         txtName.setText("ชื่อสินค้า");
         txtName.setBorder(null);
         txtName.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -145,7 +151,6 @@ public class EditProduct extends javax.swing.JPanel {
         add(jType, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, -1, -1));
 
         txtType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtType.setForeground(new java.awt.Color(0, 0, 0));
         txtType.setText("ประเภทสินค้า");
         txtType.setBorder(null);
         txtType.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -169,7 +174,6 @@ public class EditProduct extends javax.swing.JPanel {
         add(jCost_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, -1, -1));
 
         txtCost_price.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtCost_price.setForeground(new java.awt.Color(0, 0, 0));
         txtCost_price.setText("0");
         txtCost_price.setBorder(null);
         txtCost_price.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -188,7 +192,6 @@ public class EditProduct extends javax.swing.JPanel {
         add(txtCost_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 370, 30));
 
         txtPrice.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtPrice.setForeground(new java.awt.Color(0, 0, 0));
         txtPrice.setText("0");
         txtPrice.setBorder(null);
         txtPrice.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -218,7 +221,6 @@ public class EditProduct extends javax.swing.JPanel {
         add(jAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 540, -1, -1));
 
         txtAmount.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtAmount.setForeground(new java.awt.Color(0, 0, 0));
         txtAmount.setText("0");
         txtAmount.setBorder(null);
         txtAmount.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -246,6 +248,12 @@ public class EditProduct extends javax.swing.JPanel {
         txtNo.setBorder(null);
         txtNo.setFocusable(false);
         add(txtNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 850, -1, 40));
+
+        jTextField_imgPath.setEditable(false);
+        jTextField_imgPath.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField_imgPath.setText("jTextField1");
+        jTextField_imgPath.setBorder(null);
+        add(jTextField_imgPath, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 570, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtProductidFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductidFocusLost
@@ -263,7 +271,25 @@ public class EditProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNameFocusLost
 
     private void btnPicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPicActionPerformed
-        // TODO add your handling code here:
+        JFileChooser filechooser = new JFileChooser();
+        filechooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*images", ".png","jpg",".jpeg");
+        filechooser.addChoosableFileFilter(filter);
+        
+        if(filechooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+        {
+          File selectedImage = filechooser.getSelectedFile();
+          String image_path = selectedImage.getAbsolutePath();
+          displayImage(image_path, picture_box,'a');
+          jTextField_imgPath.setText(image_path);
+          System.out.println(image_path);
+        }
+        else
+        {
+            System.out.println("no file selected");
+        }
+                 
     }//GEN-LAST:event_btnPicActionPerformed
 
     private void txtTypeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTypeFocusLost
@@ -366,9 +392,10 @@ public class EditProduct extends javax.swing.JPanel {
                     Double cost = Double.valueOf(txtCost_price.getText().toString());
                     Integer quantity = Integer.valueOf(txtAmount.getText().toString());
                     Double price = Double.valueOf(txtPrice.getText().toString());
+                    String img = jTextField_imgPath.getText().toString();
 
 
-                    String updateQuery = "UPDATE inventory SET Id=?, Date=?, Name=?, Category=?, Cost=? , Quantity=? , Price=? WHERE No=?";
+                    String updateQuery = "UPDATE inventory SET Id=?, Date=?, Name=?, Category=?, Cost=? , Quantity=? , Price=?,Image=? WHERE No=?";
                     try {
                         PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
 
@@ -379,7 +406,9 @@ public class EditProduct extends javax.swing.JPanel {
                         ps.setDouble(5, cost);
                         ps.setInt(6, quantity); 
                         ps.setDouble(7, price);
-                        ps.setInt(8, no);
+                        ps.setString(8, img);
+                        ps.setInt(9, no);
+
 
                         if(ps.executeUpdate() > 0)
                         {
@@ -486,16 +515,33 @@ public class EditProduct extends javax.swing.JPanel {
         String cost = txtCost_price.getText().trim();
         String id = txtProductid.getText().trim();
         String category = txtType.getText().trim();
+        String img = jTextField_imgPath.getText().trim();
         
         if(name.equals("") || name.equals("ชื่อสินค้า") || quantity.equals("") || quantity.equals("0") || price.equals("") || price.equals("0") || cost.equals("") || cost.equals("0")
-                || id.equals("") || id.equals("ABC00000") || category.equals("") || category.equals("ประเภทสินค้า")) {
+                || id.equals("") || id.equals("ABC00000") || category.equals("") || category.equals("ประเภทสินค้า") || img.equals("")) {
             return false;
         }
         else {
           return true;    
         }
     }
-    
+    public void displayImage(String imgPath, JLabel label, char rsc)
+    {
+        ImageIcon imgIco;
+        if(rsc == 'r')
+        {
+            imgIco = new ImageIcon(getClass().getResource(imgPath));
+        }
+        else
+        {
+         imgIco = new ImageIcon(imgPath);
+        }
+        
+        Image img = imgIco.getImage().getScaledInstance(330, 270, Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(img));
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
     private javax.swing.JLabel Topic;
@@ -513,8 +559,9 @@ public class EditProduct extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    public static javax.swing.JTextField jTextField_imgPath;
     private javax.swing.JLabel jType;
-    private javax.swing.JLabel picture_box;
+    public static javax.swing.JLabel picture_box;
     public static javax.swing.JTextField txtAmount;
     public static javax.swing.JTextField txtCost_price;
     public static javax.swing.JTextField txtName;

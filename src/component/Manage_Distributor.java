@@ -12,6 +12,9 @@ import karnkha.Main;
 import component.Distributor_Register;
 import component.Edit_dealer_info;
 import java.awt.Color;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
@@ -239,7 +242,7 @@ public class Manage_Distributor extends javax.swing.JPanel {
             {
                 distributor = new DistributorInfo(rs.getInt("No"), rs.getString("Company"),
                                        rs.getString("Fname"),rs.getString("Sname"),
-                                       rs.getInt("Phone"),rs.getString("Address"));
+                                       rs.getInt("Phone"),rs.getString("Address"),rs.getString("Image"));
                 list.add(distributor);
             }
             
@@ -272,13 +275,33 @@ public class Manage_Distributor extends javax.swing.JPanel {
         }
 
     }
-        public void showProductData(int index)
-      {Edit_dealer_info.txtNo.setText(distributorArray.get(index).getNo().toString());
+        public void showProductData(int index)     
+      {
+        JLabel img = Edit_dealer_info.picture_box; 
+        Edit_dealer_info.txtNo.setText(distributorArray.get(index).getNo().toString());
         Edit_dealer_info.txtName.setText(distributorArray.get(index).getFname().toString());
         Edit_dealer_info.txtSname.setText(distributorArray.get(index).getSname().toString());
         Edit_dealer_info.txtCompany.setText(distributorArray.get(index).getCompany().toString());
         Edit_dealer_info.txtAddress.setText(distributorArray.get(index).getAddress().toString());
         Edit_dealer_info.txtPhone.setText(distributorArray.get(index).getPhone().toString());
+        Edit_dealer_info.jTextField_imgPath.setText(distributorArray.get(index).getImg().toString());
+        displayImage(distributorArray.get(index).getImg(),img,'a');
+
+    }
+        public void displayImage(String imgPath, JLabel label, char rsc)
+    {
+        ImageIcon imgIco;
+        if(rsc == 'r')
+        {
+            imgIco = new ImageIcon(getClass().getResource(imgPath));
+        }
+        else
+        {
+         imgIco = new ImageIcon(imgPath);
+        }
+        
+        Image img = imgIco.getImage().getScaledInstance(330, 270, Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(img));
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

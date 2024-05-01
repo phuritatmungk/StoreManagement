@@ -16,6 +16,7 @@ import component.EditProduct;
 import static component.EditProduct.txtNo;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
 import javax.swing.table.TableRowSorter;
 import karnkha.Home;
 
@@ -542,7 +543,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
                 InventoryInfo product = new InventoryInfo(
                     rs.getInt("No"), rs.getString("Id"),
                     rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
-                    rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price")
+                    rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price"),rs.getString("Image")
                 );
                 list.add(product);
             }
@@ -578,6 +579,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     
     public void showProductData(int index)
     {
+        JLabel img = EditProduct.picture_box;
         EditProduct.txtNo.setText(productsArray.get(index).getNo().toString());
         EditProduct.txtProductid.setText(productsArray.get(index).getId().toString());
         EditProduct.txtName.setText(productsArray.get(index).getName());
@@ -585,7 +587,10 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         EditProduct.txtCost_price.setText(productsArray.get(index).getCost().toString());
         EditProduct.txtPrice.setText(productsArray.get(index).getPrice().toString());
         EditProduct.txtAmount.setText(productsArray.get(index).getQuantity().toString());
+        EditProduct.jTextField_imgPath.setText(productsArray.get(index).getImg().toString());
+        displayImage(productsArray.get(index).getImg(),img,'a');
     }
+    
 public void loadCategory() {
     try {
         String query = "SELECT Category FROM inventory";
@@ -612,7 +617,22 @@ public void loadCategory() {
                  jTable.setRowSorter(sorter); 
     }
         }
+    public void displayImage(String imgPath, JLabel label, char rsc)
+    {
+        ImageIcon imgIco;
+        if(rsc == 'r')
+        {
+            imgIco = new ImageIcon(getClass().getResource(imgPath));
+        }
+        else
+        {
+         imgIco = new ImageIcon(imgPath);
+        }
+        
+        Image img = imgIco.getImage().getScaledInstance(330, 270, Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(img));
 
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Bgo;
     private javax.swing.JTextField Bmax;
