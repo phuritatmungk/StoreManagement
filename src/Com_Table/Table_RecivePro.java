@@ -7,6 +7,17 @@ package Com_Table;
 import karnkha.Main;
 import Com_Table.Table_OrderRec;
 import component.Order_Received;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.table.DefaultTableModel;
+import karnkha.DB;
+import karnkha.OrderInfo;
 
 /**
  *
@@ -17,8 +28,16 @@ public class Table_RecivePro extends javax.swing.JPanel {
     /**
      * Creates new form Table_OrderRec
      */
-    public Table_RecivePro() {
+    private String date;
+    private String company;
+
+    
+    public Table_RecivePro(String date, String company) {
         initComponents();
+        this.date = date;
+        this.company = company;
+        // เรียกเมทอดสำหรับการแสดงข้อมูล
+        showOrderData();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,7 +52,7 @@ public class Table_RecivePro extends javax.swing.JPanel {
         jTextArea_Information = new javax.swing.JTextArea();
         Label_Note = new javax.swing.JLabel();
         ScrollPane_Note = new javax.swing.JScrollPane();
-        Table_Order_Record1 = new javax.swing.JTable();
+        Table_Order_Recive = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         back_button1 = new javax.swing.JLabel();
         All_prices = new javax.swing.JLabel();
@@ -58,7 +77,8 @@ public class Table_RecivePro extends javax.swing.JPanel {
         Label_Note.setText("หมายเหตุ :");
         add(Label_Note, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 670, -1, -1));
 
-        Table_Order_Record1.setModel(new javax.swing.table.DefaultTableModel(
+        Table_Order_Recive.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        Table_Order_Recive.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -77,13 +97,13 @@ public class Table_RecivePro extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        Table_Order_Record1.getTableHeader().setReorderingAllowed(false);
-        Table_Order_Record1.addMouseListener(new java.awt.event.MouseAdapter() {
+        Table_Order_Recive.getTableHeader().setReorderingAllowed(false);
+        Table_Order_Recive.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Table_Order_Record1MouseClicked(evt);
+                Table_Order_ReciveMouseClicked(evt);
             }
         });
-        ScrollPane_Note.setViewportView(Table_Order_Record1);
+        ScrollPane_Note.setViewportView(Table_Order_Recive);
 
         add(ScrollPane_Note, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 570, 590));
 
@@ -113,9 +133,72 @@ public class Table_RecivePro extends javax.swing.JPanel {
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 800));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Table_Order_Record1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_Order_Record1MouseClicked
+    private void showOrderData() {
+        String query = "SELECT * FROM `order` WHERE `Date` = ? AND `Company` = ?";
+        try {
+            Connection connection = DB.mycon();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, date);
+            statement.setString(2, company);
+            ResultSet resultSet = statement.executeQuery();
 
-    }//GEN-LAST:event_Table_Order_Record1MouseClicked
+            DefaultTableModel model = (DefaultTableModel) Table_Order_Recive.getModel();
+            model.setRowCount(0); // เคลียร์ข้อมูลในตาราง
+
+            double totalPrices = 0.0; // ผลรวมของราคาทั้งหมด
+            Set<String> remarksSet = new HashSet<>(); // เก็บ Remark ที่ไม่ซ้ำกัน
+
+            int rowCount = 1; // เริ่มต้นที่เลข 1
+
+            while (resultSet.next()) {
+                String productName = resultSet.getString("Name");
+                String productType = resultSet.getString("Category");
+                String quantity = resultSet.getString("Quantity");
+                String cost = resultSet.getString("Cost");
+                String allPrices = resultSet.getString("Total");
+
+                double price = Double.parseDouble(allPrices);
+                totalPrices += price; // เพิ่มราคารวม
+
+                String remark = resultSet.getString("Remark");
+                remarksSet.add(remark); // เพิ่ม Remark เข้า Set
+
+                Object[] rowData = {
+                    rowCount, // ใช้ rowCount แทน No
+                    productName,
+                    productType,
+                    quantity,
+                    cost,
+                    allPrices
+                };
+                model.addRow(rowData);
+                rowCount++; // เพิ่มค่า rowCount ให้เพื่อเปลี่ยนเลข No ในแถวถัดไป
+            }
+
+            // Set total prices TextField
+            All_prices.setText(String.valueOf(totalPrices));
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+            // รวม Remark เป็นข้อความเดียวกัน
+            StringBuilder remarksBuilder = new StringBuilder();
+            for (String remark : remarksSet) {
+                remarksBuilder.append(remark).append("\n");
+            }
+
+            // Set remarks in jTextArea_Information
+            jTextArea_Information.setText(remarksBuilder.toString());
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+}
+    
+    private void Table_Order_ReciveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_Order_ReciveMouseClicked
+
+    }//GEN-LAST:event_Table_Order_ReciveMouseClicked
 
     private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
         Order_Received.body.removeAll();
@@ -124,13 +207,67 @@ public class Table_RecivePro extends javax.swing.JPanel {
         Order_Received.body.revalidate();
     }//GEN-LAST:event_back_button1MouseClicked
 
+        ArrayList<OrderInfo> productsArray = new ArrayList<>();
+    
+        int position = 0;
+        public ArrayList<OrderInfo> getProductsList()
+        {
+            ArrayList<OrderInfo> list = new ArrayList<>();
+            String selectQuery = "SELECT * FROM `order`";
+
+            Statement st;
+            ResultSet rs;
+
+            try {
+                st = DB.getConnection().createStatement();
+                rs = st.executeQuery(selectQuery);
+                OrderInfo product;
+
+                while(rs.next())
+                {
+                    product = new OrderInfo(rs.getInt("No"), rs.getString("Date"),
+                                          rs.getString("Company"), rs.getString("Name"), rs.getString("Category"), 
+                                          rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Total"), rs.getString("Remark"));
+                    list.add(product);
+                }
+
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+
+            productsArray = list;
+            return list;
+
+        }
+
+            public void showProductsInTable()
+        {
+            ArrayList<OrderInfo> productsList = getProductsList();
+            DefaultTableModel model = (DefaultTableModel) Table_Order_Recive.getModel();
+
+            model.setRowCount(0);
+
+            Object[] row = new Object[5];
+
+            for(int i = 0; i < productsList.size(); i++)
+            {
+                row[0] = productsList.get(i).getNo();
+                row[1] = productsList.get(i).getDate();
+                row[2] = productsList.get(i).getCompany();
+                row[3] = productsList.get(i).getQuantity();
+                row[4] = productsList.get(i).getTotal();
+
+                model.addRow(row);
+            }
+
+        }  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel All_prices;
     private javax.swing.JLabel Label_Aprices1;
     private javax.swing.JLabel Label_Note;
     private javax.swing.JScrollPane ScrollPane_Note;
-    private javax.swing.JTable Table_Order_Record1;
+    private javax.swing.JTable Table_Order_Recive;
     private javax.swing.JLabel back_button1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane4;
