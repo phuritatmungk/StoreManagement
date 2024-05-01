@@ -246,7 +246,7 @@ public class Repair_History extends javax.swing.JPanel {
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Topic.setText("ประวัติการซ่อมสินค้า");
-        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
+        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, -1, -1));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -286,7 +286,7 @@ public class Repair_History extends javax.swing.JPanel {
                 B_DateMouseClicked(evt);
             }
         });
-        add(B_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 70, 30, 30));
+        add(B_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 60, 30, 30));
 
         searchdata__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         searchdata__box.setForeground(new java.awt.Color(123, 123, 123));
@@ -301,11 +301,11 @@ public class Repair_History extends javax.swing.JPanel {
                 searchdata__boxFocusLost(evt);
             }
         });
-        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 70, 300, 30));
+        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 60, 300, 30));
 
         Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic3.setText("วันที่ :");
-        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 70, -1, 30));
+        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 60, -1, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
