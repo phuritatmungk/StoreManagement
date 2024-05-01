@@ -548,31 +548,38 @@ public class Repair_List_Page extends javax.swing.JPanel {
         String id = jComboBox_Id.getSelectedItem().toString();
         String repairman =  jComboBox_Repairman.getSelectedItem().toString();
         String status =  jComboBox_Status2.getSelectedItem().toString();
+        String malfunction = jTextArea_Behavior1.getText();
+        
         if (checkEmptyFields()) {
-            String updateQuery = "UPDATE `request` SET `Datetime`=?,`Name`=?,`Phone`=?,`Item`=? ,`Id`=? ,`Repairman`=? ,`Status`=? WHERE `No`=?";
-            try {
-                PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
-                ps.setTimestamp(1, timestamp);
-                ps.setString(2, name);
-                ps.setString(3, phone);
-                ps.setString(4, item);
-                ps.setString(5, id);
-                ps.setString(6, repairman); 
-                ps.setString(7, status);
-                ps.setInt(8, no);
+            if (phone.length()==10) {
+                String updateQuery = "UPDATE `request` SET `Datetime`=?,`Name`=?,`Phone`=?,`Item`=? ,`Id`=?,`Repairman`=? ,`Status`=?, `Malfunction`=? WHERE `No`=?";
+                try {
+                    PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
+                    ps.setTimestamp(1, timestamp);
+                    ps.setString(2, name);
+                    ps.setString(3, phone);
+                    ps.setString(4, item);
+                    ps.setString(5, id);
+                    ps.setString(6, repairman);
+                    ps.setString(7, status);
+                    ps.setString(8, malfunction);
+                    ps.setInt(9, no);
 
-                if(ps.executeUpdate() > 0)
-                {
-                    showRequestInTable();
-                    System.out.println("Updated");
-                }
-                else
-                {
-                    System.out.println("Failed");
-                }
+                    if(ps.executeUpdate() > 0)
+                    {
+                        showRequestInTable();
+                        System.out.println("Updated");
+                    }
+                    else
+                    {
+                        System.out.println("Failed");
+                    }
 
-            } catch (SQLException ex) {
-                System.out.println(ex);
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            } else {
+                System.out.println("Phone must contains only 10 numbers");
             }
         } else {
             System.out.println("You must insert all fields");
@@ -645,7 +652,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
             return;
         }
         else {
-            JOptionPane.showMessageDialog(null, "Phone value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            System.out.println("Phone value must contain only numbers");
             jTextField_Phone2.setText("");
         }
     }//GEN-LAST:event_jTextField_Phone2KeyReleased
@@ -705,7 +712,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         
         model.setRowCount(0);
         
-        Object[] row = new Object[9];
+        Object[] row = new Object[8];
         
         for(int i = 0; i < requestsList.size(); i++)
         {
@@ -726,9 +733,9 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jTextField_No.setText(requestArray.get(index).getNo().toString());
         jTextField_Date.setText(requestArray.get(index).getDate());
         jTextField_Name.setText(requestArray.get(index).getName());
-        jTextField_Phone.setText(requestArray.get(index).getPhone().toString());
+        jTextField_Phone.setText(requestArray.get(index).getPhone());
         jTextField_Item.setText(requestArray.get(index).getItem());
-        jTextField_Id.setText(requestArray.get(index).getId().toString());
+        jTextField_Id.setText(requestArray.get(index).getId());
         jTextField_Repairman.setText(requestArray.get(index).getRepairman());
         jComboBox_Status.setSelectedItem(requestArray.get(index).getStatus());
         jTextArea_Behavior.setText(requestArray.get(index).getMalfunction());
