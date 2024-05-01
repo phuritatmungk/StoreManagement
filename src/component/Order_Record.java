@@ -430,7 +430,7 @@ public class Order_Record extends javax.swing.JPanel {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("ประเภทสินค้า :");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 570, 110, -1));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 570, 110, -1));
 
         Btt_Calender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/calendar.png"))); // NOI18N
         Btt_Calender.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -438,11 +438,11 @@ public class Order_Record extends javax.swing.JPanel {
                 Btt_CalenderMouseClicked(evt);
             }
         });
-        jPanel2.add(Btt_Calender, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 435, -1, -1));
+        jPanel2.add(Btt_Calender, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 435, -1, -1));
 
         ComboBox_Type1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        ComboBox_Type1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ประเภทสินค้า" }));
-        jPanel2.add(ComboBox_Type1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 570, 210, 30));
+        ComboBox_Type1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ประเภทสินค้า", "เครื่องยนต์และอุปกรณ์การเกษตร", "อะไหล่เครื่องดีเซล", "อะไหล่เครื่องเบนซิน", "อะไหล่เครื่องตัดหญ้า", "อะไหล่เครื่องตัดไม้", "อะไหล่เป้เครื่องพ่นยา", "อะไหล่เป้พ่นยาไฟฟ้า", "อะไหล่ปั้มพ่นยา", "อะไหล่เครื่องเจาะดิน", "อะไหล่ปั้มน้ำ", "อะไหล่ปั้มน้ำไฟฟ้า", "อุปกรณ์อื่นๆ" }));
+        jPanel2.add(ComboBox_Type1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 570, 280, 30));
 
         ComboBox_Company1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         ComboBox_Company1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "เลือกบริษัท" }));
@@ -458,7 +458,7 @@ public class Order_Record extends javax.swing.JPanel {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel8.setText("ชื่อสินค้า :");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 500, -1, -1));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 500, -1, -1));
 
         jScrollPane5.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
@@ -503,13 +503,13 @@ public class Order_Record extends javax.swing.JPanel {
 
         Field_Product2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Field_Product2.setText("ชื่อสินค้า");
-        jPanel2.add(Field_Product2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 500, 210, -1));
+        jPanel2.add(Field_Product2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 500, 280, -1));
 
         TextField_Date.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         TextField_Date.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TextField_Date.setText("DD/MM/YYYY");
         TextField_Date.setEnabled(false);
-        jPanel2.add(TextField_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, 210, 30));
+        jPanel2.add(TextField_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 430, 280, 30));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel10.setText("ราคาต้นทุนสินค้า :");
@@ -517,7 +517,7 @@ public class Order_Record extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("วันที :");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 430, -1, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, -1, -1));
 
         btnDelete2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnDelete2.setText("ลบ");
@@ -559,7 +559,7 @@ public class Order_Record extends javax.swing.JPanel {
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel12.setText("ประเภทสินค้า :");
-        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 570, 110, -1));
+        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 570, 110, -1));
 
         Btt_Calender1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/calendar.png"))); // NOI18N
         Btt_Calender1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -567,11 +567,11 @@ public class Order_Record extends javax.swing.JPanel {
                 Btt_Calender1MouseClicked(evt);
             }
         });
-        jPanel3.add(Btt_Calender1, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 435, -1, -1));
+        jPanel3.add(Btt_Calender1, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 435, 20, -1));
 
         ComboBox_Type2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        ComboBox_Type2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ประเภทสินค้า" }));
-        jPanel3.add(ComboBox_Type2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 570, 210, 30));
+        ComboBox_Type2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ประเภทสินค้า", "เครื่องยนต์และอุปกรณ์การเกษตร", "อะไหล่เครื่องดีเซล", "อะไหล่เครื่องเบนซิน", "อะไหล่เครื่องตัดหญ้า", "อะไหล่เครื่องตัดไม้", "อะไหล่เป้เครื่องพ่นยา", "อะไหล่เป้พ่นยาไฟฟ้า", "อะไหล่ปั้มพ่นยา", "อะไหล่เครื่องเจาะดิน", "อะไหล่ปั้มน้ำ", "อะไหล่ปั้มน้ำไฟฟ้า", "อุปกรณ์อื่นๆ" }));
+        jPanel3.add(ComboBox_Type2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 570, 290, 30));
 
         ComboBox_Company2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         ComboBox_Company2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Test", "asd" }));
@@ -596,7 +596,7 @@ public class Order_Record extends javax.swing.JPanel {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel14.setText("ชื่อสินค้า :");
-        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 500, -1, -1));
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 500, -1, -1));
 
         jScrollPane6.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
@@ -641,13 +641,13 @@ public class Order_Record extends javax.swing.JPanel {
 
         Field_Product3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Field_Product3.setText("ชื่อสินค้า");
-        jPanel3.add(Field_Product3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 500, 210, -1));
+        jPanel3.add(Field_Product3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 500, 290, -1));
 
         TextField_Date1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         TextField_Date1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TextField_Date1.setText("DD/MM/YYYY");
         TextField_Date1.setEnabled(false);
-        jPanel3.add(TextField_Date1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, 210, 30));
+        jPanel3.add(TextField_Date1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, 290, 30));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel15.setText("ราคาต้นทุนสินค้า :");
@@ -655,7 +655,7 @@ public class Order_Record extends javax.swing.JPanel {
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel16.setText("วันที :");
-        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 430, -1, -1));
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 430, -1, -1));
 
         jFrame3.getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
 

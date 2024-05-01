@@ -232,21 +232,6 @@ public class Maintenance extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtPhoneFocusLost
 
-    private void txtBrokenItemFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBrokenItemFocusGained
-        if(txtBrokenItem.getText().equals(" ชื่ออุปกรณ์ที่รับซ่อม"))
-       {
-           txtBrokenItem.setText("");
-           txtBrokenItem.setForeground(new Color(0, 0, 0));
-       }
-    }//GEN-LAST:event_txtBrokenItemFocusGained
-
-    private void txtBrokenItemFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBrokenItemFocusLost
-        if (txtBrokenItem.getText().length()==0) {
-            txtBrokenItem.setText(" ชื่ออุปกรณ์ที่รับซ่อม");
-            txtBrokenItem.setForeground(new Color(123, 123, 123));
-        }
-    }//GEN-LAST:event_txtBrokenItemFocusLost
-
     private void txtStatusFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtStatusFocusGained
         if(txtStatus.getText().equals("   รอดำเนินการ"))
        {
@@ -341,6 +326,21 @@ public class Maintenance extends javax.swing.JPanel {
             txtPhone.setText("");
         }
     }//GEN-LAST:event_txtPhoneKeyReleased
+
+    private void txtBrokenItemFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBrokenItemFocusLost
+        if (txtBrokenItem.getText().length()==0) {
+            txtBrokenItem.setText(" ชื่ออุปกรณ์ที่รับซ่อม");
+            txtBrokenItem.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_txtBrokenItemFocusLost
+
+    private void txtBrokenItemFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBrokenItemFocusGained
+        if(txtBrokenItem.getText().equals(" ชื่ออุปกรณ์ที่รับซ่อม"))
+        {
+            txtBrokenItem.setText("");
+            txtBrokenItem.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_txtBrokenItemFocusGained
     
     private boolean isNumeric(String input) {
 
