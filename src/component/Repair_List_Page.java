@@ -439,7 +439,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
 
         Status_Combo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Status_Combo.setForeground(new java.awt.Color(123, 123, 123));
-        Status_Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ค้นหาสถานะ", "รอดําเนินการ", "กำลังดำเนินการ", "เสร็จสิ้น", "ชำระเสร็จสิ้น" }));
+        Status_Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ค้นหาสถานะ", "รอดําเนินการ", "กำลังดำเนินการ", "เสร็จสิ้น" }));
         Status_Combo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 Status_ComboItemStateChanged(evt);
