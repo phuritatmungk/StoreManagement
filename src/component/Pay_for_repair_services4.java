@@ -629,7 +629,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             {
                 request = new RepairRequest(rs.getInt("No"), rs.getString("Datetime"),
                                       rs.getString("Name"), rs.getString("Phone"), rs.getString("Item"),
-                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"));
+                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"), rs.getString("Malfunction"));
                 list.add(request);
             }
             

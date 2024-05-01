@@ -14,8 +14,9 @@ public class RepairRequest {
     private String id;
     private String repairman;
     private String status;
+    private String malfunction;
     
-    public RepairRequest(Integer no, String date, String name, String phone, String item, String id, String repairman, String status) {
+    public RepairRequest(Integer no, String date, String name, String phone, String item, String id, String repairman, String status, String malfunction) {
         this.no = no;
         this.date = date;
         this.name = name;
@@ -24,6 +25,7 @@ public class RepairRequest {
         this.id = id;
         this.repairman = repairman;
         this.status = status;
+        this.malfunction = malfunction;
     }
 
     public Integer getNo() {
@@ -88,6 +90,14 @@ public class RepairRequest {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getMalfunction() {
+        return malfunction;
+    }
+
+    public void setMalfunction(String malfunction) {
+        this.malfunction = malfunction;
     }
     
 
