@@ -1,17 +1,14 @@
 package component;
 
 import Com_Table.Table_OrderRec;
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.raven.datechooser.DateBetween;
 import com.raven.datechooser.DateChooser;
 import com.raven.datechooser.listener.DateChooserAction;
 import com.raven.datechooser.listener.DateChooserAdapter;
 import java.awt.Component;
-import raven.cell.TableActionCellEditorEdit;
-import raven.cell.TableActionCellRenderEdit;
-import raven.cell.TableActionEventEdit;
 import java.sql.*;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -71,10 +68,13 @@ public class Order_Received extends javax.swing.JPanel {
                String id = jTable.getValueAt(row, 3).toString();
                String recipient = jTable.getValueAt(row, 4).toString();
                
-               TextField_Date.setText(date);
                 ComboBox_Company2.setSelectedItem(company);
                 ComboBox_Employee1.setSelectedItem(recipient);
                 ComboBox_ID1.setSelectedItem(id);
+                chDate.setTextField(TextField_Date1);
+                TextField_Date1.setText(date);
+                chDate.setDateSelectionMode(DateChooser.DateSelectionMode.SINGLE_DATE_SELECTED);
+                chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
                
                String query = "SELECT * FROM `orderreceived` WHERE `Date` = ? AND `Company` = ? AND `Id` = ? AND `Recipient` = ?";
                try {
@@ -96,7 +96,7 @@ public class Order_Received extends javax.swing.JPanel {
                    model.addColumn("Cost");
                    model.addColumn("Total");
 
-                   int rowCount = 1; // เริ่มต้นที่เลข 1
+                   int rowCount = 1;
 
                    while (resultSet.next()) {
                        String productName = resultSet.getString("Name");
@@ -106,7 +106,7 @@ public class Order_Received extends javax.swing.JPanel {
                        String total = resultSet.getString("Total");
 
                        Object[] rowData = {
-                           rowCount, // ใช้ rowCount แทน No
+                           rowCount,
                            productName,
                            category,
                            quantity,
@@ -114,7 +114,7 @@ public class Order_Received extends javax.swing.JPanel {
                            total
                        };
                        model.addRow(rowData);
-                       rowCount++; // เพิ่มค่า rowCount ให้เพื่อเปลี่ยนเลข No ในแถวถัดไป
+                       rowCount++; 
                    }
 
                    resultSet.close();
@@ -124,10 +124,7 @@ public class Order_Received extends javax.swing.JPanel {
                    ex.printStackTrace();
                }
                jFrame2.setVisible(true);
-               Table_Receive_Pro1.setDefaultEditor(Object.class, null); // ไม่ให้แก้ไขเซลล์ในตาราง
-               chDate.setTextField(TextField_Date1);
-                chDate.setDateSelectionMode(DateChooser.DateSelectionMode.SINGLE_DATE_SELECTED);
-                chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+               Table_Receive_Pro1.setDefaultEditor(Object.class, null); 
             }
             public void onView(int row) {
                 System.out.println("Edit row : " + row);
@@ -152,7 +149,7 @@ public class Order_Received extends javax.swing.JPanel {
                     ResultSet resultSet = statement.executeQuery();
 
 
-                    double totalPrices = 0.0; // เพิ่มตัวแปรสำหรับเก็บผลรวมของราคาทั้งหมด
+                    double totalPrices = 0.0; 
 
                     DefaultTableModel model = new DefaultTableModel();
                     Table_Order_Recieved1.setModel(model);
@@ -164,9 +161,9 @@ public class Order_Received extends javax.swing.JPanel {
                     model.addColumn("Cost");
                     model.addColumn("Total");
 
-                    Set<String> remarksSet = new HashSet<>(); // เก็บ Remark ที่ไม่ซ้ำกัน
+                    Set<String> remarksSet = new HashSet<>(); 
 
-                    int rowCount = 1; // เริ่มต้นที่เลข 1
+                    int rowCount = 1; 
 
                     while (resultSet.next()) {
                         String productName = resultSet.getString("Name");
@@ -176,13 +173,13 @@ public class Order_Received extends javax.swing.JPanel {
                         String allPrices = resultSet.getString("Total");
 
                         double price = Double.parseDouble(allPrices);
-                        totalPrices += price; // เพิ่มราคารวม
+                        totalPrices += price;
 
                         String remark = resultSet.getString("Remark");
-                        remarksSet.add(remark); // เพิ่ม Remark เข้า Set
+                        remarksSet.add(remark);
 
                         Object[] rowData = {
-                           rowCount, // ใช้ rowCount แทน No
+                           rowCount, 
                            productName,
                            category,
                            quantity,
@@ -190,23 +187,20 @@ public class Order_Received extends javax.swing.JPanel {
                            allPrices
                         };
                         model.addRow(rowData);
-                        rowCount++; // เพิ่มค่า rowCount ให้เพื่อเปลี่ยนเลข No ในแถวถัดไป
+                        rowCount++; 
                     }
 
-                    // Set total prices TextField
                     All_prices.setText(String.valueOf(totalPrices));
 
                     resultSet.close();
                     statement.close();
                     connection.close();
 
-                    // รวม Remark เป็นข้อความเดียวกัน
                     StringBuilder remarksBuilder = new StringBuilder();
                     for (String remark : remarksSet) {
                         remarksBuilder.append(remark).append("\n");
                     }
 
-                    // Set remarks in jTextArea_Information
                     jTextArea_Information.setText(remarksBuilder.toString());
 
                 } catch (SQLException ex) {
@@ -232,7 +226,7 @@ public class Order_Received extends javax.swing.JPanel {
     
      private void loadData(String sql) {
         try {
-            model.setRowCount(0); // เคลียร์ข้อมูลในตารางก่อนโหลดข้อมูลใหม่
+            model.setRowCount(0); 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
             PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
@@ -250,7 +244,6 @@ public class Order_Received extends javax.swing.JPanel {
             String Total = f.format(r.getDouble("Total"));
             String Remark = r.getString("Remark");
 
-            // เพิ่มข้อมูลใหม่เข้าไปในตาราง
             model.addRow(new Object[] { No,Date,Company,Name,Category,Id,Cost,Recipient,Quantity,Total,Remark});
             
         }
@@ -856,35 +849,28 @@ public class Order_Received extends javax.swing.JPanel {
     }//GEN-LAST:event_Save_bt1MouseClicked
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
-        // TODO add your handling code here:
         int index = jTable.getSelectedRow();
         position = index;
     }//GEN-LAST:event_jTableMouseClicked
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // เช็คว่ามีข้อมูลในตารางหรือไม่
        if (Table_Receive_Pro.getRowCount() == 0) {
            JOptionPane.showMessageDialog(null, "ไม่มีข้อมูลในตารางที่จะบันทึก", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
            return;
        }
 
-       // SQL query สำหรับเพิ่มข้อมูลใหม่ลงในตาราง order
        String insertQuery = "INSERT INTO `orderreceived`(`Date`, `Company`, `Name`, `id`, `Category`, `Recipient`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-       // SQL query สำหรับอัปเดตข้อมูลที่มีการแก้ไข
        String updateQuery = "UPDATE `orderreceived` SET `Name` = ?, `Company` = ?, `Id` = ?, `Recipient` = ?, `Remark` = ? WHERE `Date` = ? AND `Name` = ? AND `Company` = ?";
 
        try {
-           // เชื่อมต่อกับฐานข้อมูลและเตรียมคำสั่ง SQL
            Connection con = DB.mycon();
            PreparedStatement psInsert = con.prepareStatement(insertQuery);
            PreparedStatement psUpdate = con.prepareStatement(updateQuery);
 
-           // ลูปเพื่อเพิ่มข้อมูลจากแต่ละบรรทัดในตาราง
            for (int i = 0; i < Table_Receive_Pro.getRowCount(); i++) {
-               // รับค่าข้อมูลจากแต่ละคอลัมน์ในแต่ละบรรทัด
-               java.util.Date date = new java.util.Date(); // รับวันที่ปัจจุบัน
-               String company = ComboBox_Company1.getSelectedItem().toString(); // รับชื่อบริษัทจาก ComboBox
+               String date = TextField_Date.getText();
+               String company = ComboBox_Company1.getSelectedItem().toString(); 
                String name = Table_Receive_Pro.getValueAt(i, 1).toString();
                String id = ComboBox_ID.getSelectedItem().toString();
                String recipient = ComboBox_Employee.getSelectedItem().toString();
@@ -892,22 +878,19 @@ public class Order_Received extends javax.swing.JPanel {
                Integer quantity = Integer.parseInt(Table_Receive_Pro.getValueAt(i, 3).toString());
                Double cost = Double.parseDouble(Table_Receive_Pro.getValueAt(i, 4).toString());   
                Double total = Double.parseDouble(Table_Receive_Pro.getValueAt(i, 5).toString());
-               String remark = jTextArea_Information.getText(); // รับค่าหมายเหตุจาก JTextArea
+               String remark = jTextArea_Information.getText(); 
 
-               // ตรวจสอบว่าข้อมูลมีอยู่ในฐานข้อมูลแล้วหรือไม่
                if (isDataExists(date, company, name, con)) {
-                   // ถ้ามีอยู่แล้ว ให้อัปเดตข้อมูล
                    psUpdate.setString(1, company);
                    psUpdate.setString(2, id);
                    psUpdate.setString(3, recipient);
                    psUpdate.setString(4, remark);
-                   psUpdate.setDate(5, new java.sql.Date(date.getTime()));
+                   psUpdate.setString(5, date);
                    psUpdate.setString(6, name);
                    psUpdate.setString(7, company);
                    psUpdate.executeUpdate();
                } else {
-                   // ถ้ายังไม่มีให้เพิ่มข้อมูลใหม่
-                   psInsert.setDate(1, new java.sql.Date(date.getTime())); // ปรับรูปแบบของวันที่เป็น java.sql.Date
+                   psInsert.setString(1, date); 
                    psInsert.setString(2, company);
                    psInsert.setString(3, name);
                    psInsert.setString(4, id);
@@ -921,7 +904,6 @@ public class Order_Received extends javax.swing.JPanel {
                }
            }
 
-           // แจ้งเตือนว่าข้อมูลถูกบันทึกเรียบร้อยแล้ว
            jFrame1.setVisible(false);
            Main.body.removeAll();
            Main.body.add(new Order_Received());
@@ -929,7 +911,6 @@ public class Order_Received extends javax.swing.JPanel {
            Main.body.revalidate();
            JOptionPane.showMessageDialog(null, "บันทึกข้อมูลเรียบร้อยแล้ว", "บันทึกข้อมูล", JOptionPane.INFORMATION_MESSAGE);
 
-           // ปิดการเชื่อมต่อกับฐานข้อมูล
            psInsert.close();
            psUpdate.close();
            con.close();
@@ -938,10 +919,22 @@ public class Order_Received extends javax.swing.JPanel {
        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private boolean isDataExists(java.util.Date date, String company, String name, Connection con) throws SQLException {
+    private boolean isDataExists(String date, String company, String name, Connection con) throws SQLException {
+            String text = TextField_Date.getText();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            sdf = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date textFieldAsDate = null;
+            try{
+                textFieldAsDate = sdf.parse(text);
+                
+            }
+            catch(ParseException pe){
+                
+            }
+            java.sql.Date date2 = java.sql.Date.valueOf(sdf.format(textFieldAsDate));
             String checkQuery = "SELECT * FROM `orderreceived` WHERE `Date` = ? AND `Company` = ? AND `Name` = ?";
             PreparedStatement psCheck = con.prepareStatement(checkQuery);
-            psCheck.setDate(1, new java.sql.Date(date.getTime()));
+            psCheck.setDate(1, date2);
             psCheck.setString(2, company);
             psCheck.setString(3, name);
             ResultSet rs = psCheck.executeQuery();
@@ -957,13 +950,11 @@ public class Order_Received extends javax.swing.JPanel {
         String costText = Field_Cost.getText();
         String quantityText = Field_Quantity.getText();
 
-        // ตรวจสอบว่ามีข้อมูลทุกฟิลด์หรือไม่
         if (name.isEmpty() || category.isEmpty() || costText.isEmpty() || quantityText.isEmpty()) {
             JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบทุกฟิลด์", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // แปลงค่าราคาเป็น Double
         Double cost;
         try {
             cost = Double.valueOf(costText);
@@ -972,7 +963,6 @@ public class Order_Received extends javax.swing.JPanel {
             return;
         }
 
-        // แปลงค่าจำนวนเป็น Integer
         Integer quantity;
         try {
             // แปลงค่าจำนวนเป็น Integer โดยตัดทศนิยมทิ้ง
@@ -982,16 +972,13 @@ public class Order_Received extends javax.swing.JPanel {
             return;
         }
 
-        // คำนวณค่ารวม
         Double total = cost * quantity;
         String remark = jTextArea_Information.getText();
 
         DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro.getModel();
-        // สร้างข้อมูลที่จะเพิ่มลงในตารางโดยรวมลำดับข้างหน้าด้วย
         Object[] rowData = new Object[]{model.getRowCount() + 1, name, category, quantity, cost, total, remark};
         model.addRow(rowData);
 
-        // เคลียร์ข้อมูลในฟิลด์หลังจากการเพิ่มข้อมูล
         Field_Product1.setText("");
         ComboBox_Type.setSelectedIndex(0);
         Field_Cost.setText("");
@@ -1002,7 +989,6 @@ public class Order_Received extends javax.swing.JPanel {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         int selectedRow = Table_Receive_Pro.getSelectedRow();
         if (selectedRow != -1) {
-            // ลบแถวที่เลือกออกจากตาราง
             DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro.getModel();
             model.removeRow(selectedRow);
         } else {
@@ -1016,7 +1002,6 @@ public class Order_Received extends javax.swing.JPanel {
         String costText = Field_Cost1.getText();
         String quantityText = Field_Quantity1.getText();
 
-        // ตรวจสอบว่าข้อมูลว่างหรือไม่
         if (name.isEmpty() || category.isEmpty() || costText.isEmpty() || quantityText.isEmpty()) {
             JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบทุกฟิลด์", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
             return;
@@ -1045,20 +1030,18 @@ public class Order_Received extends javax.swing.JPanel {
         try {
             Connection con = DB.mycon();
 
-            // อัปเดตแถวทั้งหมดในตาราง order ที่มีข้อมูลว่าง (null) ในฟิลด์ Date, Company, และ Remark
             String updateAllQuery = "UPDATE `orderreceived` SET `Date` = ?, `Company` = ?, `Id` = ?, `Recipient` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Id` IS NOT NULL AND `Recipient` IS NOT NULL AND `Remark` IS NOT NULL";
             PreparedStatement psUpdateAll = con.prepareStatement(updateAllQuery);
-            psUpdateAll.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
+            psUpdateAll.setString(1, TextField_Date1.getText());
             psUpdateAll.setString(2, ComboBox_Company2.getSelectedItem().toString());
             psUpdateAll.setString(3, ComboBox_ID1.getSelectedItem().toString());
             psUpdateAll.setString(4, ComboBox_Employee1.getSelectedItem().toString());
             psUpdateAll.setString(5, remark);
             psUpdateAll.executeUpdate(); // สั่งให้อัปเดตแถว
 
-            // เพิ่มข้อมูลใหม่ลงในตาราง order
             String insertQuery = "INSERT INTO `orderreceived`(`Date`, `Company`, `Name`, `id`, `Category`, `Recipient`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement psInsert = con.prepareStatement(insertQuery);
-            psInsert.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
+            psInsert.setString(1, TextField_Date1.getText());
             psInsert.setString(2, ComboBox_Company2.getSelectedItem().toString());
             psInsert.setString(3, name);
             psInsert.setString(4, ComboBox_ID1.getSelectedItem().toString());
@@ -1070,19 +1053,16 @@ public class Order_Received extends javax.swing.JPanel {
             psInsert.setString(10, remark);
             psInsert.executeUpdate(); // สั่งให้เพิ่มข้อมูลใหม่
             
-            // อัปเดตข้อมูลในตาราง GUI
             DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro1.getModel();
             Object[] rowData = new Object[]{model.getRowCount() + 1, name, category, quantity, cost,  total, remark};
             model.addRow(rowData);
 
-            // ล้างข้อมูลในฟิลด์และ JTextArea
             Field_Product3.setText("");
             ComboBox_Type1.setSelectedIndex(0);
             Field_Cost1.setText("");
             Field_Quantity1.setText("");
             jTextArea_Information1.setText("");
 
-            // ปิดการเชื่อมต่อกับฐานข้อมูล
             psInsert.close();
             psUpdateAll.close();
             con.close();
@@ -1128,17 +1108,15 @@ public class Order_Received extends javax.swing.JPanel {
            try {
             Connection con = DB.mycon();
 
-            // อัปเดตข้อมูลในตาราง order ทั้งหมดที่มีข้อมูลว่าง (null) ในฟิลด์ Date, Company, และ Remark
             String updateAllQuery = "UPDATE `orderreceived` SET `Date` = ?, `Company` = ?, `Id` = ?, `Recipient` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Id` IS NOT NULL AND `Recipient` IS NOT NULL AND `Remark` IS NOT NULL";
             PreparedStatement psUpdateAll = con.prepareStatement(updateAllQuery);
-            psUpdateAll.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
+            psUpdateAll.setString(1, TextField_Date1.getText());
             psUpdateAll.setString(2, ComboBox_Company2.getSelectedItem().toString());
             psUpdateAll.setString(3, ComboBox_ID1.getSelectedItem().toString());
             psUpdateAll.setString(4, ComboBox_Employee1.getSelectedItem().toString());
             psUpdateAll.setString(5, jTextArea_Information1.getText());
-            psUpdateAll.executeUpdate(); // สั่งให้อัปเดตข้อมูลในตารางทั้งหมด
+            psUpdateAll.executeUpdate(); 
 
-            // ปิดการเชื่อมต่อกับฐานข้อมูล
             psUpdateAll.close();
             con.close();
         } catch (SQLException ex) {
@@ -1146,7 +1124,7 @@ public class Order_Received extends javax.swing.JPanel {
         }
            
            Main.body.removeAll();
-           Main.body.add(new Order_Record());
+           Main.body.add(new Order_Received());
            Main.body.repaint();
            Main.body.revalidate();
            JOptionPane.showMessageDialog(null, "บันทึกข้อมูลเรียบร้อยแล้ว", "บันทึกข้อมูล", JOptionPane.INFORMATION_MESSAGE);
@@ -1263,32 +1241,26 @@ public class Order_Received extends javax.swing.JPanel {
         private void mergeAndRefreshTable() {
         HashMap<String, OrderReceivedInfo> mergedRows = new HashMap<>();
 
-        // วนลูปเพื่อวิเคราะห์และวมแถว
         for (OrderReceivedInfo product : productsArray) {
             String key = product.getDate() + product.getCompany() + product.getId() + product.getRecipient();
 
-            // ตรวจสอบว่าแถวนี้มีใน HashMap หรือไม่
             if (mergedRows.containsKey(key)) {
-                // หากมีให้ทำการบวกค่า Quantity และ Total
                 OrderReceivedInfo mergedProduct = mergedRows.get(key);
                 mergedProduct.setQuantity(mergedProduct.getQuantity() + product.getQuantity());
                 mergedProduct.setTotal(mergedProduct.getTotal() + product.getTotal());
             } else {
-                // หากไม่มีให้เพิ่มแถวเข้า HashMap
                 mergedRows.put(key, product);
             }
         }
 
-        // ล้างตารางก่อนที่จะเริ่มเพิ่มแถวใหม่
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);
 
-        // เรียงลำดับแถวใหม่ตามลำดับ 1 - n และวันที่
+        
         List<OrderReceivedInfo> sortedProducts = new ArrayList<>(mergedRows.values());
         sortedProducts.sort(Comparator.comparing(OrderReceivedInfo::getDate));
 
         int index = 1;
-        // เพิ่มแถวที่ถูกวิเคราะห์และวมเข้าไปในตารางใหม่
         for (OrderReceivedInfo mergedProduct : sortedProducts) {
             Object[] row = new Object[]{
                 index++,
@@ -1302,7 +1274,6 @@ public class Order_Received extends javax.swing.JPanel {
             model.addRow(row);
         }
 
-        // เรียกใช้ fireTableDataChanged เพื่อแจ้งให้ตารางทราบว่ามีการเปลี่ยนแปลงข้อมูล
         model.fireTableDataChanged();
 }
 
