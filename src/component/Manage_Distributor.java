@@ -55,12 +55,12 @@ public class Manage_Distributor extends javax.swing.JPanel {
 
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        back_button = new javax.swing.JLabel();
-        search__box = new javax.swing.JTextField();
         Save_bt1 = new javax.swing.JButton();
         delete_bt = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        back_button = new javax.swing.JLabel();
+        search__box = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -80,36 +80,6 @@ public class Manage_Distributor extends javax.swing.JPanel {
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Topic.setText("จัดการทะเบียนตัวแทนจำหน่าย");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, -1, -1));
-
-        back_button.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        back_button.setForeground(new java.awt.Color(139, 139, 139));
-        back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/loupe2_1.png"))); // NOI18N
-        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 50, 30, 30));
-
-        search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        search__box.setForeground(new java.awt.Color(123, 123, 123));
-        search__box.setText("ค้นหา");
-        search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        search__box.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                search__boxFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                search__boxFocusLost(evt);
-            }
-        });
-        search__box.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search__boxActionPerformed(evt);
-            }
-        });
-        search__box.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                search__boxKeyReleased(evt);
-            }
-        });
-        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 50, 300, 30));
 
         Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Save_bt1.setText("เพิ่ม");
@@ -159,11 +129,37 @@ public class Manage_Distributor extends javax.swing.JPanel {
         jScrollPane2.setViewportView(jTable);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
-    }// </editor-fold>//GEN-END:initComponents
 
-    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search__boxActionPerformed
+        back_button.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        back_button.setForeground(new java.awt.Color(139, 139, 139));
+        back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/loupe2_1.png"))); // NOI18N
+        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 50, 30, 30));
+
+        search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        search__box.setForeground(new java.awt.Color(123, 123, 123));
+        search__box.setText("ค้นหา");
+        search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        search__box.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                search__boxFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                search__boxFocusLost(evt);
+            }
+        });
+        search__box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search__boxActionPerformed(evt);
+            }
+        });
+        search__box.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                search__boxKeyReleased(evt);
+            }
+        });
+        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 50, 300, 30));
+    }// </editor-fold>//GEN-END:initComponents
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
     int selectedRow = jTable.getSelectedRow(); 
@@ -199,30 +195,6 @@ public class Manage_Distributor extends javax.swing.JPanel {
         position = index;
     }//GEN-LAST:event_jTableMouseClicked
 
-    private void search__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search__boxFocusGained
-        if(search__box.getText().equals("ค้นหาชื่อบริษัท")){
-                search__box.setText("");
-                search__box.setForeground(new Color(0, 0, 0));
-        }
-    }//GEN-LAST:event_search__boxFocusGained
-
-    private void search__boxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search__boxFocusLost
-        if (search__box.getText().length()==0) {
-            search__box.setText("ค้นหาชื่อบริษัท");
-            search__box.setForeground(new Color(123, 123, 123));
-        }
-    }//GEN-LAST:event_search__boxFocusLost
-
-    private void search__boxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search__boxKeyReleased
-        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-        jTable.setRowSorter(sorter);
-        int columnIndexToFilter = 1;
-        int columnIndexToFilter2 = 2;
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter));
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter2));
-    }//GEN-LAST:event_search__boxKeyReleased
-
     private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
         Main.body.removeAll();
         Main.body.add(new Distributor_Register());
@@ -236,6 +208,42 @@ public class Manage_Distributor extends javax.swing.JPanel {
         JFrame thisFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         thisFrame.dispose();
     }//GEN-LAST:event_back_button1MouseClicked
+
+    private void search__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search__boxFocusGained
+        if(search__box.getText().equals("ค้นหา")){
+            search__box.setText("");
+            search__box.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_search__boxFocusGained
+
+    private void search__boxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search__boxFocusLost
+        if (search__box.getText().length()==0) {
+            search__box.setText("ค้นหา");
+            search__box.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_search__boxFocusLost
+
+    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_search__boxActionPerformed
+
+    private void search__boxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search__boxKeyReleased
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable.setRowSorter(sorter);
+
+        int[] columnIndexToFilter = {1,2,3};
+
+        StringBuilder regexPattern = new StringBuilder();
+        for (int columnIndex : columnIndexToFilter) {
+            if (regexPattern.length() > 0) {
+                regexPattern.append("|");
+            }
+            regexPattern.append("(?i)").append(search__box.getText().trim());
+        }
+
+        sorter.setRowFilter(RowFilter.regexFilter(regexPattern.toString(), columnIndexToFilter));
+    }//GEN-LAST:event_search__boxKeyReleased
 
     ArrayList<DistributorInfo> distributorArray = new ArrayList<>();
     
