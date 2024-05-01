@@ -111,7 +111,7 @@ public class EditProduct extends javax.swing.JPanel {
         add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, 370, 30));
 
         Add_dealer_information.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        Add_dealer_information.setText("เพิ่มสินค้า");
+        Add_dealer_information.setText("แก้ไขสินค้า");
         add(Add_dealer_information, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, -1, -1));
 
         picture_box.setBackground(new java.awt.Color(255, 255, 255));
