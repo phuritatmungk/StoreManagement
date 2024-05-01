@@ -3,11 +3,17 @@ package component;
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Warehouse;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import karnkha.DB;
 import java.util.Date;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class AddProduct extends javax.swing.JPanel {
     
@@ -48,6 +54,7 @@ public class AddProduct extends javax.swing.JPanel {
         jAmount = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
         txtAmount = new javax.swing.JTextField();
+        jTextField_imgPath = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -237,6 +244,13 @@ public class AddProduct extends javax.swing.JPanel {
             }
         });
         add(txtAmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 540, 370, 30));
+
+        jTextField_imgPath.setEditable(false);
+        jTextField_imgPath.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField_imgPath.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField_imgPath.setText("jTextField1");
+        jTextField_imgPath.setBorder(null);
+        add(jTextField_imgPath, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 570, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtProductidFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductidFocusLost
@@ -254,7 +268,25 @@ public class AddProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNameFocusLost
 
     private void btnPicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPicActionPerformed
-        // TODO add your handling code here:
+        JFileChooser filechooser = new JFileChooser();
+        filechooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*images", ".png","jpg",".jpeg");
+        filechooser.addChoosableFileFilter(filter);
+        
+        if(filechooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+        {
+          File selectedImage = filechooser.getSelectedFile();
+          String image_path = selectedImage.getAbsolutePath();
+          displayImage(image_path, picture_box,'a');
+          jTextField_imgPath.setText(image_path);
+          System.out.println(image_path);
+        }
+        else
+        {
+            System.out.println("no file selected");
+        }
+                              
     }//GEN-LAST:event_btnPicActionPerformed
 
     private void txtTypeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTypeFocusLost
@@ -507,6 +539,24 @@ public class AddProduct extends javax.swing.JPanel {
 
         return nextQueueNumber;
 }
+    
+    public void displayImage(String imgPath, JLabel label, char rsc)
+    {
+        ImageIcon imgIco;
+        if(rsc == 'r')
+        {
+            imgIco = new ImageIcon(getClass().getResource(imgPath));
+        }
+        else
+        {
+         imgIco = new ImageIcon(imgPath);
+        }
+        
+        Image img = imgIco.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(img));
+        
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
     private javax.swing.JLabel Topic;
@@ -524,6 +574,7 @@ public class AddProduct extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JTextField jTextField_imgPath;
     private javax.swing.JLabel jType;
     private javax.swing.JLabel picture_box;
     private javax.swing.JTextField txtAmount;

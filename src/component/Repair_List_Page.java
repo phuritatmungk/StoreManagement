@@ -70,8 +70,9 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jTextField_Repairman = new javax.swing.JTextField();
         jTextField_Id = new javax.swing.JTextField();
         jTextField_Item = new javax.swing.JTextField();
-        jTextField_Behavior = new javax.swing.JTextField();
         jComboBox_Status = new javax.swing.JComboBox<>();
+        jScrollPane_Behavior = new javax.swing.JScrollPane();
+        jTextArea_Behavior = new javax.swing.JTextArea();
         jFrame2 = new javax.swing.JFrame();
         jPanel2 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -91,8 +92,11 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jTextField_Id2 = new javax.swing.JTextField();
         jTextField_Item2 = new javax.swing.JTextField();
         jComboBox_Status2 = new javax.swing.JComboBox<>();
-        jTextField_Behavior2 = new javax.swing.JTextField();
         btnEdit = new javax.swing.JButton();
+        jScrollPane_Behavior1 = new javax.swing.JScrollPane();
+        jTextArea_Behavior1 = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         btnAdd = new javax.swing.JButton();
@@ -206,13 +210,6 @@ public class Repair_List_Page extends javax.swing.JPanel {
         });
         jPanel1.add(jTextField_Item, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 140, 25));
 
-        jTextField_Behavior.setEditable(false);
-        jTextField_Behavior.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField_Behavior.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTextField_Behavior.setBorder(null);
-        jTextField_Behavior.setFocusable(false);
-        jPanel1.add(jTextField_Behavior, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 330, 120));
-
         jComboBox_Status.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jComboBox_Status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "รอดําเนินการ", "กำลังดำเนินการ", "เสร็จสิ้น" }));
         jComboBox_Status.setEnabled(false);
@@ -222,6 +219,20 @@ public class Repair_List_Page extends javax.swing.JPanel {
             }
         });
         jPanel1.add(jComboBox_Status, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 140, 30));
+
+        jScrollPane_Behavior.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jScrollPane_Behavior.setEnabled(false);
+
+        jTextArea_Behavior.setEditable(false);
+        jTextArea_Behavior.setColumns(20);
+        jTextArea_Behavior.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextArea_Behavior.setLineWrap(true);
+        jTextArea_Behavior.setRows(5);
+        jTextArea_Behavior.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextArea_Behavior.setEnabled(false);
+        jScrollPane_Behavior.setViewportView(jTextArea_Behavior);
+
+        jPanel1.add(jScrollPane_Behavior, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 230, 120));
 
         jFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 630));
 
@@ -315,10 +326,6 @@ public class Repair_List_Page extends javax.swing.JPanel {
         });
         jPanel2.add(jComboBox_Status2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 140, 30));
 
-        jTextField_Behavior2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTextField_Behavior2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.add(jTextField_Behavior2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 330, 120));
-
         btnEdit.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEdit.setText("บันทึก");
         btnEdit.setFocusPainted(false);
@@ -329,7 +336,21 @@ public class Repair_List_Page extends javax.swing.JPanel {
         });
         jPanel2.add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, 170, 50));
 
+        jScrollPane_Behavior1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+
+        jTextArea_Behavior1.setColumns(20);
+        jTextArea_Behavior1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextArea_Behavior1.setLineWrap(true);
+        jTextArea_Behavior1.setRows(5);
+        jScrollPane_Behavior1.setViewportView(jTextArea_Behavior1);
+
+        jPanel2.add(jScrollPane_Behavior1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 230, 120));
+
         jFrame2.getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 870, 670));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1280, 720));
@@ -600,7 +621,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jTextField_Id.setText(requestArray.get(index).getId().toString());
         jTextField_Repairman.setText(requestArray.get(index).getRepairman());
         jComboBox_Status.setSelectedItem(requestArray.get(index).getStatus());
-        jTextField_Behavior.setText(requestArray.get(index).getName());
+        jTextArea_Behavior1.setText(requestArray.get(index).getName());
     }
         public void showProductData2(int index)
     {
@@ -612,7 +633,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jTextField_Id2.setText(requestArray.get(index).getId().toString());
         jTextField_Repairman2.setText(requestArray.get(index).getRepairman());
         jComboBox_Status2.setSelectedItem(requestArray.get(index).getStatus());
-        jTextField_Behavior2.setText(requestArray.get(index).getName());
+        jTextArea_Behavior.setText(requestArray.get(index).getName());
     }
         public boolean checkEmptyFields()
     {
@@ -677,10 +698,14 @@ public class Repair_List_Page extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane_Behavior;
+    private javax.swing.JScrollPane jScrollPane_Behavior1;
     private javax.swing.JTable jTable;
-    private javax.swing.JTextField jTextField_Behavior;
-    private javax.swing.JTextField jTextField_Behavior2;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea_Behavior;
+    private javax.swing.JTextArea jTextArea_Behavior1;
     private javax.swing.JTextField jTextField_Date;
     private javax.swing.JTextField jTextField_Date2;
     private javax.swing.JTextField jTextField_Id;

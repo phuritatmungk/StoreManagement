@@ -21,6 +21,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         initComponents();
         con = DB.mycon();
         showProductsInTable();
+        showProductsInTable2();
     }
 
     @SuppressWarnings("unchecked")
@@ -40,6 +41,8 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         txtItem = new javax.swing.JTextField();
         txtId = new javax.swing.JTextField();
         Topic3 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
         txtDate = new javax.swing.JTextField();
@@ -48,6 +51,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         Topic4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         setPreferredSize(new java.awt.Dimension(1280, 720));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -85,11 +89,14 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         });
         add(btnpay, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 650, 200, 50));
 
+        txtRepair.setEditable(false);
+        txtRepair.setBackground(new java.awt.Color(255, 255, 255));
         txtRepair.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtRepair.setForeground(new java.awt.Color(123, 123, 123));
         txtRepair.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtRepair.setText("wdsawdsadw");
         txtRepair.setBorder(null);
+        txtRepair.setFocusable(false);
         txtRepair.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtRepairFocusGained(evt);
@@ -113,10 +120,13 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         Topic2.setText("ค่าบริการ :");
         add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 610, -1, 30));
 
+        txtTotal.setEditable(false);
+        txtTotal.setBackground(new java.awt.Color(255, 255, 255));
         txtTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtTotal.setForeground(new java.awt.Color(123, 123, 123));
         txtTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtTotal.setFocusable(false);
         txtTotal.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtTotalFocusGained(evt);
@@ -132,11 +142,14 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         });
         add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 50, 200, 30));
 
+        txtPhone.setEditable(false);
+        txtPhone.setBackground(new java.awt.Color(255, 255, 255));
         txtPhone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtPhone.setForeground(new java.awt.Color(123, 123, 123));
         txtPhone.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtPhone.setText("wdsawdsa");
         txtPhone.setBorder(null);
+        txtPhone.setFocusable(false);
         txtPhone.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtPhoneFocusGained(evt);
@@ -152,11 +165,14 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         });
         add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 600, 150, 30));
 
+        txtName.setEditable(false);
+        txtName.setBackground(new java.awt.Color(255, 255, 255));
         txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtName.setForeground(new java.awt.Color(123, 123, 123));
         txtName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtName.setText("eawdsawd");
         txtName.setBorder(null);
+        txtName.setFocusable(false);
         txtName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtNameFocusGained(evt);
@@ -172,11 +188,14 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         });
         add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 600, 110, 30));
 
+        txtItem.setEditable(false);
+        txtItem.setBackground(new java.awt.Color(255, 255, 255));
         txtItem.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtItem.setForeground(new java.awt.Color(123, 123, 123));
         txtItem.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtItem.setText("dawdsa");
         txtItem.setBorder(null);
+        txtItem.setFocusable(false);
         txtItem.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtItemFocusGained(evt);
@@ -192,11 +211,14 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         });
         add(txtItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 600, 60, 30));
 
+        txtId.setEditable(false);
+        txtId.setBackground(new java.awt.Color(255, 255, 255));
         txtId.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtId.setForeground(new java.awt.Color(123, 123, 123));
         txtId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtId.setText("dawdasdas");
         txtId.setBorder(null);
+        txtId.setFocusable(false);
         txtId.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtIdFocusGained(evt);
@@ -215,6 +237,41 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic3.setText("ผู้ส่งซ่อม");
         add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 600, -1, 30));
+
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "No", "Product ID", "Product Name", "Category", "Quantity", "Price", "Cost"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setRowHeight(50);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(6).setResizable(false);
+            jTable1.getColumnModel().getColumn(6).setHeaderValue("Cost");
+        }
+
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 830, 1240, 480));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -291,7 +348,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         });
         add(txtStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 680, 150, 30));
 
-        txtService.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtService.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtService.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtService.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtService.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -354,8 +411,10 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             String category = (String)  model.getValueAt(i,3);
             int quantity = (int) model.getValueAt(i, 4);
             double price = (double) model.getValueAt(i, 5);
+            double cost = (double) jTable1.getValueAt(i, 6);
+            Double service = Double.valueOf(txtService.getText().toString());
         
-            String insertQuery = "INSERT INTO `requestpaid` (`Date`, `Name`, `Phone`, `PId`, `Pname`, `Category`,`Quantity`,`Price`,`Item`,`Id`,`Repairman`,`Status`,`Total`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String insertQuery = "INSERT INTO `requestpaid` (`Date`, `Name`, `Phone`, `PId`, `Pname`, `Category`,`Quantity`,`Price`,`Item`,`Id`,`Repairman`,`Status`,`Total`,`Cost`,`Service`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             Connection con = DB.getConnection();
             PreparedStatement ps = con.prepareStatement(insertQuery);
@@ -372,6 +431,8 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             ps.setString(11, repair);
             ps.setString(12, status);
             ps.setDouble(13,total);
+            ps.setDouble(14,cost);
+            ps.setDouble(15,service);
             
             ps.executeUpdate();
             updateInventory(pid, quantity);
@@ -504,13 +565,17 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
     }//GEN-LAST:event_txtServiceActionPerformed
 
     private void txtServiceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtServiceKeyReleased
-    try {
-        Double.parseDouble(txtService.getText());
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(null, "Please enter a valid number for the service fee.", "Error", JOptionPane.WARNING_MESSAGE);
-    return;
+        try {
+            Double.parseDouble(txtService.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid number for the service fee.", "Error", JOptionPane.WARNING_MESSAGE);
+        return;
     }
     }//GEN-LAST:event_txtServiceKeyReleased
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
 
     ArrayList<CartInfo> productsArray = new ArrayList<>();
     
@@ -599,7 +664,29 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             
         }
     }
-
+    public void showProductsInTable2()
+    {
+        ArrayList<CartInfo> productsList = getProductsList();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        model.setRowCount(0);
+        
+        Object[] row = new Object[7];
+        
+        for(int i = 0; i < productsList.size(); i++)
+        {
+            row[0] = productsList.get(i).getNo();
+            row[1] = productsList.get(i).getId();
+            row[2] = productsList.get(i).getName();
+            row[3] = productsList.get(i).getCategory();
+            row[4] = productsList.get(i).getQuantity();
+            row[5] = productsList.get(i).getPrice();
+            row[6] = productsList.get(i).getCost();       
+            
+            model.addRow(row);
+            
+        }
+    }
     private void calculateTotalPrice() {
     DefaultTableModel model = (DefaultTableModel) jTable.getModel();
     double totalPrice = 0.0;
@@ -648,7 +735,9 @@ private void updateInventory(String productId, int soldQuantity) {
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnpay;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable;
+    private javax.swing.JTable jTable1;
     public static javax.swing.JTextField txtDate;
     public static javax.swing.JTextField txtId;
     public static javax.swing.JTextField txtItem;

@@ -5,7 +5,16 @@
 package Com_Table;
 
 import component.Order_Received;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import karnkha.DB;
+import karnkha.OrderInfo;
 
 /**
  *
@@ -18,6 +27,8 @@ public class Table_OrderRec extends javax.swing.JPanel {
      */
     public Table_OrderRec() {
         initComponents();
+        showProductsInTable();
+        mergeAndRefreshTable();
     }
 
     /**
@@ -34,7 +45,7 @@ public class Table_OrderRec extends javax.swing.JPanel {
         Date_label1 = new javax.swing.JLabel();
         Date_Text = new javax.swing.JLabel();
         Company_label = new javax.swing.JLabel();
-        Date_Text1 = new javax.swing.JLabel();
+        Company_Text1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
 
         setMinimumSize(new java.awt.Dimension(580, 800));
@@ -72,16 +83,15 @@ public class Table_OrderRec extends javax.swing.JPanel {
         add(Date_label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         Date_Text.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        Date_Text.setText("DD/MM/YY");
         add(Date_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, -1));
 
         Company_label.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         Company_label.setText("บริษัท : ");
         add(Company_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, -1));
 
-        Date_Text1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        Date_Text1.setText("ชื่อบริษัท");
-        add(Date_Text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 130, -1));
+        Company_Text1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Company_Text1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        add(Company_Text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 9, 380, 20));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -99,19 +109,142 @@ public class Table_OrderRec extends javax.swing.JPanel {
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 800));
     }// </editor-fold>//GEN-END:initComponents
 
+    private boolean isFirstClick = true;
+    
     private void Table_Order_Record1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_Order_Record1MouseClicked
-        int index = Table_Order_Record1.getSelectedRow();
-            Order_Received.body.removeAll();
-            Order_Received.body.add(new Table_RecivePro());
-            Order_Received.body.repaint();
-            Order_Received.body.revalidate();
+        int row = Table_Order_Record1.getSelectedRow();
+        if (row == -1) {
+            return; // ถ้าไม่ได้เลือกแถวใดๆ ให้ย้อนกลับ
+        }    
+         if (isFirstClick) {
+         isFirstClick = false; // เปลี่ยนค่าเป็น false เมื่อคลิกครั้งแรก
+         int index = Table_Order_Record1.getSelectedRow();
+         if (index != -1) { // Check if a row is selected
+             String company = Table_Order_Record1.getValueAt(index, 2).toString(); // Get company name from selected row
+             String date = Table_Order_Record1.getValueAt(index, 1).toString(); // Get date from selected row
+
+             // Set the values to the labels
+             Company_Text1.setText(company);
+             Date_Text.setText(date);
+         }
+     } else {
+         int index = Table_Order_Record1.getSelectedRow();
+         if (index != -1) { // Check if a row is selected
+             String company = Table_Order_Record1.getValueAt(index, 2).toString(); // Get company name from selected row
+             String date = Table_Order_Record1.getValueAt(index, 1).toString(); // Get date from selected row
+
+             // Open Table_RecivePro with selected date and company
+             Order_Received.body.removeAll();
+             Table_RecivePro tableRecivePro = new Table_RecivePro(date, company);
+             Order_Received.body.add(tableRecivePro);
+             Order_Received.body.repaint();
+             Order_Received.body.revalidate();
+         }
+}
     }//GEN-LAST:event_Table_Order_Record1MouseClicked
 
+    ArrayList<OrderInfo> productsArray = new ArrayList<>();
+    
+    int position = 0;
+    public ArrayList<OrderInfo> getProductsList()
+    {
+        ArrayList<OrderInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `order`";
+        
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            st = DB.getConnection().createStatement();
+            rs = st.executeQuery(selectQuery);
+            OrderInfo product;
+            
+            while(rs.next())
+            {
+                product = new OrderInfo(rs.getInt("No"), rs.getString("Date"),
+                                      rs.getString("Company"), rs.getString("Name"), rs.getString("Category"), 
+                                      rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Total"), rs.getString("Remark"));
+                list.add(product);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        productsArray = list;
+        return list;
+        
+    }
+    
+        public void showProductsInTable()
+    {
+        ArrayList<OrderInfo> productsList = getProductsList();
+        DefaultTableModel model = (DefaultTableModel) Table_Order_Record1.getModel();
+        
+        model.setRowCount(0);
+        
+        Object[] row = new Object[5];
+        
+        for(int i = 0; i < productsList.size(); i++)
+        {
+            row[0] = productsList.get(i).getNo();
+            row[1] = productsList.get(i).getDate();
+            row[2] = productsList.get(i).getCompany();
+            row[3] = productsList.get(i).getQuantity();
+            row[4] = productsList.get(i).getTotal();
+            
+            model.addRow(row);
+        }
+        
+    }
 
+
+    private void mergeAndRefreshTable() {
+        DefaultTableModel model = (DefaultTableModel) Table_Order_Record1.getModel();
+        if (Table_Order_Record1 != null && model != null) {
+            int rowCount = model.getRowCount();
+            HashMap<String, Double[]> dateMap = new HashMap<>();
+
+            // วนลูปผ่านแถวของตาราง
+            for (int i = 0; i < rowCount; i++) {
+                String company = model.getValueAt(i, 2).toString(); // อ้างถึงคอลัมน์ที่ 1 (บริษัท)
+                String date = model.getValueAt(i, 1).toString(); // อ้างถึงคอลัมน์ที่ 2 (วันที่)
+
+                String key = company + date; // สร้าง key โดยรวมชื่อบริษัทและวันที่
+
+                if (dateMap.containsKey(key)) {
+                    Double[] values = dateMap.get(key);
+                    values[0] += Double.parseDouble(model.getValueAt(i, 3).toString()); // อ้างถึงคอลัมน์ที่ 4 (จำนวน)
+                    values[1] += Double.parseDouble(model.getValueAt(i, 4).toString()); // อ้างถึงคอลัมน์ที่ 5 (รวม)
+                } else {
+                    Double[] values = new Double[2];
+                    values[0] = Double.parseDouble(model.getValueAt(i, 3).toString()); // อ้างถึงคอลัมน์ที่ 4 (จำนวน)
+                    values[1] = Double.parseDouble(model.getValueAt(i, 4).toString()); // อ้างถึงคอลัมน์ที่ 5 (รวม)
+                    dateMap.put(key, values);
+                }
+            }
+
+            model.setRowCount(0);
+            int newRowNumber = 1;
+
+            for (Map.Entry<String, Double[]> entry : dateMap.entrySet()) {
+                String key = entry.getKey();
+                Double[] values = entry.getValue();
+
+                String company = key.substring(0, key.length() - 10); // แยกชื่อบริษัทจาก key
+                String date = key.substring(key.length() - 10); // แยกวันที่จาก key
+
+                Object[] rowData = new Object[]{newRowNumber++, date, company,  values[0], values[1]}; // ลำดับ, บริษัท, วันที่, จำนวน, รวม
+                model.addRow(rowData);
+            }
+ 
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Company_Text1;
     private javax.swing.JLabel Company_label;
     private javax.swing.JLabel Date_Text;
-    private javax.swing.JLabel Date_Text1;
     private javax.swing.JLabel Date_label1;
     private javax.swing.JTable Table_Order_Record1;
     private javax.swing.JPanel jPanel1;

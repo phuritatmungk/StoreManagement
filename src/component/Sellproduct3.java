@@ -214,7 +214,7 @@ public class Sellproduct3 extends javax.swing.JPanel {
 
         txtTotal.setEditable(false);
         txtTotal.setBackground(new java.awt.Color(255, 255, 255));
-        txtTotal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtTotal.setBorder(null);
         txtTotal.setFocusable(false);
         add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 580, 160, 30));
