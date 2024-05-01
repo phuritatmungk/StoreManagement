@@ -188,7 +188,7 @@ public class Maintenance extends javax.swing.JPanel {
         txtStatus.setEditable(false);
         txtStatus.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtStatus.setForeground(new java.awt.Color(123, 123, 123));
-        txtStatus.setText("   รอดำเนินการ");
+        txtStatus.setText("รอดำเนินการ");
         txtStatus.setBorder(null);
         txtStatus.setFocusable(false);
         txtStatus.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -199,7 +199,12 @@ public class Maintenance extends javax.swing.JPanel {
                 txtStatusFocusLost(evt);
             }
         });
-        add(txtStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 270, 130, 30));
+        txtStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStatusActionPerformed(evt);
+            }
+        });
+        add(txtStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 290, 130, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtCustomerFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCustomerFocusGained
@@ -341,6 +346,10 @@ public class Maintenance extends javax.swing.JPanel {
             txtBrokenItem.setForeground(new Color(0, 0, 0));
         }
     }//GEN-LAST:event_txtBrokenItemFocusGained
+
+    private void txtStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStatusActionPerformed
     
     private boolean isNumeric(String input) {
 
