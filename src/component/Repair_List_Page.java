@@ -584,7 +584,10 @@ public class Repair_List_Page extends javax.swing.JPanel {
         } else {
             System.out.println("You must insert all fields");
         }
-       
+            Main.body.removeAll();
+            Main.body.add(new Repair_List_Page());
+            Main.body.repaint();
+            Main.body.revalidate();
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void jComboBox_Status2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Status2ActionPerformed
