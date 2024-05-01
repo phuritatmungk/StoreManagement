@@ -137,7 +137,7 @@ public class SellHistory extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(jTable);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 550));
 
         B_Date.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         B_Date.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/calendar.png"))); // NOI18N
@@ -146,7 +146,7 @@ public class SellHistory extends javax.swing.JPanel {
                 B_DateMouseClicked(evt);
             }
         });
-        add(B_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 60, 30, 30));
+        add(B_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 70, 30, 30));
 
         search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         search__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -157,11 +157,11 @@ public class SellHistory extends javax.swing.JPanel {
                 search__boxActionPerformed(evt);
             }
         });
-        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 60, 300, 30));
+        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 70, 300, 30));
 
         Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic3.setText("วันที่ :");
-        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 60, -1, 30));
+        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 70, -1, 30));
     }// </editor-fold>//GEN-END:initComponents
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
