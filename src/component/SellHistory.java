@@ -27,9 +27,9 @@ public class SellHistory extends javax.swing.JPanel {
 
     public SellHistory() {
         initComponents();
-        chDate.setTextField(search__box);
+        chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
-        chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+        chDate.setTextField(search__box);
         model = (DefaultTableModel)jTable.getModel();
         chDate.addActionDateChooserListener(new DateChooserAdapter() {
             @Override
@@ -37,7 +37,7 @@ public class SellHistory extends javax.swing.JPanel {
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String dateFrom = df.format(db.getFromDate());
                 String toDate = df.format(db.getToDate());
-                loadData("SELECT * FROM `sales` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
+                loadData("SELECT * FROM `reportsales` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
         
                 model.fireTableDataChanged();
             }
@@ -55,20 +55,21 @@ public class SellHistory extends javax.swing.JPanel {
         try {
             model.setRowCount(0);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            DecimalFormat f = new DecimalFormat("$ #,##0.##");
+            DecimalFormat f = new DecimalFormat("#,##0.##");
             PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
             ResultSet r = p.executeQuery();
             while (r.next()) {
-            String No = r.getString("No");
-            String Id = r.getString("Id");
             String Date = r.getString("Date");
-            String Name = r.getString("Name");
+            String Id = r.getString("Id");
+            String List = r.getString("List");
             String Category = r.getString("Category");
-            String Quantity = f.format(r.getDouble("Quantity"));
-            String Price = f.format(r.getDouble("Price"));
+            String Quantity = f.format(r.getInt("Quantity"));
+            double price = r.getDouble("Price");
+            String Price = String.valueOf(price);
             
-            model.addRow(new Object[] { No,Id, Date, Name,Category, Quantity, Price });
+            model.addRow(new Object[] { Date,Id, List,Category, Quantity, Price });
         }
+         
         r.close();
         p.close();
         model.fireTableDataChanged();
@@ -82,10 +83,11 @@ public class SellHistory extends javax.swing.JPanel {
 
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        Topic3 = new javax.swing.JLabel();
-        search__box = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        B_Date = new javax.swing.JLabel();
+        search__box = new javax.swing.JTextField();
+        Topic3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -105,18 +107,6 @@ public class SellHistory extends javax.swing.JPanel {
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Topic.setText("ประวัติการขายสินค้า");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
-
-        Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Topic3.setText("วันที่ :");
-        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 60, -1, 30));
-
-        search__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        search__box.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search__boxActionPerformed(evt);
-            }
-        });
-        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 60, 270, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -148,6 +138,30 @@ public class SellHistory extends javax.swing.JPanel {
         jScrollPane3.setViewportView(jTable);
 
         add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+
+        B_Date.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B_Date.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/calendar.png"))); // NOI18N
+        B_Date.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_DateMouseClicked(evt);
+            }
+        });
+        add(B_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 60, 30, 30));
+
+        search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        search__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        search__box.setEnabled(false);
+        search__box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search__boxActionPerformed(evt);
+            }
+        });
+        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 60, 300, 30));
+
+        Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Topic3.setText("วันที่ :");
+        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 60, -1, 30));
     }// </editor-fold>//GEN-END:initComponents
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
@@ -155,16 +169,20 @@ public class SellHistory extends javax.swing.JPanel {
         position = index;
     }//GEN-LAST:event_jTableMouseClicked
 
-    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search__boxActionPerformed
-
     private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
         Home homePage = new Home();
         homePage.setVisible(true);
         JFrame thisFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         thisFrame.dispose();
     }//GEN-LAST:event_back_button1MouseClicked
+
+    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_search__boxActionPerformed
+
+    private void B_DateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_DateMouseClicked
+        chDate.showPopup();
+    }//GEN-LAST:event_B_DateMouseClicked
 
     ArrayList<SalesReport> salesArray = new ArrayList<>();
     
@@ -223,6 +241,7 @@ public class SellHistory extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel B_Date;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel Topic3;
     private javax.swing.JLabel back_button1;
