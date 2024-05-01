@@ -19,8 +19,9 @@ public class EmployeeInfo {
     private String address;
     private String sname;
     private String full;
+    private String img;
 
-    public EmployeeInfo(Integer no, String fname, String sname, Integer id, String job, Double wage, Integer phone, String address) {
+    public EmployeeInfo(Integer no, String fname, String sname, Integer id, String job, Double wage, Integer phone, String address,String img) {
         this.no = no;
         this.fname = fname;
         this.sname = sname;
@@ -29,6 +30,7 @@ public class EmployeeInfo {
         this.wage = wage;
         this.phone = phone;
         this.address = address;
+        this.img = img;
     }
 
     public Integer getNo() {
@@ -102,5 +104,19 @@ public class EmployeeInfo {
 
     public void setFull(String full) {
         this.full = full;
+    }
+
+    /**
+     * @return the img
+     */
+    public String getImg() {
+        return img;
+    }
+
+    /**
+     * @param img the img to set
+     */
+    public void setImg(String img) {
+        this.img = img;
     }
 }

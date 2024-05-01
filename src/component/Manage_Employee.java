@@ -12,6 +12,9 @@ import karnkha.Main;
 import component.Employee_Register;
 import component.Edit_employee_info;
 import java.awt.Color;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -263,7 +266,7 @@ public class Manage_Employee extends javax.swing.JPanel {
             {
                 employee = new EmployeeInfo(rs.getInt("No"), rs.getString("Fname"),
                                       rs.getString("Sname"), rs.getInt("Id"), rs.getString("Job"),
-                                      rs.getDouble("Wage"), rs.getInt("Phone"), rs.getString("Address"));
+                                      rs.getDouble("Wage"), rs.getInt("Phone"), rs.getString("Address"),rs.getString("Image"));
                 list.add(employee);
             }
             
@@ -299,6 +302,7 @@ public class Manage_Employee extends javax.swing.JPanel {
     }
 public void showProductData(int index)
       {
+        JLabel img = Edit_employee_info.picture_box;   
         Edit_employee_info.txtNo.setText(employeesArray.get(index).getNo().toString());
         Edit_employee_info.txtId.setText(employeesArray.get(index).getId().toString());
         Edit_employee_info.txtName.setText(employeesArray.get(index).getFname().toString());
@@ -307,6 +311,25 @@ public void showProductData(int index)
         Edit_employee_info.txtJob.setText(employeesArray.get(index).getJob().toString());
         Edit_employee_info.txtSalary.setText(employeesArray.get(index).getWage().toString());
         Edit_employee_info.txtAddress.setText(employeesArray.get(index).getAddress().toString());
+        Edit_employee_info.jTextField_imgPath.setText(employeesArray.get(index).getImg().toString());
+        displayImage(employeesArray.get(index).getImg(),img,'a');
+        
+    }
+    public void displayImage(String imgPath, JLabel label, char rsc)
+    {
+        ImageIcon imgIco;
+        if(rsc == 'r')
+        {
+            imgIco = new ImageIcon(getClass().getResource(imgPath));
+        }
+        else
+        {
+         imgIco = new ImageIcon(imgPath);
+        }
+        
+        Image img = imgIco.getImage().getScaledInstance(200, 190, Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(img));
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Save_bt1;

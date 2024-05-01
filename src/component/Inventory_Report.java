@@ -280,7 +280,7 @@ public class Inventory_Report extends javax.swing.JPanel {
                 InventoryInfo product = new InventoryInfo(
                     rs.getInt("No"), rs.getString("Id"),
                     rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
-                    rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price")
+                    rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price"),rs.getString("Image")
                 );
                 list.add(product);
             }

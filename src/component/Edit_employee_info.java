@@ -1,12 +1,20 @@
 package component;
+import static component.Edit_dealer_info.jTextField_imgPath;
+import static component.Edit_dealer_info.picture_box;
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Employee;
+import java.awt.Image;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import karnkha.DB;
 
 public class Edit_employee_info extends javax.swing.JPanel {
@@ -50,6 +58,7 @@ public class Edit_employee_info extends javax.swing.JPanel {
         txtSalary = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
         txtNo = new javax.swing.JTextField();
+        jTextField_imgPath = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -75,7 +84,6 @@ public class Edit_employee_info extends javax.swing.JPanel {
         add(JId, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, -1, -1));
 
         txtId.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtId.setForeground(new java.awt.Color(0, 0, 0));
         txtId.setText("1234567890");
         txtId.setBorder(null);
         txtId.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -98,7 +106,6 @@ public class Edit_employee_info extends javax.swing.JPanel {
         add(JName, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, -1, -1));
 
         txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtName.setForeground(new java.awt.Color(0, 0, 0));
         txtName.setText("ชื่อ");
         txtName.setBorder(null);
         txtName.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -116,7 +123,6 @@ public class Edit_employee_info extends javax.swing.JPanel {
         add(JSname, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 320, -1, -1));
 
         txtSname.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSname.setForeground(new java.awt.Color(0, 0, 0));
         txtSname.setText("นามสกุล");
         txtSname.setBorder(null);
         txtSname.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -146,7 +152,6 @@ public class Edit_employee_info extends javax.swing.JPanel {
         add(JPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 410, -1, -1));
 
         txtPhone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtPhone.setForeground(new java.awt.Color(0, 0, 0));
         txtPhone.setText("เบอร์โทรศัพท์");
         txtPhone.setBorder(null);
         txtPhone.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -214,7 +219,6 @@ public class Edit_employee_info extends javax.swing.JPanel {
         add(JSalary, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 230, -1, -1));
 
         txtJob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtJob.setForeground(new java.awt.Color(0, 0, 0));
         txtJob.setText("ตำแหน่ง");
         txtJob.setBorder(null);
         txtJob.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -231,7 +235,6 @@ public class Edit_employee_info extends javax.swing.JPanel {
         add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 180, 220, 30));
 
         txtSalary.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtSalary.setForeground(new java.awt.Color(0, 0, 0));
         txtSalary.setText("0");
         txtSalary.setBorder(null);
         txtSalary.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -260,10 +263,36 @@ public class Edit_employee_info extends javax.swing.JPanel {
         txtNo.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtNo.setFocusable(false);
         add(txtNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 870, -1, -1));
+
+        jTextField_imgPath.setEditable(false);
+        jTextField_imgPath.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField_imgPath.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField_imgPath.setText("jTextField1");
+        jTextField_imgPath.setBorder(null);
+        add(jTextField_imgPath, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImgActionPerformed
-        // TODO add your handling code here:
+                                
+        JFileChooser filechooser = new JFileChooser();
+        filechooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*images", ".png","jpg",".jpeg");
+        filechooser.addChoosableFileFilter(filter);
+        
+        if(filechooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+        {
+          File selectedImage = filechooser.getSelectedFile();
+          String image_path = selectedImage.getAbsolutePath();
+          displayImage(image_path, picture_box,'a');
+          jTextField_imgPath.setText(image_path);
+          System.out.println(image_path);
+        }
+        else
+        {
+            System.out.println("no file selected");
+        }
+             
     }//GEN-LAST:event_btnImgActionPerformed
 
     private void txtIdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFocusGained
@@ -379,10 +408,10 @@ public class Edit_employee_info extends javax.swing.JPanel {
                     String job = txtJob.getText();
                     Double wage = Double.valueOf(txtSalary.getText().toString());
                     Integer phone = Integer.valueOf(txtPhone.getText().toString());
+                    String img = jTextField_imgPath.getText();
 
 
-
-                    String updateQuery = "UPDATE employee SET Fname=?,SName=?,Id=?,Phone=? ,Job=? ,Wage=?,Address=? WHERE No=?";
+                    String updateQuery = "UPDATE employee SET Fname=?,SName=?,Id=?,Phone=? ,Job=? ,Wage=?,Address=?,Image=? WHERE No=?";
                     try {
                         PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
                         ps.setString(1, fname);
@@ -392,7 +421,8 @@ public class Edit_employee_info extends javax.swing.JPanel {
                         ps.setString(5, job);
                         ps.setDouble(6, wage); 
                         ps.setString(7, address);
-                        ps.setInt(8, no);
+                        ps.setString(8, img);
+                        ps.setInt(9, no);
 
                         if(ps.executeUpdate() > 0)
                         {
@@ -496,14 +526,31 @@ public class Edit_employee_info extends javax.swing.JPanel {
         String wage = txtSalary.getText().trim();
         String address = txtAddress.getText().trim();
         String phone = txtPhone.getText().trim();
+        String img = jTextField_imgPath.getText().trim();
         
         if(id.equals("") || id.equals("1234567890") || name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || job.equals("") || job.equals("ตำแหน่ง") || address.equals("")
-                || wage.equals("") || wage.equals("0") || phone.equals("") || phone.equals("เบอร์โทรศัพท์")) {
+                || wage.equals("") || wage.equals("0") || phone.equals("") || phone.equals("เบอร์โทรศัพท์") || img.equals("")) {
             return false;
         }
         else {
           return true;    
         }
+    }
+    public void displayImage(String imgPath, JLabel label, char rsc)
+    {
+        ImageIcon imgIco;
+        if(rsc == 'r')
+        {
+            imgIco = new ImageIcon(getClass().getResource(imgPath));
+        }
+        else
+        {
+         imgIco = new ImageIcon(imgPath);
+        }
+        
+        Image img = imgIco.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(img));
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -526,7 +573,8 @@ public class Edit_employee_info extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JLabel picture_box;
+    public static javax.swing.JTextField jTextField_imgPath;
+    public static javax.swing.JLabel picture_box;
     public static javax.swing.JTextArea txtAddress;
     public static javax.swing.JTextField txtId;
     public static javax.swing.JTextField txtJob;

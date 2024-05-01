@@ -347,8 +347,9 @@ public class AddProduct extends javax.swing.JPanel {
                     Double price = Double.valueOf(txtPrice.getText().toString());
                     Integer quantity = Integer.valueOf(txtAmount.getText().toString());
                     java.util.Date date = new java.util.Date();
+                    String img = jTextField_imgPath.getText();
 
-                    String insertQuery = "INSERT INTO `inventory`(`No`,`Id`, `Date`, `Name`, `Category`, `Cost`, `Quantity`, `Price`) VALUES (?,?,?,?,?,?,?,?)";
+                    String insertQuery = "INSERT INTO `inventory`(`No`,`Id`, `Date`, `Name`, `Category`, `Cost`, `Quantity`, `Price`,`Image`) VALUES (?,?,?,?,?,?,?,?,?)";
 
                     try {
 
@@ -361,6 +362,7 @@ public class AddProduct extends javax.swing.JPanel {
                         ps.setDouble(6, cost);
                         ps.setInt(7, quantity);
                         ps.setDouble(8, price);
+                        ps.setString(9,img);
 
                         if(ps.executeUpdate() > 0)
                         {
@@ -378,7 +380,7 @@ public class AddProduct extends javax.swing.JPanel {
                         }
 
                     } catch (SQLException ex) {
-                        System.out.println("Failed to Add");
+                        System.out.println(ex);
                     }                     
                 } else {
                     JOptionPane.showMessageDialog(null, "Price must equal or higher than cost", "Error", JOptionPane.WARNING_MESSAGE);
@@ -476,6 +478,7 @@ public class AddProduct extends javax.swing.JPanel {
             }
         }
         return false;
+
     }   
     
     public boolean checkEmptyFields() {
@@ -485,9 +488,10 @@ public class AddProduct extends javax.swing.JPanel {
         String cost = txtCost.getText().trim();
         String id = txtProductid.getText().trim();
         String category = Com_Type.getSelectedItem().toString().trim();
+        String img = jTextField_imgPath.getText().trim();
         
         if(name.equals("") || name.equals("ชื่อสินค้า") || quantity.equals("") || quantity.equals("0") || price.equals("") || price.equals("0") || cost.equals("") || cost.equals("0")
-                || id.equals("") || id.equals("ABC00000") || category.equals("") || category.equals("ประเภทสินค้า")) {
+                || id.equals("") || id.equals("ABC00000") || category.equals("") || category.equals("ประเภทสินค้า") || img.equals("")) {
             return false;
         }
         else {
@@ -509,7 +513,6 @@ public class AddProduct extends javax.swing.JPanel {
         } catch (SQLException ex) {
             System.out.println("Failed to get next queue number: " + ex.getMessage());
         }
-
         return nextQueueNumber;
 }
     

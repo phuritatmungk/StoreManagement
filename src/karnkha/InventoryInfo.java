@@ -19,8 +19,9 @@ public class InventoryInfo {
     private Double cost;
     private Double total;
     private String date;
+    private String img;
 
-    public InventoryInfo(Integer no, String id, String date, String name, String category, Double cost, Integer quantity, Double price) {
+    public InventoryInfo(Integer no, String id, String date, String name, String category, Double cost, Integer quantity, Double price,String img) {
         this.no = no;
         this.id = id;
         this.date = date;
@@ -29,6 +30,7 @@ public class InventoryInfo {
         this.cost = cost;
         this.quantity = quantity;
         this.price = price;
+        this.img=img;
     }
     
     public Integer getNo() {
@@ -108,5 +110,19 @@ public class InventoryInfo {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    /**
+     * @return the img
+     */
+    public String getImg() {
+        return img;
+    }
+
+    /**
+     * @param img the img to set
+     */
+    public void setImg(String img) {
+        this.img = img;
     }
 }

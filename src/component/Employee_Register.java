@@ -1,5 +1,6 @@
 package component;
 
+import static component.Edit_employee_info.jTextField_imgPath;
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Employee;
@@ -402,10 +403,10 @@ public class Employee_Register extends javax.swing.JPanel {
                     String address = txtAddress.getText();
                     String job = txtJob.getText();
                     Double wage = Double.valueOf(txtSalary.getText().toString());
-                    Integer phone = Integer.valueOf(txtPhone.getText());
-                    
+                    Integer phone = Integer.valueOf(txtPhone.getText().toString());
+                    String img = jTextField_imgPath.getText();
 
-                    String insertQuery = "INSERT INTO `employee`(`No`,`Fname`, `Sname`, `Id`, `Phone`, `Job`, `Wage`, `Address`) VALUES (?,?,?,?,?,?,?,?)";
+                    String insertQuery = "INSERT INTO `employee`(`No`,`Fname`, `Sname`, `Id`, `Phone`, `Job`, `Wage`, `Address`,`Image`) VALUES (?,?,?,?,?,?,?,?,?)";
 
                     try {
 
@@ -418,6 +419,7 @@ public class Employee_Register extends javax.swing.JPanel {
                         ps.setString(6, job);
                         ps.setDouble(7, wage);
                         ps.setString(8, address);
+                        ps.setString(9, img);
 
                         if(ps.executeUpdate() > 0)
                         {
@@ -522,9 +524,10 @@ public class Employee_Register extends javax.swing.JPanel {
         String wage = txtSalary.getText().trim();
         String address = txtAddress.getText().trim();
         String phone = txtPhone.getText().trim();
+        String img = jTextField_imgPath.getText().trim();
         
         if(id.equals("") || id.equals("1234567890") || name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || job.equals("") || job.equals("ตำแหน่ง") || address.equals("")
-                || wage.equals("") || wage.equals("0") || phone.equals("") || phone.equals("เบอร์โทรศัพท์")) {
+                || wage.equals("") || wage.equals("0") || phone.equals("") || img.equals("")) {
             return false;
         }
         else {
