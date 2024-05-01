@@ -348,7 +348,8 @@ public class AddProduct extends javax.swing.JPanel {
                     Integer quantity = Integer.valueOf(txtAmount.getText().toString());
                     java.util.Date date = new java.util.Date();
                     String img = jTextField_imgPath.getText();
-
+                    
+                    if (!isProductIDExists(id_var)) {
                     String insertQuery = "INSERT INTO `inventory`(`No`,`Id`, `Date`, `Name`, `Category`, `Cost`, `Quantity`, `Price`,`Image`) VALUES (?,?,?,?,?,?,?,?,?)";
 
                     try {
@@ -383,6 +384,9 @@ public class AddProduct extends javax.swing.JPanel {
                         System.out.println(ex);
                     }                     
                 } else {
+                    JOptionPane.showMessageDialog(null, "Product Id already exists Please change the product Id", "Error", JOptionPane.WARNING_MESSAGE);
+                }
+                }else {
                     JOptionPane.showMessageDialog(null, "Price must equal or higher than cost", "Error", JOptionPane.WARNING_MESSAGE);
                     txtPrice.requestFocus();
                 }
@@ -394,6 +398,25 @@ public class AddProduct extends javax.swing.JPanel {
         else {
             JOptionPane.showMessageDialog(null, "You must insert all fields", "Error", JOptionPane.WARNING_MESSAGE);
         }
+    } 
+    
+    private boolean isProductIDExists(String id) {
+    boolean isExists = false;
+    try {
+        String query = "SELECT COUNT(*) FROM inventory WHERE Id = ?";
+        PreparedStatement ps = DB.getConnection().prepareStatement(query);
+        ps.setString(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            if (count > 0) {
+                isExists = true;
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error checking product ID existence: " + ex.getMessage());
+    }
+    return isExists;
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void txtAmountFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAmountFocusGained
