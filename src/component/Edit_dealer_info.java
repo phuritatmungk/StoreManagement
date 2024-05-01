@@ -392,9 +392,10 @@ public class Edit_dealer_info extends javax.swing.JPanel {
         String company = txtCompany.getText().trim();
         String address = txtAddress.getText().trim();
         String phone = txtPhone.getText().trim();
+        String img = jTextField_imgPath.getText().trim();
         
         if(name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || company.equals("") || company.equals("ชื่อบริษัท") || address.equals("")
-                || phone.equals("") || phone.equals("เบอร์โทรศัพท์")) {
+                || phone.equals("") || phone.equals("เบอร์โทรศัพท์") || img.equals("")) {
             return false;
         }
         else {

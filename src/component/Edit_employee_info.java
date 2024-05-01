@@ -526,9 +526,10 @@ public class Edit_employee_info extends javax.swing.JPanel {
         String wage = txtSalary.getText().trim();
         String address = txtAddress.getText().trim();
         String phone = txtPhone.getText().trim();
+        String img = jTextField_imgPath.getText().trim();
         
         if(id.equals("") || id.equals("1234567890") || name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || job.equals("") || job.equals("ตำแหน่ง") || address.equals("")
-                || wage.equals("") || wage.equals("0") || phone.equals("") || phone.equals("เบอร์โทรศัพท์")) {
+                || wage.equals("") || wage.equals("0") || phone.equals("") || phone.equals("เบอร์โทรศัพท์") || img.equals("")) {
             return false;
         }
         else {

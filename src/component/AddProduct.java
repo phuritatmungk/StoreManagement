@@ -515,9 +515,10 @@ public class AddProduct extends javax.swing.JPanel {
         String cost = txtCost.getText().trim();
         String id = txtProductid.getText().trim();
         String category = txtType.getText().trim();
+        String img = jTextField_imgPath.getText().trim();
         
         if(name.equals("") || name.equals("ชื่อสินค้า") || quantity.equals("") || quantity.equals("0") || price.equals("") || price.equals("0") || cost.equals("") || cost.equals("0")
-                || id.equals("") || id.equals("ABC00000") || category.equals("") || category.equals("ประเภทสินค้า")) {
+                || id.equals("") || id.equals("ABC00000") || category.equals("") || category.equals("ประเภทสินค้า") || img.equals("")) {
             return false;
         }
         else {

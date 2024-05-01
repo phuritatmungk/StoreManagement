@@ -251,7 +251,7 @@ public class EditProduct extends javax.swing.JPanel {
 
         jTextField_imgPath.setEditable(false);
         jTextField_imgPath.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField_imgPath.setText("jTextField1");
+        jTextField_imgPath.setForeground(new java.awt.Color(255, 255, 255));
         jTextField_imgPath.setBorder(null);
         add(jTextField_imgPath, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 570, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
