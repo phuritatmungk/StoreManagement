@@ -5,6 +5,7 @@ import com.raven.datechooser.DateBetween;
 import com.raven.datechooser.DateChooser;
 import com.raven.datechooser.listener.DateChooserAction;
 import com.raven.datechooser.listener.DateChooserAdapter;
+import static component.Sellproduct.jTable;
 import java.awt.Color;
 import java.awt.Component;
 import java.sql.*;
@@ -27,6 +28,12 @@ import raven.cell.TableActionCellRenderEditView;
 import raven.cell.TableActionEventEditView;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Order_Received extends javax.swing.JPanel {
 
@@ -53,9 +60,8 @@ public class Order_Received extends javax.swing.JPanel {
                 String dateFrom = df.format(db.getFromDate());
                 String toDate = df.format(db.getToDate());
                 loadData("SELECT * FROM `orderreceived` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
-                
                 model.fireTableDataChanged();
-
+                mergeAndRefreshTable();
             }
         });
         try{
@@ -73,7 +79,6 @@ public class Order_Received extends javax.swing.JPanel {
                String company = jTable.getValueAt(row, 2).toString();
                String id = jTable.getValueAt(row, 3).toString();
                String recipient = jTable.getValueAt(row, 4).toString();
-               
                 ComboBox_Company2.setSelectedItem(company);
                 ComboBox_Employee1.setSelectedItem(recipient);
                 ComboBox_ID1.setSelectedItem(id);
@@ -273,7 +278,7 @@ public class Order_Received extends javax.swing.JPanel {
             String Quantity = f.format(r.getInt("Quantity"));
             String Total = f.format(r.getDouble("Total"));
             //String Remark = r.getString("Remark");
-
+            
             model.addRow(new Object[] { No, Date, Company, Id, Recipient, Quantity, Total});
         }
         r.close();
@@ -610,7 +615,6 @@ public class Order_Received extends javax.swing.JPanel {
 
         jScrollPane5.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
-        jTextArea_Information1.setEditable(false);
         jTextArea_Information1.setColumns(20);
         jTextArea_Information1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextArea_Information1.setLineWrap(true);
@@ -1481,46 +1485,55 @@ public class Order_Received extends javax.swing.JPanel {
         }
 }
     
-        
-    private void mergeAndRefreshTable() {
-        ArrayList<OrderReceivedInfo> productsArray = getProductsList(); // เรียกใช้ getProductsList() เพื่ออัพเดทข้อมูลล่าสุด
-        HashMap<String, OrderReceivedInfo> mergedRows = new HashMap<>();
+private void mergeAndRefreshTable() {
+    DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+    int rowCount = model.getRowCount();
+    ArrayList<Integer> rowsToRemove = new ArrayList<>();
 
-        for (OrderReceivedInfo product : productsArray) {
-            String key = product.getDate() + product.getCompany() + product.getId() + product.getRecipient();
+    // Iterate through rows to merge and sum quantities and totals
+    for (int i = 0; i < rowCount - 1; i++) {
+        String company1 = model.getValueAt(i, 2).toString();
+        String date1 = model.getValueAt(i, 1).toString();
+        String id1 = model.getValueAt(i, 3).toString();
+        String recipient1 = model.getValueAt(i, 4).toString();
+        double quantity1 = Double.parseDouble(model.getValueAt(i, 5).toString());
+        double total1 = Double.parseDouble(model.getValueAt(i, 6).toString());
 
-            if (mergedRows.containsKey(key)) {
-                OrderReceivedInfo mergedProduct = mergedRows.get(key);
-                mergedProduct.setQuantity(mergedProduct.getQuantity() + product.getQuantity());
-                mergedProduct.setTotal(mergedProduct.getTotal() + product.getTotal());
-            } else {
-                mergedRows.put(key, product);
+        for (int j = i + 1; j < rowCount; j++) {
+            String company2 = model.getValueAt(j, 2).toString();
+            String date2 = model.getValueAt(j, 1).toString();
+            String id2 = model.getValueAt(j, 3).toString();
+            String recipient2 = model.getValueAt(j, 4).toString();
+
+            if (company1.equals(company2) && date1.equals(date2) && id1.equals(id2) && recipient1.equals(recipient2)) {
+                // Merge quantities and totals
+                quantity1 += Double.parseDouble(model.getValueAt(j, 5).toString());
+                total1 += Double.parseDouble(model.getValueAt(j, 6).toString());
+                // Mark the row to be removed
+                rowsToRemove.add(j);
             }
         }
 
-        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        model.setRowCount(0);
+        // Update the first row with merged quantities and totals
+        model.setValueAt(quantity1, i, 5);
+        model.setValueAt(total1, i, 6);
+        
+        // Adjust rowCount for removed rows
+        rowCount -= rowsToRemove.size();
 
-
-        List<OrderReceivedInfo> sortedProducts = new ArrayList<>(mergedRows.values());
-        sortedProducts.sort(Comparator.comparing(OrderReceivedInfo::getDate));
-
-        int index = 1;
-        for (OrderReceivedInfo mergedProduct : sortedProducts) {
-            Object[] row = new Object[]{
-                index++,
-                mergedProduct.getDate(),
-                mergedProduct.getCompany(),
-                mergedProduct.getId(),
-                mergedProduct.getRecipient(),
-                mergedProduct.getQuantity(),
-                mergedProduct.getTotal()
-            };
-            model.addRow(row);
+        // Remove the marked rows
+        for (int k = rowsToRemove.size() - 1; k >= 0; k--) {
+            int rowIndexToRemove = rowsToRemove.get(k);
+            model.removeRow(rowIndexToRemove);
         }
 
-        model.fireTableDataChanged();
+        // Clear the list of rows to remove for the next iteration
+        rowsToRemove.clear();
+    }
 }
+
+
+    
     private boolean isNumericOrDecimal(String input) {
 
         for (char c : input.toCharArray()) {
