@@ -24,6 +24,7 @@ public class Expense_Report extends javax.swing.JPanel {
     
     public Expense_Report() {
         initComponents();
+        calculateTotal(); 
         chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
         chDate.setTextField(searchDate);
@@ -69,6 +70,7 @@ public class Expense_Report extends javax.swing.JPanel {
         r.close();
         p.close();
         model.fireTableDataChanged();
+        calculateTotal();
     } catch (Exception e) {
         System.err.println(e);
     }
@@ -106,7 +108,7 @@ public class Expense_Report extends javax.swing.JPanel {
         add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        Topic.setText("รายรับทั้งหมด");
+        Topic.setText("รายจ่ายทั้งหมด");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 660, -1, -1));
 
         btnPrint.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -140,7 +142,7 @@ public class Expense_Report extends javax.swing.JPanel {
                 txtSumActionPerformed(evt);
             }
         });
-        add(txtSum, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 660, 190, 30));
+        add(txtSum, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 660, 190, 30));
 
         Topic2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Topic2.setText("รายงานสรุปรายจ่าย");
@@ -296,7 +298,16 @@ public class Expense_Report extends javax.swing.JPanel {
         }
         
     }
-
+private void calculateTotal() {
+    double total = 0.0;
+    for (int i = 0; i < jTable.getRowCount(); i++) {
+        Object value = jTable.getValueAt(i, 5);
+        if (value != null) {
+            total += Double.parseDouble(value.toString());
+        }
+    }
+    txtSum.setText(String.valueOf(total));
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel B_Date;
     private javax.swing.JLabel Topic;
