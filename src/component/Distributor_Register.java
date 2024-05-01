@@ -312,8 +312,9 @@ public class Distributor_Register extends javax.swing.JPanel {
                 String company = txtCompany.getText();
                 String address = txtAddress.getText();
                 Integer phone = Integer.valueOf(txtPhone.getText().toString());
+                String img = jTextField_imgPath.getText();
 
-                String insertQuery = "INSERT INTO `distributor`(`No`,`Company`, `FName`, `Sname`, `Phone`, `Address`) VALUES (?,?,?,?,?,?)";
+                String insertQuery = "INSERT INTO `distributor`(`No`,`Company`, `FName`, `Sname`, `Phone`, `Address`,`Image`) VALUES (?,?,?,?,?,?,?)";
 
                 try {
 
@@ -324,6 +325,7 @@ public class Distributor_Register extends javax.swing.JPanel {
                     ps.setString(4, sname);
                     ps.setInt(5, phone);
                     ps.setString(6, address);
+                    ps.setString(7, img);                    
 
                     if(ps.executeUpdate() > 0)
                     {
@@ -381,9 +383,10 @@ public class Distributor_Register extends javax.swing.JPanel {
         String company = txtCompany.getText().trim();
         String address = txtAddress.getText().trim();
         String phone = txtPhone.getText().trim();
+        String img = jTextField_imgPath.getText().trim();
         
         if(name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || company.equals("") || company.equals("ชื่อบริษัท") || address.equals("")
-                || phone.equals("") || phone.equals("เบอร์โทรศัพท์")) {
+                || phone.equals("") || phone.equals("เบอร์โทรศัพท์") || img.equals("")) {
             return false;
         }
         else {

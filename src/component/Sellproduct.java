@@ -26,6 +26,10 @@ public class Sellproduct extends javax.swing.JPanel {
     public Sellproduct() {
         initComponents();
         con = DB.mycon();
+        Main.body.removeAll();
+        Main.body.add(new Sellproduct2());
+        Main.body.repaint();
+        Main.body.revalidate();
         showProductsInTable();
         TableActionEventAdd event = new TableActionEventAdd() {
             @Override
@@ -152,7 +156,7 @@ public class Sellproduct extends javax.swing.JPanel {
         txtSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtSearch.setForeground(new java.awt.Color(123, 123, 123));
         txtSearch.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtSearch.setText("ค้นหาสินค้า");
+        txtSearch.setText(" ค้นหาสินค้า");
         txtSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -337,7 +341,7 @@ public class Sellproduct extends javax.swing.JPanel {
             {
                 product = new InventoryInfo(rs.getInt("No"), rs.getString("Id"),
                                       rs.getString("Date"), rs.getString("Name"), rs.getString("Category"),
-                                      rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price"));
+                                      rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Price"),rs.getString("Image"));
                 list.add(product);
             }
             
