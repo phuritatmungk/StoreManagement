@@ -186,7 +186,7 @@ public class SellHistory extends javax.swing.JPanel {
             {
                 sales = new SalesReport(rs.getString("Date"), rs.getString("Id"),
                                       rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
-                                      rs.getInt("Quantity"), rs.getDouble("Price"), rs.getDouble("Total"));
+                                      rs.getInt("Quantity"), rs.getDouble("Price"), rs.getDouble("Total"), rs.getDouble("Service"));
                 list.add(sales);
             }
             

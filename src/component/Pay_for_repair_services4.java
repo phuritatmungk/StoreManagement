@@ -398,8 +398,8 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         } catch (SQLException ex) {
             System.out.println("Failed to clear database data: " + ex.getMessage());
         }
-            double serviceCost = Double.parseDouble(txtService.getText());
-            double total = serviceCost;
+        double serviceCost = Double.parseDouble(txtService.getText());
+        double total = serviceCost;
 
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {

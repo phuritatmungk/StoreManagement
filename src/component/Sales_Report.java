@@ -301,7 +301,7 @@ public class Sales_Report extends javax.swing.JPanel {
             {
                 sales = new SalesReport(rs.getString("Date"), rs.getString("Id"),
                                       rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
-                                      rs.getInt("Quantity"), rs.getDouble("Price"), rs.getDouble("Total"));
+                                      rs.getInt("Quantity"), rs.getDouble("Price"), rs.getDouble("Total"), rs.getDouble("Service"));
                 list.add(sales);
             }
             
@@ -336,6 +336,16 @@ public class Sales_Report extends javax.swing.JPanel {
             
             model.addRow(row);
         }
+        
+        double total = 0;
+        
+        for (int i = 0; i < model.getRowCount(); i++) {
+            int quantity = (int) model.getValueAt(i, 5);
+            double price = (double) model.getValueAt(i, 6);
+            total += quantity * price; 
+        }
+        
+        txtSum.setText(String.format("%.2f บาท", total));
         
     }
 

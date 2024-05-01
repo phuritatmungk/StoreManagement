@@ -267,7 +267,7 @@ public class Sellproduct3 extends javax.swing.JPanel {
 
             updateInventory(id, quantity);
             deleteFromCart((int) jTable.getValueAt(i, 0));
-            String insertQuery = "INSERT INTO `reportsales` (`Date`, `Id`, `List`, `Category`, `Cost`, `Quantity`, `Price`, `Total`) VALUES (?,?,?,?,?,?,?,?)";
+            String insertQuery = "INSERT INTO `reportsales` (`Date`, `Id`, `List`, `Category`, `Cost`, `Quantity`, `Price`, `Total`, `Service`) VALUES (?,?,?,?,?,?,?,?,?)";
             try {
                 Connection con = DB.getConnection();
                 PreparedStatement ps = con.prepareStatement(insertQuery);
@@ -279,6 +279,7 @@ public class Sellproduct3 extends javax.swing.JPanel {
                 ps.setInt(6, quantity);
                 ps.setDouble(7, price);
                 ps.setDouble(8, total);
+                ps.setDouble(9, 0);
                 ps.executeUpdate();
             } catch (SQLException ex) {
                 System.out.println(ex);

@@ -330,6 +330,16 @@ public class Inventory_Report extends javax.swing.JPanel {
             model.addRow(row);
         }
         
+        double total = 0;
+        
+        for (int i = 0; i < model.getRowCount(); i++) {
+            int quantity = (int) model.getValueAt(i, 5);
+            double price = (double) model.getValueAt(i, 6);
+            total += quantity * price; 
+        }
+        
+        txtSum.setText(String.format("%.2f บาท", total));
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

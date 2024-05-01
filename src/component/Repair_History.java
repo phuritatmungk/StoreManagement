@@ -357,7 +357,7 @@ public class Repair_History extends javax.swing.JPanel {
             {
                 request = new RepairRequest(rs.getInt("No"), rs.getString("Date"),
                                       rs.getString("Name"), rs.getString("Phone"), rs.getString("Item"),
-                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"), rs.getString("Malfunction"));
+                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"), rs.getString("Service"));
                 list.add(request);
             }
             

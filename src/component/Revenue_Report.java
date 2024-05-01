@@ -311,7 +311,7 @@ private void loadRequestData(String sql) {
             {
                 sales = new SalesReport(rs.getString("Date"), rs.getString("Id"),
                                       rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
-                                      rs.getInt("Quantity"), rs.getDouble("Price"), rs.getDouble("Total"));
+                                      rs.getInt("Quantity"), rs.getDouble("Price"), rs.getDouble("Total"), rs.getDouble("Service"));
                 list.add(sales);
             }
             
@@ -375,6 +375,7 @@ private void loadRequestData(String sql) {
             row[5] = sales.getQuantity();
             row[6] = sales.getPrice();
             row[7] = sales.getTotal();
+            row[8] = sales.getService();
             model.addRow(row);
         }
 
@@ -397,6 +398,17 @@ private void loadRequestData(String sql) {
 
             model.addRow(row);
         }
+        
+        double total = 0;
+        
+        for (int i = 0; i < model.getRowCount(); i++) {
+            int quantity = (int) model.getValueAt(i, 5);
+            double price = (double) model.getValueAt(i, 6);
+            double service = (double) model.getValueAt(i, 8);
+            total += quantity * price + service; 
+        }
+        
+        txtSum.setText(String.format("%.2f บาท", total));
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
