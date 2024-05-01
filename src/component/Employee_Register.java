@@ -402,7 +402,8 @@ public class Employee_Register extends javax.swing.JPanel {
                     String address = txtAddress.getText();
                     String job = txtJob.getText();
                     Double wage = Double.valueOf(txtSalary.getText().toString());
-                    Integer phone = Integer.valueOf(txtPhone.getText().toString());
+                    Integer phone = Integer.valueOf(txtPhone.getText());
+                    
 
                     String insertQuery = "INSERT INTO `employee`(`No`,`Fname`, `Sname`, `Id`, `Phone`, `Job`, `Wage`, `Address`) VALUES (?,?,?,?,?,?,?,?)";
 

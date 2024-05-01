@@ -105,7 +105,7 @@
           <Color blue="7b" green="7b" red="7b" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="2"/>
-        <Property name="text" type="java.lang.String" value="&#xe04;&#xe49;&#xe19;&#xe2b;&#xe32;&#xe2a;&#xe34;&#xe19;&#xe04;&#xe49;&#xe32;"/>
+        <Property name="text" type="java.lang.String" value=" &#xe04;&#xe49;&#xe19;&#xe2b;&#xe32;&#xe2a;&#xe34;&#xe19;&#xe04;&#xe49;&#xe32;"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder/>

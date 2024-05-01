@@ -30,6 +30,7 @@ public class AddProduct extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Com_Type = new javax.swing.JComboBox<>();
         back_button = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
         jProductid = new javax.swing.JLabel();
@@ -43,8 +44,6 @@ public class AddProduct extends javax.swing.JPanel {
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
         jType = new javax.swing.JLabel();
-        txtType = new javax.swing.JTextField();
-        jSeparator6 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
         jCost_price = new javax.swing.JLabel();
         txtCost = new javax.swing.JTextField();
@@ -59,6 +58,12 @@ public class AddProduct extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Com_Type.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Com_Type.setMaximumRowCount(8);
+        Com_Type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "เลือกประเภทสินค้า", "เครื่องยนต์และอุปกรณ์การเกษตร", "อะไหล่เครื่องดีเซล", "อะไหล่เครื่องเบนซิน", "อะไหล่เครื่องตัดหญ้า", "อะไหล่เครื่องตัดไม้", "อะไหล่เป้เครื่องพ่นยา", "อะไหล่เป้พ่นยาไฟฟ้า", "อะไหล่ปั้มพ่นยา", "อะไหล่เครื่องเจาะดิน", "อะไหล่ปั้มน้ำ", "อะไหล่ปั้มน้ำไฟฟ้า", "อุปกรณ์อื่นๆ" }));
+        Com_Type.setLightWeightPopupEnabled(false);
+        add(Com_Type, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, 370, -1));
 
         back_button.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         back_button.setForeground(new java.awt.Color(139, 139, 139));
@@ -81,7 +86,7 @@ public class AddProduct extends javax.swing.JPanel {
 
         txtProductid.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtProductid.setForeground(new java.awt.Color(123, 123, 123));
-        txtProductid.setText("ABC00000");
+        txtProductid.setText("XXX00000");
         txtProductid.setBorder(null);
         txtProductid.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -149,23 +154,6 @@ public class AddProduct extends javax.swing.JPanel {
         jType.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jType.setText("ประเภทสินค้า");
         add(jType, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, -1, -1));
-
-        txtType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtType.setForeground(new java.awt.Color(123, 123, 123));
-        txtType.setText("ประเภทสินค้า");
-        txtType.setBorder(null);
-        txtType.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTypeFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTypeFocusLost(evt);
-            }
-        });
-        add(txtType, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, 370, 30));
-
-        jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 360, 370, 30));
 
         jSeparator7.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 430, 370, 30));
@@ -289,13 +277,6 @@ public class AddProduct extends javax.swing.JPanel {
                               
     }//GEN-LAST:event_btnPicActionPerformed
 
-    private void txtTypeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTypeFocusLost
-        if (txtType.getText ().length() ==0){
-            txtType.setText ("ประเภทสินค้า") ;
-            txtType.setForeground(new Color(123, 123, 123));
-        }
-    }//GEN-LAST:event_txtTypeFocusLost
-
     private void txtCostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCostFocusLost
         if (txtCost.getText ().length() ==0){
             txtCost.setText ("0") ;
@@ -325,14 +306,6 @@ public class AddProduct extends javax.swing.JPanel {
             txtName.setForeground(new Color(0, 0, 0));
         }
     }//GEN-LAST:event_txtNameFocusGained
-
-    private void txtTypeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTypeFocusGained
-        if (txtType.getText().equals("ประเภทสินค้า"))
-        {
-            txtType.setText("");
-            txtType.setForeground(new Color(0, 0, 0));
-        }
-    }//GEN-LAST:event_txtTypeFocusGained
 
     private void txtCostFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCostFocusGained
         if (txtCost.getText().equals("0"))
@@ -369,7 +342,7 @@ public class AddProduct extends javax.swing.JPanel {
                     Integer no = getNextQueueNumber();
                     String id = txtProductid.getText();
                     String name = txtName.getText();
-                    String category = txtType.getText();
+                    String category = Com_Type.getSelectedItem().toString();
                     Double cost = Double.valueOf(txtCost.getText().toString());
                     Double price = Double.valueOf(txtPrice.getText().toString());
                     Integer quantity = Integer.valueOf(txtAmount.getText().toString());
@@ -511,7 +484,7 @@ public class AddProduct extends javax.swing.JPanel {
         String price = txtPrice.getText().trim();
         String cost = txtCost.getText().trim();
         String id = txtProductid.getText().trim();
-        String category = txtType.getText().trim();
+        String category = Com_Type.getSelectedItem().toString().trim();
         
         if(name.equals("") || name.equals("ชื่อสินค้า") || quantity.equals("") || quantity.equals("0") || price.equals("") || price.equals("0") || cost.equals("") || cost.equals("0")
                 || id.equals("") || id.equals("ABC00000") || category.equals("") || category.equals("ประเภทสินค้า")) {
@@ -559,6 +532,7 @@ public class AddProduct extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Add_dealer_information;
+    private javax.swing.JComboBox<String> Com_Type;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel back_button;
     private javax.swing.JButton btnPic;
@@ -570,7 +544,6 @@ public class AddProduct extends javax.swing.JPanel {
     private javax.swing.JLabel jProductid;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
@@ -582,6 +555,5 @@ public class AddProduct extends javax.swing.JPanel {
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtProductid;
-    private javax.swing.JTextField txtType;
     // End of variables declaration//GEN-END:variables
 }
