@@ -13,6 +13,7 @@ import karnkha.RepairRequest;
 import karnkha.DB;
 import karnkha.Main;
 import component.Maintenance;
+import java.awt.Color;
 import javax.swing.table.TableRowSorter;
 import karnkha.Home;
 
@@ -283,16 +284,26 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jLabel21.setText("สถานะสินค้า :");
         jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 223, -1, -1));
 
+        jTextField_No2.setEditable(false);
         jTextField_No2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_No2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jTextField_No2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 140, 25));
 
+        jTextField_Date2.setEditable(false);
         jTextField_Date2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Date2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jTextField_Date2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 140, 25));
 
         jTextField_Name2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Name2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextField_Name2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_Name2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_Name2FocusLost(evt);
+            }
+        });
         jPanel2.add(jTextField_Name2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 140, 25));
 
         jTextField_Phone2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -501,7 +512,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         String strdate = jTextField_Date2.getText();
         java.util.Date date = new java.util.Date();
         String name =  jTextField_Name2.getText();
-        Integer phone = Integer.valueOf(jTextField_Phone2.getText().toString());
+        String phone = jTextField_Phone2.getText();
         String item = jTextField_Item2.getText();
         String id = jTextField_Id2.getText();
         String repairman =  jTextField_Repairman2.getText();
@@ -512,7 +523,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
             PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
             ps.setDate(1, new java.sql.Date(date.getTime()));
             ps.setString(2, name);
-            ps.setInt(3, phone);
+            ps.setString(3, phone);
             ps.setString(4, item);
             ps.setString(5, id);
             ps.setString(6, repairman); 
@@ -554,6 +565,21 @@ public class Repair_List_Page extends javax.swing.JPanel {
         JFrame thisFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         thisFrame.dispose();
     }//GEN-LAST:event_back_button1MouseClicked
+
+    private void jTextField_Name2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Name2FocusGained
+        if (jTextField_Name2.getText().equals("ผู้ส่งซ่อม"))
+        {
+            jTextField_Name2.setText("");
+            jTextField_Name2.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_jTextField_Name2FocusGained
+
+    private void jTextField_Name2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Name2FocusLost
+        if (jTextField_Name2.getText ().length() ==0){
+            jTextField_Name2.setText ("ผู้ส่งซ่อม") ;
+            jTextField_Name2.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_jTextField_Name2FocusLost
 
     ArrayList<RepairRequest> requestArray = new ArrayList<>();
     
