@@ -33,6 +33,7 @@ public class Order_Received extends javax.swing.JPanel {
     Connection con = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
+    
     private DateChooser chDate = new DateChooser();
     private DefaultTableModel model;
     
@@ -40,27 +41,28 @@ public class Order_Received extends javax.swing.JPanel {
         initComponents();
         loadDistributor();
         loadEmployees();
-        chDate.setTextField(searchDate);
-        chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
         chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+        chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
+        chDate.setLabelCurrentDayVisible(false);
+        chDate.setTextField(searchDate);
         model = (DefaultTableModel)jTable.getModel();
         chDate.addActionDateChooserListener(new DateChooserAdapter() {
-    @Override
-    public void dateBetweenChanged(DateBetween db, DateChooserAction action) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String dateFrom = df.format(db.getFromDate());
-        String toDate = df.format(db.getToDate());
-        loadData("SELECT * FROM `orderreceived` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
-        mergeAndRefreshTable();
-        
-    }
-});
-        
-                try{
+            @Override
+            public void dateBetweenChanged(DateBetween db, DateChooserAction action) {
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String dateFrom = df.format(db.getFromDate());
+                String toDate = df.format(db.getToDate());
+                loadData("SELECT * FROM `orderreceived` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
+                
+                model.fireTableDataChanged();
+
+            }
+        });
+        try{
             DB.getInstance().getConnection();
         } catch (Exception e) {
             System.err.println(e);
-            }
+        }
         
         con = DB.mycon();
         showProductsTable();
@@ -251,28 +253,28 @@ public class Order_Received extends javax.swing.JPanel {
         body.revalidate();
     }
     
-     private void loadData(String sql) {
+    private void loadData(String sql) {
+        System.out.println(sql);
         try {
             model.setRowCount(0); 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            DecimalFormat f = new DecimalFormat("$ #,##0.##");
+            DecimalFormat f = new DecimalFormat("0");
             PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
             ResultSet r = p.executeQuery();
             while (r.next()) {
             String No = r.getString("No");
             String Date = r.getString("Date");
             String Company = r.getString("Company");
-            String Name = r.getString("Name");
-            String Category = r.getString("Category");
+            //String Name = r.getString("Name");
+            //String Category = r.getString("Category");
             String Id = r.getString("Id");
-            String Cost = f.format(r.getDouble("Cost"));
+            //String Cost = f.format(r.getDouble("Cost"));
             String Recipient = r.getString("Recipient");
-            String Quantity = f.format(r.getDouble("Quantity"));
+            String Quantity = f.format(r.getInt("Quantity"));
             String Total = f.format(r.getDouble("Total"));
-            String Remark = r.getString("Remark");
+            //String Remark = r.getString("Remark");
 
-            model.addRow(new Object[] { No,Date,Company,Name,Id,Category,Recipient,Cost,Quantity,Total,Remark});
-            System.out.println(sql);
+            model.addRow(new Object[] { No, Date, Company, Id, Recipient, Quantity, Total});
         }
         r.close();
         p.close();
@@ -361,6 +363,7 @@ public class Order_Received extends javax.swing.JPanel {
         Company_label2 = new javax.swing.JLabel();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
+        B_date = new javax.swing.JButton();
         searchDate = new javax.swing.JTextField();
         Save_bt1 = new javax.swing.JButton();
         delete_bt = new javax.swing.JButton();
@@ -849,15 +852,20 @@ public class Order_Received extends javax.swing.JPanel {
         Topic.setText("รับสินค้าตามรายการสั่งซื้อ");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, -1, -1));
 
+        B_date.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/calendar1_1.png"))); // NOI18N
+        B_date.setBorder(null);
+        B_date.setContentAreaFilled(false);
+        B_date.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_dateActionPerformed(evt);
+            }
+        });
+        add(B_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 50, 40, 30));
+
         searchDate.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         searchDate.setForeground(new java.awt.Color(123, 123, 123));
         searchDate.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         searchDate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        searchDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchDateActionPerformed(evt);
-            }
-        });
         add(searchDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 50, 290, 30));
 
         Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -915,10 +923,6 @@ public class Order_Received extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void searchDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchDateActionPerformed
 
     private void delete_btActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btActionPerformed
      int selectedRow = jTable.getSelectedRow(); 
@@ -1378,6 +1382,10 @@ public class Order_Received extends javax.swing.JPanel {
         chDate.showPopup();
     }//GEN-LAST:event_TextField_Date1MouseClicked
 
+    private void B_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_dateActionPerformed
+        chDate.showPopup();
+    }//GEN-LAST:event_B_dateActionPerformed
+
     ArrayList<OrderReceivedInfo> productsArray = new ArrayList<>();
     
     int position = 0;
@@ -1475,43 +1483,43 @@ public class Order_Received extends javax.swing.JPanel {
     
         
     private void mergeAndRefreshTable() {
-    ArrayList<OrderReceivedInfo> productsArray = getProductsList(); // เรียกใช้ getProductsList() เพื่ออัพเดทข้อมูลล่าสุด
-    HashMap<String, OrderReceivedInfo> mergedRows = new HashMap<>();
+        ArrayList<OrderReceivedInfo> productsArray = getProductsList(); // เรียกใช้ getProductsList() เพื่ออัพเดทข้อมูลล่าสุด
+        HashMap<String, OrderReceivedInfo> mergedRows = new HashMap<>();
 
-    for (OrderReceivedInfo product : productsArray) {
-        String key = product.getDate() + product.getCompany() + product.getId() + product.getRecipient();
+        for (OrderReceivedInfo product : productsArray) {
+            String key = product.getDate() + product.getCompany() + product.getId() + product.getRecipient();
 
-        if (mergedRows.containsKey(key)) {
-            OrderReceivedInfo mergedProduct = mergedRows.get(key);
-            mergedProduct.setQuantity(mergedProduct.getQuantity() + product.getQuantity());
-            mergedProduct.setTotal(mergedProduct.getTotal() + product.getTotal());
-        } else {
-            mergedRows.put(key, product);
+            if (mergedRows.containsKey(key)) {
+                OrderReceivedInfo mergedProduct = mergedRows.get(key);
+                mergedProduct.setQuantity(mergedProduct.getQuantity() + product.getQuantity());
+                mergedProduct.setTotal(mergedProduct.getTotal() + product.getTotal());
+            } else {
+                mergedRows.put(key, product);
+            }
         }
-    }
 
-    DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-    model.setRowCount(0);
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        model.setRowCount(0);
 
-    
-    List<OrderReceivedInfo> sortedProducts = new ArrayList<>(mergedRows.values());
-    sortedProducts.sort(Comparator.comparing(OrderReceivedInfo::getDate));
 
-    int index = 1;
-    for (OrderReceivedInfo mergedProduct : sortedProducts) {
-        Object[] row = new Object[]{
-            index++,
-            mergedProduct.getDate(),
-            mergedProduct.getCompany(),
-            mergedProduct.getId(),
-            mergedProduct.getRecipient(),
-            mergedProduct.getQuantity(),
-            mergedProduct.getTotal()
-        };
-        model.addRow(row);
-    }
+        List<OrderReceivedInfo> sortedProducts = new ArrayList<>(mergedRows.values());
+        sortedProducts.sort(Comparator.comparing(OrderReceivedInfo::getDate));
 
-    model.fireTableDataChanged();
+        int index = 1;
+        for (OrderReceivedInfo mergedProduct : sortedProducts) {
+            Object[] row = new Object[]{
+                index++,
+                mergedProduct.getDate(),
+                mergedProduct.getCompany(),
+                mergedProduct.getId(),
+                mergedProduct.getRecipient(),
+                mergedProduct.getQuantity(),
+                mergedProduct.getTotal()
+            };
+            model.addRow(row);
+        }
+
+        model.fireTableDataChanged();
 }
     private boolean isNumericOrDecimal(String input) {
 
@@ -1571,6 +1579,7 @@ public class Order_Received extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel All_prices;
+    private javax.swing.JButton B_date;
     private javax.swing.JLabel Btt_Calender;
     private javax.swing.JLabel Btt_Calender1;
     private javax.swing.JComboBox<String> ComboBox_Company1;
