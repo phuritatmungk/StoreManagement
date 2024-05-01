@@ -403,7 +403,11 @@ public class Employee_Register extends javax.swing.JPanel {
                     String address = txtAddress.getText();
                     String job = txtJob.getText();
                     Double wage = Double.valueOf(txtSalary.getText().toString());
-                    Integer phone = Integer.valueOf(txtPhone.getText().toString());
+                    Integer phone = Integer.valueOf(txtPhone.getText());
+                    if (txtPhone.getText().charAt(0)=='0') {
+                        String phonestr = txtPhone.getText();
+                        phone = phone + '6';
+                    }
                     String img = jTextField_imgPath.getText();
 
                     String insertQuery = "INSERT INTO `employee`(`No`,`Fname`, `Sname`, `Id`, `Phone`, `Job`, `Wage`, `Address`,`Image`) VALUES (?,?,?,?,?,?,?,?,?)";

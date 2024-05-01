@@ -403,7 +403,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             String item = txtItem.getText();
             Integer phone = Integer.valueOf(txtPhone.getText().toString());
             String repair = txtRepair.getText();
-            Integer id = Integer.valueOf(txtId.getText().toString());
+            String id = txtId.getText();
             String status = txtStatus.getText();
             java.util.Date date  = new java.util.Date();
             String pid = (String) model.getValueAt(i,1);
@@ -427,7 +427,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             ps.setInt(7, quantity);
             ps.setDouble(8, price);
             ps.setString(9, item);
-            ps.setInt(10, id);
+            ps.setString(10, id);
             ps.setString(11, repair);
             ps.setString(12, status);
             ps.setDouble(13,total);
@@ -628,8 +628,8 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             while(rs.next())
             {
                 request = new RepairRequest(rs.getInt("No"), rs.getString("Datetime"),
-                                      rs.getString("Name"), rs.getInt("Phone"), rs.getString("Item"),
-                                      rs.getInt("ID"), rs.getString("Repairman"), rs.getString("Status"));
+                                      rs.getString("Name"), rs.getString("Phone"), rs.getString("Item"),
+                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"));
                 list.add(request);
             }
             

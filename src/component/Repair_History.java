@@ -340,8 +340,8 @@ public class Repair_History extends javax.swing.JPanel {
             while(rs.next())
             {
                 request = new RepairRequest(rs.getInt("No"), rs.getString("Date"),
-                                      rs.getString("Name"), rs.getInt("Phone"), rs.getString("Item"),
-                                      rs.getInt("ID"), rs.getString("Repairman"), rs.getString("Status"));
+                                      rs.getString("Name"), rs.getString("Phone"), rs.getString("Item"),
+                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"));
                 list.add(request);
             }
             

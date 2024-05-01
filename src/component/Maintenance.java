@@ -279,9 +279,9 @@ public class Maintenance extends javax.swing.JPanel {
                 java.util.Date date = new java.util.Date();
                 java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
                 String name = txtCustomer.getText();
-                Integer phone = Integer.valueOf(txtPhone.getText().toString());
+                String phone = txtPhone.getText();
                 String item = txtBrokenItem.getText();
-                Integer id = Integer.valueOf(jComboBox1.getSelectedItem().toString());
+                String id = jComboBox1.getSelectedItem().toString();
                 String repairman = jComboBox2.getSelectedItem().toString();
                 String status = txtStatus.getText();
                 String malfunction = jTextArea2.getText();
@@ -294,9 +294,9 @@ public class Maintenance extends javax.swing.JPanel {
                     ps.setInt(1, no);
                     ps.setTimestamp(2, timestamp);
                     ps.setString(3, name);
-                    ps.setInt(4, phone);
+                    ps.setString(4, phone);
                     ps.setString(5, item);
-                    ps.setInt(6, id);
+                    ps.setString(6, id);
                     ps.setString(7, repairman);
                     ps.setString(8, status);
                     ps.setString(9, malfunction);

@@ -1284,7 +1284,7 @@ public class Order_Received extends javax.swing.JPanel {
             while(rs.next())
             {
                 product = new OrderReceivedInfo(rs.getInt("No"), rs.getString("Date"), rs.getString("Company"),
-                                      rs.getString("Name"), rs.getString("Category"), rs.getInt("Id"), rs.getDouble("Cost"), rs.getString("Recipient"),
+                                      rs.getString("Name"), rs.getString("Category"), rs.getString("Id"), rs.getDouble("Cost"), rs.getString("Recipient"),
                                       rs.getInt("Quantity"), rs.getDouble("Total"), rs.getString("Remark"));
                 list.add(product);
             }
