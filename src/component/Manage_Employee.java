@@ -265,8 +265,8 @@ public class Manage_Employee extends javax.swing.JPanel {
             while(rs.next())
             {
                 employee = new EmployeeInfo(rs.getInt("No"), rs.getString("Fname"),
-                                      rs.getString("Sname"), rs.getInt("Id"), rs.getString("Job"),
-                                      rs.getDouble("Wage"), rs.getInt("Phone"), rs.getString("Address"),rs.getString("Image"));
+                                      rs.getString("Sname"), rs.getString("Id"), rs.getString("Job"),
+                                      rs.getDouble("Wage"), rs.getString("Phone"), rs.getString("Address"),rs.getString("Image"));
                 list.add(employee);
             }
             
@@ -308,7 +308,7 @@ public void showProductData(int index)
         Edit_employee_info.txtName.setText(employeesArray.get(index).getFname().toString());
         Edit_employee_info.txtSname.setText(employeesArray.get(index).getSname().toString());
         Edit_employee_info.txtPhone.setText(employeesArray.get(index).getPhone().toString());
-        Edit_employee_info.txtJob.setText(employeesArray.get(index).getJob().toString());
+        Edit_employee_info.comboJob.setSelectedItem(employeesArray.get(index).getJob());
         Edit_employee_info.txtSalary.setText(employeesArray.get(index).getWage().toString());
         Edit_employee_info.txtAddress.setText(employeesArray.get(index).getAddress().toString());
         Edit_employee_info.jTextField_imgPath.setText(employeesArray.get(index).getImg().toString());

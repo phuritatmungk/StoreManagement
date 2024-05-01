@@ -54,11 +54,11 @@ public class Employee_Register extends javax.swing.JPanel {
         jSeparator4 = new javax.swing.JSeparator();
         JJob = new javax.swing.JLabel();
         JSalary = new javax.swing.JLabel();
-        txtJob = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
         txtSalary = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
         jTextField_imgPath = new javax.swing.JTextField();
+        comboJob = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -222,20 +222,6 @@ public class Employee_Register extends javax.swing.JPanel {
         JSalary.setText("อัตราจ้าง");
         add(JSalary, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 230, -1, -1));
 
-        txtJob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtJob.setForeground(new java.awt.Color(123, 123, 123));
-        txtJob.setText("ตำแหน่ง");
-        txtJob.setBorder(null);
-        txtJob.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtJobFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtJobFocusLost(evt);
-            }
-        });
-        add(txtJob, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 150, 220, 30));
-
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
         add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 180, 220, 30));
 
@@ -266,6 +252,10 @@ public class Employee_Register extends javax.swing.JPanel {
         jTextField_imgPath.setForeground(new java.awt.Color(255, 255, 255));
         jTextField_imgPath.setBorder(null);
         add(jTextField_imgPath, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 460, -1, -1));
+
+        comboJob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        comboJob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "เลือกตำแหน่ง", "พนักงานขาย", "พนักงานซ่อม" }));
+        add(comboJob, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 150, 220, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImgActionPerformed
@@ -357,21 +347,6 @@ public class Employee_Register extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtPhoneFocusLost
 
-    private void txtJobFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtJobFocusGained
-        if(txtJob.getText().equals("ตำแหน่ง"))
-       {
-           txtJob.setText("");
-           txtJob.setForeground(new Color(0, 0, 0));
-       }
-    }//GEN-LAST:event_txtJobFocusGained
-
-    private void txtJobFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtJobFocusLost
-        if (txtJob.getText().length()==0) {
-            txtJob.setText("ตำแหน่ง");
-            txtJob.setForeground(new Color(123, 123, 123));
-        }
-    }//GEN-LAST:event_txtJobFocusLost
-
     private void txtSalaryFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSalaryFocusGained
         if(txtSalary.getText().equals("0"))
        {
@@ -397,15 +372,16 @@ public class Employee_Register extends javax.swing.JPanel {
                 if (id_var.length () == 10) {
         
                     Integer no = getNextQueueNumber();
-                    Integer id = Integer.valueOf(txtId.getText().toString());
+                    String id = txtId.getText();
                     String fname = txtName.getText();
                     String sname = txtSname.getText();
                     String address = txtAddress.getText();
-                    String job = txtJob.getText();
+                    String job = comboJob.getSelectedItem().toString();
                     Double wage = Double.valueOf(txtSalary.getText().toString());
-                    Integer phone = Integer.valueOf(txtPhone.getText().toString());
+                    String phone = txtPhone.getText();
                     String img = jTextField_imgPath.getText();
-
+                    
+                    if (!isEmployeeIDExists(id_var)) {
                     String insertQuery = "INSERT INTO `employee`(`No`,`Fname`, `Sname`, `Id`, `Phone`, `Job`, `Wage`, `Address`,`Image`) VALUES (?,?,?,?,?,?,?,?,?)";
 
                     try {
@@ -414,8 +390,8 @@ public class Employee_Register extends javax.swing.JPanel {
                         ps.setInt(1, no);
                         ps.setString(2, fname);
                         ps.setString(3, sname);
-                        ps.setInt(4, id);
-                        ps.setInt(5, phone);
+                        ps.setString(4, id);
+                        ps.setString(5, phone);
                         ps.setString(6, job);
                         ps.setDouble(7, wage);
                         ps.setString(8, address);
@@ -440,6 +416,9 @@ public class Employee_Register extends javax.swing.JPanel {
                         System.out.println(ex);
                     }     
                 } else {
+                    JOptionPane.showMessageDialog(null, "Employee Id already exists Please change the Employee Id", "Error", JOptionPane.WARNING_MESSAGE);
+                }
+                }else {
                     JOptionPane.showMessageDialog(null, "Employee ID must contains only 10 numbers", "ERROR", JOptionPane.ERROR_MESSAGE);
                     txtPhone.requestFocus();
                 }
@@ -450,6 +429,25 @@ public class Employee_Register extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(null, "You must insert all fields", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
+   }
+      
+    private boolean isEmployeeIDExists(String id) {
+    boolean isExists = false;
+    try {
+        String query = "SELECT COUNT(*) FROM employee WHERE Id = ?";
+        PreparedStatement ps = DB.getConnection().prepareStatement(query);
+        ps.setString(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            if (count > 0) {
+                isExists = true;
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error checking product ID existence: " + ex.getMessage());
+    }
+    return isExists;
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void txtIdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyReleased
@@ -520,14 +518,13 @@ public class Employee_Register extends javax.swing.JPanel {
         String id = txtId.getText().trim();
         String name = txtName.getText().trim();
         String sname = txtSname.getText().trim();
-        String job = txtJob.getText().trim();
         String wage = txtSalary.getText().trim();
         String address = txtAddress.getText().trim();
         String phone = txtPhone.getText().trim();
         String img = jTextField_imgPath.getText().trim();
         
-        if(id.equals("") || id.equals("1234567890") || name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || job.equals("") || job.equals("ตำแหน่ง") || address.equals("")
-                || wage.equals("") || wage.equals("0") || phone.equals("") || img.equals("")) {
+        if(id.equals("") || id.equals("1234567890") || name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || address.equals("")
+                || wage.equals("") || wage.equals("0") || phone.equals("") || phone.equals("เบอร์โทรศัพท์") || img.equals("")) {
             return false;
         }
         else {
@@ -583,6 +580,7 @@ public class Employee_Register extends javax.swing.JPanel {
     private javax.swing.JLabel back_button;
     private javax.swing.JButton btnImg;
     private javax.swing.JButton btnSave;
+    public static javax.swing.JComboBox<String> comboJob;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -593,7 +591,6 @@ public class Employee_Register extends javax.swing.JPanel {
     private javax.swing.JLabel picture_box;
     private javax.swing.JTextArea txtAddress;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtJob;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtSalary;

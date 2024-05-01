@@ -14,12 +14,12 @@ public class DistributorInfo {
     private String company;
     private String fname;
     private String sname;
-    private Integer phone;
+    private String phone;
     private String address;
     private String salesman;
     private String img;
             
-    public DistributorInfo(Integer no, String company, String fname, String sname, Integer phone,String address,String img) {
+    public DistributorInfo(Integer no, String company, String fname, String sname, String phone,String address,String img) {
         this.no = no;
         this.company = company;
         this.fname = fname;
@@ -37,7 +37,7 @@ public class DistributorInfo {
         this.no = no;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
     public String getAddress() {
@@ -72,7 +72,7 @@ public class DistributorInfo {
         this.sname = sname;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
