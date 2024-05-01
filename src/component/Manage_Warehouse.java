@@ -384,7 +384,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     }//GEN-LAST:event_BmaxActionPerformed
 
     private void BminFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_BminFocusGained
-        if (Bmin.getText().equals("$Min"))
+        if (Bmin.getText().equals("ราคาต่ำสุด"))
         {
             Bmin.setText("");
             Bmin.setForeground(new Color(0, 0, 0));
@@ -393,13 +393,13 @@ public class Manage_Warehouse extends javax.swing.JPanel {
 
     private void BminFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_BminFocusLost
          if (Bmin.getText ().length() ==0){
-            Bmin.setText ("$Min") ;
+            Bmin.setText ("ราคาต่ำสุด") ;
             Bmin.setForeground(new Color(0, 0, 0));
         }
     }//GEN-LAST:event_BminFocusLost
 
     private void BmaxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_BmaxFocusGained
-        if (Bmax.getText().equals("$Max"))
+        if (Bmax.getText().equals("ราคาสูงสุด"))
         {
             Bmax.setText("");
             Bmax.setForeground(new Color(0, 0, 0));
@@ -408,7 +408,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
 
     private void BmaxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_BmaxFocusLost
          if (Bmax.getText ().length() ==0){
-            Bmax.setText ("$Max") ;
+            Bmax.setText ("ราคาสูงสุด") ;
             Bmax.setForeground(new Color(0, 0, 0));
         }
     }//GEN-LAST:event_BmaxFocusLost
