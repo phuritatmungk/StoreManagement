@@ -301,6 +301,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         });
         jPanel2.add(jComboBox_Repairman, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 140, 25));
 
+        jTextField_No2.setEditable(false);
         jTextField_No2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_No2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jTextField_No2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 140, 25));
@@ -324,11 +325,32 @@ public class Repair_List_Page extends javax.swing.JPanel {
 
         jTextField_Phone2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Phone2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextField_Phone2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_Phone2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_Phone2FocusLost(evt);
+            }
+        });
+        jTextField_Phone2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField_Phone2KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField_Phone2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 140, 25));
 
         jTextField_Item2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Item2.setForeground(new java.awt.Color(255, 0, 51));
         jTextField_Item2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextField_Item2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_Item2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_Item2FocusLost(evt);
+            }
+        });
         jTextField_Item2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_Item2ActionPerformed(evt);
@@ -519,37 +541,41 @@ public class Repair_List_Page extends javax.swing.JPanel {
         Integer no = Integer.valueOf(jTextField_No2.getText().toString());
         String strdate = jTextField_Date2.getText();
         java.util.Date date = new java.util.Date();
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
         String name =  jTextField_Name2.getText();
         String phone = jTextField_Phone2.getText();
         String item = jTextField_Item2.getText();
         String id = jComboBox_Id.getSelectedItem().toString();
         String repairman =  jComboBox_Repairman.getSelectedItem().toString();
         String status =  jComboBox_Status2.getSelectedItem().toString();
- 
-        String updateQuery = "UPDATE `request` SET `Datetime`=?,`Name`=?,`Phone`=?,`Item`=? ,`Id`=? ,`Repairman`=? ,`Status`=? WHERE `No`=?";
-        try {
-            PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
-            ps.setDate(1, new java.sql.Date(date.getTime()));
-            ps.setString(2, name);
-            ps.setString(3, phone);
-            ps.setString(4, item);
-            ps.setString(5, id);
-            ps.setString(6, repairman); 
-            ps.setString(7, status);
-            ps.setInt(8, no);
-            
-            if(ps.executeUpdate() > 0)
-            {
-                showRequestInTable();
-                System.out.println("Updated");
+        if (checkEmptyFields()) {
+            String updateQuery = "UPDATE `request` SET `Datetime`=?,`Name`=?,`Phone`=?,`Item`=? ,`Id`=? ,`Repairman`=? ,`Status`=? WHERE `No`=?";
+            try {
+                PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
+                ps.setTimestamp(1, timestamp);
+                ps.setString(2, name);
+                ps.setString(3, phone);
+                ps.setString(4, item);
+                ps.setString(5, id);
+                ps.setString(6, repairman); 
+                ps.setString(7, status);
+                ps.setInt(8, no);
+
+                if(ps.executeUpdate() > 0)
+                {
+                    showRequestInTable();
+                    System.out.println("Updated");
+                }
+                else
+                {
+                    System.out.println("Failed");
+                }
+
+            } catch (SQLException ex) {
+                System.out.println(ex);
             }
-            else
-            {
-                System.out.println("Failed");
-            }
-            
-        } catch (SQLException ex) {
-            System.out.println(ex);
+        } else {
+            System.out.println("You must insert all fields");
         }
        
     }//GEN-LAST:event_btnEditActionPerformed
@@ -596,6 +622,49 @@ public class Repair_List_Page extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox_RepairmanActionPerformed
 
+    private void jTextField_Phone2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phone2FocusGained
+        if (jTextField_Phone2.getText().equals("เบอร์โทรศัพท์"))
+        {
+            jTextField_Phone2.setText("");
+            jTextField_Phone2.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_jTextField_Phone2FocusGained
+
+    private void jTextField_Phone2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phone2FocusLost
+        if (jTextField_Phone2.getText ().length() ==0){
+            jTextField_Phone2.setText ("เบอร์โทรศัพท์") ;
+            jTextField_Phone2.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_jTextField_Phone2FocusLost
+
+    private void jTextField_Phone2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_Phone2KeyReleased
+        String text = jTextField_Phone2.getText();
+        
+        if (!isNumeric(text)) {
+            evt.consume();
+            return;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Phone value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            jTextField_Phone2.setText("");
+        }
+    }//GEN-LAST:event_jTextField_Phone2KeyReleased
+
+    private void jTextField_Item2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Item2FocusGained
+        if (jTextField_Item2.getText().equals("อุปกรณ์ที่รับซ่อม"))
+        {
+            jTextField_Item2.setText("");
+            jTextField_Item2.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_jTextField_Item2FocusGained
+
+    private void jTextField_Item2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Item2FocusLost
+        if (jTextField_Item2.getText ().length() ==0){
+            jTextField_Item2.setText ("อุปกรณ์ที่รับซ่อม") ;
+            jTextField_Item2.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_jTextField_Item2FocusLost
+
     ArrayList<RepairRequest> requestArray = new ArrayList<>();
     
     int position = 0;
@@ -616,7 +685,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
             {
                 request = new RepairRequest(rs.getInt("No"), rs.getString("Datetime"),
                                       rs.getString("Name"), rs.getString("Phone"), rs.getString("Item"),
-                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"));
+                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"), rs.getString("Malfunction"));
                 list.add(request);
             }
             
@@ -636,7 +705,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         
         model.setRowCount(0);
         
-        Object[] row = new Object[8];
+        Object[] row = new Object[9];
         
         for(int i = 0; i < requestsList.size(); i++)
         {
@@ -662,39 +731,47 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jTextField_Id.setText(requestArray.get(index).getId().toString());
         jTextField_Repairman.setText(requestArray.get(index).getRepairman());
         jComboBox_Status.setSelectedItem(requestArray.get(index).getStatus());
-        jTextArea_Behavior1.setText(requestArray.get(index).getName());
+        jTextArea_Behavior.setText(requestArray.get(index).getMalfunction());
     }
         public void showProductData2(int index)
     {
         jTextField_No2.setText(requestArray.get(index).getNo().toString());
         jTextField_Date2.setText(requestArray.get(index).getDate());
         jTextField_Name2.setText(requestArray.get(index).getName());
-        jTextField_Phone2.setText(requestArray.get(index).getPhone().toString());
+        jTextField_Phone2.setText(requestArray.get(index).getPhone());
         jTextField_Item2.setText(requestArray.get(index).getItem());
         jComboBox_Id.setSelectedItem(requestArray.get(index).getId());
         jComboBox_Repairman.setSelectedItem(requestArray.get(index).getRepairman());
         jComboBox_Status2.setSelectedItem(requestArray.get(index).getStatus());
-        jTextArea_Behavior.setText(requestArray.get(index).getName());
+        jTextArea_Behavior1.setText(requestArray.get(index).getMalfunction());
     }
-        public boolean checkEmptyFields()
-    {
-        String no = jTextField_No2.getText().trim();
-        String date = jTextField_Date2.getText().trim();
-        String name = jTextField_Name2.getText().trim();
+    
+    public boolean checkEmptyFields() {
+        String customer = jTextField_Name2.getText().trim();
         String phone = jTextField_Phone2.getText().trim();
         String item = jTextField_Item2.getText().trim();
-        if(no.equals("") || date.equals("") || name.equals("") || phone.equals("") || item.equals(""))
-         {
+        String malfunction = jTextArea_Behavior1.getText().trim();
+        
+        if(customer.equals("") || customer.equals("ผู้ส่งซ่อม") || phone.equals("") || phone.equals("หมายเลขโทรศัพท์") || item.equals("") || item.equals("อุุปกรณ์ที่รับซ่อม")
+                 || malfunction.equals("")) {
             return false;
         }
-            else
-        {
-            return true;    
+        else {
+          return true;    
         }
-  
+    }
+    
+    private boolean isNumeric(String input) {
 
-     }
-        private void filter(String query){
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
+    }   
+        
+    private void filter(String query){
             DefaultTableModel model = (DefaultTableModel) jTable.getModel();
             TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
             jTable.setRowSorter(sorter);
@@ -779,8 +856,4 @@ public class Repair_List_Page extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField_Phone2;
     private javax.swing.JTextField jTextField_Repairman;
     // End of variables declaration//GEN-END:variables
-
-    private void dispose() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

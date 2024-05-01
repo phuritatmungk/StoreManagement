@@ -301,7 +301,7 @@ public class Pay_for_repair_services3 extends javax.swing.JPanel {
             {
                 request = new RepairRequest(rs.getInt("No"), rs.getString("Datetime"),
                                       rs.getString("Name"), rs.getString("Phone"), rs.getString("Item"),
-                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"));
+                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"), rs.getString("Malfunction"));
                 list.add(request);
             }
             
@@ -351,7 +351,7 @@ public void showRequestInTable()
         jTextField_Id.setText(requestArray.get(index).getId().toString());
         jTextField_Repairman.setText(requestArray.get(index).getRepairman());
         jComboBox_Status.setSelectedItem(requestArray.get(index).getStatus());
-        jTextField_Behavior.setText(requestArray.get(index).getName());
+        jTextField_Behavior.setText(requestArray.get(index).getMalfunction());
     } 
         public void showProductData2(int index)
     {
