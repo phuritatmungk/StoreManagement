@@ -14,8 +14,6 @@ import javax.swing.*;
 import karnkha.DB;
 import karnkha.Main;
 import karnkha.OrderInfo;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
@@ -132,7 +130,7 @@ public class Order_Record extends javax.swing.JPanel {
                    ex.printStackTrace();
                }
                jFrame3.setVisible(true);
-               Table_Receive_Pro1.setDefaultEditor(Object.class, null); // ไม่ให้แก้ไขเซลล์ในตาราง
+               Table_Receive_Pro1.setDefaultEditor(Object.class, null); 
                
            }
         public void onView(int row) {
@@ -940,7 +938,7 @@ public class Order_Record extends javax.swing.JPanel {
                         psUpdate.setString(6, company);
                         psUpdate.executeUpdate();
                     } else {
-                        psInsert.setString(1, date); // ปรับรูปแบบของวันที่เป็น java.sql.Date
+                        psInsert.setString(1, date); 
                         psInsert.setString(2, company);
                         psInsert.setString(3, name);
                         psInsert.setString(4, category);
@@ -1449,7 +1447,6 @@ public class Order_Record extends javax.swing.JPanel {
             int rowCount = model.getRowCount();
             HashMap<String, Double[]> dateMap = new HashMap<>();
 
-            // วนลูปผ่านแถวของตาราง
             for (int i = 0; i < rowCount; i++) {
                 String company = model.getValueAt(i, 2).toString(); 
                 String date = model.getValueAt(i, 1).toString(); 

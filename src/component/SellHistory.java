@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.Home;
-import karnkha.SalesInfo;
 import karnkha.SalesReport;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;

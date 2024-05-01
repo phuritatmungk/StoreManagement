@@ -1,6 +1,5 @@
 package component;
 
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.raven.datechooser.DateBetween;
 import com.raven.datechooser.DateChooser;
 import com.raven.datechooser.listener.DateChooserAction;
@@ -9,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
-import karnkha.InvReport;
 import component.ReportMenu;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -94,7 +92,7 @@ public class Order_Report extends javax.swing.JPanel {
     }
  private void loadData(String sql) {
         try {
-            model.setRowCount(0); // เคลียร์ข้อมูลในตารางก่อนโหลดข้อมูลใหม่
+            model.setRowCount(0); 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             DecimalFormat f = new DecimalFormat("$ #,##0.##");
             PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);

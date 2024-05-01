@@ -1,10 +1,8 @@
 package component;
 
 import java.sql.*;
-import java.sql.Date;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Component;
 import java.util.ArrayList;
 import raven.cell.TableActionCellEditorEditView;
 import raven.cell.TableActionCellRenderEditView;

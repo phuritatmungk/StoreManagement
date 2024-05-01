@@ -143,12 +143,12 @@ public class Table_RecivePro extends javax.swing.JPanel {
             ResultSet resultSet = statement.executeQuery();
 
             DefaultTableModel model = (DefaultTableModel) Table_Order_Recive.getModel();
-            model.setRowCount(0); // เคลียร์ข้อมูลในตาราง
+            model.setRowCount(0); 
 
-            double totalPrices = 0.0; // ผลรวมของราคาทั้งหมด
-            Set<String> remarksSet = new HashSet<>(); // เก็บ Remark ที่ไม่ซ้ำกัน
+            double totalPrices = 0.0; 
+            Set<String> remarksSet = new HashSet<>(); 
 
-            int rowCount = 1; // เริ่มต้นที่เลข 1
+            int rowCount = 1; 
 
             while (resultSet.next()) {
                 String productName = resultSet.getString("Name");
@@ -158,13 +158,13 @@ public class Table_RecivePro extends javax.swing.JPanel {
                 String allPrices = resultSet.getString("Total");
 
                 double price = Double.parseDouble(allPrices);
-                totalPrices += price; // เพิ่มราคารวม
+                totalPrices += price; 
 
                 String remark = resultSet.getString("Remark");
-                remarksSet.add(remark); // เพิ่ม Remark เข้า Set
+                remarksSet.add(remark); 
 
                 Object[] rowData = {
-                    rowCount, // ใช้ rowCount แทน No
+                    rowCount, 
                     productName,
                     productType,
                     quantity,
@@ -172,23 +172,23 @@ public class Table_RecivePro extends javax.swing.JPanel {
                     allPrices
                 };
                 model.addRow(rowData);
-                rowCount++; // เพิ่มค่า rowCount ให้เพื่อเปลี่ยนเลข No ในแถวถัดไป
+                rowCount++; 
             }
 
-            // Set total prices TextField
+      
             All_prices.setText(String.valueOf(totalPrices));
 
             resultSet.close();
             statement.close();
             connection.close();
 
-            // รวม Remark เป็นข้อความเดียวกัน
+            
             StringBuilder remarksBuilder = new StringBuilder();
             for (String remark : remarksSet) {
                 remarksBuilder.append(remark).append("\n");
             }
 
-            // Set remarks in jTextArea_Information
+    
             jTextArea_Information.setText(remarksBuilder.toString());
 
         } catch (SQLException ex) {

@@ -13,7 +13,6 @@ import karnkha.DB;
 import karnkha.InventoryInfo;
 import karnkha.Main;
 import component.Pay_for_repair_services2;
-import static component.Sellproduct.jTable;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 import java.sql.*;

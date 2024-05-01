@@ -11,7 +11,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
 import karnkha.OrderInfo;
@@ -114,26 +113,26 @@ public class Table_OrderRec extends javax.swing.JPanel {
     private void Table_Order_Record1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_Order_Record1MouseClicked
         int row = Table_Order_Record1.getSelectedRow();
         if (row == -1) {
-            return; // ถ้าไม่ได้เลือกแถวใดๆ ให้ย้อนกลับ
+            return; 
         }    
          if (isFirstClick) {
-         isFirstClick = false; // เปลี่ยนค่าเป็น false เมื่อคลิกครั้งแรก
+         isFirstClick = false; 
          int index = Table_Order_Record1.getSelectedRow();
-         if (index != -1) { // Check if a row is selected
-             String company = Table_Order_Record1.getValueAt(index, 2).toString(); // Get company name from selected row
-             String date = Table_Order_Record1.getValueAt(index, 1).toString(); // Get date from selected row
+         if (index != -1) {
+             String company = Table_Order_Record1.getValueAt(index, 2).toString(); 
+             String date = Table_Order_Record1.getValueAt(index, 1).toString(); 
 
-             // Set the values to the labels
+             
              Company_Text1.setText(company);
              Date_Text.setText(date);
          }
      } else {
          int index = Table_Order_Record1.getSelectedRow();
-         if (index != -1) { // Check if a row is selected
-             String company = Table_Order_Record1.getValueAt(index, 2).toString(); // Get company name from selected row
-             String date = Table_Order_Record1.getValueAt(index, 1).toString(); // Get date from selected row
+         if (index != -1) { 
+             String company = Table_Order_Record1.getValueAt(index, 2).toString(); 
+             String date = Table_Order_Record1.getValueAt(index, 1).toString(); // 
 
-             // Open Table_RecivePro with selected date and company
+         
              Order_Received.body.removeAll();
              Table_RecivePro tableRecivePro = new Table_RecivePro(date, company);
              Order_Received.body.add(tableRecivePro);
@@ -207,19 +206,19 @@ public class Table_OrderRec extends javax.swing.JPanel {
 
             // วนลูปผ่านแถวของตาราง
             for (int i = 0; i < rowCount; i++) {
-                String company = model.getValueAt(i, 2).toString(); // อ้างถึงคอลัมน์ที่ 1 (บริษัท)
-                String date = model.getValueAt(i, 1).toString(); // อ้างถึงคอลัมน์ที่ 2 (วันที่)
+                String company = model.getValueAt(i, 2).toString(); 
+                String date = model.getValueAt(i, 1).toString(); 
 
-                String key = company + date; // สร้าง key โดยรวมชื่อบริษัทและวันที่
+                String key = company + date; 
 
                 if (dateMap.containsKey(key)) {
                     Double[] values = dateMap.get(key);
-                    values[0] += Double.parseDouble(model.getValueAt(i, 3).toString()); // อ้างถึงคอลัมน์ที่ 4 (จำนวน)
-                    values[1] += Double.parseDouble(model.getValueAt(i, 4).toString()); // อ้างถึงคอลัมน์ที่ 5 (รวม)
+                    values[0] += Double.parseDouble(model.getValueAt(i, 3).toString()); 
+                    values[1] += Double.parseDouble(model.getValueAt(i, 4).toString()); 
                 } else {
                     Double[] values = new Double[2];
-                    values[0] = Double.parseDouble(model.getValueAt(i, 3).toString()); // อ้างถึงคอลัมน์ที่ 4 (จำนวน)
-                    values[1] = Double.parseDouble(model.getValueAt(i, 4).toString()); // อ้างถึงคอลัมน์ที่ 5 (รวม)
+                    values[0] = Double.parseDouble(model.getValueAt(i, 3).toString()); 
+                    values[1] = Double.parseDouble(model.getValueAt(i, 4).toString()); 
                     dateMap.put(key, values);
                 }
             }
@@ -231,10 +230,10 @@ public class Table_OrderRec extends javax.swing.JPanel {
                 String key = entry.getKey();
                 Double[] values = entry.getValue();
 
-                String company = key.substring(0, key.length() - 10); // แยกชื่อบริษัทจาก key
-                String date = key.substring(key.length() - 10); // แยกวันที่จาก key
+                String company = key.substring(0, key.length() - 10); 
+                String date = key.substring(key.length() - 10); 
 
-                Object[] rowData = new Object[]{newRowNumber++, date, company,  values[0], values[1]}; // ลำดับ, บริษัท, วันที่, จำนวน, รวม
+                Object[] rowData = new Object[]{newRowNumber++, date, company,  values[0], values[1]};
                 model.addRow(rowData);
             }
  

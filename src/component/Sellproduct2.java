@@ -15,7 +15,6 @@ import raven.cell.TableActionCellRenderTrash;
 import raven.cell.TableActionEventTrash;
 import component.Sellproduct3;
 import component.Sellproduct;
-import static component.Sellproduct.jTable;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JOptionPane;

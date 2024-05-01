@@ -1,12 +1,4 @@
 package component;
-import static component.EditProduct.jTextField_imgPath;
-import static component.EditProduct.picture_box;
-import static component.EditProduct.txtAmount;
-import static component.EditProduct.txtCost_price;
-import static component.EditProduct.txtName;
-import static component.EditProduct.txtNo;
-import static component.EditProduct.txtPrice;
-import static component.EditProduct.txtProductid;
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Distributor;

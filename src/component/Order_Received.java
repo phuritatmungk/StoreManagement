@@ -1481,7 +1481,6 @@ private void mergeAndRefreshTable() {
     DefaultTableModel model = (DefaultTableModel) jTable.getModel();
     int rowCount = model.getRowCount();
     
-    // Create a map to store the merged rows
     HashMap<String, Integer> mergedRows = new HashMap<>();
     HashMap<String, Double> mergedQuantities = new HashMap<>();
     HashMap<String, Double> mergedTotals = new HashMap<>();
@@ -1493,31 +1492,29 @@ private void mergeAndRefreshTable() {
         String id = model.getValueAt(i, 3).toString();
         String recipient = model.getValueAt(i, 4).toString();
 
-        // Create a unique key for each row based on Date, Company, Id, and Recipient
         String key = date + company + id + recipient;
 
         if (mergedRows.containsKey(key)) {
-            // If the row with the same key exists, merge quantities and totals
             double quantity = mergedQuantities.get(key) + Double.parseDouble(model.getValueAt(i, 5).toString());
             double total = mergedTotals.get(key) + Double.parseDouble(model.getValueAt(i, 6).toString());
             mergedQuantities.put(key, quantity);
             mergedTotals.put(key, total);
             model.removeRow(i);
             rowCount--;
-            i--; // Adjust the index to account for the removed row
+
         } else {
-            // If the row with the same key does not exist, add it to the map
+
             mergedRows.put(key, i);
             mergedQuantities.put(key, Double.parseDouble(model.getValueAt(i, 5).toString()));
             mergedTotals.put(key, Double.parseDouble(model.getValueAt(i, 6).toString()));
 
-            // Set the new index
+
             model.setValueAt(nextIndex, i, 0);
             nextIndex++;
         }
     }
 
-    // Add merged data to the table
+
     for (Map.Entry<String, Integer> entry : mergedRows.entrySet()) {
         String key = entry.getKey();
         int rowIndex = entry.getValue();

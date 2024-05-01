@@ -11,12 +11,7 @@ import karnkha.Main;
 import karnkha.RepairRequest;
 import component.Pay_for_repair_services4;
 import component.Pay_for_repair_services2;
-import static component.Pay_for_repair_services4.txtId;
-import static component.Pay_for_repair_services4.txtName;
-import static component.Pay_for_repair_services4.txtPhone;
 import javax.swing.JOptionPane;
-import static component.Pay_for_repair_services4.txtItem;
-import static component.Pay_for_repair_services4.txtRepair;
 public class Pay_for_repair_services3 extends javax.swing.JPanel {
     
     Connection con = null;

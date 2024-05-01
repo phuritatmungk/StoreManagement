@@ -1,6 +1,5 @@
 package component;
 
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.raven.datechooser.DateBetween;
 import com.raven.datechooser.DateChooser;
 import com.raven.datechooser.listener.DateChooserAction;
@@ -9,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import karnkha.DB;
-import karnkha.ExpenseInfo;
 import karnkha.Main;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
