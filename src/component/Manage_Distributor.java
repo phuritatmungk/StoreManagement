@@ -257,7 +257,7 @@ public class Manage_Distributor extends javax.swing.JPanel {
             {
                 distributor = new DistributorInfo(rs.getInt("No"), rs.getString("Company"),
                                        rs.getString("Fname"),rs.getString("Sname"),
-                                       rs.getInt("Phone"),rs.getString("Address"),rs.getString("Image"));
+                                       rs.getString("Phone"),rs.getString("Address"),rs.getString("Image"));
                 list.add(distributor);
             }
             

@@ -265,8 +265,8 @@ public class Manage_Employee extends javax.swing.JPanel {
             while(rs.next())
             {
                 employee = new EmployeeInfo(rs.getInt("No"), rs.getString("Fname"),
-                                      rs.getString("Sname"), rs.getInt("Id"), rs.getString("Job"),
-                                      rs.getDouble("Wage"), rs.getInt("Phone"), rs.getString("Address"),rs.getString("Image"));
+                                      rs.getString("Sname"), rs.getString("Id"), rs.getString("Job"),
+                                      rs.getDouble("Wage"), rs.getString("Phone"), rs.getString("Address"),rs.getString("Image"));
                 list.add(employee);
             }
             

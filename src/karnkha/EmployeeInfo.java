@@ -12,16 +12,16 @@ public class EmployeeInfo {
     
     private Integer no;
     private String fname;
-    private Integer id;
+    private String id;
     private String job;
     private Double wage;
-    private Integer phone;
+    private String phone;
     private String address;
     private String sname;
     private String full;
     private String img;
 
-    public EmployeeInfo(Integer no, String fname, String sname, Integer id, String job, Double wage, Integer phone, String address,String img) {
+    public EmployeeInfo(Integer no, String fname, String sname, String id, String job, Double wage, String phone, String address,String img) {
         this.no = no;
         this.fname = fname;
         this.sname = sname;
@@ -41,11 +41,11 @@ public class EmployeeInfo {
         this.no = no;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -73,11 +73,11 @@ public class EmployeeInfo {
         this.address = address;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

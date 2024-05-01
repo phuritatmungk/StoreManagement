@@ -9,13 +9,13 @@ public class RepairRequest {
     private Integer no;
     private String date;
     private String name;
-    private Integer phone;
+    private String phone;
     private String item;
-    private Integer id;
+    private String id;
     private String repairman;
     private String status;
     
-    public RepairRequest(Integer no, String date, String name, Integer phone, String item, Integer id, String repairman, String status) {
+    public RepairRequest(Integer no, String date, String name, String phone, String item, String id, String repairman, String status) {
         this.no = no;
         this.date = date;
         this.name = name;
@@ -50,11 +50,11 @@ public class RepairRequest {
         this.name = name;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -66,11 +66,11 @@ public class RepairRequest {
         this.item = item;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -401,13 +401,13 @@ public class Edit_employee_info extends javax.swing.JPanel {
             if (phone_var.length() == 10) {
                 if (id_var.length () == 10) {
                     Integer no = Integer.valueOf(txtNo.getText().toString());
-                    Integer id = Integer.valueOf(txtId.getText().toString());
+                    String id = txtId.getText();
                     String fname = txtName.getText();
                     String sname = txtSname.getText();
                     String address = txtAddress.getText();
                     String job = txtJob.getText();
                     Double wage = Double.valueOf(txtSalary.getText().toString());
-                    Integer phone = Integer.valueOf(txtPhone.getText().toString());
+                    String phone = txtPhone.getText();
                     String img = jTextField_imgPath.getText();
 
 
@@ -416,8 +416,8 @@ public class Edit_employee_info extends javax.swing.JPanel {
                         PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
                         ps.setString(1, fname);
                         ps.setString(2, sname);
-                        ps.setInt(3, id);
-                        ps.setInt(4, phone);
+                        ps.setString(3, id);
+                        ps.setString(4, phone);
                         ps.setString(5, job);
                         ps.setDouble(6, wage); 
                         ps.setString(7, address);

@@ -14,7 +14,7 @@ public class OrderReceivedInfo {
     private String date;
     private String company;
     private String name;
-    private Integer id;
+    private String id;
     private String category;
     private Double cost;
     private String recipient;
@@ -22,7 +22,7 @@ public class OrderReceivedInfo {
     private Double total;
     private String remark;
 
-    public OrderReceivedInfo(Integer no, String date, String company, String name, String category, Integer id, Double cost, String recipient, Integer quantity, Double total, String remark) {
+    public OrderReceivedInfo(Integer no, String date, String company, String name, String category, String id, Double cost, String recipient, Integer quantity, Double total, String remark) {
         this.no = no;
         this.date = date;
         this.company = company;
@@ -76,11 +76,11 @@ public class OrderReceivedInfo {
         this.total = total;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

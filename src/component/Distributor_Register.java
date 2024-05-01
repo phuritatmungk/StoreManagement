@@ -311,7 +311,7 @@ public class Distributor_Register extends javax.swing.JPanel {
                 String sname = txtSname.getText();
                 String company = txtCompany.getText();
                 String address = txtAddress.getText();
-                Integer phone = Integer.valueOf(txtPhone.getText().toString());
+                String phone = txtPhone.getText();
                 String img = jTextField_imgPath.getText();
 
                 String insertQuery = "INSERT INTO `distributor`(`No`,`Company`, `FName`, `Sname`, `Phone`, `Address`,`Image`) VALUES (?,?,?,?,?,?,?)";
@@ -323,7 +323,7 @@ public class Distributor_Register extends javax.swing.JPanel {
                     ps.setString(2, company);
                     ps.setString(3, name);
                     ps.setString(4, sname);
-                    ps.setInt(5, phone);
+                    ps.setString(5, phone);
                     ps.setString(6, address);
                     ps.setString(7, img);                    
 

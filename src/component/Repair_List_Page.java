@@ -503,7 +503,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         String name =  jTextField_Name2.getText();
         Integer phone = Integer.valueOf(jTextField_Phone2.getText().toString());
         String item = jTextField_Item2.getText();
-        Integer id = Integer.valueOf(jTextField_Id2.getText().toString());
+        String id = jTextField_Id2.getText();
         String repairman =  jTextField_Repairman2.getText();
         String status =  jComboBox_Status2.getSelectedItem().toString();
  
@@ -514,7 +514,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
             ps.setString(2, name);
             ps.setInt(3, phone);
             ps.setString(4, item);
-            ps.setInt(5, id);
+            ps.setString(5, id);
             ps.setString(6, repairman); 
             ps.setString(7, status);
             ps.setInt(8, no);
@@ -574,8 +574,8 @@ public class Repair_List_Page extends javax.swing.JPanel {
             while(rs.next())
             {
                 request = new RepairRequest(rs.getInt("No"), rs.getString("Datetime"),
-                                      rs.getString("Name"), rs.getInt("Phone"), rs.getString("Item"),
-                                      rs.getInt("ID"), rs.getString("Repairman"), rs.getString("Status"));
+                                      rs.getString("Name"), rs.getString("Phone"), rs.getString("Item"),
+                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"));
                 list.add(request);
             }
             
