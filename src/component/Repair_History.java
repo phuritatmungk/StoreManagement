@@ -134,7 +134,7 @@ public class Repair_History extends javax.swing.JPanel {
         try {
             model.setRowCount(0);
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            DecimalFormat f = new DecimalFormat("$ #,##0.##");
+            DecimalFormat f = new DecimalFormat("#");
             PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
             ResultSet r = p.executeQuery();
             while (r.next()) {
@@ -171,10 +171,11 @@ public class Repair_History extends javax.swing.JPanel {
         txtTotal = new javax.swing.JTextField();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        Topic3 = new javax.swing.JLabel();
-        searchdata__box = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        B_Date = new javax.swing.JLabel();
+        searchdata__box = new javax.swing.JTextField();
+        Topic3 = new javax.swing.JLabel();
 
         jFrame1.setSize(new java.awt.Dimension(1550, 800));
         jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -245,25 +246,7 @@ public class Repair_History extends javax.swing.JPanel {
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Topic.setText("ประวัติการซ่อมสินค้า");
-        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, -1, -1));
-
-        Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        Topic3.setText("วันที่ :");
-        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 70, -1, 30));
-
-        searchdata__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        searchdata__box.setForeground(new java.awt.Color(123, 123, 123));
-        searchdata__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        searchdata__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        searchdata__box.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                searchdata__boxFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                searchdata__boxFocusLost(evt);
-            }
-        });
-        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 70, 220, 30));
+        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -295,15 +278,35 @@ public class Repair_History extends javax.swing.JPanel {
         jScrollPane2.setViewportView(jTable);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 560));
+
+        B_Date.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B_Date.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/calendar.png"))); // NOI18N
+        B_Date.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_DateMouseClicked(evt);
+            }
+        });
+        add(B_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 70, 30, 30));
+
+        searchdata__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        searchdata__box.setForeground(new java.awt.Color(123, 123, 123));
+        searchdata__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        searchdata__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        searchdata__box.setEnabled(false);
+        searchdata__box.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchdata__boxFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchdata__boxFocusLost(evt);
+            }
+        });
+        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 70, 300, 30));
+
+        Topic3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Topic3.setText("วันที่ :");
+        add(Topic3, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 70, -1, 30));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void searchdata__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchdata__boxFocusGained
-
-    private void searchdata__boxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchdata__boxFocusLost
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         // TODO add your handling code here:
@@ -321,6 +324,18 @@ public class Repair_History extends javax.swing.JPanel {
         JFrame thisFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         thisFrame.dispose();
     }//GEN-LAST:event_back_button1MouseClicked
+
+    private void searchdata__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchdata__boxFocusGained
+
+    private void searchdata__boxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchdata__boxFocusLost
+
+    private void B_DateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_DateMouseClicked
+        chDate.showPopup();
+    }//GEN-LAST:event_B_DateMouseClicked
 
     ArrayList<RepairRequest> requestArray = new ArrayList<>();
     
@@ -342,7 +357,7 @@ public class Repair_History extends javax.swing.JPanel {
             {
                 request = new RepairRequest(rs.getInt("No"), rs.getString("Date"),
                                       rs.getString("Name"), rs.getString("Phone"), rs.getString("Item"),
-                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"));
+                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"), rs.getString("Service"));
                 list.add(request);
             }
             
@@ -427,6 +442,7 @@ public class Repair_History extends javax.swing.JPanel {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel B_Date;
     private javax.swing.JLabel Company_label;
     private javax.swing.JLabel Label_Aprices1;
     private javax.swing.JScrollPane ScrollPane_Note;

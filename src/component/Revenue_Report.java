@@ -28,9 +28,9 @@ public class Revenue_Report extends javax.swing.JPanel {
     
     public Revenue_Report() {
         initComponents();
-        chDate.setTextField(searchdata__box);
+        chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
-        chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+        chDate.setTextField(searchdata__box);
         model = (DefaultTableModel)jTable.getModel();
         chDate.addActionDateChooserListener(new DateChooserAdapter() {
             @Override
@@ -38,43 +38,76 @@ public class Revenue_Report extends javax.swing.JPanel {
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 String dateFrom = df.format(db.getFromDate());
                 String toDate = df.format(db.getToDate());
-                loadData("SELECT * FROM `reportrevenue` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
-        
+                loadSalesData("SELECT * FROM `reportsales` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
+                loadRequestData("SELECT * FROM `requestpaid` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
                 model.fireTableDataChanged();
             }
         });
-                try{
-            DB.getInstance().getConnection();
-        } catch (Exception e) {
-            System.err.println(e);
-            }
-                
-        con = DB.mycon();
-        showProductsInTable();
+    try {
+        DB.getInstance().getConnection();
+    } catch (Exception e) {
+        System.err.println(e);
     }
+    con = DB.mycon();
+    showProductsInTable();
+}
 
-    private void loadData(String sql) {
-        try {
-            model.setRowCount(0); 
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            DecimalFormat f = new DecimalFormat("$ #,##0.##");
-            PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
-            ResultSet r = p.executeQuery();
-            while (r.next()) {
+    private void loadSalesData(String sql) {
+    try {
+        model.setRowCount(0); 
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DecimalFormat fWithDecimal = new DecimalFormat("###0.0");
+        DecimalFormat fWithoutDecimal = new DecimalFormat("###0"); 
+        fWithDecimal.setMinimumFractionDigits(1); // ตั้งค่าให้มีตัวเลขหลังจุดทศนิยมอย่างน้อย 1 ตัว
+        fWithDecimal.setMaximumFractionDigits(1); // ตั้งค่าให้มีตัวเลขหลังจุดทศนิยมมากสุด 1 ตัว
+        PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
+        ResultSet r = p.executeQuery();
+        while (r.next()) {
             String Date = r.getString("Date");
             String Id = r.getString("Id");
             String List = r.getString("List");
             String Category = r.getString("Category");
-            String Cost = f.format(r.getDouble("Cost"));
-            String Price = f.format(r.getDouble("Price"));
-            String Quantity = f.format(r.getDouble("Quantity"));
-            String Income = f.format(r.getDouble("Income"));
-            String Total = f.format(r.getDouble("Total"));
-            model.addRow(new Object[] { Date,Id,List,Category,Cost,Price,Quantity,Income, Total});
-            
-           
-            
-            
+            double cost = r.getDouble("Cost");
+            double price = r.getDouble("Price");
+            double total = r.getDouble("Total");
+            String Cost =  fWithDecimal.format(cost); 
+            String Quantity = fWithoutDecimal.format(r.getInt("Quantity")); 
+            String Price = fWithDecimal.format(price);
+            String Total = fWithDecimal.format(total); 
+            model.addRow(new Object[] { Date,Id,List,Category,Cost,Quantity,Price,Total});
+        }
+        r.close();
+        p.close();
+        model.fireTableDataChanged();
+    } catch (Exception e) {
+        System.err.println(e);
+    }
+}
+
+private void loadRequestData(String sql) {
+    try {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DecimalFormat fWithDecimal = new DecimalFormat("###0.0"); 
+        DecimalFormat fWithoutDecimal = new DecimalFormat("###0"); 
+        fWithDecimal.setMinimumFractionDigits(1); 
+        fWithDecimal.setMaximumFractionDigits(1);
+        PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
+        ResultSet r = p.executeQuery();
+        while (r.next()) {
+            String Date = r.getString("Date");
+            String PId = r.getString("PId");
+            String PName = r.getString("PName");
+            String Category = r.getString("Category");
+            double cost = r.getDouble("Cost");
+            double price = r.getDouble("Price");
+            double total = r.getDouble("Total");
+            double service = r.getDouble("Service");
+            String Cost = fWithDecimal.format(cost);
+            String Quantity = fWithoutDecimal.format(r.getInt("Quantity"));
+            String Price = fWithDecimal.format(price);
+            String Total = fWithDecimal.format(total);
+            String Service = fWithDecimal.format(service);
+            model.addRow(new Object[] { Date,PId,PName,Category,Cost,Quantity,Price,Total,Service});
         }
         r.close();
         p.close();
@@ -94,10 +127,11 @@ public class Revenue_Report extends javax.swing.JPanel {
         Topic1 = new javax.swing.JLabel();
         txtSum = new javax.swing.JTextField();
         Topic2 = new javax.swing.JLabel();
-        Topic4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        B_Date = new javax.swing.JLabel();
         searchdata__box = new javax.swing.JTextField();
+        Topic4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -116,7 +150,7 @@ public class Revenue_Report extends javax.swing.JPanel {
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Topic.setText("รายรับทั้งหมด");
-        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 660, -1, -1));
+        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 640, -1, -1));
 
         btnPrint.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/printer.png"))); // NOI18N
@@ -149,15 +183,11 @@ public class Revenue_Report extends javax.swing.JPanel {
                 txtSumActionPerformed(evt);
             }
         });
-        add(txtSum, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 660, 190, 30));
+        add(txtSum, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 640, 190, 30));
 
         Topic2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Topic2.setText("รายงานสรุปรายรับ");
         add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, -1, -1));
-
-        Topic4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        Topic4.setText("วันที่:");
-        add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 640, -1, 30));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -190,10 +220,21 @@ public class Revenue_Report extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
 
+        B_Date.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B_Date.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/calendar.png"))); // NOI18N
+        B_Date.setToolTipText("");
+        B_Date.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_DateMouseClicked(evt);
+            }
+        });
+        add(B_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 640, 30, 30));
+
         searchdata__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         searchdata__box.setForeground(new java.awt.Color(123, 123, 123));
         searchdata__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         searchdata__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        searchdata__box.setEnabled(false);
         searchdata__box.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 searchdata__boxFocusGained(evt);
@@ -202,7 +243,11 @@ public class Revenue_Report extends javax.swing.JPanel {
                 searchdata__boxFocusLost(evt);
             }
         });
-        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 640, 200, 30));
+        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 640, 300, 30));
+
+        Topic4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        Topic4.setText("วันที่:");
+        add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 640, -1, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
@@ -242,6 +287,10 @@ public class Revenue_Report extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchdata__boxFocusLost
 
+    private void B_DateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_DateMouseClicked
+        chDate.showPopup();
+    }//GEN-LAST:event_B_DateMouseClicked
+
     ArrayList<SalesReport> salesArray = new ArrayList<>();
     
     int position = 0;
@@ -262,7 +311,7 @@ public class Revenue_Report extends javax.swing.JPanel {
             {
                 sales = new SalesReport(rs.getString("Date"), rs.getString("Id"),
                                       rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
-                                      rs.getInt("Quantity"), rs.getDouble("Price"), rs.getDouble("Total"));
+                                      rs.getInt("Quantity"), rs.getDouble("Price"), rs.getDouble("Total"), rs.getDouble("Service"));
                 list.add(sales);
             }
             
@@ -326,6 +375,7 @@ public class Revenue_Report extends javax.swing.JPanel {
             row[5] = sales.getQuantity();
             row[6] = sales.getPrice();
             row[7] = sales.getTotal();
+            row[8] = sales.getService();
             model.addRow(row);
         }
 
@@ -348,9 +398,21 @@ public class Revenue_Report extends javax.swing.JPanel {
 
             model.addRow(row);
         }
+        
+        double total = 0;
+        
+        for (int i = 0; i < model.getRowCount(); i++) {
+            int quantity = (int) model.getValueAt(i, 5);
+            double price = (double) model.getValueAt(i, 6);
+            double service = (double) model.getValueAt(i, 8);
+            total += quantity * price + service; 
+        }
+        
+        txtSum.setText(String.format("%.2f บาท", total));
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel B_Date;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel Topic1;
     private javax.swing.JLabel Topic2;

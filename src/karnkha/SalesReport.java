@@ -18,8 +18,9 @@ public class SalesReport {
     private Double total;
     private String date;
     private Double price;
+    private Double service;
 
-    public SalesReport(String date, String id, String name, String category, Double cost, Integer quantity, Double price, Double total) {
+    public SalesReport(String date, String id, String name, String category, Double cost, Integer quantity, Double price, Double total, Double service) {
         this.id = id;
         this.date = date;
         this.name = name;
@@ -28,6 +29,7 @@ public class SalesReport {
         this.quantity = quantity;
         this.price = price;
         this.total = total;
+        this.service = service;
     }
 
     public String getId() {
@@ -98,5 +100,13 @@ public class SalesReport {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getService() {
+        return service;
+    }
+
+    public void setService(Double service) {
+        this.service = service;
     }
 }

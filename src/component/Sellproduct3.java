@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 public class Sellproduct3 extends javax.swing.JPanel {
     
@@ -241,7 +242,14 @@ public class Sellproduct3 extends javax.swing.JPanel {
 
     private void btnNext1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNext1ActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        
+            JOptionPane.showMessageDialog(this, "Payment completed successfully!");
+            try {
+            String deleteQuery = "DELETE FROM cart";
+            PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Failed to clear database data: " + ex.getMessage());
+        }
         for (int i = 0; i < model.getRowCount(); i++) {
             String id = (String) model.getValueAt(i, 1);
             String name = (String) model.getValueAt(i, 2);
@@ -255,7 +263,7 @@ public class Sellproduct3 extends javax.swing.JPanel {
 
             updateInventory(id, quantity);
             deleteFromCart((int) jTable.getValueAt(i, 0));
-            String insertQuery = "INSERT INTO `reportsales` (`Date`, `Id`, `List`, `Category`, `Cost`, `Quantity`, `Price`, `Total`) VALUES (?,?,?,?,?,?,?,?)";
+            String insertQuery = "INSERT INTO `reportsales` (`Date`, `Id`, `List`, `Category`, `Cost`, `Quantity`, `Price`, `Total`, `Service`) VALUES (?,?,?,?,?,?,?,?,?)";
             try {
                 Connection con = DB.getConnection();
                 PreparedStatement ps = con.prepareStatement(insertQuery);
@@ -267,6 +275,7 @@ public class Sellproduct3 extends javax.swing.JPanel {
                 ps.setInt(6, quantity);
                 ps.setDouble(7, price);
                 ps.setDouble(8, total);
+                ps.setDouble(9, 0);
                 ps.executeUpdate();
             } catch (SQLException ex) {
                 System.out.println(ex);
@@ -280,6 +289,10 @@ public class Sellproduct3 extends javax.swing.JPanel {
                 System.out.println(ex);
             }
         }
+            Main.body.removeAll();
+            Main.body.add(new Sellproduct());
+            Main.body.repaint();
+            Main.body.revalidate();
     }//GEN-LAST:event_btnNext1ActionPerformed
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked

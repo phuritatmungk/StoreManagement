@@ -385,10 +385,17 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         if (txtService.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please enter the service fee before proceeding with the payment.", "Error", JOptionPane.WARNING_MESSAGE);
             return; 
+        }else{
+            JOptionPane.showMessageDialog(this, "Payment completed successfully!");
+            try {
+            String deleteQuery = "DELETE FROM repaircart";
+            PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Failed to clear database data: " + ex.getMessage());
         }
-
-            double serviceCost = Double.parseDouble(txtService.getText());
-            double total = serviceCost;
+        double serviceCost = Double.parseDouble(txtService.getText());
+        double total = serviceCost;
 
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
@@ -440,7 +447,11 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             System.out.println(ex);
         }
         }
-        
+        } 
+            Main.body.removeAll();
+            Main.body.add(new Pay_for_repair_services());
+            Main.body.repaint();
+            Main.body.revalidate();
     }//GEN-LAST:event_btnpayActionPerformed
 
     private void txtRepairFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRepairFocusGained
@@ -629,7 +640,7 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             {
                 request = new RepairRequest(rs.getInt("No"), rs.getString("Datetime"),
                                       rs.getString("Name"), rs.getString("Phone"), rs.getString("Item"),
-                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"));
+                                      rs.getString("ID"), rs.getString("Repairman"), rs.getString("Status"), rs.getString("Malfunction"));
                 list.add(request);
             }
             
