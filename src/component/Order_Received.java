@@ -1492,16 +1492,16 @@ private void mergeAndRefreshTable() {
 
     // Iterate through rows to merge and sum quantities and totals
     for (int i = 0; i < rowCount - 1; i++) {
-        String company1 = model.getValueAt(i, 2).toString();
         String date1 = model.getValueAt(i, 1).toString();
+        String company1 = model.getValueAt(i, 2).toString();
         String id1 = model.getValueAt(i, 3).toString();
         String recipient1 = model.getValueAt(i, 4).toString();
         double quantity1 = Double.parseDouble(model.getValueAt(i, 5).toString());
         double total1 = Double.parseDouble(model.getValueAt(i, 6).toString());
 
         for (int j = i + 1; j < rowCount; j++) {
-            String company2 = model.getValueAt(j, 2).toString();
             String date2 = model.getValueAt(j, 1).toString();
+            String company2 = model.getValueAt(j, 2).toString();
             String id2 = model.getValueAt(j, 3).toString();
             String recipient2 = model.getValueAt(j, 4).toString();
 
@@ -1515,6 +1515,7 @@ private void mergeAndRefreshTable() {
         }
 
         // Update the first row with merged quantities and totals
+        
         model.setValueAt(quantity1, i, 5);
         model.setValueAt(total1, i, 6);
         
@@ -1530,6 +1531,9 @@ private void mergeAndRefreshTable() {
         // Clear the list of rows to remove for the next iteration
         rowsToRemove.clear();
     }
+    
+    // Disable sorting for the table
+    jTable.setRowSorter(null);
 }
 
 
