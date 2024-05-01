@@ -1,12 +1,9 @@
 package component;
 
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.raven.datechooser.DateBetween;
 import com.raven.datechooser.DateChooser;
 import com.raven.datechooser.listener.DateChooserAction;
 import com.raven.datechooser.listener.DateChooserAdapter;
-import com.raven.datechooser.listener.DateChooserListener;
-import raven.cell.TableActionCellEditorEdit;
 
 import java.sql.*;
 import java.text.DecimalFormat;
@@ -16,15 +13,11 @@ import javax.swing.*;
 import karnkha.DB;
 import karnkha.Main;
 import karnkha.OrderInfo;
-import com.raven.datechooser.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.TreeMap;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import karnkha.Home;
 import raven.cell.TableActionCellEditorEditView;
 import raven.cell.TableActionCellRenderEditView;
@@ -1111,10 +1104,10 @@ public class Order_Record extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDelete1ActionPerformed
 
     private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
-         Home homePage = new Home();
-         homePage.setVisible(true);
-         JFrame thisFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-         thisFrame.dispose();
+        Home homePage = new Home();
+        homePage.setVisible(true);
+        JFrame thisFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        thisFrame.dispose();
     }//GEN-LAST:event_back_button1MouseClicked
 
     private void B_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_dateActionPerformed

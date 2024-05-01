@@ -15,6 +15,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import static karnkha.DB.getConnection;
 import karnkha.Main;
+import karnkha.OrderInfo;
 
 public class Order_Report extends javax.swing.JPanel {
 
@@ -229,11 +230,11 @@ public class Order_Report extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Date", "Product ID", "Product Name", "Category", "Cost", "Quantity", "Total"
+                "Date", "Distributor", "Product Name", "Category", "Cost", "Quantity", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, true, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -315,13 +316,13 @@ public class Order_Report extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchdata__boxFocusLost
 
-    ArrayList<InvReport> orderArray = new ArrayList<>();
+    ArrayList<OrderInfo> productsArray = new ArrayList<>();
     
     int position = 0;
-    public ArrayList<InvReport> getProductsList()
+    public ArrayList<OrderInfo> getProductsList()
     {
-        ArrayList<InvReport> list = new ArrayList<>();
-        String selectQuery = "SELECT * FROM `reportorder`";
+        ArrayList<OrderInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `order`";
         
         Statement st;
         ResultSet rs;
@@ -329,43 +330,44 @@ public class Order_Report extends javax.swing.JPanel {
         try {
             st = DB.getConnection().createStatement();
             rs = st.executeQuery(selectQuery);
-            InvReport inventory;
+            OrderInfo product;
             
             while(rs.next())
             {
-                inventory = new InvReport(rs.getString("Date"), rs.getInt("Id"),
-                                      rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
-                                      rs.getInt("Quantity"), rs.getDouble("Total"));
-                list.add(inventory);
+                product = new OrderInfo(rs.getInt("No"), rs.getString("Date"),
+                                      rs.getString("Company"), rs.getString("Name"), rs.getString("Category"), 
+                                      rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Total"), rs.getString("Remark"));
+                list.add(product);
             }
             
         } catch (SQLException ex) {
             System.out.println(ex);
         }
         
-        orderArray = list;
+        productsArray = list;
         return list;
         
     }
     
+    
     public void showProductsInTable()
     {
-        ArrayList<InvReport> inventorysList = getProductsList();
+        ArrayList<OrderInfo> productsList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         
         model.setRowCount(0);
         
         Object[] row = new Object[7];
         
-        for(int i = 0; i < inventorysList.size(); i++)
+        for(int i = 0; i < productsList.size(); i++)
         {
-            row[0] = inventorysList.get(i).getDate();
-            row[1] = inventorysList.get(i).getId();
-            row[2] = inventorysList.get(i).getName();
-            row[3] = inventorysList.get(i).getCategory();
-            row[4] = inventorysList.get(i).getCost();
-            row[5] = inventorysList.get(i).getQuantity();
-            row[6] = inventorysList.get(i).getTotal();
+            row[0] = productsList.get(i).getDate();
+            row[1] = productsList.get(i).getCompany();
+            row[2] = productsList.get(i).getName();
+            row[3] = productsList.get(i).getCategory();
+            row[4] = productsList.get(i).getCost();
+            row[5] = productsList.get(i).getQuantity();
+            row[6] = productsList.get(i).getTotal();
             
             model.addRow(row);
         }
