@@ -45,16 +45,17 @@ public class Order_Received extends javax.swing.JPanel {
         chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         model = (DefaultTableModel)jTable.getModel();
         chDate.addActionDateChooserListener(new DateChooserAdapter() {
-            @Override
-            public void dateBetweenChanged(DateBetween db, DateChooserAction action) {
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                String dateFrom = df.format(db.getFromDate());
-                String toDate = df.format(db.getToDate());
-                loadData("SELECT * FROM `orderreceived` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
-                mergeAndRefreshTable();
-                model.fireTableDataChanged();
-            }
-        });
+    @Override
+    public void dateBetweenChanged(DateBetween db, DateChooserAction action) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String dateFrom = df.format(db.getFromDate());
+        String toDate = df.format(db.getToDate());
+        loadData("SELECT * FROM `orderreceived` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
+        mergeAndRefreshTable();
+        
+    }
+});
+        
                 try{
             DB.getInstance().getConnection();
         } catch (Exception e) {
@@ -270,8 +271,8 @@ public class Order_Received extends javax.swing.JPanel {
             String Total = f.format(r.getDouble("Total"));
             String Remark = r.getString("Remark");
 
-            model.addRow(new Object[] { No,Date,Company,Name,Category,Id,Cost,Recipient,Quantity,Total,Remark});
-            
+            model.addRow(new Object[] { No,Date,Company,Name,Id,Category,Recipient,Cost,Quantity,Total,Remark});
+            System.out.println(sql);
         }
         r.close();
         p.close();
@@ -417,10 +418,16 @@ public class Order_Received extends javax.swing.JPanel {
         jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, 920, 350));
 
         Btt_Calender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/calendar.png"))); // NOI18N
+        Btt_Calender.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btt_CalenderMouseClicked(evt);
+            }
+        });
         jPanel1.add(Btt_Calender, new org.netbeans.lib.awtextra.AbsoluteConstraints(1075, 25, -1, -1));
 
         TextField_Date.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         TextField_Date.setText("DD/MM/YYYY");
+        TextField_Date.setEnabled(false);
         jPanel1.add(TextField_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 20, 150, 30));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -724,6 +731,12 @@ public class Order_Received extends javax.swing.JPanel {
 
         TextField_Date1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         TextField_Date1.setText("DD/MM/YYYY");
+        TextField_Date1.setEnabled(false);
+        TextField_Date1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TextField_Date1MouseClicked(evt);
+            }
+        });
         jFrame2.getContentPane().add(TextField_Date1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 20, 150, 30));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -1357,6 +1370,14 @@ public class Order_Received extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_Field_Cost1KeyReleased
 
+    private void Btt_CalenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btt_CalenderMouseClicked
+        chDate.showPopup();
+    }//GEN-LAST:event_Btt_CalenderMouseClicked
+
+    private void TextField_Date1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TextField_Date1MouseClicked
+        chDate.showPopup();
+    }//GEN-LAST:event_TextField_Date1MouseClicked
+
     ArrayList<OrderReceivedInfo> productsArray = new ArrayList<>();
     
     int position = 0;
@@ -1454,42 +1475,43 @@ public class Order_Received extends javax.swing.JPanel {
     
         
     private void mergeAndRefreshTable() {
+    ArrayList<OrderReceivedInfo> productsArray = getProductsList(); // เรียกใช้ getProductsList() เพื่ออัพเดทข้อมูลล่าสุด
     HashMap<String, OrderReceivedInfo> mergedRows = new HashMap<>();
 
-        for (OrderReceivedInfo product : productsArray) {
-            String key = product.getDate() + product.getCompany() + product.getId() + product.getRecipient();
+    for (OrderReceivedInfo product : productsArray) {
+        String key = product.getDate() + product.getCompany() + product.getId() + product.getRecipient();
 
-            if (mergedRows.containsKey(key)) {
-                OrderReceivedInfo mergedProduct = mergedRows.get(key);
-                mergedProduct.setQuantity(mergedProduct.getQuantity() + product.getQuantity());
-                mergedProduct.setTotal(mergedProduct.getTotal() + product.getTotal());
-            } else {
-                mergedRows.put(key, product);
-            }
+        if (mergedRows.containsKey(key)) {
+            OrderReceivedInfo mergedProduct = mergedRows.get(key);
+            mergedProduct.setQuantity(mergedProduct.getQuantity() + product.getQuantity());
+            mergedProduct.setTotal(mergedProduct.getTotal() + product.getTotal());
+        } else {
+            mergedRows.put(key, product);
         }
+    }
 
-        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        model.setRowCount(0);
+    DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+    model.setRowCount(0);
 
-        
-        List<OrderReceivedInfo> sortedProducts = new ArrayList<>(mergedRows.values());
-        sortedProducts.sort(Comparator.comparing(OrderReceivedInfo::getDate));
+    
+    List<OrderReceivedInfo> sortedProducts = new ArrayList<>(mergedRows.values());
+    sortedProducts.sort(Comparator.comparing(OrderReceivedInfo::getDate));
 
-        int index = 1;
-        for (OrderReceivedInfo mergedProduct : sortedProducts) {
-            Object[] row = new Object[]{
-                index++,
-                mergedProduct.getDate(),
-                mergedProduct.getCompany(),
-                mergedProduct.getId(),
-                mergedProduct.getRecipient(),
-                mergedProduct.getQuantity(),
-                mergedProduct.getTotal()
-            };
-            model.addRow(row);
-        }
+    int index = 1;
+    for (OrderReceivedInfo mergedProduct : sortedProducts) {
+        Object[] row = new Object[]{
+            index++,
+            mergedProduct.getDate(),
+            mergedProduct.getCompany(),
+            mergedProduct.getId(),
+            mergedProduct.getRecipient(),
+            mergedProduct.getQuantity(),
+            mergedProduct.getTotal()
+        };
+        model.addRow(row);
+    }
 
-        model.fireTableDataChanged();
+    model.fireTableDataChanged();
 }
     private boolean isNumericOrDecimal(String input) {
 
