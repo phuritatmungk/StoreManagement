@@ -10,6 +10,11 @@ import component.Repair_List_Page;
 import component.ReportMenu;
 import component.SellHistory;
 import component.Sellproduct;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -22,7 +27,57 @@ public class Home extends javax.swing.JFrame {
      */
     public Home() {
         initComponents();
+        createNewDatabase();
     }
+    
+    public void createNewDatabase() {  
+        
+        String sql = "CREATE DATABASE IF NOT EXISTS storedb";
+        
+        String url = "jdbc:mysql://localhost:3306";
+
+        try{  
+            Connection conn = DriverManager.getConnection(url, "root", "");
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.execute();
+            createNewTable();
+            if(stmt.executeUpdate() > 0)
+            {
+                System.out.println("Database and Table have been created");
+            }
+        } catch (SQLException e) {  
+            System.out.println(e.getMessage());  
+        }  
+    }  
+    
+    public void createNewTable() {    
+        String sql = "CREATE TABLE IF NOT EXISTS cart (No INTEGER(10) AUTO_INCREMENT NOT NULL PRIMARY KEY, Id VARCHAR(255), Name VARCHAR(255), Category VARCHAR(255), Cost DOUBLE NOT NULL, Quantity INTEGER(10) NOT NULL, Price DOUBLE NOT NULL)";
+        String sql2 = "CREATE TABLE IF NOT EXISTS distributor (No INTEGER(10) AUTO_INCREMENT NOT NULL PRIMARY KEY, Company VARCHAR(255), Fname VARCHAR(255), Sname VARCHAR(255), Phone INTEGER(10) NOT NULL, Address VARCHAR(255), Image VARCHAR(255))";
+        String sql3 = "CREATE TABLE IF NOT EXISTS employee (No INTEGER(10) AUTO_INCREMENT NOT NULL PRIMARY KEY, Fname VARCHAR(255), Sname VARCHAR(255), Id INTEGER(10) NOT NULL, Phone INTEGER(10) NOT NULL, Job VARCHAR(255), Wage DOUBLE NOT NULL, Address VARCHAR(255), Image VARCHAR(255))";
+        String sql4 = "CREATE TABLE IF NOT EXISTS inventory (No INTEGER(10) AUTO_INCREMENT NOT NULL PRIMARY KEY, Id VARCHAR(255), Date DATE, Name VARCHAR(255), Category VARCHAR(255), Cost DOUBLE NOT NULL, Quantity INTEGER(10) NOT NULL, Price DOUBLE NOT NULL, Image VARCHAR(255))";
+        String sql5 = "CREATE TABLE IF NOT EXISTS `order` (No INTEGER(10) AUTO_INCREMENT NOT NULL PRIMARY KEY, Date DATE, Company VARCHAR(255), Name VARCHAR(255), Category VARCHAR(255), Cost DOUBLE NOT NULL, Quantity INTEGER(10) NOT NULL, Total DOUBLE NOT NULL, Remark VARCHAR(255))";
+        String sql6 = "CREATE TABLE IF NOT EXISTS orderreceived (No INTEGER(10) AUTO_INCREMENT NOT NULL PRIMARY KEY, Date DATE, Company VARCHAR(255), Name VARCHAR(255), Id INTEGER(10) NOT NULL, Category VARCHAR(255), Recipient VARCHAR(255), Cost DOUBLE NOT NULL, Quantity INTEGER(10) NOT NULL, Total DOUBLE NOT NULL, Remark VARCHAR(255))";
+        String sql7 = "CREATE TABLE IF NOT EXISTS repaircart (No INTEGER(10) AUTO_INCREMENT NOT NULL PRIMARY KEY, Id VARCHAR(255), Name VARCHAR(255), Category VARCHAR(255), Cost DOUBLE NOT NULL, Quantity INTEGER(10) NOT NULL, Price DOUBLE NOT NULL)";
+        String sql8 = "CREATE TABLE IF NOT EXISTS reportsales (Date DATE, Id VARCHAR(255), List VARCHAR(255), Category VARCHAR(255), Cost DOUBLE NOT NULL, Quantity INTEGER(10) NOT NULL, Price DOUBLE NOT NULL, Total DOUBLE NOT NULL)";
+        String sql9 = "CREATE TABLE IF NOT EXISTS request (No INTEGER(10) AUTO_INCREMENT NOT NULL PRIMARY KEY, Datetime DATETIME, Name VARCHAR(255), Phone INTEGER(10) NOT NULL, Item VARCHAR(255), Id INTEGER(10) NOT NULL, Repairman VARCHAR(255), Status VARCHAR(255), Malfunction VARCHAR(255))";
+        String sql10 = "CREATE TABLE IF NOT EXISTS requestpaid (No INTEGER(10) AUTO_INCREMENT NOT NULL PRIMARY KEY, Date DATE, Name VARCHAR(255), Phone INTEGER(10) NOT NULL, PId VARCHAR(255), PName VARCHAR(255), Category VARCHAR(255), Quantity INTEGER(10) NOT NULL, Price DOUBLE NOT NULL, Item VARCHAR(255), Id INTEGER(10) NOT NULL, Repairman VARCHAR(255), Status VARCHAR(255), Total DOUBLE NOT NULL, Cost DOUBLE NOT NULL, Service DOUBLE NOT NULL)";
+        Statement st;
+        try{  
+            st = DB.getConnection().createStatement();
+            st.execute(sql);
+            st.execute(sql2);
+            st.execute(sql3);
+            st.execute(sql4);
+            st.execute(sql5);
+            st.execute(sql6);
+            st.execute(sql7);
+            st.execute(sql8);
+            st.execute(sql9);
+            st.execute(sql10);
+        } catch (SQLException e) {  
+            System.out.println(e.getMessage());  
+        }  
+    }  
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

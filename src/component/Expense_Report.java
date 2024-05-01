@@ -13,6 +13,7 @@ import karnkha.ExpenseInfo;
 import karnkha.Main;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import karnkha.OrderInfo;
 public class Expense_Report extends javax.swing.JPanel {
 
     Connection con = null;
@@ -156,17 +157,17 @@ public class Expense_Report extends javax.swing.JPanel {
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Date", "Product ID", "List", "Category", "Cost", "Quantity", "Expense", "Total"
+                "Date", "Product Name", "Category", "Cost", "Quantity", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -229,13 +230,13 @@ public class Expense_Report extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchDateActionPerformed
 
-    ArrayList<ExpenseInfo> expenseArray = new ArrayList<>();
+    ArrayList<OrderInfo> productsArray = new ArrayList<>();
     
     int position = 0;
-    public ArrayList<ExpenseInfo> getProductsList()
+    public ArrayList<OrderInfo> getProductsList()
     {
-        ArrayList<ExpenseInfo> list = new ArrayList<>();
-        String selectQuery = "SELECT * FROM `reportexpense`";
+        ArrayList<OrderInfo> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `order`";
         
         Statement st;
         ResultSet rs;
@@ -243,44 +244,43 @@ public class Expense_Report extends javax.swing.JPanel {
         try {
             st = DB.getConnection().createStatement();
             rs = st.executeQuery(selectQuery);
-            ExpenseInfo expense;
+            OrderInfo product;
             
             while(rs.next())
             {
-                expense = new ExpenseInfo(rs.getString("Date"), rs.getInt("Id"),
-                                      rs.getString("List"), rs.getString("Category"), rs.getDouble("Cost"),
-                                      rs.getInt("Quantity"), rs.getDouble("Expense"), rs.getDouble("Total"));
-                list.add(expense);
+                product = new OrderInfo(rs.getInt("No"), rs.getString("Date"),
+                                      rs.getString("Company"), rs.getString("Name"), rs.getString("Category"), 
+                                      rs.getDouble("Cost"), rs.getInt("Quantity"), rs.getDouble("Total"), rs.getString("Remark"));
+                list.add(product);
             }
             
         } catch (SQLException ex) {
             System.out.println(ex);
         }
         
-        expenseArray = list;
+        productsArray = list;
         return list;
         
     }
     
+    
     public void showProductsInTable()
     {
-        ArrayList<ExpenseInfo> expensesList = getProductsList();
+        ArrayList<OrderInfo> productsList = getProductsList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         
         model.setRowCount(0);
         
-        Object[] row = new Object[8];
+        Object[] row = new Object[6];
         
-        for(int i = 0; i < expensesList.size(); i++)
+        for(int i = 0; i < productsList.size(); i++)
         {
-            row[0] = expensesList.get(i).getDate();
-            row[1] = expensesList.get(i).getId();
-            row[2] = expensesList.get(i).getList();
-            row[3] = expensesList.get(i).getCategory();
-            row[4] = expensesList.get(i).getCost();
-            row[5] = expensesList.get(i).getQuantity();
-            row[6] = expensesList.get(i).getExpense();
-            row[7] = expensesList.get(i).getTotal();
+            row[0] = productsList.get(i).getDate();
+            row[1] = productsList.get(i).getName();
+            row[2] = productsList.get(i).getCategory();
+            row[3] = productsList.get(i).getCost();
+            row[4] = productsList.get(i).getQuantity();
+            row[5] = productsList.get(i).getTotal();
             
             model.addRow(row);
         }

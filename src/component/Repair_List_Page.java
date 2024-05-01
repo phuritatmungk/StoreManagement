@@ -14,6 +14,7 @@ import karnkha.DB;
 import karnkha.Main;
 import component.Maintenance;
 import javax.swing.table.TableRowSorter;
+import karnkha.Home;
 
 public class Repair_List_Page extends javax.swing.JPanel {
     
@@ -361,6 +362,11 @@ public class Repair_List_Page extends javax.swing.JPanel {
         back_button1.setForeground(new java.awt.Color(139, 139, 139));
         back_button1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         back_button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/back-button.png"))); // NOI18N
+        back_button1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back_button1MouseClicked(evt);
+            }
+        });
         add(back_button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -541,6 +547,13 @@ public class Repair_List_Page extends javax.swing.JPanel {
         String query = Status_Combo.getSelectedItem().toString();
         filter(query);
     }//GEN-LAST:event_Status_ComboItemStateChanged
+
+    private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
+        Home homePage = new Home();
+        homePage.setVisible(true);
+        JFrame thisFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        thisFrame.dispose();
+    }//GEN-LAST:event_back_button1MouseClicked
 
     ArrayList<RepairRequest> requestArray = new ArrayList<>();
     

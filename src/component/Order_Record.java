@@ -1104,10 +1104,10 @@ public class Order_Record extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDelete1ActionPerformed
 
     private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
-         Home homePage = new Home();
-         homePage.setVisible(true);
-         JFrame thisFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-         thisFrame.dispose();
+        Home homePage = new Home();
+        homePage.setVisible(true);
+        JFrame thisFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        thisFrame.dispose();
     }//GEN-LAST:event_back_button1MouseClicked
 
     private void B_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_dateActionPerformed

@@ -311,7 +311,10 @@ public class Sellproduct extends javax.swing.JPanel {
     }//GEN-LAST:event_jText_PriceActionPerformed
 
     private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
-
+        Home homePage = new Home();
+        homePage.setVisible(true);
+        JFrame thisFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        thisFrame.dispose();
     }//GEN-LAST:event_back_button1MouseClicked
  
     ArrayList<InventoryInfo> productsArray = new ArrayList<>();
