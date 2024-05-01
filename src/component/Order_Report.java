@@ -51,6 +51,7 @@ public class Order_Report extends javax.swing.JPanel {
                 
         con = DB.mycon();
         showProductsInTable();
+        calculateTotal();
     }
     
     public void showData(String d1, String d2)
@@ -116,6 +117,7 @@ public class Order_Report extends javax.swing.JPanel {
         r.close();
         p.close();
         model.fireTableDataChanged();
+        calculateTotal();
     } catch (Exception e) {
         System.err.println(e);
     }
@@ -155,7 +157,7 @@ public class Order_Report extends javax.swing.JPanel {
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic.setText("มูลค่าสินค้าในคลัง");
-        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 740, -1, -1));
+        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 720, -1, -1));
 
         btnPrint.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/printer.png"))); // NOI18N
@@ -188,7 +190,7 @@ public class Order_Report extends javax.swing.JPanel {
                 txtSumActionPerformed(evt);
             }
         });
-        add(txtSum, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 660, 200, 70));
+        add(txtSum, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 640, 200, 70));
 
         Topic2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Topic2.setText("รายงานสรุปข้อมูลการสั่งซื้อสินค้า");
@@ -200,7 +202,7 @@ public class Order_Report extends javax.swing.JPanel {
 
         Topic5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic5.setText("จำนวนสินค้าเข้าในคลังทั้งหมด");
-        add(Topic5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 740, -1, -1));
+        add(Topic5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 720, -1, -1));
 
         txtSum2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtSum2.setForeground(new java.awt.Color(123, 123, 123));
@@ -219,7 +221,7 @@ public class Order_Report extends javax.swing.JPanel {
                 txtSum2ActionPerformed(evt);
             }
         });
-        add(txtSum2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 660, 200, 70));
+        add(txtSum2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 640, 200, 70));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -373,7 +375,20 @@ public class Order_Report extends javax.swing.JPanel {
         }
         
     }
-
+private void calculateTotal() {
+    double total = 0.0;
+    DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+    int rowCount = model.getRowCount();
+    
+    for (int i = 0; i < rowCount; i++) {
+        Object value = model.getValueAt(i, 6); 
+        if (value != null) {
+            total += Double.parseDouble(value.toString());
+        }
+    }
+    
+    txtSum.setText(String.valueOf(total));
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel Topic1;

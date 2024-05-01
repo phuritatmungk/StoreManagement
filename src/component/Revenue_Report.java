@@ -150,7 +150,7 @@ private void loadRequestData(String sql) {
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Topic.setText("รายรับทั้งหมด");
-        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 660, -1, -1));
+        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 640, -1, -1));
 
         btnPrint.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/printer.png"))); // NOI18N
@@ -183,7 +183,7 @@ private void loadRequestData(String sql) {
                 txtSumActionPerformed(evt);
             }
         });
-        add(txtSum, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 660, 190, 30));
+        add(txtSum, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 640, 190, 30));
 
         Topic2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         Topic2.setText("รายงานสรุปรายรับ");

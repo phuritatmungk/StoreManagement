@@ -243,10 +243,6 @@ public class Sellproduct3 extends javax.swing.JPanel {
     private void btnNext1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNext1ActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
             JOptionPane.showMessageDialog(this, "Payment completed successfully!");
-            Main.body.removeAll();
-            Main.body.add(new Sellproduct());
-            Main.body.repaint();
-            Main.body.revalidate();
             try {
             String deleteQuery = "DELETE FROM cart";
             PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
@@ -293,6 +289,10 @@ public class Sellproduct3 extends javax.swing.JPanel {
                 System.out.println(ex);
             }
         }
+            Main.body.removeAll();
+            Main.body.add(new Sellproduct());
+            Main.body.repaint();
+            Main.body.revalidate();
     }//GEN-LAST:event_btnNext1ActionPerformed
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked

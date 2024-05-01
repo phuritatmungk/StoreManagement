@@ -387,10 +387,6 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
             return; 
         }else{
             JOptionPane.showMessageDialog(this, "Payment completed successfully!");
-            Main.body.removeAll();
-            Main.body.add(new Pay_for_repair_services());
-            Main.body.repaint();
-            Main.body.revalidate();
             try {
             String deleteQuery = "DELETE FROM repaircart";
             PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
@@ -452,6 +448,10 @@ public class Pay_for_repair_services4 extends javax.swing.JPanel {
         }
         }
         } 
+            Main.body.removeAll();
+            Main.body.add(new Pay_for_repair_services());
+            Main.body.repaint();
+            Main.body.revalidate();
     }//GEN-LAST:event_btnpayActionPerformed
 
     private void txtRepairFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRepairFocusGained

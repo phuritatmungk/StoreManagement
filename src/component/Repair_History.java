@@ -246,7 +246,7 @@ public class Repair_History extends javax.swing.JPanel {
 
         Topic.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Topic.setText("ประวัติการซ่อมสินค้า");
-        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, -1, -1));
+        add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
 
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
