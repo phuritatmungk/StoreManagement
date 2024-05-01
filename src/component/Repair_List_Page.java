@@ -27,6 +27,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         initComponents();
         con = DB.mycon();
         showRequestInTable();
+        loadEmployees();
         TableActionEventEditView event = new TableActionEventEditView() {
             @Override
             public void onEdit(int row) {
@@ -85,12 +86,12 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
+        jComboBox_Id = new javax.swing.JComboBox<>();
+        jComboBox_Repairman = new javax.swing.JComboBox<>();
         jTextField_No2 = new javax.swing.JTextField();
         jTextField_Date2 = new javax.swing.JTextField();
         jTextField_Name2 = new javax.swing.JTextField();
         jTextField_Phone2 = new javax.swing.JTextField();
-        jTextField_Repairman2 = new javax.swing.JTextField();
-        jTextField_Id2 = new javax.swing.JTextField();
         jTextField_Item2 = new javax.swing.JTextField();
         jComboBox_Status2 = new javax.swing.JComboBox<>();
         btnEdit = new javax.swing.JButton();
@@ -284,7 +285,22 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jLabel21.setText("สถานะสินค้า :");
         jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 223, -1, -1));
 
-        jTextField_No2.setEditable(false);
+        jComboBox_Id.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_Id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_IdActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jComboBox_Id, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 140, 25));
+
+        jComboBox_Repairman.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox_Repairman.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_RepairmanActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jComboBox_Repairman, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 140, 25));
+
         jTextField_No2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_No2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jTextField_No2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 140, 25));
@@ -309,14 +325,6 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jTextField_Phone2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Phone2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(jTextField_Phone2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 140, 25));
-
-        jTextField_Repairman2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTextField_Repairman2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.add(jTextField_Repairman2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 140, 25));
-
-        jTextField_Id2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTextField_Id2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.add(jTextField_Id2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 140, 25));
 
         jTextField_Item2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField_Item2.setForeground(new java.awt.Color(255, 0, 51));
@@ -514,8 +522,8 @@ public class Repair_List_Page extends javax.swing.JPanel {
         String name =  jTextField_Name2.getText();
         String phone = jTextField_Phone2.getText();
         String item = jTextField_Item2.getText();
-        String id = jTextField_Id2.getText();
-        String repairman =  jTextField_Repairman2.getText();
+        String id = jComboBox_Id.getSelectedItem().toString();
+        String repairman =  jComboBox_Repairman.getSelectedItem().toString();
         String status =  jComboBox_Status2.getSelectedItem().toString();
  
         String updateQuery = "UPDATE `request` SET `Datetime`=?,`Name`=?,`Phone`=?,`Item`=? ,`Id`=? ,`Repairman`=? ,`Status`=? WHERE `No`=?";
@@ -580,6 +588,13 @@ public class Repair_List_Page extends javax.swing.JPanel {
             jTextField_Name2.setForeground(new Color(123, 123, 123));
         }
     }//GEN-LAST:event_jTextField_Name2FocusLost
+    private void jComboBox_IdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_IdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_IdActionPerformed
+
+    private void jComboBox_RepairmanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_RepairmanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_RepairmanActionPerformed
 
     ArrayList<RepairRequest> requestArray = new ArrayList<>();
     
@@ -656,8 +671,8 @@ public class Repair_List_Page extends javax.swing.JPanel {
         jTextField_Name2.setText(requestArray.get(index).getName());
         jTextField_Phone2.setText(requestArray.get(index).getPhone().toString());
         jTextField_Item2.setText(requestArray.get(index).getItem());
-        jTextField_Id2.setText(requestArray.get(index).getId().toString());
-        jTextField_Repairman2.setText(requestArray.get(index).getRepairman());
+        jComboBox_Id.setSelectedItem(requestArray.get(index).getId());
+        jComboBox_Repairman.setSelectedItem(requestArray.get(index).getRepairman());
         jComboBox_Status2.setSelectedItem(requestArray.get(index).getStatus());
         jTextArea_Behavior.setText(requestArray.get(index).getName());
     }
@@ -668,9 +683,7 @@ public class Repair_List_Page extends javax.swing.JPanel {
         String name = jTextField_Name2.getText().trim();
         String phone = jTextField_Phone2.getText().trim();
         String item = jTextField_Item2.getText().trim();
-        String id = jTextField_Id2.getText().trim();
-        String repairman = jTextField_Repairman2.getText().trim();
-        if(no.equals("") || date.equals("") || name.equals("") || phone.equals("") || item.equals("") || id.equals("")|| repairman.equals(""))
+        if(no.equals("") || date.equals("") || name.equals("") || phone.equals("") || item.equals(""))
          {
             return false;
         }
@@ -692,6 +705,25 @@ public class Repair_List_Page extends javax.swing.JPanel {
                  jTable.setRowSorter(sorter); 
     }
         }
+            public void loadEmployees() {
+        try {
+            String query = "SELECT Id, Fname FROM employee";
+            PreparedStatement ps = DB.getConnection().prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String employeeID = rs.getString("Id");
+                String employeeName = rs.getString("Fname");
+
+                jComboBox_Id.addItem(employeeID);
+                jComboBox_Repairman.addItem(employeeName);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Failed to load employees: " + ex.getMessage());
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Status_Combo;
     private javax.swing.JLabel Topic;
@@ -699,6 +731,8 @@ public class Repair_List_Page extends javax.swing.JPanel {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton delete_bt;
+    private javax.swing.JComboBox<String> jComboBox_Id;
+    private javax.swing.JComboBox<String> jComboBox_Repairman;
     private javax.swing.JComboBox<String> jComboBox_Status;
     private javax.swing.JComboBox<String> jComboBox_Status2;
     private javax.swing.JFrame jFrame1;
@@ -735,7 +769,6 @@ public class Repair_List_Page extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField_Date;
     private javax.swing.JTextField jTextField_Date2;
     private javax.swing.JTextField jTextField_Id;
-    private javax.swing.JTextField jTextField_Id2;
     private javax.swing.JTextField jTextField_Item;
     private javax.swing.JTextField jTextField_Item2;
     private javax.swing.JTextField jTextField_Name;
@@ -745,7 +778,6 @@ public class Repair_List_Page extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField_Phone;
     private javax.swing.JTextField jTextField_Phone2;
     private javax.swing.JTextField jTextField_Repairman;
-    private javax.swing.JTextField jTextField_Repairman2;
     // End of variables declaration//GEN-END:variables
 
     private void dispose() {

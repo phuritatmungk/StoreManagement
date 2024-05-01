@@ -310,7 +310,7 @@ public class Edit_dealer_info extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPhoneFocusLost
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        
+        String company_var = txtCompany.getText();
         String phone_var = txtPhone.getText();
         
         if (checkEmptyFields()) {
@@ -323,7 +323,7 @@ public class Edit_dealer_info extends javax.swing.JPanel {
                 String phone = txtPhone.getText();
                 String img = jTextField_imgPath.getText();
 
-
+                if (!isDistributorNameExists(company_var,no)) {
                 String updateQuery = "UPDATE distributor SET Company=?,Fname=?,Sname=? ,Phone=?,Address=?,Image=?  WHERE No=?";
                 try {
                     PreparedStatement ps = DB.getConnection().prepareStatement(updateQuery);
@@ -354,12 +354,34 @@ public class Edit_dealer_info extends javax.swing.JPanel {
                     System.out.println(ex);
                 }
             } else {
+                    JOptionPane.showMessageDialog(null, "Company already exists Please change the Company", "Error", JOptionPane.WARNING_MESSAGE);
+                }
+            }else {
                 JOptionPane.showMessageDialog(null, "Phone must contains only 10 numbers", "ERROR", JOptionPane.ERROR_MESSAGE);
                 txtPhone.requestFocus();
             }
         } else {
             JOptionPane.showMessageDialog(null, "You must insert all fields", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
+}
+private boolean isDistributorNameExists(String company, int no) {
+    boolean isExists = false;
+    try {
+        String query = "SELECT COUNT(*) FROM distributor WHERE Company = ? AND No != ?";
+        PreparedStatement ps = DB.getConnection().prepareStatement(query);
+        ps.setString(1, company);
+        ps.setInt(2, no);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            if (count > 0) {
+                isExists = true;
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error checking distributor name existence: " + ex.getMessage());
+    }
+    return isExists;
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void txtPhoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneKeyReleased

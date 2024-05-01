@@ -308,7 +308,7 @@ public void showProductData(int index)
         Edit_employee_info.txtName.setText(employeesArray.get(index).getFname().toString());
         Edit_employee_info.txtSname.setText(employeesArray.get(index).getSname().toString());
         Edit_employee_info.txtPhone.setText(employeesArray.get(index).getPhone().toString());
-        Edit_employee_info.txtJob.setText(employeesArray.get(index).getJob().toString());
+        Edit_employee_info.comboJob.setSelectedItem(employeesArray.get(index).getJob());
         Edit_employee_info.txtSalary.setText(employeesArray.get(index).getWage().toString());
         Edit_employee_info.txtAddress.setText(employeesArray.get(index).getAddress().toString());
         Edit_employee_info.jTextField_imgPath.setText(employeesArray.get(index).getImg().toString());
