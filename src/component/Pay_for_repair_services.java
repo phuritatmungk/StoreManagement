@@ -17,7 +17,10 @@ import static component.Sellproduct.jTable;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 import java.sql.*;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import karnkha.Home;
 
 public class Pay_for_repair_services extends javax.swing.JPanel {
 
@@ -295,7 +298,10 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
     }//GEN-LAST:event_jTableMouseClicked
 
     private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
-
+        Home homePage = new Home();
+        homePage.setVisible(true);
+        JFrame thisFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        thisFrame.dispose();
     }//GEN-LAST:event_back_button1MouseClicked
 
     private void txtSearch1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearch1KeyReleased
