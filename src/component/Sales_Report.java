@@ -25,9 +25,9 @@ public class Sales_Report extends javax.swing.JPanel {
     
     public Sales_Report() {
         initComponents();
-        chDate.setTextField(searchdata__box);
+        chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
-        chDate.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+        chDate.setTextField(searchdata__box);
         model = (DefaultTableModel)jTable.getModel();
         chDate.addActionDateChooserListener(new DateChooserAdapter() {
             @Override
@@ -36,8 +36,10 @@ public class Sales_Report extends javax.swing.JPanel {
                 String dateFrom = df.format(db.getFromDate());
                 String toDate = df.format(db.getToDate());
                 loadData("SELECT * FROM `reportsales` WHERE `Date` BETWEEN '" + dateFrom + "' AND '" + toDate + "'");
-        
                 model.fireTableDataChanged();
+                
+                
+    
             }
         });
                 try{
@@ -52,23 +54,25 @@ public class Sales_Report extends javax.swing.JPanel {
     
     private void loadData(String sql) {
         try {
-            model.setRowCount(0); // เคลียร์ข้อมูลในตารางก่อนโหลดข้อมูลใหม่
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            DecimalFormat f = new DecimalFormat("$ #,##0.##");
-            PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
-            ResultSet r = p.executeQuery();
-            while (r.next()) {
-            String Date = r.getString("Date");
-            String Id = r.getString("Id");
-            String List = r.getString("List");
-            String Category = r.getString("Category");
-            String Cost = f.format(r.getDouble("Cost"));
-            String Quantity = f.format(r.getDouble("Quantity"));
-            String Total = f.format(r.getDouble("Total"));
-            // เพิ่มข้อมูลใหม่เข้าไปในตาราง
-            model.addRow(new Object[] { Date,Id,List,Category,Cost,Quantity, Total});
+        model.setRowCount(0); 
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DecimalFormat fWithDecimal = new DecimalFormat("0.0"); 
+        DecimalFormat fWithoutDecimal = new DecimalFormat("0.#");
+
+        PreparedStatement p = DB.getInstance().getConnection().prepareStatement(sql);
+        ResultSet r = p.executeQuery();
+        while (r.next()) {
+                String Date = r.getString("Date");
+                String Id = r.getString("Id");
+                String List = r.getString("List");
+                String Category = r.getString("Category");
+                String Cost = fWithDecimal.format(r.getDouble("Cost"));
+                String Quantity = r.getInt("Quantity") % 1 == 0 ? String.valueOf(r.getInt("Quantity")) : fWithoutDecimal.format(r.getDouble("Quantity"));
+                String Price = fWithDecimal.format(r.getDouble("Price"));
+                String Total = fWithDecimal.format(r.getDouble("Total"));
+                model.addRow(new Object[] { Date,Id,List,Category,Cost,Quantity,Price, Total});
             
-            
+          
         }
         r.close();
         p.close();
@@ -87,12 +91,13 @@ public class Sales_Report extends javax.swing.JPanel {
         Topic1 = new javax.swing.JLabel();
         txtSum = new javax.swing.JTextField();
         Topic2 = new javax.swing.JLabel();
-        searchdata__box = new javax.swing.JTextField();
-        Topic4 = new javax.swing.JLabel();
         Topic5 = new javax.swing.JLabel();
         txtSum2 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        B_Date = new javax.swing.JLabel();
+        searchdata__box = new javax.swing.JTextField();
+        Topic4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1280, 720));
@@ -150,29 +155,6 @@ public class Sales_Report extends javax.swing.JPanel {
         Topic2.setText("รายงานสรุปข้อมูลการขายสินค้า");
         add(Topic2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, -1, -1));
 
-        searchdata__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        searchdata__box.setForeground(new java.awt.Color(123, 123, 123));
-        searchdata__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        searchdata__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        searchdata__box.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                searchdata__boxFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                searchdata__boxFocusLost(evt);
-            }
-        });
-        searchdata__box.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchdata__boxActionPerformed(evt);
-            }
-        });
-        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 650, 210, 30));
-
-        Topic4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        Topic4.setText("วันที่:");
-        add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 650, -1, 30));
-
         Topic5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Topic5.setText("จำนวนสินค้าออกจากคลังทั้งหมด");
         add(Topic5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 740, -1, -1));
@@ -226,6 +208,39 @@ public class Sales_Report extends javax.swing.JPanel {
         jScrollPane2.setViewportView(jTable);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+
+        B_Date.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B_Date.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/calendar.png"))); // NOI18N
+        B_Date.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_DateMouseClicked(evt);
+            }
+        });
+        add(B_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 650, 30, 30));
+
+        searchdata__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        searchdata__box.setForeground(new java.awt.Color(123, 123, 123));
+        searchdata__box.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        searchdata__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        searchdata__box.setEnabled(false);
+        searchdata__box.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchdata__boxFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchdata__boxFocusLost(evt);
+            }
+        });
+        searchdata__box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchdata__boxActionPerformed(evt);
+            }
+        });
+        add(searchdata__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 650, 300, 30));
+
+        Topic4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        Topic4.setText("วันที่:");
+        add(Topic4, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 650, -1, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
@@ -243,18 +258,6 @@ public class Sales_Report extends javax.swing.JPanel {
     private void txtSumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSumActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSumActionPerformed
-
-    private void searchdata__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchdata__boxFocusGained
-
-    private void searchdata__boxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchdata__boxFocusLost
-
-    private void searchdata__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchdata__boxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchdata__boxActionPerformed
 
     private void txtSum2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSum2FocusGained
         // TODO add your handling code here:
@@ -280,6 +283,22 @@ public class Sales_Report extends javax.swing.JPanel {
         Main.body.repaint();
         Main.body.revalidate();
     }//GEN-LAST:event_back_button1MouseClicked
+
+    private void searchdata__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchdata__boxFocusGained
+
+    private void searchdata__boxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchdata__boxFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchdata__boxFocusLost
+
+    private void searchdata__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchdata__boxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchdata__boxActionPerformed
+
+    private void B_DateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_DateMouseClicked
+        chDate.showPopup();
+    }//GEN-LAST:event_B_DateMouseClicked
 
     ArrayList<SalesReport> salesArray = new ArrayList<>();
     
@@ -350,6 +369,7 @@ public class Sales_Report extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel B_Date;
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel Topic1;
     private javax.swing.JLabel Topic2;
