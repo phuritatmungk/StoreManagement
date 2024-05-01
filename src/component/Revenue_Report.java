@@ -14,6 +14,8 @@ import karnkha.RevenueInfo;
 import component.ReportMenu;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import karnkha.RepairRequest;
+import karnkha.RepairRequest1;
 import karnkha.SalesReport;
 
 public class Revenue_Report extends javax.swing.JPanel {
@@ -160,17 +162,17 @@ public class Revenue_Report extends javax.swing.JPanel {
         jTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Date", "Product ID", "List", "Category", "Cost", "Price", "Quantity", "Total"
+                "Date", "Product ID", "List", "Category", "Cost", "Quantity", "Price", "Total", "Service"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -273,30 +275,81 @@ public class Revenue_Report extends javax.swing.JPanel {
         
     }
     
+    ArrayList<RepairRequest1> requestArray = new ArrayList<>();
+   
+    public ArrayList<RepairRequest1> getRequestList()
+    {
+        ArrayList<RepairRequest1> list = new ArrayList<>();
+        String selectQuery = "SELECT * FROM `requestpaid`";
+        
+        Statement st;
+        ResultSet rs;
+        
+        try {
+            st = DB.getConnection().createStatement();
+            rs = st.executeQuery(selectQuery);
+            RepairRequest1 request;
+            
+            while(rs.next())
+            {
+                request = new RepairRequest1(rs.getInt("No"), rs.getString("Date"),
+                                      rs.getString("PName"),rs.getString("Name"),rs.getString("PId"), rs.getString("Category"), rs.getDouble("Cost"),
+                                      rs.getDouble("Price"), rs.getInt("Quantity"), rs.getDouble("Total"), rs.getDouble("Service"));
+                list.add(request);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        requestArray = list;
+        return list;
+        
+    }
+    
+    
     public void showProductsInTable()
     {
-        ArrayList<SalesReport> salessList = getProductsList();
+        ArrayList<SalesReport> salesList = getProductsList();
+        ArrayList<RepairRequest1> repairList = getRequestList();
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        
+
         model.setRowCount(0);
-        
-        Object[] row = new Object[8];
-        
-        for(int i = 0; i < salessList.size(); i++)
-        {
-            row[0] = salessList.get(i).getDate();
-            row[1] = salessList.get(i).getId();
-            row[2] = salessList.get(i).getName();
-            row[3] = salessList.get(i).getCategory();
-            row[4] = salessList.get(i).getCost();
-            row[5] = salessList.get(i).getQuantity();
-            row[6] = salessList.get(i).getPrice();
-            row[7] = salessList.get(i).getTotal();
-            
+
+        for (SalesReport sales : salesList) {
+            Object[] row = new Object[9];
+            row[0] = sales.getDate();
+            row[1] = sales.getId();
+            row[2] = sales.getName();
+            row[3] = sales.getCategory();
+            row[4] = sales.getCost();
+            row[5] = sales.getQuantity();
+            row[6] = sales.getPrice();
+            row[7] = sales.getTotal();
             model.addRow(row);
         }
-    }
 
+        for (RepairRequest1 request : repairList) {
+            Object[] row = new Object[9];
+            row[0] = request.getDate();
+            row[1] = request.getPid();
+            row[2] = request.getPname();
+            row[3] = request.getCategory();
+            row[4] = request.getCost();
+            row[5] = request.getQuantity();
+            row[6] = request.getPrice();
+            row[7] = request.getResult();
+
+            if (requestArray.indexOf(request) == 0 || !request.getPname().equals(repairList.get(requestArray.indexOf(request) - 1).getPname()) || !request.getDate().equals(repairList.get(requestArray.indexOf(request) - 1).getDate())) {
+                row[8] = request.getService();
+            } else {
+                row[8] = ""; 
+            }
+
+            model.addRow(row);
+        }
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Topic;
     private javax.swing.JLabel Topic1;

@@ -66,7 +66,7 @@ public class Sellproduct extends javax.swing.JPanel {
                         Main.body.add(new Sellproduct());
                         Main.body.repaint();
                         Main.body.revalidate();
-                        System.out.println("New Product Added");
+                        JOptionPane.showMessageDialog(null, "New Product Added", "Add Product", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
                         System.out.println("Some Error Message Here");

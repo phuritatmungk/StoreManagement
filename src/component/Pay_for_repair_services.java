@@ -64,7 +64,11 @@ public class Pay_for_repair_services extends javax.swing.JPanel {
 
                     if (ps.executeUpdate() > 0) {
                         showProductsInTable();
-                        System.out.println("New Product Added");
+                        Main.body.removeAll();
+                        Main.body.add(new Pay_for_repair_services());
+                        Main.body.repaint();
+                        Main.body.revalidate();
+                        JOptionPane.showMessageDialog(null, "New Product Added", "Add Product", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Product Not Added", "Add Product", JOptionPane.ERROR_MESSAGE);
                         System.out.println("Some Error Message Here");
