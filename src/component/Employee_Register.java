@@ -523,7 +523,7 @@ public class Employee_Register extends javax.swing.JPanel {
         String phone = txtPhone.getText().trim();
         String img = jTextField_imgPath.getText().trim();
         
-        if(id.equals("") || id.equals("1234567890") || name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || job.equals("") || job.equals("ตำแหน่ง") || address.equals("")
+        if(id.equals("") || id.equals("1234567890") || name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || address.equals("")
                 || wage.equals("") || wage.equals("0") || phone.equals("") || phone.equals("เบอร์โทรศัพท์") || img.equals("")) {
             return false;
         }
