@@ -82,7 +82,6 @@ public class Manage_Warehouse extends javax.swing.JPanel {
 
         jFrame1.setBounds(new java.awt.Rectangle(50, 50, 0, 0));
         jFrame1.setLocation(new java.awt.Point(1250, 360));
-        jFrame1.setPreferredSize(new java.awt.Dimension(500, 500));
         jFrame1.setResizable(false);
         jFrame1.setSize(new java.awt.Dimension(500, 500));
         jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -169,7 +168,8 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         });
         jPanel1.add(Bgo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, 50, 30));
 
-        Bmax.setText("$Max");
+        Bmax.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        Bmax.setText("ราคาสูงสุด");
         Bmax.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 BmaxFocusGained(evt);
@@ -190,7 +190,8 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         });
         jPanel1.add(Bmax, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 80, 30));
 
-        Bmin.setText("$Min");
+        Bmin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        Bmin.setText("ราคาต่ำสุด");
         Bmin.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 BminFocusGained(evt);
@@ -586,7 +587,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         EditProduct.txtNo.setText(productsArray.get(index).getNo().toString());
         EditProduct.txtProductid.setText(productsArray.get(index).getId().toString());
         EditProduct.txtName.setText(productsArray.get(index).getName());
-        EditProduct.txtType.setText(productsArray.get(index).getCategory());
+        EditProduct.Com_Type.setSelectedItem(productsArray.get(index).getCategory());
         EditProduct.txtCost_price.setText(productsArray.get(index).getCost().toString());
         EditProduct.txtPrice.setText(productsArray.get(index).getPrice().toString());
         EditProduct.txtAmount.setText(productsArray.get(index).getQuantity().toString());

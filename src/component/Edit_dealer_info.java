@@ -7,7 +7,6 @@ import static component.EditProduct.txtName;
 import static component.EditProduct.txtNo;
 import static component.EditProduct.txtPrice;
 import static component.EditProduct.txtProductid;
-import static component.EditProduct.txtType;
 import java.awt.Color;
 import karnkha.Main;
 import component.Manage_Distributor;
