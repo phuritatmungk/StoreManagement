@@ -445,6 +445,11 @@ public class Repair_List_Page extends javax.swing.JPanel {
                 Status_ComboItemStateChanged(evt);
             }
         });
+        Status_Combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Status_ComboActionPerformed(evt);
+            }
+        });
         add(Status_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 50, 170, 40));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -674,6 +679,10 @@ public class Repair_List_Page extends javax.swing.JPanel {
             jTextField_Item2.setForeground(new Color(123, 123, 123));
         }
     }//GEN-LAST:event_jTextField_Item2FocusLost
+
+    private void Status_ComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Status_ComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Status_ComboActionPerformed
 
     ArrayList<RepairRequest> requestArray = new ArrayList<>();
     
