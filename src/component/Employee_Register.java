@@ -522,9 +522,10 @@ public class Employee_Register extends javax.swing.JPanel {
         String address = txtAddress.getText().trim();
         String phone = txtPhone.getText().trim();
         String img = jTextField_imgPath.getText().trim();
+        String job = comboJob.getSelectedItem().toString();
         
         if(id.equals("") || id.equals("1234567890") || name.equals("") || name.equals("ชื่อ") || sname.equals("") || sname.equals("นามสกุล") || address.equals("")
-                || wage.equals("") || wage.equals("0") || phone.equals("") || phone.equals("เบอร์โทรศัพท์") || img.equals("")) {
+                || wage.equals("") || wage.equals("0") || phone.equals("") || phone.equals("เบอร์โทรศัพท์") || img.equals("") || job.equals("เลือกตำแหน่ง")) {
             return false;
         }
         else {
