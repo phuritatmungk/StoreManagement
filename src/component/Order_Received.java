@@ -5,6 +5,7 @@ import com.raven.datechooser.DateBetween;
 import com.raven.datechooser.DateChooser;
 import com.raven.datechooser.listener.DateChooserAction;
 import com.raven.datechooser.listener.DateChooserAdapter;
+import java.awt.Color;
 import java.awt.Component;
 import java.sql.*;
 import java.text.DecimalFormat;
@@ -24,6 +25,8 @@ import karnkha.OrderReceivedInfo;
 import raven.cell.TableActionCellEditorEditView;
 import raven.cell.TableActionCellRenderEditView;
 import raven.cell.TableActionEventEditView;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Order_Received extends javax.swing.JPanel {
 
@@ -216,6 +219,29 @@ public class Order_Received extends javax.swing.JPanel {
         jTable.getColumnModel().getColumn(7).setCellRenderer(new TableActionCellRenderEditView());
         jTable.getColumnModel().getColumn(7).setCellEditor(new TableActionCellEditorEditView(event));
         mergeAndRefreshTable();
+        jFrame1.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                e.getWindow().dispose();
+                Main.body.removeAll();
+                Main.body.add(new Order_Received());
+                Main.body.repaint();
+                Main.body.revalidate();
+            }
+        });
+
+        jFrame2.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                e.getWindow().dispose(); 
+                Main.body.removeAll();
+                Main.body.add(new Order_Received());
+                Main.body.repaint();
+                Main.body.revalidate();
+            }
+        });
     }
 
      public void showForm(Component com) {
@@ -434,7 +460,21 @@ public class Order_Received extends javax.swing.JPanel {
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 560, -1, -1));
 
         Field_Quantity.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Quantity.setForeground(new java.awt.Color(123, 123, 123));
         Field_Quantity.setText("0");
+        Field_Quantity.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Field_QuantityFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Field_QuantityFocusLost(evt);
+            }
+        });
+        Field_Quantity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Field_QuantityKeyReleased(evt);
+            }
+        });
         jPanel1.add(Field_Quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 440, 210, -1));
 
         ComboBox_Company1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -452,7 +492,21 @@ public class Order_Received extends javax.swing.JPanel {
         jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 560, 210, 100));
 
         Field_Cost.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Cost.setForeground(new java.awt.Color(123, 123, 123));
         Field_Cost.setText("0");
+        Field_Cost.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Field_CostFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Field_CostFocusLost(evt);
+            }
+        });
+        Field_Cost.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Field_CostKeyReleased(evt);
+            }
+        });
         jPanel1.add(Field_Cost, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 500, 210, -1));
 
         ComboBox_Employee.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -487,7 +541,16 @@ public class Order_Received extends javax.swing.JPanel {
         jPanel1.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 690, 170, 50));
 
         Field_Product1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Field_Product1.setForeground(new java.awt.Color(123, 123, 123));
         Field_Product1.setText("ชื่อสินค้า");
+        Field_Product1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Field_Product1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Field_Product1FocusLost(evt);
+            }
+        });
         jPanel1.add(Field_Product1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 440, 210, -1));
 
         jFrame1.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 800));
@@ -858,64 +921,68 @@ public class Order_Received extends javax.swing.JPanel {
            JOptionPane.showMessageDialog(null, "ไม่มีข้อมูลในตารางที่จะบันทึก", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
            return;
        }
+       String company2 = ComboBox_Company1.getSelectedItem().toString();
+       if(company2.equals("เลือกบริษัท")) {
+           JOptionPane.showMessageDialog(null, "You must select distributor", "Error", JOptionPane.WARNING_MESSAGE);
+       } else {
+            String insertQuery = "INSERT INTO `orderreceived`(`Date`, `Company`, `Name`, `id`, `Category`, `Recipient`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-       String insertQuery = "INSERT INTO `orderreceived`(`Date`, `Company`, `Name`, `id`, `Category`, `Recipient`, `Cost`, `Quantity`, `Total`, `Remark`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String updateQuery = "UPDATE `orderreceived` SET `Name` = ?, `Company` = ?, `Id` = ?, `Recipient` = ?, `Remark` = ? WHERE `Date` = ? AND `Name` = ? AND `Company` = ?";
 
-       String updateQuery = "UPDATE `orderreceived` SET `Name` = ?, `Company` = ?, `Id` = ?, `Recipient` = ?, `Remark` = ? WHERE `Date` = ? AND `Name` = ? AND `Company` = ?";
+            try {
+                Connection con = DB.mycon();
+                PreparedStatement psInsert = con.prepareStatement(insertQuery);
+                PreparedStatement psUpdate = con.prepareStatement(updateQuery);
 
-       try {
-           Connection con = DB.mycon();
-           PreparedStatement psInsert = con.prepareStatement(insertQuery);
-           PreparedStatement psUpdate = con.prepareStatement(updateQuery);
+                for (int i = 0; i < Table_Receive_Pro.getRowCount(); i++) {
+                    String date = TextField_Date.getText();
+                    String company = ComboBox_Company1.getSelectedItem().toString(); 
+                    String name = Table_Receive_Pro.getValueAt(i, 1).toString();
+                    String id = ComboBox_ID.getSelectedItem().toString();
+                    String recipient = ComboBox_Employee.getSelectedItem().toString();
+                    String category = Table_Receive_Pro.getValueAt(i, 2).toString();
+                    Integer quantity = Integer.parseInt(Table_Receive_Pro.getValueAt(i, 3).toString());
+                    Double cost = Double.parseDouble(Table_Receive_Pro.getValueAt(i, 4).toString());   
+                    Double total = Double.parseDouble(Table_Receive_Pro.getValueAt(i, 5).toString());
+                    String remark = jTextArea_Information.getText(); 
 
-           for (int i = 0; i < Table_Receive_Pro.getRowCount(); i++) {
-               String date = TextField_Date.getText();
-               String company = ComboBox_Company1.getSelectedItem().toString(); 
-               String name = Table_Receive_Pro.getValueAt(i, 1).toString();
-               String id = ComboBox_ID.getSelectedItem().toString();
-               String recipient = ComboBox_Employee.getSelectedItem().toString();
-               String category = Table_Receive_Pro.getValueAt(i, 2).toString();
-               Integer quantity = Integer.parseInt(Table_Receive_Pro.getValueAt(i, 3).toString());
-               Double cost = Double.parseDouble(Table_Receive_Pro.getValueAt(i, 4).toString());   
-               Double total = Double.parseDouble(Table_Receive_Pro.getValueAt(i, 5).toString());
-               String remark = jTextArea_Information.getText(); 
+                    if (isDataExists(date, company, name, con)) {
+                        psUpdate.setString(1, company);
+                        psUpdate.setString(2, id);
+                        psUpdate.setString(3, recipient);
+                        psUpdate.setString(4, remark);
+                        psUpdate.setString(5, date);
+                        psUpdate.setString(6, name);
+                        psUpdate.setString(7, company);
+                        psUpdate.executeUpdate();
+                    } else {
+                        psInsert.setString(1, date); 
+                        psInsert.setString(2, company);
+                        psInsert.setString(3, name);
+                        psInsert.setString(4, id);
+                        psInsert.setString(5, category);
+                        psInsert.setString(6, recipient);
+                        psInsert.setDouble(7, cost);
+                        psInsert.setInt(8, quantity);
+                        psInsert.setDouble(9, total);
+                        psInsert.setString(10, remark);
+                        psInsert.executeUpdate();
+                    }
+                }
 
-               if (isDataExists(date, company, name, con)) {
-                   psUpdate.setString(1, company);
-                   psUpdate.setString(2, id);
-                   psUpdate.setString(3, recipient);
-                   psUpdate.setString(4, remark);
-                   psUpdate.setString(5, date);
-                   psUpdate.setString(6, name);
-                   psUpdate.setString(7, company);
-                   psUpdate.executeUpdate();
-               } else {
-                   psInsert.setString(1, date); 
-                   psInsert.setString(2, company);
-                   psInsert.setString(3, name);
-                   psInsert.setString(4, id);
-                   psInsert.setString(5, category);
-                   psInsert.setString(6, recipient);
-                   psInsert.setDouble(7, cost);
-                   psInsert.setInt(8, quantity);
-                   psInsert.setDouble(9, total);
-                   psInsert.setString(10, remark);
-                   psInsert.executeUpdate();
-               }
-           }
+                jFrame1.setVisible(false);
+                Main.body.removeAll();
+                Main.body.add(new Order_Received());
+                Main.body.repaint();
+                Main.body.revalidate();
+                JOptionPane.showMessageDialog(null, "บันทึกข้อมูลเรียบร้อยแล้ว", "บันทึกข้อมูล", JOptionPane.INFORMATION_MESSAGE);
 
-           jFrame1.setVisible(false);
-           Main.body.removeAll();
-           Main.body.add(new Order_Received());
-           Main.body.repaint();
-           Main.body.revalidate();
-           JOptionPane.showMessageDialog(null, "บันทึกข้อมูลเรียบร้อยแล้ว", "บันทึกข้อมูล", JOptionPane.INFORMATION_MESSAGE);
-
-           psInsert.close();
-           psUpdate.close();
-           con.close();
-       } catch (SQLException ex) {
-           System.out.println("Error: " + ex.getMessage());
+                psInsert.close();
+                psUpdate.close();
+                con.close();
+            } catch (SQLException ex) {
+                System.out.println("Error: " + ex.getMessage());
+            }
        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -945,45 +1012,27 @@ public class Order_Received extends javax.swing.JPanel {
 }
     
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
-        String name = Field_Product1.getText();
-        String category = ComboBox_Type.getSelectedItem().toString();
-        String costText = Field_Cost.getText();
-        String quantityText = Field_Quantity.getText();
+        if (checkEmptyFields()) {
+            String name = Field_Product1.getText();
+            String category = ComboBox_Type.getSelectedItem().toString();
+            Double cost = Double.valueOf(Field_Cost.getText());
+            Integer quantity = Integer.valueOf(Field_Quantity.getText());
 
-        if (name.isEmpty() || category.isEmpty() || costText.isEmpty() || quantityText.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "กรุณากรอกข้อมูลให้ครบทุกฟิลด์", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-            return;
+            Double total = cost * quantity;
+            String remark = jTextArea_Information.getText();
+
+            DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro.getModel();
+            Object[] rowData = new Object[]{model.getRowCount() + 1, name, category, quantity, cost, total, remark};
+            model.addRow(rowData);
+
+            Field_Product1.setText("ชื่อสินค้า");
+            ComboBox_Type.setSelectedIndex(0);
+            Field_Cost.setText("0");
+            Field_Quantity.setText("0");
+            jTextArea_Information.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "You must insert all fields", "Error", JOptionPane.WARNING_MESSAGE);
         }
-
-        Double cost;
-        try {
-            cost = Double.valueOf(costText);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "กรุณากรอกราคาให้เป็นตัวเลข", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Integer quantity;
-        try {
-            // แปลงค่าจำนวนเป็น Integer โดยตัดทศนิยมทิ้ง
-            quantity = Double.valueOf(quantityText).intValue();
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "กรุณากรอกจำนวนให้เป็นตัวเลขจำนวนเต็ม", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Double total = cost * quantity;
-        String remark = jTextArea_Information.getText();
-
-        DefaultTableModel model = (DefaultTableModel) Table_Receive_Pro.getModel();
-        Object[] rowData = new Object[]{model.getRowCount() + 1, name, category, quantity, cost, total, remark};
-        model.addRow(rowData);
-
-        Field_Product1.setText("");
-        ComboBox_Type.setSelectedIndex(0);
-        Field_Cost.setText("");
-        Field_Quantity.setText("");
-        jTextArea_Information.setText("");
     }//GEN-LAST:event_btnAdd1ActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -1104,30 +1153,29 @@ public class Order_Received extends javax.swing.JPanel {
 
     private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
         jFrame2.setVisible(false);
-           
-           try {
-            Connection con = DB.mycon();
+        try {
+        Connection con = DB.mycon();
 
-            String updateAllQuery = "UPDATE `orderreceived` SET `Date` = ?, `Company` = ?, `Id` = ?, `Recipient` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Id` IS NOT NULL AND `Recipient` IS NOT NULL AND `Remark` IS NOT NULL";
-            PreparedStatement psUpdateAll = con.prepareStatement(updateAllQuery);
-            psUpdateAll.setString(1, TextField_Date1.getText());
-            psUpdateAll.setString(2, ComboBox_Company2.getSelectedItem().toString());
-            psUpdateAll.setString(3, ComboBox_ID1.getSelectedItem().toString());
-            psUpdateAll.setString(4, ComboBox_Employee1.getSelectedItem().toString());
-            psUpdateAll.setString(5, jTextArea_Information1.getText());
-            psUpdateAll.executeUpdate(); 
+        String updateAllQuery = "UPDATE `orderreceived` SET `Date` = ?, `Company` = ?, `Id` = ?, `Recipient` = ?, `Remark` = ? WHERE `Date` IS NOT NULL AND `Company` IS NOT NULL AND `Id` IS NOT NULL AND `Recipient` IS NOT NULL AND `Remark` IS NOT NULL";
+        PreparedStatement psUpdateAll = con.prepareStatement(updateAllQuery);
+        psUpdateAll.setString(1, TextField_Date1.getText());
+        psUpdateAll.setString(2, ComboBox_Company2.getSelectedItem().toString());
+        psUpdateAll.setString(3, ComboBox_ID1.getSelectedItem().toString());
+        psUpdateAll.setString(4, ComboBox_Employee1.getSelectedItem().toString());
+        psUpdateAll.setString(5, jTextArea_Information1.getText());
+        psUpdateAll.executeUpdate(); 
 
-            psUpdateAll.close();
-            con.close();
+        psUpdateAll.close();
+        con.close();
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
-           
-           Main.body.removeAll();
-           Main.body.add(new Order_Received());
-           Main.body.repaint();
-           Main.body.revalidate();
-           JOptionPane.showMessageDialog(null, "บันทึกข้อมูลเรียบร้อยแล้ว", "บันทึกข้อมูล", JOptionPane.INFORMATION_MESSAGE);
+
+        Main.body.removeAll();
+        Main.body.add(new Order_Received());
+        Main.body.repaint();
+        Main.body.revalidate();
+        JOptionPane.showMessageDialog(null, "บันทึกข้อมูลเรียบร้อยแล้ว", "บันทึกข้อมูล", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnSave1ActionPerformed
 
     private void Field_Product3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Field_Product3ActionPerformed
@@ -1141,6 +1189,81 @@ public class Order_Received extends javax.swing.JPanel {
     private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
        
     }//GEN-LAST:event_Save_bt1ActionPerformed
+
+    private void Field_Product1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_Product1FocusGained
+        if (Field_Product1.getText().equals("ชื่อสินค้า"))
+        {
+            Field_Product1.setText("");
+            Field_Product1.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_Field_Product1FocusGained
+
+    private void Field_Product1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_Product1FocusLost
+        if (Field_Product1.getText ().length() ==0){
+            Field_Product1.setText ("ชื่อสินค้า") ;
+            Field_Product1.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_Field_Product1FocusLost
+
+    private void Field_QuantityFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_QuantityFocusGained
+        if (Field_Quantity.getText().equals("0"))
+        {
+            Field_Quantity.setText("");
+            Field_Quantity.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_Field_QuantityFocusGained
+
+    private void Field_QuantityFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_QuantityFocusLost
+        if (Field_Quantity.getText ().length() ==0){
+            Field_Quantity.setText ("0") ;
+            Field_Quantity.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_Field_QuantityFocusLost
+
+    private void Field_QuantityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Field_QuantityKeyReleased
+        String text = Field_Quantity.getText();
+        
+        if (!isNumeric(text)) {
+            evt.consume();
+            return;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Quantity value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            Field_Quantity.setText("");
+        }
+    }//GEN-LAST:event_Field_QuantityKeyReleased
+
+    private void Field_CostFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_CostFocusGained
+        if (Field_Cost.getText().equals("0"))
+        {
+            Field_Cost.setText("");
+            Field_Cost.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_Field_CostFocusGained
+
+    private void Field_CostFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_CostFocusLost
+        if (Field_Cost.getText ().length() ==0){
+            Field_Cost.setText ("0") ;
+            Field_Cost.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_Field_CostFocusLost
+
+    private void Field_CostKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Field_CostKeyReleased
+        try {
+        String text = Field_Cost.getText();
+
+            if (!isNumericOrDecimal(text)) {
+
+                evt.consume();
+                return;
+            }
+
+            Double.valueOf(text);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Cost value must contain only numbers", "Error", JOptionPane.WARNING_MESSAGE);
+            Field_Cost.setText("");
+        }
+    }//GEN-LAST:event_Field_CostKeyReleased
 
     ArrayList<OrderReceivedInfo> productsArray = new ArrayList<>();
     
@@ -1238,8 +1361,8 @@ public class Order_Received extends javax.swing.JPanel {
 }
         
         
-        private void mergeAndRefreshTable() {
-        HashMap<String, OrderReceivedInfo> mergedRows = new HashMap<>();
+    private void mergeAndRefreshTable() {
+    HashMap<String, OrderReceivedInfo> mergedRows = new HashMap<>();
 
         for (OrderReceivedInfo product : productsArray) {
             String key = product.getDate() + product.getCompany() + product.getId() + product.getRecipient();
@@ -1276,6 +1399,43 @@ public class Order_Received extends javax.swing.JPanel {
 
         model.fireTableDataChanged();
 }
+    private boolean isNumericOrDecimal(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c) && c != '.') {
+                return true;
+            }
+        }
+        return false;
+    }   
+    
+    private boolean isNumeric(String input) {
+
+        for (char c : input.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
+    }   
+    
+    public boolean checkEmptyFields() {
+        String name = Field_Product1.getText().trim();
+        String quantity = Field_Quantity.getText().trim();
+        String cost = Field_Cost.getText().trim();
+        String recipient = String.valueOf(ComboBox_Employee.getSelectedItem().toString());
+        String category = String.valueOf(ComboBox_Type.getSelectedItem().toString());
+        String remark = jTextArea_Information.getText().trim();
+        String id = String.valueOf(ComboBox_ID.getSelectedItem().toString());
+        
+        if(name.equals("") || name.equals("ชื่อสินค้า") || quantity.equals("") || quantity.equals("0") || cost.equals("") || cost.equals("0") || recipient.equals("")
+                || recipient.equals("เลือกพนักงาน")|| id.equals("") || id.equals("เลือกรหัสพนักงาน") || category.equals("ประเภทสินค้า") || remark.equals("")) {
+            return false;
+        }
+        else {
+          return true;    
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel All_prices;
