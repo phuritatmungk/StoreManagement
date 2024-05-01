@@ -433,7 +433,7 @@ public class Order_Received extends javax.swing.JPanel {
         });
         jPanel1.add(Btt_Calender, new org.netbeans.lib.awtextra.AbsoluteConstraints(1075, 25, -1, -1));
 
-        TextField_Date.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        TextField_Date.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         TextField_Date.setText("DD/MM/YYYY");
         TextField_Date.setEnabled(false);
         jPanel1.add(TextField_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 20, 150, 30));
@@ -448,7 +448,7 @@ public class Order_Received extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("วันเวลาทีรับสินค้า :");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 20, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 20, -1, 30));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setText("รหัสพนักงาน :");
@@ -870,6 +870,7 @@ public class Order_Received extends javax.swing.JPanel {
         searchDate.setForeground(new java.awt.Color(123, 123, 123));
         searchDate.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         searchDate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        searchDate.setEnabled(false);
         add(searchDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 50, 290, 30));
 
         Save_bt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -877,11 +878,6 @@ public class Order_Received extends javax.swing.JPanel {
         Save_bt1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Save_bt1MouseClicked(evt);
-            }
-        });
-        Save_bt1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Save_bt1ActionPerformed(evt);
             }
         });
         add(Save_bt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 640, 130, 50));
@@ -971,7 +967,7 @@ public class Order_Received extends javax.swing.JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
        if (Table_Receive_Pro.getRowCount() == 0) {
-           JOptionPane.showMessageDialog(null, "ไม่มีข้อมูลในตารางที่จะบันทึก", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(null, "Please Add Product", "ข้อผิดพลาด", JOptionPane.ERROR_MESSAGE);
            return;
        }
        String company2 = ComboBox_Company1.getSelectedItem().toString();
@@ -1223,10 +1219,6 @@ public class Order_Received extends javax.swing.JPanel {
     private void ComboBox_ID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBox_ID1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ComboBox_ID1ActionPerformed
-
-    private void Save_bt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_bt1ActionPerformed
-       
-    }//GEN-LAST:event_Save_bt1ActionPerformed
 
     private void Field_Product1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Field_Product1FocusGained
         if (Field_Product1.getText().equals("ชื่อสินค้า"))
@@ -1488,53 +1480,59 @@ public class Order_Received extends javax.swing.JPanel {
 private void mergeAndRefreshTable() {
     DefaultTableModel model = (DefaultTableModel) jTable.getModel();
     int rowCount = model.getRowCount();
-    ArrayList<Integer> rowsToRemove = new ArrayList<>();
+    
+    // Create a map to store the merged rows
+    HashMap<String, Integer> mergedRows = new HashMap<>();
+    HashMap<String, Double> mergedQuantities = new HashMap<>();
+    HashMap<String, Double> mergedTotals = new HashMap<>();
+    int nextIndex = 1;
 
-    // Iterate through rows to merge and sum quantities and totals
-    for (int i = 0; i < rowCount - 1; i++) {
-        String date1 = model.getValueAt(i, 1).toString();
-        String company1 = model.getValueAt(i, 2).toString();
-        String id1 = model.getValueAt(i, 3).toString();
-        String recipient1 = model.getValueAt(i, 4).toString();
-        double quantity1 = Double.parseDouble(model.getValueAt(i, 5).toString());
-        double total1 = Double.parseDouble(model.getValueAt(i, 6).toString());
+    for (int i = 0; i < rowCount; i++) {
+        String date = model.getValueAt(i, 1).toString();
+        String company = model.getValueAt(i, 2).toString();
+        String id = model.getValueAt(i, 3).toString();
+        String recipient = model.getValueAt(i, 4).toString();
 
-        for (int j = i + 1; j < rowCount; j++) {
-            String date2 = model.getValueAt(j, 1).toString();
-            String company2 = model.getValueAt(j, 2).toString();
-            String id2 = model.getValueAt(j, 3).toString();
-            String recipient2 = model.getValueAt(j, 4).toString();
+        // Create a unique key for each row based on Date, Company, Id, and Recipient
+        String key = date + company + id + recipient;
 
-            if (company1.equals(company2) && date1.equals(date2) && id1.equals(id2) && recipient1.equals(recipient2)) {
-                // Merge quantities and totals
-                quantity1 += Double.parseDouble(model.getValueAt(j, 5).toString());
-                total1 += Double.parseDouble(model.getValueAt(j, 6).toString());
-                // Mark the row to be removed
-                rowsToRemove.add(j);
-            }
+        if (mergedRows.containsKey(key)) {
+            // If the row with the same key exists, merge quantities and totals
+            double quantity = mergedQuantities.get(key) + Double.parseDouble(model.getValueAt(i, 5).toString());
+            double total = mergedTotals.get(key) + Double.parseDouble(model.getValueAt(i, 6).toString());
+            mergedQuantities.put(key, quantity);
+            mergedTotals.put(key, total);
+            model.removeRow(i);
+            rowCount--;
+            i--; // Adjust the index to account for the removed row
+        } else {
+            // If the row with the same key does not exist, add it to the map
+            mergedRows.put(key, i);
+            mergedQuantities.put(key, Double.parseDouble(model.getValueAt(i, 5).toString()));
+            mergedTotals.put(key, Double.parseDouble(model.getValueAt(i, 6).toString()));
+
+            // Set the new index
+            model.setValueAt(nextIndex, i, 0);
+            nextIndex++;
         }
+    }
 
-        // Update the first row with merged quantities and totals
-        
-        model.setValueAt(quantity1, i, 5);
-        model.setValueAt(total1, i, 6);
-        
-        // Adjust rowCount for removed rows
-        rowCount -= rowsToRemove.size();
-
-        // Remove the marked rows
-        for (int k = rowsToRemove.size() - 1; k >= 0; k--) {
-            int rowIndexToRemove = rowsToRemove.get(k);
-            model.removeRow(rowIndexToRemove);
-        }
-
-        // Clear the list of rows to remove for the next iteration
-        rowsToRemove.clear();
+    // Add merged data to the table
+    for (Map.Entry<String, Integer> entry : mergedRows.entrySet()) {
+        String key = entry.getKey();
+        int rowIndex = entry.getValue();
+        double quantity = mergedQuantities.get(key);
+        double total = mergedTotals.get(key);
+        model.setValueAt(quantity, rowIndex, 5);
+        model.setValueAt(total, rowIndex, 6);
     }
     
     // Disable sorting for the table
     jTable.setRowSorter(null);
 }
+
+
+
 
 
     

@@ -93,6 +93,7 @@ public class Order_Record extends javax.swing.JPanel {
                    model.addColumn("Cost");
                    model.addColumn("Total");
 
+                   Set<String> remarksSet = new HashSet<>(); 
                    int rowCount = 1;
 
                    while (resultSet.next()) {
@@ -102,6 +103,9 @@ public class Order_Record extends javax.swing.JPanel {
                        String cost = resultSet.getString("Cost");
                        String allPrices = resultSet.getString("Total");
 
+                       String remark = resultSet.getString("Remark");
+                       remarksSet.add(remark); 
+                       
                        Object[] rowData = {
                            rowCount,
                            productName,
@@ -117,6 +121,13 @@ public class Order_Record extends javax.swing.JPanel {
                    resultSet.close();
                    statement.close();
                    connection.close();
+                   StringBuilder remarksBuilder = new StringBuilder();
+                for (String remark : remarksSet) {
+                    remarksBuilder.append(remark).append("\n");
+                }
+
+                jTextArea_Information.setText(remarksBuilder.toString());
+                   
                } catch (SQLException ex) {
                    ex.printStackTrace();
                }
