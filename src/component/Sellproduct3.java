@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 public class Sellproduct3 extends javax.swing.JPanel {
     
@@ -241,7 +242,18 @@ public class Sellproduct3 extends javax.swing.JPanel {
 
     private void btnNext1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNext1ActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
-        
+            JOptionPane.showMessageDialog(this, "Payment completed successfully!");
+            Main.body.removeAll();
+            Main.body.add(new Sellproduct());
+            Main.body.repaint();
+            Main.body.revalidate();
+            try {
+            String deleteQuery = "DELETE FROM cart";
+            PreparedStatement ps = DB.getConnection().prepareStatement(deleteQuery);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Failed to clear database data: " + ex.getMessage());
+        }
         for (int i = 0; i < model.getRowCount(); i++) {
             String id = (String) model.getValueAt(i, 1);
             String name = (String) model.getValueAt(i, 2);

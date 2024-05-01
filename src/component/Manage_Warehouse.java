@@ -29,7 +29,6 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     public Manage_Warehouse() {
         initComponents();
         con = DB.mycon();
-        loadCategory();
         loadAllProducts();
         
             
@@ -72,13 +71,13 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         Bmin = new javax.swing.JTextField();
         back_button1 = new javax.swing.JLabel();
         Topic = new javax.swing.JLabel();
-        back_button = new javax.swing.JLabel();
-        search__box = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
         delete_bt = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        back_button = new javax.swing.JLabel();
+        search__box = new javax.swing.JTextField();
 
         jFrame1.setBounds(new java.awt.Rectangle(50, 50, 0, 0));
         jFrame1.setLocation(new java.awt.Point(1250, 360));
@@ -94,7 +93,8 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         jLabel4.setText("จำนวนคงเหลือ");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
 
-        CategoryBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category" }));
+        CategoryBox.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        CategoryBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "เลือกประเภทสินค้า", "เครื่องยนต์และอุปกรณ์การเกษตร", "อะไหล่เครื่องดีเซล", "อะไหล่เครื่องเบนซิน", "อะไหล่เครื่องตัดหญ้า", "อะไหล่เครื่องตัดไม้", "อะไหล่เป้เครื่องพ่นยา", "อะไหล่เป้พ่นยาไฟฟ้า", "อะไหล่ปั้มพ่นยา", "อะไหล่เครื่องเจาะดิน", "อะไหล่ปั้มน้ำ", "อะไหล่ปั้มน้ำไฟฟ้า", "อุปกรณ์อื่นๆ" }));
         CategoryBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 CategoryBoxItemStateChanged(evt);
@@ -228,36 +228,6 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         Topic.setText("จัดการคลังสินค้า");
         add(Topic, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, -1, -1));
 
-        back_button.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        back_button.setForeground(new java.awt.Color(139, 139, 139));
-        back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/loupe2_1.png"))); // NOI18N
-        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 50, 30, 30));
-
-        search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        search__box.setForeground(new java.awt.Color(123, 123, 123));
-        search__box.setText("ค้นหาสินค้า");
-        search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        search__box.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                search__boxFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                search__boxFocusLost(evt);
-            }
-        });
-        search__box.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                search__boxActionPerformed(evt);
-            }
-        });
-        search__box.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                search__boxKeyReleased(evt);
-            }
-        });
-        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 50, 300, 30));
-
         btnAdd.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnAdd.setText("เพิ่ม");
         btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -317,6 +287,36 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 1240, 520));
+
+        back_button.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        back_button.setForeground(new java.awt.Color(139, 139, 139));
+        back_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        back_button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/loupe2_1.png"))); // NOI18N
+        add(back_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 50, 30, 30));
+
+        search__box.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        search__box.setForeground(new java.awt.Color(123, 123, 123));
+        search__box.setText("ค้นหาสินค้า");
+        search__box.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        search__box.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                search__boxFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                search__boxFocusLost(evt);
+            }
+        });
+        search__box.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search__boxActionPerformed(evt);
+            }
+        });
+        search__box.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                search__boxKeyReleased(evt);
+            }
+        });
+        add(search__box, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 50, 300, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -358,30 +358,6 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
 
     }//GEN-LAST:event_btnAddMouseClicked
-
-    private void search__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search__boxFocusGained
-        if(search__box.getText().equals("ค้นหาสินค้า")){
-                search__box.setText("");
-                search__box.setForeground(new Color(0, 0, 0));
-        }
-    }//GEN-LAST:event_search__boxFocusGained
-
-    private void search__boxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search__boxFocusLost
-        if (search__box.getText().length()==0) {
-            search__box.setText("ค้นหาสินค้า");
-            search__box.setForeground(new Color(123, 123, 123));
-        }
-    }//GEN-LAST:event_search__boxFocusLost
-
-    private void search__boxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search__boxKeyReleased
-        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-        jTable.setRowSorter(sorter);
-        int columnIndexToFilter = 1;
-        int columnIndexToFilter2 = 3;
-
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter));
-    }//GEN-LAST:event_search__boxKeyReleased
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         sortProductsByQuantityDescending();
@@ -494,16 +470,48 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         filter(query);
     }//GEN-LAST:event_CategoryBoxItemStateChanged
 
-    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search__boxActionPerformed
-
     private void back_button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_button1MouseClicked
         Home homePage = new Home();
         homePage.setVisible(true);
         JFrame thisFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         thisFrame.dispose();
     }//GEN-LAST:event_back_button1MouseClicked
+
+    private void search__boxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search__boxFocusGained
+        if(search__box.getText().equals("ค้นหาสินค้า")){
+            search__box.setText("");
+            search__box.setForeground(new Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_search__boxFocusGained
+
+    private void search__boxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_search__boxFocusLost
+        if (search__box.getText().length()==0) {
+            search__box.setText("ค้นหาสินค้า");
+            search__box.setForeground(new Color(123, 123, 123));
+        }
+    }//GEN-LAST:event_search__boxFocusLost
+
+    private void search__boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search__boxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_search__boxActionPerformed
+
+    private void search__boxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search__boxKeyReleased
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable.setRowSorter(sorter);
+
+        int[] columnIndexToFilter = {1,3,4};
+
+        StringBuilder regexPattern = new StringBuilder();
+        for (int columnIndex : columnIndexToFilter) {
+            if (regexPattern.length() > 0) {
+                regexPattern.append("|");
+            }
+            regexPattern.append("(?i)").append(search__box.getText().trim());
+        }
+
+        sorter.setRowFilter(RowFilter.regexFilter(regexPattern.toString(), columnIndexToFilter));
+    }//GEN-LAST:event_search__boxKeyReleased
 
     
      private void loadAllProducts() {
@@ -595,21 +603,6 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         displayImage(productsArray.get(index).getImg(),img,'a');
     }
     
-public void loadCategory() {
-    try {
-        String query = "SELECT Category FROM inventory";
-        PreparedStatement ps = DB.getConnection().prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
-        
-        while (rs.next()) {
-            String Category = rs.getString("Category");
-            CategoryBox.addItem(Category);
-        }
-        
-    } catch (SQLException ex) {
-        System.out.println("Failed to load employees: " + ex.getMessage());
-    }
-}
         private void filter(String query){
             DefaultTableModel model = (DefaultTableModel) jTable.getModel();
             TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
