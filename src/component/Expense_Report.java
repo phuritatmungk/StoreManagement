@@ -24,7 +24,6 @@ public class Expense_Report extends javax.swing.JPanel {
     
     public Expense_Report() {
         initComponents();
-        calculateTotal(); 
         chDate.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         chDate.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
         chDate.setTextField(searchDate);
@@ -47,6 +46,7 @@ public class Expense_Report extends javax.swing.JPanel {
             }
         con = DB.mycon();
         showProductsInTable();
+        calculateTotal();
     }
     
     private void loadData(String sql) {
@@ -300,12 +300,16 @@ public class Expense_Report extends javax.swing.JPanel {
     }
 private void calculateTotal() {
     double total = 0.0;
-    for (int i = 0; i < jTable.getRowCount(); i++) {
-        Object value = jTable.getValueAt(i, 5);
+    DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+    int rowCount = model.getRowCount();
+    
+    for (int i = 0; i < rowCount; i++) {
+        Object value = model.getValueAt(i, 5); 
         if (value != null) {
             total += Double.parseDouble(value.toString());
         }
     }
+    
     txtSum.setText(String.valueOf(total));
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
