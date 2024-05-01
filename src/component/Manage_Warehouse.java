@@ -29,7 +29,6 @@ public class Manage_Warehouse extends javax.swing.JPanel {
     public Manage_Warehouse() {
         initComponents();
         con = DB.mycon();
-        loadCategory();
         loadAllProducts();
         
             
@@ -94,7 +93,8 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         jLabel4.setText("จำนวนคงเหลือ");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
 
-        CategoryBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category" }));
+        CategoryBox.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        CategoryBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "เลือกประเภทสินค้า", "เครื่องยนต์และอุปกรณ์การเกษตร", "อะไหล่เครื่องดีเซล", "อะไหล่เครื่องเบนซิน", "อะไหล่เครื่องตัดหญ้า", "อะไหล่เครื่องตัดไม้", "อะไหล่เป้เครื่องพ่นยา", "อะไหล่เป้พ่นยาไฟฟ้า", "อะไหล่ปั้มพ่นยา", "อะไหล่เครื่องเจาะดิน", "อะไหล่ปั้มน้ำ", "อะไหล่ปั้มน้ำไฟฟ้า", "อุปกรณ์อื่นๆ" }));
         CategoryBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 CategoryBoxItemStateChanged(evt);
@@ -381,6 +381,7 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         int columnIndexToFilter2 = 3;
 
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter));
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + search__box.getText().trim(), columnIndexToFilter2));
     }//GEN-LAST:event_search__boxKeyReleased
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -595,21 +596,6 @@ public class Manage_Warehouse extends javax.swing.JPanel {
         displayImage(productsArray.get(index).getImg(),img,'a');
     }
     
-public void loadCategory() {
-    try {
-        String query = "SELECT Category FROM inventory";
-        PreparedStatement ps = DB.getConnection().prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
-        
-        while (rs.next()) {
-            String Category = rs.getString("Category");
-            CategoryBox.addItem(Category);
-        }
-        
-    } catch (SQLException ex) {
-        System.out.println("Failed to load employees: " + ex.getMessage());
-    }
-}
         private void filter(String query){
             DefaultTableModel model = (DefaultTableModel) jTable.getModel();
             TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);

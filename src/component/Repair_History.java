@@ -191,6 +191,7 @@ public class Repair_History extends javax.swing.JPanel {
         Company_label.setText("รายละเอียดประวัติการซ่อมสินค้า");
         jPanel1.add(Company_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 1440, -1));
 
+        Table_Order_Record1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         Table_Order_Record1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
